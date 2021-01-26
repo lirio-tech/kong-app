@@ -19,4 +19,15 @@ export default{
                 errorCb(error)
             })
     },
+    saveOrder(order, callback, errorCb) {
+        let url = './orders.json'
+        Axios.post(url, order)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    }
 }
