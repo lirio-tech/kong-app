@@ -1,19 +1,20 @@
 <template>
     <v-container>
+        <v-main class="">
             <v-row justify="start">
               <div v-if="true">
-              <v-row>
-                  <v-col cols="1" style="margin-top: 10px;">   
-                      <v-btn icon small style="display: inline;"
-                          :to="{ 'path': '/'}"
-                      > 
-                          <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
-                      </v-btn>
-                  </v-col> 
-                  <v-col cols="11">  
-                          <span style="font-size: 2.0rem !important;">Novo Corte</span>
-                  </v-col>       
-              </v-row>    
+                  <v-row>
+                      <v-col cols="1" style="margin-top: 10px;">   
+                          <v-btn icon small style="display: inline;"
+                              :to="{ 'path': '/'}"
+                          > 
+                              <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                          </v-btn>
+                      </v-col> 
+                      <v-col cols="11">  
+                              <span style="font-size: 2.0rem !important;">Novo Corte</span>
+                      </v-col>       
+                  </v-row>    
                   <v-row>
                       <v-col cols="12" sm="12">
                           <v-form 
@@ -75,7 +76,8 @@
                       </v-col>
                   </v-row>
               </div>
-            </v-row>   
+            </v-row>                        
+        </v-main>        
     </v-container>
 </template>
 
