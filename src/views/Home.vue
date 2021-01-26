@@ -42,7 +42,6 @@
                       class="mx-auto"
                       max-width="800"
                       outlined
-                      :to="{ 'path': '/view-pedido/' }"
                   >
                       <v-list-item three-line>
                       <v-list-item-content>                
