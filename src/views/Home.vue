@@ -106,7 +106,7 @@
     name: 'Home',
     components: { AppBar },
     data: () => ({
-      itemsPeriodo: ['Hoje', 'Mes Atual', 'Mes Anterior', 'Customizado'],
+      itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Customizado'],
       periodo: {
         inicio: new Date(),
         fim: new Date()
