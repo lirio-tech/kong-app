@@ -114,7 +114,7 @@
       headers: [
           { text: "Data", value: "createdAt" },
           { text: "Cabelereiro", value: "usuario.nome" },
-          { text: "Destinatario", value: "tipoServico" },
+          { text: "Tipo de Servico", value: "tipoServico" },
           { text: "Valor", value: "valor" },
           { text: "Cliente", value: "cliente.nome" },
       ],                
