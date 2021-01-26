@@ -7,7 +7,7 @@
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
-                  <span style="color: #006666;"></span><span class="cyan--text">Wiskritorio</span>
+                  <span style="color: #006666;"></span><span class="cyan--text">Wiskritório</span>
                 </span>
               </v-btn>
             </router-link>
