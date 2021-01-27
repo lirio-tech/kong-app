@@ -6,7 +6,7 @@
         <v-row justify="start" align="center"> 
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
-                <span style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
+                <span style="font-family: 'Frijole', cursive; font-size: 1.2rem;">
                   <span style="color: #006666;"></span><span class="cyan--text">Wiskritório</span>
                 </span>
               </v-btn>
@@ -16,7 +16,7 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on">
-                    <v-icon style="font-size: 1.7rem">mdi-dots-vertical</v-icon>
+                    <v-icon style="font-size: 1.6rem">mdi-dots-vertical</v-icon>
                 </v-btn>
                 </template>
                 <v-card>
