@@ -25,15 +25,66 @@
                           >
                               <v-container>
                               <v-row>
-                                  <v-col cols="12" md="4">                      
+                                <v-col cols="12" md="4">                      
+                                    <v-text-field v-model="order.customer.name"
+                                                    label="Cliente"
+                                                    prepend-icon="mdi-calendar"
+                                                    filled>                                
+                                    </v-text-field>  
+                                </v-col>
+                              </v-row>               
+                              <v-row>
+                                <v-col cols="12" md="4">                      
+                                    <v-text-field v-model="order.customer.phone_number"
+                                                    label="Celular"
+                                                    prepend-icon="mdi-calendar"
+                                                    filled>                                
+                                    </v-text-field>  
+                                </v-col>
+                              </v-row>                                                              
+                              <v-row>
+                                  <!-- <v-col cols="12" md="4">                      
                                       <v-text-field v-model="order.date"
                                                       label="Data"
                                                       filled required>                                
                                       </v-text-field>  
-                                  </v-col>
+                                  </v-col> -->
+                                  <v-col
+                                    cols="12"
+                                    sm="6"
+                                    md="4"
+                                  >
+                                    <v-menu
+                                      v-model="menu2"
+                                      :close-on-content-click="false"
+                                      :nudge-right="40"
+                                      transition="scale-transition"
+                                      offset-y
+                                      min-width="auto"
+                                    >
+                                      <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                          v-model="order.date"
+                                          label="Data"
+                                          prepend-icon="mdi-calendar"
+                                          readonly
+                                          filled
+                                          v-bind="attrs"
+                                          v-on="on"
+                                        ></v-text-field>
+                                      </template>
+                                      <v-date-picker
+                                        v-model="order.date"
+                                        @input="menu2 = false"
+                                      ></v-date-picker>
+                                    </v-menu>
+                                  </v-col>                                                       
+                              </v-row>
+                              <v-row>
                                   <v-col cols="12" md="4">
                                       <v-text-field v-model="order.price"
                                                   label="Valor"
+                                                  prepend-icon="mdi-calendar"
                                                   filled required>
                                       </v-text-field>
                                   </v-col>
@@ -45,6 +96,7 @@
                                         size="1" 
                                         :items="typeServices"
                                         label="Tipo de Servico"
+                                        prepend-icon="mdi-calendar"
                                         ref="typeService"
                                         required filled
                                     ></v-combobox>                                              
@@ -56,12 +108,31 @@
                                         v-model="order.user.name" 
                                         size="1" 
                                         :items="users"
+                                        prepend-icon="mdi-calendar"
                                         label="Cabeleiro"
                                         ref="user"
                                         required filled disabled
                                     ></v-combobox>                                              
                                 </v-col>
                               </v-row>
+                              <v-row v-if="order._id">
+                                  <v-col cols="12" md="4">                      
+                                      <v-text-field v-model="order.createdAt"
+                                                      label="Lancamento"
+                                                      disabled
+                                                      filled required>                                
+                                      </v-text-field>  
+                                  </v-col>
+                              </v-row>                              
+                              <v-row v-if="order._id">
+                                  <v-col cols="12" md="4">                      
+                                      <v-text-field v-model="order.updatedAt"
+                                                      label="Alterado"
+                                                      disabled
+                                                      filled required>                                
+                                      </v-text-field>  
+                                  </v-col>
+                              </v-row>                                                            
                               <v-row>
                                   <v-btn 
                                       type="submit" 
@@ -87,53 +158,46 @@ import gateway from '../api/gateway';
   export default {
      name: 'OrdemServico',
      data: () => ({
-       valid: true,
-       isLoading: false,
-       order: {
-         typeService: 'Corte de Cabelo',
-         date: new Date(),
-         price: 40.00,
-         user: {
-           _id: "d6v12ed52gb2rfthrt",
-           username: "diegolirio",
-           name: "Diego Lirio"
-         }
-       },
-       typeServices: ['Corte de Cabelo', 'Barba', 'Sobrancelha'],
-  //     itemsPeriodo: ['Hoje', 'Mes Atual', 'Mes Anterior', 'Customizado'],
-  //     periodo: {
-  //       inicio: new Date(),
-  //       fim: new Date()
-  //     },
-  //     headers: [
-  //         { text: "Data", value: "createdAt" },
-  //         { text: "Cabelereiro", value: "usuario.nome" },
-  //         { text: "Destinatario", value: "tipoServico" },
-  //         { text: "Valor", value: "valor" },
-  //         { text: "Cliente", value: "cliente.nome" },
-  //     ],                
-  //     orders: [],      
-  //     selectPeriodo: 'Hoje'
-  }),
-  methods: {
-    save() {
-      alert(JSON.stringify(this.order));
-      gateway.saveOrder(this.order,
-        res => {
-          this.order = res;
-          alert('Gravado com sucesso');
-        }, err => {
-          console.log(err);
-        });
+        valid: true,
+        isLoading: false,
+        menu: false,
+        modal: false,
+        menu2: false,       
+        order: {
+          typeService: 'Corte de Cabelo',
+          date: new Date().toISOString().substr(0, 10),
+          price: 40.00,
+          user: {
+            _id: "d6v12ed52gb2rfthrt",
+            username: "diegolirio",
+            name: "Diego Lirio"
+          },
+          customer: {},
+        },
+        typeServices: ['Corte de Cabelo', 'Barba', 'Sobrancelha'],
+        users: ['Diego']
+    }),
+    methods: {
+      save() {
+        gateway.saveOrder(this.order,
+          res => {
+            this.order = res;
+            alert('Gravado com sucesso');
+            this.$router.push('/');
+          }, err => {
+            console.log(err);
+          });
+      },
     },
-  },
-  //   beforeMount() {
-  //     gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim,
-  //       res => {
-  //           this.orders = res;
-  //       }, err => {
-  //           console.log(err);
-  //       });
-  //   }
+    beforeMount() {
+      if(this.$route.params._id) {
+        gateway.getOrderById(this.$route.params._id,
+          res => {
+            this.order = res;
+          }, err => {
+            console.log(err);
+          });
+      }
+    }
   }
 </script>

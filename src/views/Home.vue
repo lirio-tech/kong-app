@@ -87,9 +87,6 @@
                             loading-text="Carregando... Por favor aguarde"
                             @click:row="clickRow"
                         >
-                            <!-- <template v-slot:item.createdAt="{ item }">
-                                {{ new Date(item.createdAt).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}                            
-                            </template>                                -->
                         </v-data-table>               
                     </v-sheet>
                 </v-col>
@@ -111,11 +108,11 @@
         fim: new Date()
       },
       headers: [
-          { text: "Data", value: "createdAt" },
-          { text: "Cabelereiro", value: "usuario.nome" },
-          { text: "Tipo de Servico", value: "tipoServico" },
-          { text: "Valor", value: "valor" },
-          { text: "Cliente", value: "cliente.nome" },
+          { text: "Data", value: "date" },
+          { text: "Cabelereiro", value: "user.name" },
+          { text: "Tipo de Servico", value: "typeService" },
+          { text: "Valor", value: "price" },
+          { text: "Cliente", value: "customer.name" },
       ],                
       orders: [],      
       selectPeriodo: 'Hoje'
@@ -136,11 +133,20 @@
         if(this.selectPeriodo === 'customizado') {
           alert(this.selectPeriodo);
         }                        
-      }
+      },
+      clickRow(row) {
+          this.orders.map((item) => {
+              let selected = item === row;
+              if(selected) {
+                  this.$router.push('/ordem-servico/'+item._id);
+              }
+          })
+      }               
     },
     beforeMount() {
       gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim,
         res => {
+            console.log(res);
             this.orders = res;
         }, err => {
             console.log(err);

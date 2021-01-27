@@ -21,6 +21,11 @@ const routes = [
     name: 'NovaOrdemServico',
     component: OrdemServico
   },      
+  {
+    path: '/ordem-servico/:_id',
+    name: 'EditOrdemServico',
+    component: OrdemServico
+  },    
 ]
 
 const router = new VueRouter({
