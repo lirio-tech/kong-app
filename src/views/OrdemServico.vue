@@ -28,7 +28,7 @@
                                 <v-col cols="12" md="12" xs="12">                      
                                     <v-text-field v-model="order.customer.name"
                                                     label="Cliente"
-                                                    prepend-icon="mdi-calendar"
+                                                    prepend-icon="mdi-account"
                                                     filled>                                
                                     </v-text-field>  
                                 </v-col>
@@ -38,7 +38,7 @@
                                     <v-text-field v-model="order.customer.phone_number"
                                                     label="Celular"
                                                     v-mask="'(##) #####-####'"
-                                                    prepend-icon="mdi-calendar"
+                                                    prepend-icon="mdi-whatsapp"
                                                     filled>                                
                                     </v-text-field>  
                                 </v-col>
@@ -87,7 +87,7 @@
                                   <v-col cols="12" md="12" xs="12">
                                       <v-text-field v-model="order.priceBR"
                                                   label="Valor"
-                                                  prepend-icon="mdi-calendar"
+                                                  prepend-icon="mdi-plus"
                                                   filled required>
                                       </v-text-field>
                                   </v-col>
@@ -99,7 +99,7 @@
                                         size="1" 
                                         :items="typeServices"
                                         label="Tipo de Servico"
-                                        prepend-icon="mdi-calendar"
+                                        prepend-icon="mdi-account-check"
                                         ref="typeService"
                                         required filled
                                     ></v-combobox>                                              
@@ -111,7 +111,7 @@
                                         v-model="order.user.name" 
                                         size="1" 
                                         :items="users"
-                                        prepend-icon="mdi-calendar"
+                                        prepend-icon="mdi-account"
                                         label="Cabeleiro"
                                         ref="user"
                                         required filled disabled
