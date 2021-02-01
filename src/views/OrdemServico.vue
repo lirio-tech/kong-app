@@ -1,7 +1,5 @@
 <template>
     <v-container>
-        <v-main class="">
-            <v-row justify="space-around">
               <div v-if="true">
                   <v-row>
                       <v-col cols="2" style="margin-top: 10px;">   
@@ -20,14 +18,16 @@
                           <v-form 
                             v-model="valid" 
                             v-on:submit.prevent="save"
-                            ref="clienteForm"
-                            id="clienteForm"
+                            ref="orderForm"
+                            id="orderForm"
                           >
                               <v-container>
                               <v-row>
                                 <v-col cols="12" md="12" xs="12">                      
                                     <v-text-field v-model="order.customer.name"
                                                     label="Cliente"
+                                                    ref="customerName"
+                                                    :rules="customerNameRules"
                                                     prepend-icon="mdi-account"
                                                     filled>                                
                                     </v-text-field>  
@@ -37,6 +37,7 @@
                                 <v-col cols="12" md="12" xs="12">                      
                                     <v-text-field v-model="order.customer.phone_number"
                                                     label="Celular"
+                                                    ref="customerPhone"
                                                     v-mask="'(##) #####-####'"
                                                     prepend-icon="mdi-whatsapp"
                                                     filled>                                
@@ -68,6 +69,7 @@
                                           v-model="dateFormatted"
                                           @blur="date = parseDate(dateFormatted)"
                                           label="Data"
+                                          ref="date"
                                           prepend-icon="mdi-calendar"
                                           readonly
                                           filled
@@ -86,6 +88,8 @@
                               <v-row>
                                   <v-col cols="12" md="12" xs="12">
                                       <v-text-field v-model="order.priceBR"
+                                                  :rules="priceRules"
+                                                  ref="price"
                                                   label="Valor"
                                                   prepend-icon="mdi-plus"
                                                   filled required>
@@ -155,9 +159,7 @@
                           </v-form>                
                       </v-col>
                   </v-row>
-              </div>
-            </v-row>                        
-        </v-main>        
+              </div>           
     </v-container>
 </template>
 
@@ -167,6 +169,14 @@ import gateway from '../api/gateway';
   export default {
     name: 'OrdemServico',
     data: vm => ({
+        customerNameRules: [
+            v => !!v || 'Nome do Cliente Obrigatório',
+            v => (v && v.length <= 20) || 'Nome deve ser menor que 20 caracteres',
+        ],
+        priceRules: [ 
+            v => !!v || 'Valor obrigatório',
+            v => (v &&  Number(v.replaceAll('R$ ', '').replaceAll('.', '').replaceAll(',', '.') ) > 0) || 'Valor deve ser maior que R$ 0,00',
+        ],           
         valid: true,
         isLoading: false,
         menu: false,
@@ -193,16 +203,18 @@ import gateway from '../api/gateway';
     }),
     methods: {
       save() {
-        this.order.date = this.date;
-        this.order.price = this.numberBrToUS(this.order.priceBR);
-        gateway.saveOrder(this.order,
-          res => {
-            this.order = res;
-            alert('Gravado com sucesso');
-            this.$router.push('/');
-          }, err => {
-            console.log(err);
-          });
+        if (this.$refs.orderForm.validate()) {
+          this.order.date = this.date;
+          this.order.price = this.numberBrToUS(this.order.priceBR);
+          gateway.saveOrder(this.order,
+            res => {
+              this.order = res;
+              alert('Gravado com sucesso');
+              this.$router.push('/');
+            }, err => {
+              console.log(err);
+            });
+        }
       },
       formatDate (date) {
         if (!date) return null;
