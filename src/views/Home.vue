@@ -30,6 +30,13 @@
                             </v-col>                     
                           </v-row>
                         </v-col>
+                        <v-col cols="12">
+                          <v-btn 
+                              v-on:click="filterOrders"
+                              class="ma-2" small
+                              outlined :loading="loading"
+                          >Atualizar</v-btn>    
+                        </v-col>
                     </v-row>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -69,6 +76,7 @@
                               class="ma-2"
                               outlined
                               color="cyan"
+                              :loading="loading"
                           >Novo</v-btn>                
                       </v-card-actions>
             </v-card>   
@@ -100,6 +108,7 @@
     name: 'Home',
     components: { AppBar },
     data: () => ({
+      loading: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Customizado'],
       periodo: {
         inicio: new Date(),
@@ -125,16 +134,35 @@
     }),
     methods: {
       selectedPeriodo() {
+        if(this.selectPeriodo === 'Ontem') {
+           let ontem = new Date();
+           ontem.setDate(ontem.getDate()-1);
+           this.periodo.inicio = ontem;
+           this.periodo.fim = ontem;
+        }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
            this.periodo.inicio = hoje;
            this.periodo.fim = hoje;
         }
         if(this.selectPeriodo === 'Mes Anterior') {
-          alert(this.selectPeriodo);
+           let m = new Date();
+           m.setMonth(m.getMonth()-1);
+           let ini = new Date();
+           ini.setFullYear(m.getFullYear(), m.getMonth(), 1);
+           let end = new Date();
+           end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
+           this.periodo.inicio = ini;
+           this.periodo.fim = end;
         }
         if(this.selectPeriodo === 'Mes Atual') {
-          alert(this.selectPeriodo);
+           let m = new Date();
+           let ini = new Date();
+           ini.setFullYear(m.getFullYear(), m.getMonth(), 1);
+           let end = new Date();
+           end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
+           this.periodo.inicio = ini;
+           this.periodo.fim = end;
         }                
         if(this.selectPeriodo === 'customizado') {
           alert(this.selectPeriodo);
@@ -149,13 +177,15 @@
           })
       },
       filterOrders() {
+        this.orders = [];
+        this.loading = true;
         gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
+              this.loading = false;
               this.orders = res;
+
               this.consolidado.total = 0;
-
               this.consolidado.cabelereiros = new Map();
-
               this.orders.forEach(o => {
                 o.servicess = [];
                 let key = this.consolidado.cabelereiros.get(o.user.name) ? this.consolidado.cabelereiros.get(o.user.name) : 0;
@@ -168,6 +198,7 @@
 
           }, err => {
               console.log(err);
+              this.loading = false;
           });
 
       },

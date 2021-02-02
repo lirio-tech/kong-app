@@ -201,12 +201,14 @@
                                       type="submit" 
                                       depressed  
                                       color="success"
-                                      :loading="isLoading"
-                                      :disabled="isLoading"
+                                      :loading="loadingSave"
+                                      :disabled="loadingSave"
                                     >Salvar</v-btn>
                                   <v-btn 
                                     color="error" 
                                     v-if="userLogged.type === 'administrator' && order._id"
+                                    :loading="loadingDelete"
+                                    :disabled="loadingDelete"
                                     v-on:click="deleteOrder"
                                   >
                                       Deletar
@@ -226,6 +228,8 @@ import gateway from '../api/gateway';
   export default {
     name: 'OrdemServico',
     data: vm => ({
+        loadingSave: false,
+        loadingDelete: false,
         customerNameRules: [
             v => !!v || 'Nome do Cliente Obrigatório',
             v => (v && v.length <= 20) || 'Nome deve ser menor que 20 caracteres',
@@ -265,13 +269,16 @@ import gateway from '../api/gateway';
       save() {
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
           this.order.date = this.date;
+          this.loadingSave = true;          
           gateway.saveOrder(this.order,
             res => {
               this.order = res;
+              this.loadingSave = false;          
               alert('Gravado com sucesso');
               this.$router.push('/');
             }, err => {
               console.log(err);
+              this.loadingSave = false;          
             });
         }
       },
@@ -343,19 +350,24 @@ import gateway from '../api/gateway';
       numberUsToBr(v) {
           return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
       },      
-      deleteOrder() {
+      deleteOrder() {        
         if (this.userLogged.type === 'administrator') {
+          this.loadingDelete = true;          
           gateway.deleteOrder(this.order._id,
             () => {
+              this.loadingDelete = false;              
               alert('Excluido com sucesso');
               this.$router.push('/');
             }, err => {
               console.log(err);
+              this.loadingDelete = false;
             });
         }
       }
     },
     beforeMount() {
+      this.loadingDelete = true;
+      this.loadingSave = true;
       if(this.$route.params._id) {
         gateway.getOrderById(this.$route.params._id,
           res => {
@@ -364,15 +376,23 @@ import gateway from '../api/gateway';
             this.createdAt = this.formatDateTime(this.order.createdAt);
             this.updatedAt = this.formatDateTime(this.order.updatedAt);
             this.order.priceBR = this.numberUsToBr(this.order.price);
+            this.loadingDelete = false;
+            this.loadingSave = false;            
           }, err => {
             console.log(err);
+            this.loadingDelete = false;
+            this.loadingSave = false;            
           });
       }
-
+      
       gateway.getUsers(res => {
         this.users = res;
+        this.loadingDelete = false;
+        this.loadingSave = false;        
       }, err => {
         console.log(err);
+      this.loadingDelete = false;
+      this.loadingSave = false;        
       });
 
       this.userLogged = JSON.parse(localStorage.getItem('user'));
