@@ -6,13 +6,16 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "local": "vue-cli-service serve --mode local",
     "prod": "vue-cli-service serve --mode prod"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "v-mask": "^2.2.4",
+    "v-money": "^0.8.1",
     "vue": "^2.6.11",
+    "vue-currency-filter": "^5.2.0",
     "vue-router": "^3.5.1",
     "vuetify": "^2.2.11"
   },

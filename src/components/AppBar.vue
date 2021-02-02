@@ -36,7 +36,7 @@
                                 <v-col cols="9"> 
                                     <div>
                                         <span class="font-weight-black">
-                                            {{ username }}
+                                            {{ userLogger.username }}
                                         </span>
                                     </div>
                                     <div>
@@ -63,7 +63,7 @@
 <script>
     export default {
         data:() => ({
-            
+            userLogger: {}
         }),
         computed: {
             username() {
@@ -75,6 +75,9 @@
                 localStorage.clear();
                 this.$router.push('/login');
             }
+        }, 
+        beforeMount() {
+            this.userLogger = JSON.parse(localStorage.getItem('user'));
         }
     }
 </script>

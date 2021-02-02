@@ -42,6 +42,17 @@ export default{
                 errorCb(error)
             })        
     },
+    deleteOrder(_id, callback, errorCb) {
+        let url = ORDERS_API+'/'+_id;
+        Axios.delete(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },    
     getOrderById(_id, callback, errorCb) {
         let url = ORDERS_API+'/'+_id;
         Axios.get(url)
@@ -64,4 +75,15 @@ export default{
                 errorCb(error)
             })        
     },        
+    getUsers(callback, errorCb) {
+        let url = USERS_API;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },         
 }

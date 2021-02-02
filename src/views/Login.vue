@@ -76,19 +76,23 @@
                     this.loading = true;
                     gateway.signIn(this.user, 
                       res => {
+                        console.log('token', res.auth);
+                        if(!res.auth === true) {
+                            alert('Usuario ou Senha Invalido');
+                            this.loading = false;
+                            return;
+                        }
                         localStorage.setItem('TOKEN', res.token);
-                        localStorage.setItem('username', this.user.username);
-                        localStorage.setItem('userType', this.user.type);
+                        // localStorage.setItem('username', this.user.username);
+                        // localStorage.setItem('userType', this.user.type);
                         this.loading = false;
-                        this.$router.push('/');
-                        // gateway.getUserByUsername(this.user.username,
-                        //   res2 => {
-                        //     localStorage.setItem('username', res2.username);
-                        //     localStorage.setItem('userType', res2.type);
-                        //     this.$router.push('/');
-                        //   }, err2 => {
-                        //     this.showMessage('error', err2.message);
-                        //   });
+                        gateway.getUserByUsername(this.user.username,
+                          res2 => {
+                            localStorage.setItem('user', JSON.stringify(res2));
+                            this.$router.push('/');
+                          }, err2 => {
+                            this.showMessage('error', err2.message);
+                          });
                       }, err => {
                         //this.showMessage('error', err.message);
                         console.log(err);

@@ -15,6 +15,77 @@
                   </v-row>    
                   <v-row>
                       <v-col cols="12" sm="12">
+                        <h2 class="success--text" 
+                            align="center" 
+                            justify="space-around"> 
+                              {{ order.total | currency }}
+                        </h2>
+                      </v-col>
+                      <v-col cols="12" sm="12">
+                          <div class="d-flex">
+                            <v-col cols="6">
+                              <v-select
+                                v-model="service.type"
+                                :items="typeServices"
+                                item-text="name"
+                                item-value="name"
+                                filled
+                                ref="serviceType"
+                                @change="setFocusServicePrice"
+                                label="Servico"
+                              ></v-select>
+                            </v-col>
+                            
+                            <v-col cols="4">
+                              <v-text-field
+                                autocomplete="off"
+                                label="Valor"
+                                v-model="service.priceBR"
+                                @focus="$event.target.select()"
+                                ref="servicePrice"
+                                @keyup="service.priceBR = maskCurrency(service.priceBR)"
+                                filled
+                              />
+                            </v-col>
+                            <v-col cols="2">
+                              <v-btn icon outlined class="mt-3" @click="addService">
+                                <v-icon>mdi-plus</v-icon>
+                              </v-btn>                            
+                            </v-col>
+                          </div>
+                      </v-col>
+                          <v-col cols="12"  class="mt-0 pt-0">
+
+                            <v-simple-table dense >
+                              <template v-slot:default>
+                                <thead >
+                                  <tr>
+                                    <th class="text-left">
+                                      Servico
+                                    </th>
+                                    <th class="text-left">
+                                      Valor
+                                    </th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="item in order.services" :key="item.type">
+                                    <td>{{ item.type }}</td>
+                                    <td>{{ item.price | currency }}</td>
+                                    <td>
+                                      <v-icon small @click="deleteItem(item)">
+                                        mdi-delete
+                                      </v-icon>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </template>
+                            </v-simple-table>
+                          </v-col>
+
+                      <hr/>
+                      <v-col cols="12" sm="12">
                           <v-form 
                             v-model="valid" 
                             v-on:submit.prevent="save"
@@ -86,39 +157,18 @@
                                   </v-col>                                                       
                               </v-row>
                               <v-row>
-                                  <v-col cols="12" md="12" xs="12">
-                                      <v-text-field v-model="order.priceBR"
-                                                  :rules="priceRules"
-                                                  ref="price"
-                                                  label="Valor"
-                                                  prepend-icon="mdi-plus"
-                                                  filled required>
-                                      </v-text-field>
-                                  </v-col>
-                              </v-row>
-                              <v-row>
                                 <v-col cols="12" md="12" xs="12">        
                                     <v-combobox 
-                                        v-model="order.typeService" 
-                                        size="1" 
-                                        :items="typeServices"
-                                        label="Tipo de Servico"
-                                        prepend-icon="mdi-account-check"
-                                        ref="typeService"
-                                        required filled
-                                    ></v-combobox>                                              
-                                </v-col>
-                              </v-row>
-                              <v-row>
-                                <v-col cols="12" md="12" xs="12">        
-                                    <v-combobox 
-                                        v-model="order.user.name" 
+                                        v-model="order.user" 
                                         size="1" 
                                         :items="users"
                                         prepend-icon="mdi-account"
                                         label="Cabeleiro"
                                         ref="user"
-                                        required filled disabled
+                                        required filled 
+                                        item-text='name'
+                                        item-value='_id'          
+                                        v-if="userLogged.type === 'administrator'"                              
                                     ></v-combobox>                                              
                                 </v-col>
                               </v-row>
@@ -143,7 +193,8 @@
                                   </v-col>
                               </v-row>                                                            
                               <v-row align="center"
-                                     justify="space-around">
+                                     justify="space-around"
+                                     v-if="userLogged.type === 'administrator' || !order._id">
                                   <v-btn 
                                       type="submit" 
                                       depressed  
@@ -151,8 +202,12 @@
                                       :loading="isLoading"
                                       :disabled="isLoading"
                                     >Salvar</v-btn>
-                                  <v-btn color="error">
-                                    Deletar
+                                  <v-btn 
+                                    color="error" 
+                                    v-if="userLogged.type === 'administrator' && order._id"
+                                    v-on:click="deleteOrder"
+                                  >
+                                      Deletar
                                   </v-btn>                                    
                               </v-row>
                               </v-container>
@@ -176,7 +231,7 @@ import gateway from '../api/gateway';
         priceRules: [ 
             v => !!v || 'Valor obrigatório',
             v => (v &&  Number(v.replaceAll('R$ ', '').replaceAll('.', '').replaceAll(',', '.') ) > 0) || 'Valor deve ser maior que R$ 0,00',
-        ],           
+        ],         
         valid: true,
         isLoading: false,
         menu: false,
@@ -187,25 +242,27 @@ import gateway from '../api/gateway';
         updatedAt: null,
         createdAt: null,   
         order: {
-          typeService: 'Corte de Cabelo',
+          services: [],
+          total: 0,
           date: new Date().toISOString().substr(0, 10),
           price: 40.00,
           priceBR: "40,00",
-          user: {
-            _id: "d6v12ed52gb2rfthrt",
-            username: "diegolirio",
-            name: "Diego Lirio"
-          },
+          user: {},
           customer: {},
         },
+        service: {
+          type: "",
+          price: 0,
+          priceBR: "0",
+        },
         typeServices: ['Corte de Cabelo', 'Barba', 'Sobrancelha'],
-        users: ['Diego']
+        users: [],
+        userLogged: {}
     }),
     methods: {
       save() {
-        if (this.$refs.orderForm.validate()) {
+        if (this.orderHasServices() && this.$refs.orderForm.validate()) {
           this.order.date = this.date;
-          this.order.price = this.numberBrToUS(this.order.priceBR);
           gateway.saveOrder(this.order,
             res => {
               this.order = res;
@@ -215,6 +272,38 @@ import gateway from '../api/gateway';
               console.log(err);
             });
         }
+      },
+      setFocusServicePrice() {
+        this.$refs.servicePrice.focus(); 
+      },
+      orderHasServices() {
+        if(!this.order.services || this.order.services.length <= 0) {
+          alert('Obrigatorio adicionar 1 servico');
+          this.$refs.serviceType.focus();
+          return false;
+        }
+        return true;
+      },
+      addService() {
+        if(!this.service.type) {
+          alert('Selecione o Servico');
+          this.$refs.serviceType.focus();
+          return;
+        }
+        this.service.price = this.numberBrToUS(this.service.priceBR);
+        if(!this.service.price) {
+          alert('Valor deve ser maior que zero');
+          this.$refs.servicePrice.focus();
+          return;
+        }        
+        
+        this.order.services.push({type: this.service.type, price: this.service.price});
+        this.order.total += Number(this.service.price);
+        this.service = {type: "", priceBR: "0,00"};
+      },
+      deleteItem(service) {
+        this.order.total -= service.price;
+        this.order.services.splice(this.order.services.indexOf(service), 1);
       },
       formatDate (date) {
         if (!date) return null;
@@ -252,6 +341,17 @@ import gateway from '../api/gateway';
       numberUsToBr(v) {
           return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
       },      
+      deleteOrder() {
+        if (this.userLogged.type === 'administrator') {
+          gateway.deleteOrder(this.order._id,
+            () => {
+              alert('Excluido com sucesso');
+              this.$router.push('/');
+            }, err => {
+              console.log(err);
+            });
+        }
+      }
     },
     beforeMount() {
       if(this.$route.params._id) {
@@ -266,18 +366,20 @@ import gateway from '../api/gateway';
             console.log(err);
           });
       }
+
+      gateway.getUsers(res => {
+        this.users = res;
+      }, err => {
+        console.log(err);
+      });
+
+      this.userLogged = JSON.parse(localStorage.getItem('user'));
+      this.order.user = this.userLogged;
     },
     watch: {
       date() {
         this.dateFormatted = this.formatDate(this.date)
-      },
-      order: {
-        deep: true,
-        handler() {
-          console.log(this.order.priceBR);
-          this.order.priceBR = this.maskCurrency(this.order.priceBR);
-        }
-      }      
+      },      
     },    
   }
 </script>

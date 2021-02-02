@@ -50,19 +50,17 @@
                                   {{ periodo.inicio.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} a 
                                   {{ periodo.fim.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}
                               </div>
-                              Total:
-                              <v-list-item-title class="success--text headline mb-1" >
-                                  1500,00
+                              
+                              <v-list-item-title class="headline mb-1" v-if="userLogged.type === 'administrator'">
+                                  Total: <span class="cyan--text">{{ consolidado.total | currency }} </span>
                               </v-list-item-title>
                               <br/>
-                              <v-list-item-subtitle>
+                              <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
                                   <br/>
-                                  <h3>Guilherme: R$ 1.000,00</h3>                    
+                                  <h3 v-if="userLogged.name === cab[0] || userLogged.type ==='administrator'">
+                                    {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
+                                  </h3>
                               </v-list-item-subtitle>                
-                              <v-list-item-subtitle>
-                                  <br/>
-                                  <h3>Dimas: R$ 1.000,00</h3>                    
-                              </v-list-item-subtitle>                                          
                       </v-list-item-content>
                       </v-list-item>
                       <v-card-actions class="text-right"> 
@@ -110,12 +108,20 @@
       headers: [
           { text: "Data", value: "date" },
           { text: "Cabelereiro", value: "user.name" },
-          { text: "Tipo de Servico", value: "typeService" },
-          { text: "Valor", value: "price" },
+          { text: "Servicos", value: "servicess" },
+          { text: "Valor", value: "total" },
           { text: "Cliente", value: "customer.name" },
       ],                
       orders: [],      
-      selectPeriodo: 'Hoje'
+      selectPeriodo: 'Hoje',
+      consolidado: {
+        periodoDescricao: "",
+        total: 0,
+        cabelereiros: new Map()
+      },
+      userLogged: {
+        type: 'none'
+      }
     }),
     methods: {
       selectedPeriodo() {
@@ -141,16 +147,35 @@
                   this.$router.push('/ordem-servico/'+item._id);
               }
           })
-      }               
+      },
+      filterOrders() {
+        gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim,
+          res => {
+              this.orders = res;
+              this.consolidado.total = 0;
+
+              this.consolidado.cabelereiros = new Map();
+
+              this.orders.forEach(o => {
+                o.servicess = [];
+                let key = this.consolidado.cabelereiros.get(o.user.name) ? this.consolidado.cabelereiros.get(o.user.name) : 0;
+                this.consolidado.cabelereiros.set(o.user.name, key + o.total);
+                this.consolidado.total += o.total;
+                o.services.forEach(e => {
+                  o.servicess.push(e.type);
+                });
+              });              
+
+          }, err => {
+              console.log(err);
+          });
+
+      },
+        
     },
     beforeMount() {
-      gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim,
-        res => {
-            console.log(res);
-            this.orders = res;
-        }, err => {
-            console.log(err);
-        });
+      this.filterOrders();
+      this.userLogged = JSON.parse(localStorage.getItem('user'));
     }
   }
 </script>
