@@ -49,7 +49,7 @@
                               />
                             </v-col>
                             <v-col cols="2" >
-                              <v-btn icon outlined class="mt-3" @click="addService">
+                              <v-btn icon outlined class="mt-3" v-on:click="addService">
                                 <v-icon>mdi-plus</v-icon>
                               </v-btn>                            
                             </v-col>

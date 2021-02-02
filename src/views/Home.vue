@@ -66,7 +66,7 @@
                                   Periodo: 
                                   <!-- {{ periodo.inicio.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} a 
                                   {{ periodo.fim.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} -->
-                                  {{ consolidado.periodoDescricao }}
+                                  <span class="orange--text">{{ consolidado.periodoDescricao }}</span>
                               </div>
                               
                               <v-list-item-title class="headline mb-1" v-if="userLogged.type === 'administrator'">
