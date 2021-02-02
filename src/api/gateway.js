@@ -19,8 +19,8 @@ export default{
                 errorCb(error);
             })
     },       
-    getOrdersByDataBetween(dataInicio,dataFim,callback,errorCb){       
-        let url = ORDERS_API+'/'+dataInicio+'/'+dataFim;
+    getOrdersByDataBetween(dataInicio,dataFim,user,callback,errorCb){       
+        let url = ORDERS_API+'/'+dataInicio+'/'+dataFim+'?username='+user.username+'&usertype='+user.type;
         console.log(url);
         Axios.get(url)
             .then(data => {

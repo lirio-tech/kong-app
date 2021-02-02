@@ -220,7 +220,7 @@
       filterOrders() {
         this.orders = [];
         this.loading = true;
-        gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim,
+        gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim, this.userLogged,
           res => {
               this.loading = false;
               this.orders = res;
@@ -246,10 +246,10 @@
         
     },
     beforeMount() {
+      this.userLogged = JSON.parse(localStorage.getItem('user'));
       this.periodo = this.formatarPeriodo(new Date(), new Date());
       this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders();
-      this.userLogged = JSON.parse(localStorage.getItem('user'));
     }
   }
 </script>
