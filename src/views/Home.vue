@@ -138,15 +138,15 @@
         if(this.selectPeriodo === 'Ontem') {
            let ontem = new Date();
            ontem.setDate(ontem.getDate()-1);
-           this.periodo.inicio = ontem;
-           this.periodo.fim = ontem;
+           this.periodo.inicio = ontem.getFullYear() + '-' + (ontem.getMonth()+1) + '-' +ontem.getDate();
+           this.periodo.fim = ontem.getFullYear() + '-' + (ontem.getMonth()+1) + '-' +ontem.getDate();
            this.filterOrders();
            this.consolidado.periodoDescricao = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
-           this.periodo.inicio = hoje;
-           this.periodo.fim = hoje;
+           this.periodo.inicio = hoje.getFullYear() + '-' + hoje.getMonth() + '-' +hoje.getDate();
+           this.periodo.fim = hoje.getFullYear() + '-' + hoje.getMonth() + '-' +hoje.getDate();
            this.filterOrders();
            this.consolidado.periodoDescricao = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }
@@ -157,8 +157,8 @@
            ini.setFullYear(m.getFullYear(), m.getMonth(), 1);
            let end = new Date();
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
-           this.periodo.inicio = ini;
-           this.periodo.fim = end;
+           this.periodo.inicio = ini.getFullYear() + '-' + ini.getMonth() + '-' +ini.getDate();
+           this.periodo.fim = end.getFullYear() + '-' + end.getMonth() + '-' +end.getDate();
            this.filterOrders();
            console.log(this.getMesPtBr(m.getMonth()));
            this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
@@ -169,8 +169,8 @@
            ini.setFullYear(m.getFullYear(), m.getMonth(), 1);
            let end = new Date();
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
-           this.periodo.inicio = ini;
-           this.periodo.fim = end;
+           this.periodo.inicio = ini.getFullYear() + '-' + ini.getMonth() + '-' +ini.getDate();
+           this.periodo.fim = end.getFullYear() + '-' + end.getMonth() + '-' +end.getDate();
            this.filterOrders();
            console.log(this.getMesPtBr(m.getMonth()));
            this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());

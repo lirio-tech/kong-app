@@ -20,8 +20,8 @@ export default{
             })
     },       
     getOrdersByDataBetween(dataInicio,dataFim,callback,errorCb){       
-        //let url = ORDERS_API+'/'+dataInicio+'/'+dataFim;
-        let url = ORDERS_API;
+        let url = ORDERS_API+'/'+dataInicio+'/'+dataFim;
+        console.log(url);
         Axios.get(url)
             .then(data => {
                 callback(data.data)
