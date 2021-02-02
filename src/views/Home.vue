@@ -3,6 +3,16 @@
         <AppBar />             
         <v-main class="">
 
+            <v-alert
+                dense
+                border="left"
+                type="error"
+                v-if="orders.length === 0 && !loading"
+              >
+                Dados nao Encontrados para este periodo
+              </v-alert>
+
+
             <br/>  
             <v-row justify="start">
 
