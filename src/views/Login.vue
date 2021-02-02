@@ -95,8 +95,13 @@
                           });
                       }, err => {
                         //this.showMessage('error', err.message);
-                        console.log(err);
-                        this.loading = false;
+                        console.log('err', err.response); 
+                        if(err.response.status === 401) {
+                          this.loading = false;
+                          alert('Usuario ou Senha Invalido');
+                        } else {
+                          alert('Erro interno no servidor, contate o Administrador ou Tente novamente');
+                        }
                       });
                 } else {
                     if(!this.user.username) {
