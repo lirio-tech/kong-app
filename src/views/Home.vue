@@ -138,15 +138,13 @@
         if(this.selectPeriodo === 'Ontem') {
            let ontem = new Date();
            ontem.setDate(ontem.getDate()-1);
-           this.periodo.inicio = ontem.getFullYear() + '-' + (ontem.getMonth()+1) + '-' +ontem.getDate();
-           this.periodo.fim = ontem.getFullYear() + '-' + (ontem.getMonth()+1) + '-' +ontem.getDate();
+           this.periodo = this.formatarPeriodo(ontem, ontem);
            this.filterOrders();
            this.consolidado.periodoDescricao = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
-           this.periodo.inicio = hoje.getFullYear() + '-' + hoje.getMonth() + '-' +hoje.getDate();
-           this.periodo.fim = hoje.getFullYear() + '-' + hoje.getMonth() + '-' +hoje.getDate();
+           this.periodo = this.formatarPeriodo(hoje, hoje);
            this.filterOrders();
            this.consolidado.periodoDescricao = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }
@@ -157,10 +155,8 @@
            ini.setFullYear(m.getFullYear(), m.getMonth(), 1);
            let end = new Date();
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
-           this.periodo.inicio = ini.getFullYear() + '-' + ini.getMonth() + '-' +ini.getDate();
-           this.periodo.fim = end.getFullYear() + '-' + end.getMonth() + '-' +end.getDate();
+           this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           console.log(this.getMesPtBr(m.getMonth()));
            this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
         }
         if(this.selectPeriodo === 'Mes Atual') {
@@ -169,15 +165,25 @@
            ini.setFullYear(m.getFullYear(), m.getMonth(), 1);
            let end = new Date();
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
-           this.periodo.inicio = ini.getFullYear() + '-' + ini.getMonth() + '-' +ini.getDate();
-           this.periodo.fim = end.getFullYear() + '-' + end.getMonth() + '-' +end.getDate();
+           this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           console.log(this.getMesPtBr(m.getMonth()));
            this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
         }                
         if(this.selectPeriodo === 'customizado') {
           alert(this.selectPeriodo);
         }                        
+      },
+      formatarPeriodo(dateStart, dateEnd) {
+        let monthStart = String(dateStart.getMonth()+1).padStart(2, "0");
+        let dayStart = String(dateStart.getDate()).padStart(2, "0");
+
+        let monthEnd = String(dateEnd.getMonth()+1).padStart(2, "0");
+        let dayEnd = String(dateEnd.getDate()).padStart(2, "0");
+
+        return {
+          inicio: dateStart.getFullYear() + '-' + monthStart + '-' +dayStart,
+          fim: dateEnd.getFullYear() + '-' + monthEnd + '-' +dayEnd
+        }
       },
       getMesPtBr(mes) {
           if(mes === 0) return 'Janeiro';
@@ -230,6 +236,8 @@
         
     },
     beforeMount() {
+      this.periodo = this.formatarPeriodo(new Date(), new Date());
+      this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders();
       this.userLogged = JSON.parse(localStorage.getItem('user'));
     }
