@@ -74,7 +74,9 @@
                                     <td>{{ item.type }}</td>
                                     <td>{{ item.price | currency }}</td>
                                     <td>
-                                      <v-icon small @click="deleteItem(item)">
+                                      <v-icon 
+                                        small @click="deleteItem(item)" 
+                                        v-if="userLogged.type === 'administrator' || !order._id">
                                         mdi-delete
                                       </v-icon>
                                     </td>
