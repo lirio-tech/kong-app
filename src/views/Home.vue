@@ -54,8 +54,9 @@
                       <v-list-item-content>                
                               <div class="overline mb-4">
                                   Periodo: 
-                                  {{ periodo.inicio.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} a 
-                                  {{ periodo.fim.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}
+                                  <!-- {{ periodo.inicio.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} a 
+                                  {{ periodo.fim.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} -->
+                                  {{ consolidado.periodoDescricao }}
                               </div>
                               
                               <v-list-item-title class="headline mb-1" v-if="userLogged.type === 'administrator'">
@@ -139,11 +140,15 @@
            ontem.setDate(ontem.getDate()-1);
            this.periodo.inicio = ontem;
            this.periodo.fim = ontem;
+           this.filterOrders();
+           this.consolidado.periodoDescricao = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
            this.periodo.inicio = hoje;
            this.periodo.fim = hoje;
+           this.filterOrders();
+           this.consolidado.periodoDescricao = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }
         if(this.selectPeriodo === 'Mes Anterior') {
            let m = new Date();
@@ -154,6 +159,9 @@
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo.inicio = ini;
            this.periodo.fim = end;
+           this.filterOrders();
+           console.log(this.getMesPtBr(m.getMonth()));
+           this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
         }
         if(this.selectPeriodo === 'Mes Atual') {
            let m = new Date();
@@ -163,10 +171,27 @@
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo.inicio = ini;
            this.periodo.fim = end;
+           this.filterOrders();
+           console.log(this.getMesPtBr(m.getMonth()));
+           this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
         }                
         if(this.selectPeriodo === 'customizado') {
           alert(this.selectPeriodo);
         }                        
+      },
+      getMesPtBr(mes) {
+          if(mes === 0) return 'Janeiro';
+          if(mes === 1) return 'Fevereiro';
+          if(mes === 2) return 'Marco';
+          if(mes === 3) return 'Abril';
+          if(mes === 4) return 'Maio';
+          if(mes === 5) return 'Junho';
+          if(mes === 6) return 'Julho';
+          if(mes === 7) return 'Agosto';
+          if(mes === 8) return 'Setembro';
+          if(mes === 9) return 'Outubro';
+          if(mes === 10) return 'Novembro';
+          if(mes === 11) return 'Dezembro';
       },
       clickRow(row) {
           this.orders.map((item) => {
