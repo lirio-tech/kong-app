@@ -10,16 +10,16 @@
                           </v-btn>
                       </v-col> 
                       <v-col cols="9">  
-                              <span style="font-size: 2.0rem !important;">Novo Corte</span>
+                              <span style="font-size: 1.6rem !important;">Novo Corte</span>
                       </v-col>       
                   </v-row>    
                   <v-row>
                       <v-col cols="12" sm="12">
-                        <h2 class="success--text" 
+                        <h1 class="success--text" 
                             align="center" 
                             justify="space-around"> 
                               {{ order.total | currency }}
-                        </h2>
+                        </h1>
                       </v-col>
                       <v-col cols="12" sm="12">
                           <div class="d-flex">
