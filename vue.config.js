@@ -3,6 +3,10 @@ module.exports = {
     "vuetify"
   ],
   pwa: {
-    name: 'Wiskritorio',
-  }  
+    themeColor: '#3399FF',
+    name: 'Wiskritorio', 
+    workboxOptions: {
+        skipWaiting: true
+    }
+  }    
 }
