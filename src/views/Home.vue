@@ -5,7 +5,7 @@
 
             <v-alert
                 dense
-                border="left"
+                border="bottom"
                 type="error"
                 v-if="orders.length === 0 && !loading"
               >
