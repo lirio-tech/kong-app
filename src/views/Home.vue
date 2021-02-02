@@ -104,6 +104,12 @@
                             loading-text="Carregando... Por favor aguarde"
                             @click:row="clickRow"
                         >
+                            <template v-slot:item.date="{ item }">
+                                {{ new Date(item.date).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}                            
+                            </template>           
+                            <template v-slot:item.total="{ item }">
+                                {{ item.total | currency }}                            
+                            </template>                                                         
                         </v-data-table>               
                     </v-sheet>
                 </v-col>
