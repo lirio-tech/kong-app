@@ -9,8 +9,9 @@
                               <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
                           </v-btn>
                       </v-col> 
-                      <v-col cols="9">  
-                              <span style="font-size: 1.6rem !important;">Novo Corte</span>
+                      <v-col cols="8" align="center" >  
+                              <span v-if="order._id" style="font-size: 1.6rem !important;">Corte</span>
+                              <span v-else style="font-size: 1.6rem !important;">Novo Corte</span>
                       </v-col>       
                   </v-row>    
                   <v-row>
@@ -21,7 +22,7 @@
                               {{ order.total | currency }}
                         </h1>
                       </v-col>
-                      <v-col cols="12" sm="12">
+                      <v-col cols="12" sm="12" v-if="(userLogged.type && userLogged.type === 'administrator') || !order._id">
                           <div class="d-flex">
                             <v-col cols="6">
                               <v-select
@@ -47,7 +48,7 @@
                                 filled
                               />
                             </v-col>
-                            <v-col cols="2">
+                            <v-col cols="2" >
                               <v-btn icon outlined class="mt-3" @click="addService">
                                 <v-icon>mdi-plus</v-icon>
                               </v-btn>                            
@@ -118,12 +119,6 @@
                                 </v-col>
                               </v-row>                                                              
                               <v-row>
-                                  <!-- <v-col cols="12" md="4">                      
-                                      <v-text-field v-model="order.date"
-                                                      label="Data"
-                                                      filled required>                                
-                                      </v-text-field>  
-                                  </v-col> -->
                                   <v-col
                                     cols="12"
                                     sm="12"
@@ -170,7 +165,7 @@
                                         required filled 
                                         item-text='name'
                                         item-value='_id'          
-                                        v-if="userLogged.type === 'administrator'"                              
+                                        v-if="userLogged.type === 'administrator' || order._id"                              
                                     ></v-combobox>                                              
                                 </v-col>
                               </v-row>
@@ -263,7 +258,9 @@ import gateway from '../api/gateway';
         },
         typeServices: ['Corte de Cabelo', 'Barba', 'Sobrancelha'],
         users: [],
-        userLogged: {}
+        userLogged: {
+          type: null
+        }
     }),
     methods: {
       save() {
