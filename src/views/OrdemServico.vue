@@ -16,7 +16,7 @@
                   </v-row>    
                   <v-row>
                       <v-col cols="12" sm="12">
-                        <h1 class="success--text" 
+                        <h1 :class="{  'warning--text': (order.total <= 0), 'success--text': (order.total > 0 ) }" 
                             align="center" 
                             justify="space-around"> 
                               {{ order.total | currency }}
@@ -238,14 +238,14 @@ import gateway from '../api/gateway';
         menu: false,
         modal: false,
         menu2: false,       
-        date: new Date().toISOString().substr(0, 10),
-        dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),     
+        date: new Date().toLocaleString( 'sv', { timeZoneName: 'short' } ).substr(0,10),
+        dateFormatted: vm.formatDate(new Date().toLocaleString( 'sv', { timeZoneName: 'short' } ).substr(0,10)),     
         updatedAt: null,
         createdAt: null,   
         order: {
           services: [],
           total: 0,
-          date: new Date().toISOString().substr(0, 10),
+          date: new Date().toLocaleString( 'sv', { timeZoneName: 'short' } ).substr(0,10),
           price: 40.00,
           priceBR: "40,00",
           user: {},
@@ -308,8 +308,8 @@ import gateway from '../api/gateway';
         this.service = {type: "", priceBR: "0,00"};
       },
       deleteItem(service) {
-        this.order.total -= service.price;
-        this.order.services.splice(this.order.services.indexOf(service), 1);
+          this.order.total -= service.price;
+          this.order.services.splice(this.order.services.indexOf(service), 1);
       },
       formatDate (date) {
         if (!date) return null;
@@ -348,7 +348,7 @@ import gateway from '../api/gateway';
           return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
       },      
       deleteOrder() {        
-        if (this.userLogged.type === 'administrator') {
+        if (this.userLogged.type === 'administrator' && confirm('Deseja Relamente Excluir?')) {
           this.loadingDelete = true;          
           gateway.deleteOrder(this.order._id,
             () => {
