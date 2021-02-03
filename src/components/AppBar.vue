@@ -21,7 +21,7 @@
                 </template>
                 <v-card>
                     <v-list-item-content class="justify-center">
-                        <router-link  :to="'/perfil'" style="color: inherit; text-decoration: none">
+                        <router-link :to="'/perfil'" style="color: inherit; text-decoration: none">
                             <v-row class="mr-0 ml-0">
                                 <v-col cols="3">
                                     <v-avatar size="40" color="grey">
