@@ -55,7 +55,7 @@
                             </v-col>
                           </div>
                       </v-col>
-                          <v-col cols="12"  class="mt-0 pt-0">
+                      <v-col cols="12"  class="mt-0 pt-0">
 
                             <v-simple-table dense >
                               <template v-slot:default>
@@ -76,16 +76,19 @@
                                     <td>{{ item.price | currency }}</td>
                                     <td>
                                       <v-icon 
-                                        small @click="deleteItem(item)" 
+                                        small @click="deleteItem(item)" class="error--text"
                                         v-if="userLogged.type === 'administrator' || !order._id">
                                         mdi-delete
                                       </v-icon>
                                     </td>
                                   </tr>
+                                  <tr v-if="order.services.length === 0">
+                                      <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
+                                  </tr>
                                 </tbody>
                               </template>
                             </v-simple-table>
-                          </v-col>
+                      </v-col>
 
                       <hr/>
                       <v-col cols="12" sm="12">
