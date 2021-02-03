@@ -86,4 +86,26 @@ export default{
                 errorCb(error)
             })        
     },         
+    saveUser(user, callback, errorCb) {
+        let url = USERS_API;
+        Axios.post(url, user)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })                
+    },
+    UpdatePassword(_idUser, userPasswords, callback, errorCb) {
+        let url = USERS_API+'/'+_idUser;
+        Axios.patch(url, userPasswords)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })                
+    }    
 }
