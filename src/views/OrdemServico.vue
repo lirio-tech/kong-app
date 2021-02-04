@@ -366,6 +366,7 @@ import gateway from '../api/gateway';
       }
     },
     beforeMount() {
+      this.userLogged = JSON.parse(localStorage.getItem('user'));
       this.loadingDelete = true;
       this.loadingSave = true;
       if(this.$route.params._id) {
@@ -384,18 +385,19 @@ import gateway from '../api/gateway';
             this.loadingSave = false;            
           });
       }
-      
-      gateway.getUsers(res => {
-        this.users = res;
+      if(this.userLogged.type === 'adminstrator') {
+        gateway.getUsers(res => {
+          this.users = res;
+          this.loadingDelete = false;
+          this.loadingSave = false;        
+        }, err => {
+          console.log(err);
         this.loadingDelete = false;
         this.loadingSave = false;        
-      }, err => {
-        console.log(err);
-      this.loadingDelete = false;
-      this.loadingSave = false;        
-      });
-
-      this.userLogged = JSON.parse(localStorage.getItem('user'));
+        });
+      } else {
+        this.users.push(this.userLogged);
+      }      
       this.order.user = this.userLogged;
     },
     watch: {
