@@ -45,8 +45,15 @@
                                 </v-col>
                             </v-row>
                         </router-link>
- 
-                        <div style="cursor: pointer;" @click="logout">
+
+                        <div style="cursor: pointer;" @click="sobre">                           
+                            <v-divider class="my-1"></v-divider>
+                            <v-col cols="12" class="font-weight-medium">
+                                Sobre
+                            </v-col>
+                        </div>
+
+                        <div style="cursor: pointer;" @click="logout">                           
                             <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
                                 Sair
@@ -74,6 +81,9 @@
             logout() {
                 localStorage.clear();
                 this.$router.push('/login');
+            },
+            sobre() {
+                alert('Version: 0.1.1');
             }
         }, 
         beforeMount() {

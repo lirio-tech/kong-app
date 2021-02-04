@@ -367,8 +367,7 @@ import gateway from '../api/gateway';
     },
     beforeMount() {
       this.userLogged = JSON.parse(localStorage.getItem('user'));
-      this.loadingDelete = true;
-      this.loadingSave = true;
+      console.log(this.$route.params._id);
       if(this.$route.params._id) {
         gateway.getOrderById(this.$route.params._id,
           res => {
@@ -397,8 +396,12 @@ import gateway from '../api/gateway';
         });
       } else {
         this.users.push(this.userLogged);
+        this.loadingDelete = false;
+        this.loadingSave = false;             
       }      
       this.order.user = this.userLogged;
+      this.loadingDelete = false;
+      this.loadingSave = false;     
     },
     watch: {
       date() {
