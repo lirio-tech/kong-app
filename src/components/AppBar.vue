@@ -83,7 +83,7 @@
                 this.$router.push('/login');
             },
             sobre() {
-                alert('Version: 0.1.1');
+                alert('Version: 0.1.2');
             }
         }, 
         beforeMount() {
