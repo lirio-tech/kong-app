@@ -127,7 +127,16 @@
                                     sm="12"
                                     md="12"
                                   >
-                                    <v-menu
+                                    <v-text-field v-model="dateFormatted"
+                                                    @blur="date = parseDate(dateFormatted)"
+                                                    label="Data"
+                                                    ref="date"
+                                                    v-mask="'##/##/####'"
+                                                    prepend-icon="mdi-whatsapp"
+                                                    filled>                                
+                                    </v-text-field>  
+
+                                    <!-- <v-menu
                                       v-model="menu2"
                                       :close-on-content-click="false"
                                       :nudge-right="40"
@@ -153,7 +162,7 @@
                                         @input="menu2 = false"
                                         locale="pt-br"
                                       ></v-date-picker>
-                                    </v-menu>
+                                    </v-menu> -->
                                   </v-col>                                                       
                               </v-row>
                               <v-row>
@@ -269,6 +278,10 @@ import gateway from '../api/gateway';
       save() {
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
           this.order.date = this.date;
+          if(this.order.date.includes('/')) {
+            const [day, month, year] = this.order.date.split('/');
+            this.order.date = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+          }
           this.loadingSave = true;          
           gateway.saveOrder(this.order,
             res => {
@@ -326,7 +339,7 @@ import gateway from '../api/gateway';
         console.log(time);
         if (!date) return null;
 
-        const [year, month, day] = date.split('-')
+        const [year, month, day] = date.split('-');
         return `${day}/${month}/${year} ${time}`
       },      
       parseDate (date) {
