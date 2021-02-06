@@ -9,7 +9,8 @@ const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users
 export default{
     signIn(user, callback,errorCb){       
         let url = AUTH_API+'/signin';
-        console.log(url);
+        alert(url);
+        alert('3');
         Axios.post(url, user)
             .then(data => {
                 callback(data.data)
