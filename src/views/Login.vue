@@ -71,11 +71,9 @@
         },
         methods: {
             onSubmit() {
-                alert('1');
                 if(this.$refs.form.validate()) {     
                     this.user.username = this.user.username.toLowerCase();
                     this.loading = true;
-                    alert('2');
                     gateway.signIn(this.user, 
                       res => {
                         console.log('token', res.auth);
