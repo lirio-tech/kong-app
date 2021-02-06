@@ -132,7 +132,7 @@
                                                     label="Data"
                                                     ref="date"
                                                     v-mask="'##/##/####'"
-                                                    prepend-icon="mdi-whatsapp"
+                                                    prepend-icon="mdi-calendar"
                                                     filled>                                
                                     </v-text-field>  
 
@@ -207,6 +207,7 @@
                                   <v-btn 
                                       type="submit" 
                                       depressed  
+                                      large 
                                       color="success"
                                       :loading="loadingSave"
                                       :disabled="loadingSave"
@@ -215,6 +216,7 @@
                                     color="error" 
                                     v-if="userLogged.type === 'administrator' && order._id"
                                     :loading="loadingDelete"
+                                    large
                                     :disabled="loadingDelete"
                                     v-on:click="deleteOrder"
                                   >

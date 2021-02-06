@@ -70,7 +70,7 @@
                               </div>
                               
                               <v-list-item-title class="headline mb-1" v-if="userLogged.type === 'administrator'">
-                                  Total: <span class="cyan--text">{{ consolidado.total | currency }} </span>
+                                  Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
                               </v-list-item-title>
                               <br/>
                               <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">

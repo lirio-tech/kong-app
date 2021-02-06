@@ -7,16 +7,16 @@
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.2rem;">
-                  <span style="color: #006666;"></span><span class="cyan--text">Wiskritório</span>
-                </span>
+                  <span style="color: #006666;"></span><span class="primary--text">Wiskritório</span>
+                </span> 
               </v-btn>
             </router-link>
         </v-row>
         <v-row justify="end" align="center" >
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
-                <v-btn icon v-on="on">
-                    <v-icon style="font-size: 1.6rem">mdi-dots-vertical</v-icon>
+                <v-btn icon v-on="on" style="margin-bottom: 20px;">
+                    <v-icon style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
                 </v-btn>
                 </template>
                 <v-card>
@@ -83,7 +83,7 @@
                 this.$router.push('/login');
             },
             sobre() {
-                alert('Version: 0.1.4');
+                alert('Version: 0.1.5');
             }
         }, 
         beforeMount() {

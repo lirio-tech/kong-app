@@ -5,7 +5,7 @@
         <v-slide-y-transition appear>
           <v-form id="form" ref="form" v-model="valid" lazy-validation v-on:submit.prevent="onSubmit">
             <v-card class="pa-3 pa-md-6 mx-auto">
-                <p class="mr-2 text-center cyan--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
+                <p class="mr-2 text-center primary--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
                   Login
                 </p>
               <v-row justify="center">
