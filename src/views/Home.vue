@@ -73,6 +73,12 @@
                                   Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
                               </v-list-item-title>
                               <br/>
+                              <v-list-item-subtitle>
+                                  <br/>
+                                  <h3>
+                                    Quantidade: <span class="primary--text">{{ orders.length }}</span>
+                                  </h3>
+                              </v-list-item-subtitle>                                              
                               <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
                                   <br/>
                                   <h3 v-if="userLogged.name === cab[0] || userLogged.type ==='administrator'">
