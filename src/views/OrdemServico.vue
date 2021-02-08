@@ -221,7 +221,8 @@
                                     v-on:click="deleteOrder"
                                   >
                                       Deletar
-                                  </v-btn>                                    
+                                  </v-btn>           
+                                                           
                               </v-row>
                               </v-container>
                           </v-form>                
@@ -398,7 +399,7 @@ import gateway from '../api/gateway';
             this.loadingSave = false;            
           });
       }
-      if(this.userLogged.type === 'adminstrator') {
+      if(this.userLogged.type === 'administrator') {
         gateway.getUsers(res => {
           this.users = res;
           this.loadingDelete = false;
