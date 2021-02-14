@@ -46,6 +46,13 @@
                             </v-row>
                         </router-link>
 
+                        <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/users" style="color: inherit; text-decoration: none">
+                            <v-divider class="my-1"></v-divider>
+                            <v-col cols="10" class="font-weight-medium">
+                            Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>novo</v-chip>
+                            </v-col>
+                        </router-link>                           
+
                         <div style="cursor: pointer;" @click="sobre">                           
                             <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
@@ -64,26 +71,30 @@
                 </v-card>                
             </v-menu>
         </v-row>
+        <DialogSobre :dialog="dialog" v-on:show-dialog="showDialog"/>
     </v-app-bar>    
 </template>
 
 <script>
+    import DialogSobre from './DialogSobre'
     export default {
-        data:() => ({
-            userLogger: {}
-        }),
-        computed: {
-            username() {
-                return localStorage.getItem('username');
-            }
+        components: {
+            DialogSobre
         },
+        data:() => ({
+            userLogger: {},
+            dialog: false
+        }),
         methods: {
             logout() {
                 localStorage.clear();
                 this.$router.push('/login');
             },
             sobre() {
-                alert('Version: 0.1.5');
+                this.dialog = true;
+            },
+            showDialog(show) {
+                this.dialog = show;
             }
         }, 
         beforeMount() {

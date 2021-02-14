@@ -81,7 +81,7 @@
 
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel v-if="userLogged.type === 'administrator'">
+            <!-- <v-expansion-panel v-if="userLogged.type === 'administrator'">
                 <v-expansion-panel-header>Cadastrar Novo Usuario</v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <v-row>
@@ -153,7 +153,7 @@
                     </v-row>
 
                 </v-expansion-panel-content>
-            </v-expansion-panel>
+            </v-expansion-panel> -->
 
         </v-expansion-panels>
     </v-container>

@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home'
 import Perfil from '../views/Perfil'
 import OrdemServico from '../views/OrdemServico'
+import UsuarioList from '../views/UsuarioList.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,11 @@ const routes = [
     name: 'Perfil', 
     component: Perfil
   },  
-
+  {
+    path: '/admin/users',
+    name: 'UsuarioList', 
+    component: UsuarioList
+  },  
   {
     path: '/',
     name: 'Home',

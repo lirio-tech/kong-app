@@ -248,7 +248,6 @@
                   o.servicess.push(e.type);
                 });
               });              
-
           }, err => {
               console.log(err);
               this.loading = false;
