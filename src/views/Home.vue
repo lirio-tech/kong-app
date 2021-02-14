@@ -106,6 +106,7 @@
                             :items="orders" 
                             item-key="code"
                             class="elevation-1"
+                            :items-per-page="orders.length"
                             hide-default-footer
                             loading-text="Carregando... Por favor aguarde"
                             @click:row="clickRow"
@@ -140,7 +141,7 @@
       headers: [
           { text: "Data", value: "date" },
           { text: "Cabelereiro", value: "user.name" },
-          { text: "Servicos", value: "servicess" },
+          { sortable: false, text: "Servicos", value: "servicess" },
           { text: "Valor", value: "total" },
           { text: "Cliente", value: "customer.name" },
       ],                
