@@ -112,7 +112,7 @@
                             @click:row="clickRow"
                         >
                             <template v-slot:item.date="{ item }">
-                                {{ new Date(item.date).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}                            
+                                {{ getDateFormated(item.date) }}                            
                             </template>           
                             <template v-slot:item.total="{ item }">
                                 {{ item.total | currency }}                            
@@ -208,6 +208,12 @@
           fim: dateEnd.getFullYear() + '-' + monthEnd + '-' +dayEnd
         }
       },
+      getDateFormated(date) {
+        if (!date) return null;
+
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
+      },      
       getMesPtBr(mes) {
           if(mes === 0) return 'Janeiro';
           if(mes === 1) return 'Fevereiro';
