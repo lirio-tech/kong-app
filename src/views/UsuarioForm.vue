@@ -22,6 +22,23 @@
                 id="userForm"
             >         
                 <v-row>
+                        <v-col cols="12" md="4"
+                            style="margin-left: 20%"
+                        >
+                            <v-radio-group
+                                v-model="user.type"
+                                row
+                            >
+                                <v-radio
+                                    label="Administrador"
+                                    value="administrator"
+                                ></v-radio>
+                                <v-radio
+                                    label="Cabelereiro"
+                                    value="hairdresser"
+                                ></v-radio>
+                            </v-radio-group>                                                           
+                        </v-col>                    
                         <v-col cols="12" md="4">                      
                             <v-text-field 
                                 v-model="user.username"
@@ -70,23 +87,6 @@
                                     filled
                             />                                                    
                         </v-col>       
-                        <v-col cols="12" md="4"
-                            style="margin-left: 20%"
-                        >
-                            <v-radio-group
-                                v-model="user.type"
-                                row
-                            >
-                                <v-radio
-                                    label="Administrador"
-                                    value="administrator"
-                                ></v-radio>
-                                <v-radio
-                                    label="Cabelereiro"
-                                    value="hairdresser"
-                                ></v-radio>
-                            </v-radio-group>                                                           
-                        </v-col>
                         <v-col cols="12" md="4" style="margin-left: 40%">
                                 <v-switch
                                     dense
@@ -117,6 +117,7 @@
                                 label="Criado"
                                 v-model="user.createdAt"
                                 ref="createdAt"
+                                prepend-icon="mdi-calendar"
                                 required filled disabled
                             />
                         </v-col>
@@ -125,6 +126,7 @@
                                 label="Alterado"
                                 v-model="user.updatedAt"
                                 ref="updatedAt"
+                                prepend-icon="mdi-calendar"
                                 required filled disabled
                                 />
                         </v-col>   
@@ -146,15 +148,20 @@
             </v-form>                                                
             <br/><br/>
         </v-main>
+        <SnackBar :show="message.show" :text="message.text" :color="message.color" />
     </v-container>
 </template>
 
 <script>
   import gateway from '../api/gateway'
   import AppBar from '../components/AppBar'
+  import SnackBar from '../components/SnackBar'
   export default {
     name: 'UsuarioForm',
-    components: { AppBar },
+    components: { 
+        AppBar, 
+        SnackBar
+    },
     data: () => ({
         loadingSave: false,
         valid: true,
@@ -164,9 +171,10 @@
             passwordConfirm: '',
             type: 'hairdresser'
         },
+        message: { },
         usernameRules: [
-            v => !!v || 'Username do Usuario Obrigatório',
-            v => (v && v.length <= 15) || 'Nome deve ser menor que 15 caracteres',
+            v => !!v || 'Username Obrigatório',
+            v => (v && v.length <= 15) || 'Username deve ser menor que 15 caracteres',
         ],        
         nameRules: [
             v => !!v || 'Nome do Usuario Obrigatório',
@@ -183,8 +191,14 @@
     methods: {
       save() {
         this.user.disabled = !this.user.enabled;
+
+        if(!this.$refs.userForm.validate()) {
+            return;
+        }
+
         if (!this.user.password.match(this.user.passwordConfirm)) {
             alert('Confirmacao de Senha deve ser equivalente');
+            this.showMessage('red', 'Confirmacao de Senha deve ser equivalente');
             return;
         }
         if(this.$route.params._id && this.$route.params._id !== '_newUser') {
@@ -211,7 +225,12 @@
                     }
             );            
         }    
-      }
+      },
+      showMessage(color, text) {
+            this.message.color = color;
+            this.message.text = text;
+            this.message.show = true;
+      }        
     },
     beforeMount() {
       this.userLogged = JSON.parse(localStorage.getItem('user'));   
