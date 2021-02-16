@@ -10,9 +10,17 @@
                       <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
                   </v-btn>
               </v-col>
-              <v-col cols="8" align="center">   
-                      <span style="font-size: 2.0rem !important;">Usuarios</span>
+              <v-col cols="7" align="center">   
+                  <span style="font-size: 1.8rem !important;">Usuarios</span>
               </v-col>
+              <v-col cols="2" align="center">   
+                  <!-- <v-btn 
+                      :to="{ path:'/admin/users/_newUser'}" 
+                      class="ma-2"
+                      outlined
+                      color="cyan"
+                  >Novo</v-btn>                         -->
+              </v-col>              
           </v-row>          
             <v-row>
                 <v-col cols="12" sm="12">

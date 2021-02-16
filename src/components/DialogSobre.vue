@@ -6,7 +6,7 @@
     >
       <v-card>
         <v-card-title class="headline lighten-2">
-          Wiskritório - Versao: 0.2.1
+          Wiskritório - Versao: 0.2.2
         </v-card-title>
 
 
