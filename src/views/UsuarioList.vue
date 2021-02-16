@@ -40,7 +40,7 @@
                                     text-color="white"
                                     v-else
                                   >
-                                    mdi-check 
+                                    mdi-close 
                                   </v-icon>                                  
                                 </v-chip>
                             </template>                                                                   
@@ -56,7 +56,7 @@
   import gateway from '../api/gateway';
   import AppBar from '../components/AppBar'
   export default {
-    name: 'Home',
+    name: 'UsuarioList',
     components: { AppBar },
     data: () => ({
       headers: [
@@ -71,14 +71,19 @@
     }),
     methods: {
       getUsers() {
-        gateway.getUsers(res => {
+        gateway.getUsers('all', res => {
           this.users = res;
         }, err => {
           console.log(err);
         })
       },
-      clickRow() {
-        
+      clickRow(row) {
+          this.users.map((it) => {
+              let selected = it === row;
+              if(selected) {
+                  this.$router.push('/admin/users/'+it._id);
+              }
+          })        
       }
     },
     beforeMount() {

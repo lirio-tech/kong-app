@@ -8,6 +8,17 @@
                 <p class="mr-2 text-center primary--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
                   Login
                 </p>
+                <center>
+                   <v-avatar
+                        class="profile"
+                        color="black"
+                        size="150"
+                    >
+                  <v-img 
+                    avatar
+                    src="../assets/logo.png" />
+                   </v-avatar>
+                  </center>
               <v-row justify="center">
                 <v-col cols="12" md="6">
                   <div class="text-center">

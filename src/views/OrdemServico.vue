@@ -400,8 +400,9 @@ import gateway from '../api/gateway';
           });
       }
       if(this.userLogged.type === 'administrator') {
-        gateway.getUsers(res => {
+        gateway.getUsers('enabled', res => {
           this.users = res;
+          console.log(this.users);
           this.loadingDelete = false;
           this.loadingSave = false;        
         }, err => {

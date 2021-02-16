@@ -75,8 +75,8 @@ export default{
                 errorCb(error)
             })        
     },        
-    getUsers(callback, errorCb) {
-        let url = USERS_API;
+    getUsers(enabledType, callback, errorCb) {
+        let url = `${USERS_API}/?enabledType=${enabledType}`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)

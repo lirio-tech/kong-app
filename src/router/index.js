@@ -4,7 +4,8 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home'
 import Perfil from '../views/Perfil'
 import OrdemServico from '../views/OrdemServico'
-import UsuarioList from '../views/UsuarioList.vue'
+import UsuarioList from '../views/UsuarioList'
+import UsuarioForm from '../views/UsuarioForm'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ const routes = [
     name: 'UsuarioList', 
     component: UsuarioList
   },  
+  {
+    path: '/admin/users/:_id',
+    name: 'UsuarioForm', 
+    component: UsuarioForm
+  },    
   {
     path: '/',
     name: 'Home',
