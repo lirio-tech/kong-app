@@ -293,8 +293,11 @@ import gateway from '../api/gateway';
               alert('Gravado com sucesso');
               this.$router.push('/');
             }, err => {
-              console.log(err);
+              console.log(err.response);
               this.loadingSave = false;          
+              if(err.response.status === 403 || err.response.status === 401) {
+                this.$router.push('/login');
+              }
             });
         }
       },
