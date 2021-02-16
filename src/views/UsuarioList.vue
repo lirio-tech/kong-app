@@ -14,12 +14,12 @@
                   <span style="font-size: 1.8rem !important;">Usuarios</span>
               </v-col>
               <v-col cols="2" align="center">   
-                  <!-- <v-btn 
+                  <v-btn 
                       :to="{ path:'/admin/users/_newUser'}" 
                       class="ma-2"
                       outlined
                       color="cyan"
-                  >Novo</v-btn>                         -->
+                  >Novo</v-btn>                        
               </v-col>              
           </v-row>          
             <v-row>
@@ -51,7 +51,36 @@
                                     mdi-close 
                                   </v-icon>                                  
                                 </v-chip>
-                            </template>                                                                   
+                            </template>      
+                            <template v-slot:item.createdAt="{ item }">
+                                {{ 
+                                  new Date(item.createdAt)
+                                      .toLocaleDateString('pt-BR', 
+                                        {
+                                            year: 'numeric',
+                                            month: ('numeric'),
+                                            day: 'numeric',
+                                            hour: 'numeric',
+                                            minute: 'numeric'
+                                        }) }}                            
+                            </template> 
+                            <template v-slot:item.updatedAt="{ item }">
+                                {{ 
+                                  new Date(item.updatedAt)
+                                      .toLocaleDateString('pt-BR', 
+                                        {
+                                            year: 'numeric',
+                                            month: ('numeric'),
+                                            day: 'numeric',
+                                            hour: 'numeric',
+                                            minute: 'numeric'
+                                        }) }}                            
+                            </template> 
+                            <template v-slot:item.type="{ item }">
+                               <v-chip>
+                                {{ getTypePtBR(item.type) }}                            
+                               </v-chip>
+                            </template> 
                         </v-data-table>               
                     </v-sheet>
                 </v-col>
@@ -92,6 +121,15 @@
                   this.$router.push('/admin/users/'+it._id);
               }
           })        
+      },
+      getTypePtBR(type) {
+        if(type === 'administrator') {
+          return 'Administrador';
+        } 
+        if(type === 'hairdresser') {
+          return 'Cabelereiro';
+        }
+        return type;
       }
     },
     beforeMount() {

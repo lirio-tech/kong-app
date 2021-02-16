@@ -27,6 +27,8 @@
                                 v-model="user.username"
                                 label="Username"
                                 ref="username"
+                                prepend-icon="mdi-account"
+                                :rules="usernameRules"
                                 filled required>
                             </v-text-field>  
                         </v-col>
@@ -35,35 +37,82 @@
                                         label="Nome"
                                         ref="nome"
                                         required
+                                        prepend-icon="mdi-account"
+                                        :rules="nameRules"
                                         filled>
                             </v-text-field>
                         </v-col>
-                        <v-col cols="12" md="4" v-if="$route.params._id === '_newUser'">                      
-                            <v-text-field 
-                                    v-model="user.password"
+                        <v-col cols="12" md="4" v-if="$route.params._id === '_newUser'"> 
+                            <v-text-field
                                     label="Senha"
+                                    v-model="user.password"
+                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show ? 'text' : 'password'"
+                                    @click:append.prevent="show = !show"
+                                    prepend-icon="mdi-lock-outline"
+                                    :rules="passwordRules"
                                     ref="password"
                                     required
-                                    filled>
-                            </v-text-field>
+                                    filled
+                            />                            
                         </v-col>        
-                        <v-col cols="12" md="4" v-if="$route.params._id === '_newUser'">                      
-                            <v-text-field 
-                                    v-model="user.passwordConfirm"
+                        <v-col cols="12" md="4" v-if="$route.params._id === '_newUser'"> 
+                            <v-text-field
                                     label="Confirmar Senha"
+                                    v-model="user.passwordConfirm"
+                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show ? 'text' : 'password'"
+                                    @click:append.prevent="show = !show"
+                                    prepend-icon="mdi-lock-outline"
+                                    :rules="passwordConfirmRules"
                                     ref="passwordConfirm"
                                     required
-                                    filled>
-                            </v-text-field>
-                        </v-col>                                          
-                        <v-col cols="12">
+                                    filled
+                            />                                                    
+                        </v-col>       
+                        <v-col cols="12" md="4"
+                            style="margin-left: 20%"
+                        >
+                            <v-radio-group
+                                v-model="user.type"
+                                row
+                            >
+                                <v-radio
+                                    label="Administrador"
+                                    value="administrator"
+                                ></v-radio>
+                                <v-radio
+                                    label="Cabelereiro"
+                                    value="hairdresser"
+                                ></v-radio>
+                            </v-radio-group>                                                           
+                        </v-col>
+                        <v-col cols="12" md="4" style="margin-left: 40%">
                                 <v-switch
                                     dense
                                     v-model="user.enabled"
                                     :label="user.enabled ? 'Ativo' : 'DESATIVADO'"
                                 ></v-switch>    
-                        </v-col>                 
-                        <v-col cols="12" md="4">
+                        </v-col>      
+                        <v-col cols="12" md="4">                      
+                            <v-text-field v-model="user.email"
+                                        label="Email"
+                                        ref="email"
+                                        required
+                                        prepend-icon="mdi-at"
+                                        filled>
+                            </v-text-field>
+                        </v-col>    
+                        <v-col cols="12" md="4">                      
+                            <v-text-field v-model="user.phone_number"
+                                        label="Celular/WhatsApp"
+                                        ref="phone"
+                                        required
+                                        prepend-icon="mdi-whatsapp"
+                                        filled>
+                            </v-text-field>
+                        </v-col>                                                         
+                        <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser'">
                             <v-text-field
                                 label="Criado"
                                 v-model="user.createdAt"
@@ -71,7 +120,7 @@
                                 required filled disabled
                             />
                         </v-col>
-                        <v-col cols="12" md="4">
+                        <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser'">
                                 <v-text-field
                                 label="Alterado"
                                 v-model="user.updatedAt"
@@ -84,15 +133,15 @@
                     align="center"
                     justify="space-around"
                 >
-                    <v-btn 
-                        type="submit" 
-                        depressed  
-                        x-large 
-                        color="success"
-                        :loading="loadingSave"
-                        :disabled="loadingSave"
-                        style="wigth: 100%"
-                    >Salvar</v-btn>                                        
+                        <v-btn 
+                            type="submit" 
+                            depressed  
+                            x-large 
+                            color="success"
+                            :loading="loadingSave"
+                            :disabled="loadingSave"
+                            style="width: 50%"
+                        >Salvar</v-btn>                                        
                 </v-row>                    
             </v-form>                                                
             <br/><br/>
@@ -109,13 +158,35 @@
     data: () => ({
         loadingSave: false,
         valid: true,
-        user: {
-          enabled: true
-        }
+        show: false,
+        user: { 
+            enabled: true,
+            passwordConfirm: '',
+            type: 'hairdresser'
+        },
+        usernameRules: [
+            v => !!v || 'Username do Usuario Obrigatório',
+            v => (v && v.length <= 15) || 'Nome deve ser menor que 15 caracteres',
+        ],        
+        nameRules: [
+            v => !!v || 'Nome do Usuario Obrigatório',
+            v => (v && v.length <= 20) || 'Nome deve ser menor que 20 caracteres',
+        ],   
+        passwordRules: [
+            v => !!v || 'Senha do Usuario Obrigatório',
+            v => (v && v.length > 3) || 'Senha deve ser maior que 3 caracteres',
+        ],                          
+        passwordConfirmRules: [
+            v => (!!v) || 'Confirmacao de Senha deve ser equivalente',
+        ],                                  
     }),
     methods: {
       save() {
         this.user.disabled = !this.user.enabled;
+        if (!this.user.password.match(this.user.passwordConfirm)) {
+            alert('Confirmacao de Senha deve ser equivalente');
+            return;
+        }
         if(this.$route.params._id && this.$route.params._id !== '_newUser') {
                 gateway.updateUser(
                     this.$route.params._id,
@@ -129,7 +200,7 @@
                     }
             );
         } else {
-                gateway.saveUser(
+                gateway.signUp(
                     this.user,
                     res => {
                         console.log(res);
@@ -144,9 +215,7 @@
     },
     beforeMount() {
       this.userLogged = JSON.parse(localStorage.getItem('user'));   
-      if(this.$route.params._id === '_newUser') {
-          this.user = {};
-      } else {
+      if(this.$route.params._id !== '_newUser') {
         gateway.getUserById(
                 this.$route.params._id,
                 res => {
