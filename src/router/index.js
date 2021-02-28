@@ -7,6 +7,7 @@ import PlanView from '../views/PlanView'
 import OrdemServico from '../views/OrdemServico'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
+import ContactUs from '../views/ContactUs'
 
 Vue.use(VueRouter)
 
@@ -50,7 +51,12 @@ const routes = [
     path: '/ordem-servico/:_id',
     name: 'EditOrdemServico',
     component: OrdemServico
-  },    
+  },   
+  {
+    path: '/public/fale-conosco',
+    name: 'FaleConosco', 
+    component: ContactUs
+  },     
 ]
 
 const router = new VueRouter({
