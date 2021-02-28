@@ -6,7 +6,7 @@
       >
             <v-toolbar
               dark
-              color="amber darken-2"
+              color="primary"
             >
               <v-toolbar-title>Escolha seu Plano</v-toolbar-title>
               <v-spacer></v-spacer>
@@ -19,10 +19,11 @@
         class="mx-auto"
         max-width="400"
       >
+        <v-subheader>Plano</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline">
-              Free <v-chip color="purple" style="margin-left: 15px;" outlined small>Seu plano Atual</v-chip>
+              Free <v-chip color="green" style="margin-left: 15px;" outlined>Seu plano Atual</v-chip>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -52,8 +53,8 @@
           <v-list-item-subtitle>R$ 1.000,00 por Mes</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn style="width: 100%" color="gray" disabled>
-            <v-icon left>mdi-checked</v-icon>
+          <v-btn style="width: 100%; color: green" x-large readonly>
+            <v-icon left>mdi-check</v-icon>
             Plano Atual
           </v-btn>          
         </v-card-actions>
@@ -69,10 +70,11 @@
         class="mx-auto"
         max-width="400"
       >
+        <v-subheader>Plano</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline light-blue--text "> 
-              Azul 1
+              Azul
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -107,7 +109,10 @@
           <v-list-item-subtitle>R$ 2.000,00 por Mes</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn style="width: 100%" color="primary">
+          <v-btn 
+            x-large
+            style="width: 100%; color: blue"
+          >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
           </v-btn>
@@ -122,10 +127,11 @@
         class="mx-auto"
         max-width="400"
       >
+        <v-subheader>Plano</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
-            <v-list-item-title class="headline amber--text ">
-              Gold 1 <v-chip color="cyan" style="margin-left: 15px;" outlined small>Mais Vantajoso</v-chip>
+            <v-list-item-title class="headline" style="color: #d4af37">
+              Gold <v-chip color="yellow" style="margin-left: 15px;" outlined>Mais Vantajoso</v-chip>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -169,7 +175,7 @@
           <v-list-item-subtitle>R$ 20.000,00 por Mes de Servicos Lancados</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn style="width: 100%" color="amber darken-2">
+          <v-btn x-large style="width: 100%; color: #d4af37">
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
           </v-btn>
@@ -186,10 +192,11 @@
         class="mx-auto"
         max-width="400"
       >
+        <v-subheader>Plano</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
-            <v-list-item-title class="headline light-blue--text">
-              Azul 2
+            <v-list-item-title class="headline cyan--text">
+              Oceano
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -224,7 +231,10 @@
           <v-list-item-subtitle>R$ 6.000,00 por Mes</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn style="width: 100%" color="blue">
+          <v-btn 
+            x-large
+            style="width: 100%; color: cyan"
+          >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
           </v-btn>
@@ -244,10 +254,11 @@
         class="mx-auto"
         max-width="400"
       >
+        <v-subheader>Plano</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline amber--text ">
-              Gold 2 <v-chip color="cyan" style="margin-left: 15px;" outlined small>Mais Vantajoso</v-chip>
+              Premium <v-chip color="yellow" style="margin-left: 15px;" outlined>Mais Vantajoso</v-chip>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -291,7 +302,10 @@
           <v-list-item-subtitle>R$ 80.000,00 por Mes de Servicos Lancados</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn style="width: 100%" color="amber darken-2">
+          <v-btn 
+            x-large
+            style="width: 100%; color: #d4af37"
+          >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
           </v-btn>
@@ -309,6 +323,7 @@
         class="mx-auto"
         max-width="400"
       >
+        <v-subheader>Plano</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline purple--text ">
@@ -350,7 +365,10 @@
           <v-list-item-subtitle>R$ Lancamento de Servicos Infinitos</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn style="width: 100%" color="purple">
+          <v-btn 
+            x-large
+            style="width: 100%; color: purple" 
+          >
             <v-icon left>mdi-rocket-launch</v-icon>
             Entrar em Contato
           </v-btn>
