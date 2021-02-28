@@ -118,7 +118,12 @@
         },  
         beforeMount() {
             this.userLogger = JSON.parse(localStorage.getItem('user'));
-            this.$store.commit('companyStore/setCompany', JSON.parse(localStorage.getItem('company'))); 
+            let cpny = JSON.parse(localStorage.getItem('company'));
+            if(cpny) {
+                this.$store.commit('companyStore/setCompany', cpny); 
+            } else {
+                localStorage.clear();
+            }
         },
         computed: {
             ...mapGetters({ 
