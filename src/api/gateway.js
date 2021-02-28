@@ -1,8 +1,7 @@
 import Axios from "axios";
 
 const ORDERS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/orders';
-// const CLIENTES_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/clientes';
-// const PEDIDOS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/pedidos';
+const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies';
 const AUTH_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/auth';
 const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users';
 
@@ -32,7 +31,7 @@ export default{
             })
     },     
     getOrdersByDataBetween(dataInicio,dataFim,user,callback,errorCb){       
-        let url = ORDERS_API+'/'+dataInicio+'/'+dataFim+'?username='+user.username+'&usertype='+user.type;
+        let url = ORDERS_API+'/'+dataInicio+'/'+dataFim+'?username='+user.username+'&usertype='+user.type+'&company='+user.company;
         console.log(url);
         Axios.get(url)
             .then(data => {
@@ -130,5 +129,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })                
-    }    
+    },
+    getCompanyById(_id, callback, errorCb) {
+        let url = `${COMPANIES_API}/${_id}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },             
 }

@@ -7,7 +7,7 @@
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.2rem;">
-                  <span style="color: #006666;"></span><span class="primary--text">Wiskritório</span>
+                  <span :class="getColor()">{{ company.nome }}</span>
                 </span> 
               </v-btn>
             </router-link>
@@ -52,6 +52,12 @@
                             Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
                         </router-link>                           
+                        <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/users" style="color: inherit; text-decoration: none">
+                            <v-divider class="my-1"></v-divider>
+                            <v-col cols="10" class="font-weight-medium">
+                            Plano <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
+                            </v-col>
+                        </router-link>      
 
                         <div style="cursor: pointer;" @click="sobre">                           
                             <v-divider class="my-1"></v-divider>
@@ -77,13 +83,15 @@
 
 <script>
     import DialogSobre from './DialogSobre'
+    import { mapGetters } from 'vuex'
     export default {
         components: {
             DialogSobre
         },
         data:() => ({
             userLogger: {},
-            dialog: false
+            dialog: false,
+            companyName: ''
         }),
         methods: {
             logout() {
@@ -95,10 +103,27 @@
             },
             showDialog(show) {
                 this.dialog = show;
+            },
+            getColor() {
+                let color = 'yellow--text';
+                if(new Date().getDay() % 5 == 0) 
+                    color = 'green--text'
+                else if(new Date().getDay() % 4 == 0) 
+                    color = 'purple--text'
+                else if(new Date().getDay() % 3 == 0) 
+                    color = 'primary--text'     
+                else if(new Date().getDay() % 2 == 0) 
+                    color = 'orange--text' 
+                return color;
             }
         }, 
         beforeMount() {
             this.userLogger = JSON.parse(localStorage.getItem('user'));
-        }
+        },
+        computed: {
+            ...mapGetters({
+                company: "companyStore/company"
+            }), 
+        }       
     }
 </script>

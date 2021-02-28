@@ -1,5 +1,6 @@
 <template>
     <v-container >
+              <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
               <div v-if="true">
                   <v-row>
                       <v-col cols="2" style="margin-top: 10px;">   
@@ -207,7 +208,8 @@
                                   <v-btn 
                                       type="submit" 
                                       depressed  
-                                      large 
+                                      x-large 
+                                      style="width: 50%"
                                       color="success"
                                       :loading="loadingSave"
                                       :disabled="loadingSave"
@@ -216,30 +218,37 @@
                                     color="error" 
                                     v-if="userLogged.type === 'administrator' && order._id"
                                     :loading="loadingDelete"
-                                    large
+                                       x-large 
+                                      style="width: 50%"
                                     :disabled="loadingDelete"
                                     v-on:click="deleteOrder"
                                   >
                                       Deletar
                                   </v-btn>           
                                                            
-                              </v-row>
+                              </v-row>                               
                               </v-container>
                           </v-form>                
                       </v-col>
                   </v-row>
+                  <br/><br/>
               </div>           
     </v-container>
 </template>
 
 <script>
-import gateway from '../api/gateway';
-  // import gateway from '../api/gateway';
+  import gateway from '../api/gateway'
+  import { mapGetters } from 'vuex'
+  import DialogPlan from '../components/DialogPlan'
   export default {
     name: 'OrdemServico',
+    components: {
+      DialogPlan
+    },
     data: vm => ({
         loadingSave: false,
         loadingDelete: false,
+        dialogPlan: false,
         customerNameRules: [
             v => !!v || 'Nome do Cliente Obrigatório',
             v => (v && v.length <= 20) || 'Nome deve ser menor que 20 caracteres',
@@ -265,6 +274,7 @@ import gateway from '../api/gateway';
           priceBR: "40,00",
           user: {},
           customer: {},
+          company: ''
         },
         service: {
           type: "",
@@ -279,13 +289,24 @@ import gateway from '../api/gateway';
     }),
     methods: {
       save() {
+
+        console.log(this.company);
+
+        if(this.company.plan.type === 'free') {
+          this.dialogPlan = true;
+          return true;
+        }
+
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
+
+
           this.order.date = this.date;
           if(this.order.date.includes('/')) {
             const [day, month, year] = this.order.date.split('/');
             this.order.date = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
           }
-          this.loadingSave = true;          
+          this.loadingSave = true;     
+          this.order.company = this.userLogged.company;     
           gateway.saveOrder(this.order,
             res => {
               this.order = res;
@@ -381,6 +402,9 @@ import gateway from '../api/gateway';
               this.loadingDelete = false;
             });
         }
+      },
+      showPlanDialog(show) {
+        this.dialogPlan = show;
       }
     },
     beforeMount() {
@@ -427,5 +451,10 @@ import gateway from '../api/gateway';
         this.dateFormatted = this.formatDate(this.date)
       },      
     },    
+    computed: {
+        ...mapGetters({
+            company: "companyStore/company"
+        }), 
+    }          
   }
 </script>

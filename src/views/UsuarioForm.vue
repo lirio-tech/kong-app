@@ -22,7 +22,7 @@
                 id="userForm"
             >         
                 <v-row>
-                        <v-col cols="12" md="4"
+                        <!-- <v-col cols="12" md="4"
                             style="margin-left: 20%"
                         >
                             <v-radio-group
@@ -38,7 +38,7 @@
                                     value="hairdresser"
                                 ></v-radio>
                             </v-radio-group>                                                           
-                        </v-col>                    
+                        </v-col>                     -->
                         <v-col cols="12" md="4">                      
                             <v-text-field 
                                 v-model="user.username"
@@ -46,6 +46,7 @@
                                 ref="username"
                                 prepend-icon="mdi-account"
                                 :rules="usernameRules"
+                                @blur="user.username = user.username.toLowerCase()"
                                 filled required>
                             </v-text-field>  
                         </v-col>
@@ -191,7 +192,6 @@
     methods: {
       save() {
         this.user.disabled = !this.user.enabled;
-
         if(!this.$refs.userForm.validate()) {
             return;
         }
@@ -201,6 +201,7 @@
             this.showMessage('red', 'Confirmacao de Senha deve ser equivalente');
             return;
         }
+        this.user.company = this.userLogged.company;
         if(this.$route.params._id && this.$route.params._id !== '_newUser') {
                 gateway.updateUser(
                     this.$route.params._id,

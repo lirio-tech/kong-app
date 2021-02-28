@@ -3,16 +3,6 @@
         <AppBar />             
         <v-main class="">
 
-            <v-alert
-                dense
-                border="bottom"
-                type="error"
-                v-if="orders.length === 0 && !loading"
-              >
-                Dados nao Encontrados para este periodo
-              </v-alert>
-
-
             <br/>  
             <v-row justify="start">
 
@@ -55,6 +45,7 @@
             </v-row>
 
             <br/>
+
             <v-card
                       class="mx-auto"
                       max-width="800"
@@ -70,20 +61,32 @@
                               </div>
                               
                               <v-list-item-title class="headline mb-1" v-if="userLogged.type === 'administrator'">
-                                  Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
+                                  <div v-if="!loading">
+                                    Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
+                                  </div>
+                                  <div v-else>
+                                    <v-skeleton-loader
+                                      v-bind="attrs"
+                                      type="list-item-two-line"
+                                    ></v-skeleton-loader>
+                                  </div>
                               </v-list-item-title>
                               <br/>
                               <v-list-item-subtitle>
                                   <br/>
-                                  <h3>
-                                    Quantidade: <span class="primary--text">{{ orders.length }}</span>
-                                  </h3>
+                                  <div v-if="!loading">
+                                    <h3>
+                                      Quantidade: <span class="primary--text">{{ orders.length }}</span>
+                                    </h3>
+                                  </div>                                
                               </v-list-item-subtitle>                                              
                               <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
                                   <br/>
-                                  <h3 v-if="userLogged.name === cab[0] || userLogged.type ==='administrator'">
-                                    {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
-                                  </h3>
+                                  <div v-if="!loading">
+                                    <h3 v-if="userLogged.name === cab[0] || userLogged.type ==='administrator'">
+                                      {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
+                                    </h3>
+                                  </div>
                               </v-list-item-subtitle>                
                       </v-list-item-content>
                       </v-list-item>

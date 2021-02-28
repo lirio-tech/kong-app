@@ -6,9 +6,8 @@
     >
       <v-card>
         <v-card-title class="headline lighten-2">
-          Wiskritório - Versao: 0.2.6
+          Barber App - Versao: 0.3.0
         </v-card-title>
-
 
         <v-card-text>   
           <v-container >

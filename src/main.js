@@ -6,6 +6,7 @@ import VueMask from 'v-mask'
 import './plugins/axiosRequestIntercept'
 import { VueMaskDirective } from 'v-mask'
 import { VueMaskFilter } from 'v-mask'
+import store from './store/'
 import './registerServiceWorker'
 
 
@@ -17,5 +18,6 @@ Vue.filter('VMask', VueMaskFilter);
 new Vue({
   router,
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')

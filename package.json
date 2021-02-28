@@ -1,12 +1,12 @@
 {
   "name": "appw",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "local": "vue-cli-service serve --mode local",
+    "dev": "vue-cli-service serve --mode dev",
     "prod": "vue-cli-service serve --mode prod"
   },
   "dependencies": {
@@ -20,7 +20,8 @@
     "vue-currency-filter": "^5.2.0",
     "vue-qrcode": "^0.3.5",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.2.11"
+    "vuetify": "^2.2.11",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

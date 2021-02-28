@@ -15,7 +15,6 @@ Vue.use(VueCurrencyFilter,
       avoidEmptyDecimals: undefined,
     })
 
-
 export default new Vuetify({
     theme: { dark: true },
 });
