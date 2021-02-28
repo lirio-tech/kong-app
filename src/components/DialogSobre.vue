@@ -6,7 +6,7 @@
     >
       <v-card>
         <v-card-title class="headline lighten-2">
-          Barber App - Versao: 0.3.1
+          Barber App - Versao: 0.3.2
         </v-card-title>
 
         <v-card-text>   
