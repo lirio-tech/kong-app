@@ -8,7 +8,7 @@
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.2rem;">
                   <span :class="getColor()">{{ company.nome }}</span>
-                </span> 
+                </span>  
               </v-btn>
             </router-link>
         </v-row>
@@ -90,8 +90,7 @@
         },
         data:() => ({
             userLogger: {},
-            dialog: false,
-            companyName: ''
+            dialog: false
         }),
         methods: {
             logout() {
@@ -114,14 +113,15 @@
                     color = 'primary--text'     
                 else if(new Date().getDay() % 2 == 0) 
                     color = 'orange--text' 
-                return color;
-            }
-        }, 
+                return color; 
+            } 
+        },  
         beforeMount() {
             this.userLogger = JSON.parse(localStorage.getItem('user'));
+            this.$store.commit('companyStore/setCompany', JSON.parse(localStorage.getItem('company'))); 
         },
         computed: {
-            ...mapGetters({
+            ...mapGetters({ 
                 company: "companyStore/company"
             }), 
         }       

@@ -81,9 +81,6 @@
             }
         },
         methods: {
-            setCompany(company) {
-              this.$store.commit('companyStore/setCompany', company);
-            },
             onSubmit() {
                 if(this.$refs.form.validate()) {     
                     this.user.username = this.user.username.toLowerCase();
@@ -103,7 +100,7 @@
                             localStorage.setItem('user', JSON.stringify(res2));
                             gateway.getCompanyById(res2.company,
                               resCompany => {
-                                //localStorage.setItem('companyName', resCompany.nome);
+                                localStorage.setItem('company', JSON.stringify(resCompany));
                                 this.$store.commit('companyStore/setCompany', resCompany); 
                               }, err3 => {
                                 this.showMessage('error', err3.message);
