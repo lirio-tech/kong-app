@@ -45,10 +45,11 @@
                       ref="password"
                       required
                     />
-                    <br /><br />
+                    <br/>
                     
-                    <v-btn type="submit" dark :loading="loading">Entrar</v-btn>
+                    <v-btn type="submit" x-large dark :loading="loading">Entrar</v-btn>
                   </div>
+                  <br />
                 </v-col>
               </v-row>
             </v-card>

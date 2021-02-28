@@ -2,7 +2,18 @@
     <v-container>
         <AppBar />             
         <v-main class="">
-
+          <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
+            <v-progress-linear
+              indeterminate
+              rounded
+              :active="loading"
+              background-opacity="0.42"
+              buffer-value="100"
+              height="7"
+              value="0"
+              color="light-blue"
+            ></v-progress-linear>
+          </v-col>   
             <br/>  
             <v-row justify="start">
 
