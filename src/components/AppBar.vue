@@ -52,7 +52,7 @@
                             Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
                         </router-link>                           
-                        <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/users" style="color: inherit; text-decoration: none">
+                        <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/plans" style="color: inherit; text-decoration: none">
                             <v-divider class="my-1"></v-divider>
                             <v-col cols="10" class="font-weight-medium">
                             Plano <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>

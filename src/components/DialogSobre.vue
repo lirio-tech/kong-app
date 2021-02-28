@@ -5,11 +5,12 @@
       width="500"
     >
       <v-card>
-        <v-card-title class="headline lighten-2">
-          Barber App - Versao: 0.3.2
-        </v-card-title>
+        <v-card-text class="headline lighten-2">
+          Barber App
+        </v-card-text>
 
         <v-card-text>   
+          Versao: 0.3.2
           <v-container >
             <v-row align="center">
               <v-col
