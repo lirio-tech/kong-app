@@ -111,7 +111,7 @@
         <v-card-actions>
           <v-btn 
             x-large
-            style="width: 100%; color: blue"
+            style="width: 100%" color="primary"
           >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
@@ -175,7 +175,7 @@
           <v-list-item-subtitle>R$ 20.000,00 por Mes de Servicos Lancados</v-list-item-subtitle>
         </v-list-item>
         <v-card-actions>
-          <v-btn x-large style="width: 100%; color: #d4af37">
+          <v-btn x-large style="width: 100%; background-color: #d4af37">
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
           </v-btn>
@@ -233,7 +233,7 @@
         <v-card-actions>
           <v-btn 
             x-large
-            style="width: 100%; color: cyan"
+            style="width: 100%" color="cyan"
           >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
@@ -304,7 +304,7 @@
         <v-card-actions>
           <v-btn 
             x-large
-            style="width: 100%; color: #d4af37"
+            style="width: 100%" color="amber darken-2"
           >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
@@ -367,7 +367,7 @@
         <v-card-actions>
           <v-btn 
             x-large
-            style="width: 100%; color: purple" 
+            style="width: 100%" color="purple" 
           >
             <v-icon left>mdi-rocket-launch</v-icon>
             Entrar em Contato

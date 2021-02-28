@@ -4,7 +4,7 @@
         <router-link to="/" style="color: inherit; text-decoration: none">
             <v-btn
                 dark
-                style="width: 100%"
+                style="width: 100%; color: red"
             >
                 <v-icon left>
                     mdi-arrow-left
@@ -12,6 +12,8 @@
                 Voltar
             </v-btn>          
         </router-link>
+
+        <br/><br/><br/>
     </div>
 </template>
 <script>
