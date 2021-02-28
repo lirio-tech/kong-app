@@ -33,7 +33,7 @@
                         <v-col cols="12">
                           <v-btn 
                               v-on:click="filterOrders"
-                              class="ma-2" small
+                              class="ma-2" large
                               outlined :loading="loading"
                           >Atualizar</v-btn>    
                         </v-col>
@@ -94,6 +94,7 @@
                           <v-btn 
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
+                              large
                               outlined
                               color="cyan"
                               :loading="loading"
