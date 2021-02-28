@@ -247,8 +247,8 @@ export default {
             "advantage": false
           },           
           {
-            "name": "Forever",
-            "type": "Forever",
+            "name": "Infinity",
+            "type": "Infinity",
             "price": 1200.00,
             "benefits": [                   
               {

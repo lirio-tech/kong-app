@@ -7,7 +7,7 @@
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.2rem;">
-                  <span :class="getColor()">{{ company.nome }}</span>
+                  <span :class="getColor()">{{ company.shortName }}</span>
                 </span>  
               </v-btn>
             </router-link>
