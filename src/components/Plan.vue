@@ -6,9 +6,9 @@
       >
             <v-toolbar
               dark
-              color="primary"
+              class="green"
             >
-              <v-toolbar-title>Escolha seu Plano</v-toolbar-title>
+              <v-toolbar-title>Escolha o Plano melhor para VC :-)</v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>    
     </v-card>
@@ -70,7 +70,7 @@
         class="mx-auto"
         max-width="400"
       >
-        <v-subheader>Plano</v-subheader>
+        <v-subheader>Plano Mensal</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline light-blue--text "> 
@@ -127,7 +127,7 @@
         class="mx-auto"
         max-width="400"
       >
-        <v-subheader>Plano</v-subheader>
+        <v-subheader>Plano Anual</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline" style="color: #d4af37">
@@ -192,7 +192,7 @@
         class="mx-auto"
         max-width="400"
       >
-        <v-subheader>Plano</v-subheader>
+        <v-subheader>Plano Mensal</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline cyan--text">
@@ -246,19 +246,15 @@
     <v-divider></v-divider>
     <br/>
 
-    <br/>
-    <v-divider></v-divider>
-    <br/>
-
     <v-card
         class="mx-auto"
         max-width="400"
       >
-        <v-subheader>Plano</v-subheader>
+        <v-subheader>Plano Anual</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
-            <v-list-item-title class="headline amber--text ">
-              Premium <v-chip color="yellow" style="margin-left: 15px;" outlined>Mais Vantajoso</v-chip>
+            <v-list-item-title class="headline orange--text ">
+              Premium <v-chip color="orange" style="margin-left: 15px;" outlined>Mais Vantajoso</v-chip>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -304,7 +300,7 @@
         <v-card-actions>
           <v-btn 
             x-large
-            style="width: 100%" color="amber darken-2"
+            style="width: 100%" color="orange"
           >
             <v-icon left>mdi-rocket-launch</v-icon>
             Quero esse
@@ -323,7 +319,7 @@
         class="mx-auto"
         max-width="400"
       >
-        <v-subheader>Plano</v-subheader>
+        <v-subheader>Plano Infinito</v-subheader>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline purple--text ">

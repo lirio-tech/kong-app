@@ -3,6 +3,7 @@
         <Plan />    
         <router-link to="/" style="color: inherit; text-decoration: none">
             <v-btn
+                x-large
                 dark
                 style="width: 100%; color: red"
             >
