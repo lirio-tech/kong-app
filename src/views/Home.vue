@@ -2,6 +2,8 @@
     <v-container>
         <AppBar />             
         <v-main class="">
+          <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+          
           <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
             <v-progress-linear
               indeterminate
@@ -113,7 +115,17 @@
                       </v-card-actions>
             </v-card>   
             <br/>
-            <v-row>
+
+            <v-alert
+                dense
+                border="bottom"
+                type="error"
+                v-if="orders.length === 0 && !loading"
+              >
+                Dados nao Encontrados para este periodo
+              </v-alert>
+
+            <v-row v-if="orders.length !== 0 && !loading">
                 <v-col cols="12" sm="12">
                     <v-sheet min-height="70vh" rounded="lg">
                         <v-data-table 
@@ -143,11 +155,16 @@
 <script>
   import gateway from '../api/gateway';
   import AppBar from '../components/AppBar'
+  import DialogPlan from '../components/DialogPlan'
   export default {
     name: 'Home',
-    components: { AppBar },
+    components: { 
+      AppBar,
+      DialogPlan
+    },
     data: () => ({
       loading: false,
+      dialogPlan: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Customizado'],
       periodo: {
         inicio: new Date(),
@@ -274,16 +291,28 @@
               console.log(err);
               this.loading = false;
           });
-
       },
-        
+      showPlanDialog(show) {
+        this.dialogPlan = show
+      },
+      verifyAccontPremium() {
+        let cpny = JSON.parse(localStorage.getItem('company'))
+        let i = Number(localStorage.getItem('dialogPlan') ? localStorage.getItem('dialogPlan') : '0')+1;
+        localStorage.setItem('dialogPlan', i)
+        if(i == 4
+            && cpny 
+            && cpny.plan.name === 'Free' 
+            && this.userLogged.type === 'administrator') {
+          this.dialogPlan = true
+        }
+      }        
     },
     beforeMount() {
-      this.userLogged = JSON.parse(localStorage.getItem('user'));
-      this.periodo = this.formatarPeriodo(new Date(), new Date());
+      this.userLogged = JSON.parse(localStorage.getItem('user'))
+      this.periodo = this.formatarPeriodo(new Date(), new Date())
       this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
-      
-      this.filterOrders();
+      this.filterOrders()
+      this.verifyAccontPremium();
     }
   }
 </script>

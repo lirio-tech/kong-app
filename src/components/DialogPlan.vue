@@ -6,13 +6,19 @@
       transition="dialog-bottom-transition"
     >
       <Plan />
+
       <v-btn
+          x-large
           dark
-          text
+          style="width: 100%; color: red"
           @click="$emit('show-plan-dialog', false)"
       >
+          <v-icon left>
+              mdi-close
+          </v-icon>
           Voltar
       </v-btn>      
+      <br/><br/><br/>
     </v-dialog>    
 </template>
 

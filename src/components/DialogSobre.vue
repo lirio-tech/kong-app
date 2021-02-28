@@ -6,11 +6,11 @@
     >
       <v-card>
         <v-card-text class="headline lighten-2">
-          Barber App
+          Wiskritório App
         </v-card-text>
 
         <v-card-text>   
-          Versao: 0.3.2
+          Versao: 0.3.4
           <v-container >
             <v-row align="center">
               <v-col

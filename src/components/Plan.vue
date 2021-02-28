@@ -1,20 +1,38 @@
 <template>
   <div>
-    <v-card
-       
+    <v-card>
+      <v-toolbar
+        dark
+        class="blue-grey darken-3"
       >
-            <v-toolbar
-              dark
-              class="green"
-            >
-              <v-toolbar-title>
-                Escolha o Plano melhor para VC :-)
-              </v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>    
+        <!-- <v-btn
+          icon
+          dark
+          x-small
+          @click="$emit('show-plan-dialog', false)"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>       -->
+        <v-toolbar-title>
+          Escolha o Plano melhor para VC :-)
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>    
     </v-card>
     
-    <br/>
+    <v-card
+      class="mx-auto"
+      max-width="800"
+      outlined
+    >
+      <v-list-item three-line>
+        <v-list-item-content>                
+          <div class="overline mb-4 green--text" align="center">
+            Seu Plano Atual é o {{ company.plan.name }}
+          </div>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>   
 
     <v-card
         v-for="plan in plans" 
@@ -104,7 +122,7 @@
     </v-card>
 
     <v-alert
-      outlined
+      
       prominent
       type="cyan"
       
@@ -244,7 +262,7 @@ export default {
               "icon": "mdi-rocket-launch"
             },
             "color": "orange",
-            "advantage": false
+            "advantage": true
           },           
           {
             "name": "Infinity",
@@ -269,6 +287,9 @@ export default {
           },                                     
         ]
       }
+    },
+    beforeMount() {
+      this.company = JSON.parse(localStorage.getItem('company'))
     }
 }
 </script>
