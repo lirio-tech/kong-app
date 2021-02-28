@@ -103,11 +103,11 @@
                               resCompany => {
                                 localStorage.setItem('company', JSON.stringify(resCompany));
                                 this.$store.commit('companyStore/setCompany', resCompany); 
+                                this.$router.push('/');
                               }, err3 => {
                                 this.showMessage('error', err3.message);
                               }
                             );
-                            this.$router.push('/');
                           }, err2 => {
                             this.showMessage('error', err2.message);
                           });

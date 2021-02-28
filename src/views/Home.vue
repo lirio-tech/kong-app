@@ -282,6 +282,7 @@
       this.userLogged = JSON.parse(localStorage.getItem('user'));
       this.periodo = this.formatarPeriodo(new Date(), new Date());
       this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+      
       this.filterOrders();
     }
   }
