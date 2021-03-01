@@ -306,10 +306,11 @@
             }, err => {
               console.log(err.response);
               this.loadingSave = false;          
-              if(err.response.status === 403 || err.response.status === 401) {
+              if(err.response.status === 401) {
                 this.$router.push('/login');
               }
               if(err.response.status === 412) {
+                alert(err.response.data.message)
                 this.dialogPlan = true;                
               }
             });
