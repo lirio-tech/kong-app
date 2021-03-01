@@ -19,127 +19,119 @@
         <v-spacer></v-spacer>
       </v-toolbar>    
     </v-card>
-    
-    <v-card
-      class="mx-auto"
-      max-width="800"
-      outlined
-    >
-      <v-list-item three-line>
-        <v-list-item-content>                
-          <div class="overline mb-4 green--text" align="center">
-            Seu Plano Atual é o {{ company.plan.name }}
-          </div>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card>   
-
-    <v-card
-        v-for="plan in plans" 
-        :key="plan._id"
-      >
-        <v-subheader>
-          Plano {{ plan.type }}
-        </v-subheader>
-        <v-list-item two-line>
-          <v-list-item-content>
-            <v-list-item-title 
-              class="headline" 
-              :style="'color:'+plan.color"
-            >
-              {{ plan.name }} 
-              <v-chip 
-                v-if="company.plan.name === plan.name"
-                color="green" 
-                style="margin-left: 15px;" 
-                outlined
-              >
-                  Seu plano Atual
-              </v-chip>
-              <v-chip 
-                v-if="plan.advantage && company.plan.name !== plan.name"
-                color="yellow" 
-                style="margin-left: 15px;" 
-                outlined
-              >
-                Mais Vantajoso
-              </v-chip>           
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-text>
-          <v-row align="center">
-            <v-col
-              cols="12"
-            >
-              <span class="display-3">
-                  {{ plan.price | currency }}
-              </span>
-              <span v-if="plan.type === 'Mensal' || plan.type === 'Anual'">
-                 por {{ plan.type === 'Mensal' ? 'Mês' : 'Ano' }}
-              </span>              
-            </v-col>
-
-
-          </v-row>
-        </v-card-text>
-
-        <v-list-item
-          v-for="benefit in plan.benefits"
-          :key="benefit.description"
-        >
-            <v-list-item-icon>
-              <v-icon>{{ benefit.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-subtitle>{{ benefit.description }}</v-list-item-subtitle>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn 
-            v-if="plan.name === company.plan.name"
-            style="width: 100%; color: green" 
-            x-large 
-            readonly
-          >
-            <v-icon left>mdi-check</v-icon>
-            Plano Atual
-          </v-btn>             
-          <v-btn 
-            v-if="plan.name !== company.plan.name"
-            style="width: 100%"
-            :color="plan.color" 
-            x-large
-          >
-            <v-icon left>{{ plan.button.icon }}</v-icon>
-            {{ plan.button.label }}
-          </v-btn>          
-        </v-card-actions>
-
+    <v-container style="margin-top: -10px;">
+      <v-card>
         <br/>
-        <v-divider></v-divider>
-        
-    </v-card>
+        <div 
+          class="overline green--text" 
+          align="center"
+          dark
+        >
+          Seu Plano Atual é o {{ company.plan.name }}
+        </div>
+        <br/>
+      </v-card>  
+      <v-card
+          v-for="plan in plans" 
+          :key="plan._id"
+          outlined
+        >
+          <v-subheader class="overline">
+            Plano {{ plan.type }}
+          </v-subheader>
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-title 
+                class="headline " 
+                :style="'color:'+plan.color"
+              >
+                {{ plan.name }} 
+                <v-chip 
+                  v-if="company.plan.name === plan.name"
+                  color="green" 
+                  style="margin-left: 15px;" 
+                  outlined
+                >
+                    Seu plano Atual
+                </v-chip>
+                <v-chip 
+                  v-if="plan.advantage && company.plan.name !== plan.name"
+                  color="yellow" 
+                  style="margin-left: 15px;" 
+                  outlined
+                >
+                  Mais Vantajoso
+                </v-chip>           
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-    <v-alert
-      
-      prominent
-      type="cyan"
-      
-    >
-      <v-row align="center">
-        <v-col class="grow">
-          Nao encontrou um plano ideal para voce? 
-          Entre em contato com a Gente ;-)
-        </v-col>
-        <v-col class="shrink">
-          <router-link to="/public/fale-conosco" style="color: inherit; text-decoration: none">
-            <v-btn>Entrar em contato</v-btn>
-          </router-link>
-        </v-col>
-      </v-row>
-    </v-alert>
-    
+          <v-card-text>
+            <v-row align="center">
+              <v-col
+                cols="12"
+              >
+                <span class="display-3">
+                    {{ plan.price | currency }}
+                </span>
+                <span v-if="plan.type === 'Mensal' || plan.type === 'Anual'">
+                  por {{ plan.type === 'Mensal' ? 'Mês' : 'Ano' }}
+                </span>              
+              </v-col>
+            </v-row>
+          </v-card-text>
+
+          <v-list-item
+            v-for="benefit in plan.benefits"
+            :key="benefit.description"
+          >
+              <v-list-item-icon>
+                <v-icon>{{ benefit.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-subtitle>{{ benefit.description }}</v-list-item-subtitle>
+          </v-list-item>
+
+          <v-card-actions>
+            <v-btn 
+              v-if="plan.name === company.plan.name"
+              style="width: 100%; color: green" 
+              x-large 
+              readonly
+            >
+              <v-icon left>mdi-check</v-icon>
+              Plano Atual
+            </v-btn>             
+            <v-btn 
+              v-if="plan.name !== company.plan.name"
+              style="width: 100%"
+              :color="plan.color" 
+              x-large
+            >
+              <v-icon left>{{ plan.button.icon }}</v-icon>
+              {{ plan.button.label }}
+            </v-btn>          
+          </v-card-actions>
+
+      </v-card>
+      <v-card style="margin-top: 0px; margin-bottom: -30px;">
+        <v-alert        
+          prominent
+          type="blue-grey"        
+        >
+          <v-row>
+            <v-col cols="12">
+              Nao encontrou um plano ideal para voce? 
+              Entre em contato com a Gente ;-)
+            </v-col>
+            <v-col cols="12">
+              <router-link to="/public/fale-conosco" style="color: inherit; text-decoration: none">
+                <v-btn small>Entrar em contato</v-btn>
+              </router-link>
+            </v-col>
+          </v-row>
+        </v-alert>
+      </v-card>
+    </v-container>
   </div>
 </template>
 

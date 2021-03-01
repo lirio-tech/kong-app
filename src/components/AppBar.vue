@@ -104,7 +104,7 @@
                 this.dialog = show;
             },
             getColor() {
-                let color = 'yellow--text';
+                let color = 'primary--text';
                 if(new Date().getDay() % 5 == 0) 
                     color = 'green--text'
                 else if(new Date().getDay() % 4 == 0) 
