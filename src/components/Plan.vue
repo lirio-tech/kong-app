@@ -116,8 +116,9 @@
       <v-card style="margin-top: 0px; margin-bottom: -30px;">
         <v-alert        
           prominent
-          type="blue-grey"        
+          type="blue-grey darken-4"        
         >
+          <br/>
           <v-row>
             <v-col cols="12">
               Nao encontrou um plano ideal para voce? 
@@ -129,6 +130,7 @@
               </router-link>
             </v-col>
           </v-row>
+          <br/>
         </v-alert>
       </v-card>
     </v-container>
