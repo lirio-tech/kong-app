@@ -289,17 +289,7 @@
     }),
     methods: {
       save() {
-
-        console.log(this.company);
-
-        if(this.company.plan.type === 'free') {
-          this.dialogPlan = true;
-          return true;
-        }
-
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
-
-
           this.order.date = this.date;
           if(this.order.date.includes('/')) {
             const [day, month, year] = this.order.date.split('/');
@@ -318,6 +308,9 @@
               this.loadingSave = false;          
               if(err.response.status === 403 || err.response.status === 401) {
                 this.$router.push('/login');
+              }
+              if(err.response.status === 412) {
+                this.dialogPlan = true;                
               }
             });
         }
