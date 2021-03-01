@@ -10,7 +10,7 @@
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  
-                        <span style="font-size: 1.6rem !important;">Fale Conosco</span>
+                        <span style="font-size: 2.0rem !important;">Fale Conosco</span>
                 </v-col>       
             </v-row>    
             <br/><br/><br/>
