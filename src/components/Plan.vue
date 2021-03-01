@@ -116,7 +116,7 @@
       <v-card style="margin-top: 0px; margin-bottom: -30px;">
         <v-alert        
           prominent
-          type="blue-grey darken-4"        
+          type="blue-grey darken-4 "        
         >
           <br/>
           <v-row>
