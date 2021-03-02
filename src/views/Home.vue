@@ -299,7 +299,7 @@
         let cpny = JSON.parse(localStorage.getItem('company'))
         let i = Number(localStorage.getItem('dialogPlan') ? localStorage.getItem('dialogPlan') : '0')+1;
         localStorage.setItem('dialogPlan', i)
-        if(i == 4
+        if(i == 6
             && cpny 
             && cpny.plan.name === 'Free' 
             && this.userLogged.type === 'administrator') {

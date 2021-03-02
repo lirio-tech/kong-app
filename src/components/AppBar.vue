@@ -36,7 +36,7 @@
                                 <v-col cols="9"> 
                                     <div>
                                         <span class="font-weight-black">
-                                            {{ userLogger.username }}
+                                            {{ userLogger.name }}
                                         </span>
                                     </div>
                                     <div>
@@ -51,13 +51,16 @@
                             <v-col cols="10" class="font-weight-medium">
                             Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
-                        </router-link>                           
-                        <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/plans" style="color: inherit; text-decoration: none">
+                        </router-link>                              
+
+                        <div 
+                            v-if="userLogger && userLogger.type === 'administrator'"
+                            style="cursor: pointer;" @click="showPlanDialog(true)">                           
                             <v-divider class="my-1"></v-divider>
-                            <v-col cols="10" class="font-weight-medium">
-                            Plano <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
+                            <v-col cols="12" class="font-weight-medium">
+                                Plano <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
-                        </router-link>      
+                        </div>                        
                         
                         <router-link 
                             to="/public/fale-conosco" 
@@ -87,19 +90,23 @@
             </v-menu>
         </v-row>
         <DialogSobre :dialog="dialog" v-on:show-dialog="showDialog"/>
+        <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
     </v-app-bar>    
 </template>
 
 <script>
     import DialogSobre from './DialogSobre'
+    import DialogPlan from './DialogPlan'
     import { mapGetters } from 'vuex'
     export default {
         components: {
-            DialogSobre
+            DialogSobre,
+            DialogPlan
         },
         data:() => ({
             userLogger: {},
-            dialog: false
+            dialog: false,
+            dialogPlan: false
         }),
         methods: {
             logout() {
@@ -111,6 +118,9 @@
             },
             showDialog(show) {
                 this.dialog = show;
+            },
+            showPlanDialog(show) {
+                this.dialogPlan = show
             },
             getColor() {
                 let color = 'primary--text';

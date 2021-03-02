@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Home from '../views/Home'
 import Perfil from '../views/Perfil'
-import PlanView from '../views/PlanView'
 import OrdemServico from '../views/OrdemServico'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
@@ -21,11 +20,6 @@ const routes = [
     path: '/perfil',
     name: 'Perfil', 
     component: Perfil
-  },  
-  {
-    path: '/admin/plans',
-    name: 'Plans', 
-    component: PlanView
   },   
   {
     path: '/admin/users',

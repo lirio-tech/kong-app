@@ -4,7 +4,7 @@
             <v-row>
                 <v-col cols="2" style="margin-top: 10px;">   
                     <v-btn icon small style="display: inline;"
-                        :to="{ 'path': '/'}"
+                        @click="goBack"
                     > 
                         <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
                     </v-btn>
@@ -43,11 +43,14 @@
 <script>
 export default {
     methods: {
-    sendMessageWhatsapp() {
-      window.open(
-        "https://api.whatsapp.com/send?phone=11961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!"
-      );
-    },        
+        sendMessageWhatsapp() {
+            window.open(
+                "https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!"
+            );
+        },        
+        goBack() {
+            this.$router.go(-1)
+        }
     }
 }
 </script>
