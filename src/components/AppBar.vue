@@ -58,6 +58,15 @@
                             Plano <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
                         </router-link>      
+                        
+                        <router-link 
+                            to="/public/fale-conosco" 
+                            style="color: inherit; text-decoration: none">
+                            <v-divider class="my-1"></v-divider>
+                            <v-col cols="10" class="font-weight-medium">
+                            Fale Conosco
+                            </v-col>
+                        </router-link>                            
 
                         <div style="cursor: pointer;" @click="sobre">                           
                             <v-divider class="my-1"></v-divider>

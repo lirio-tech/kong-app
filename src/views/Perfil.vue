@@ -81,85 +81,57 @@
 
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <!-- <v-expansion-panel v-if="userLogged.type === 'administrator'">
-                <v-expansion-panel-header>Cadastrar Novo Usuario</v-expansion-panel-header>
+            <v-expansion-panel>
+                <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <v-row>
-                        <v-col cols="12" sm="12">
-                            <v-form 
-                            v-model="valid" 
-                            v-on:submit.prevent="saveNewUser"
-                            id="usewNewForm"
-                            ref="usewNewForm">
-                                <v-container>
-                                <v-row>
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field 
-                                            v-model="userNew.username"
-                                            label="Username"
-                                            ref="username"
-                                            prepend-icon="mdi-account"
-                                            filled required >
-                                        </v-text-field>  
-                                    </v-col>
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field v-model="userNew.name"
-                                                    label="Nome"
-                                                    ref="nome"
-                                                    prepend-icon="mdi-account"
-                                                    required
-                                                    filled>
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" md="4">
-                                        <v-text-field
-                                          label="Senha"
-                                          v-model="userNew.password"
-                                          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                          :type="show ? 'text' : 'password'"
-                                          @click:append.prevent="show = !show"
-                                          prepend-icon="mdi-lock-outline"
-                                          :rules="[ val => val && val.length > 0 || 'Senha Obrigatoria']"
-                                          ref="password"
-                                          required filled
-                                        />
-                                    </v-col>
-                                    <v-col cols="12" md="4">
-                                        <v-text-field
-                                          label="Senha"
-                                          v-model="userNew.passwordConfirm"
-                                          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                          :type="show ? 'text' : 'password'"
-                                          @click:append.prevent="show = !show"
-                                          prepend-icon="mdi-lock-outline"
-                                          :rules="[ val => val && val.length > 0 || 'Confirmacao de Senha esta diferente']"
-                                          ref="passwordConfirm"
-                                          required filled
-                                        />
-                                    </v-col>                                    
-                                </v-row>
-                                <v-row>
-                                    <v-btn 
-                                        type="submit" 
-                                        depressed 
-                                        color="success"
-                                        :loading="isLoading"
-                                        :disabled="isLoading"
-                                    >Salvar</v-btn>
-                                </v-row>
-                                </v-container>
-                            </v-form>                
-                        </v-col>
-                    </v-row>
+                    <br/>
+                    <span class="d-flex justify-end" flex>
+                        <router-link to="/company" style="color: inherit; text-decoration: none">
+                            <v-btn fab x-small>
+                                <v-icon>
+                                    mdi-pencil
+                                </v-icon>    
+                            </v-btn>
+                        </router-link>                          
+                    </span> 
+                    <span>Nome: {{ company.name }} </span> 
+                    <br/>
+                    <span>Short Name: {{ company.shortName }} </span>
+                    <br/>
+                    <span>Endereco: {{ company.endereco }} </span>     
+                    <br/>          
+                    
+                    <v-card>
+                        <br/>
+                        <div 
+                            class="overline green--text" 
+                            align="center"
+                            dark
+                        >
+                            Seu Plano Atual é o {{ company.plan.name }}
+                        </div>
+                        <br/>
+                        <div 
+                            class="overline green--text" 
+                            align="center"
+                            dark
+                        >
+                            <router-link to="/admin/plans" style="color: inherit; text-decoration: none">
+                                <v-btn small color="primary">Escolha um plano ideal para VC ;-)</v-btn>
+                            </router-link>                            
+                        </div>
+                        <br/>
+                    </v-card>  
 
                 </v-expansion-panel-content>
-            </v-expansion-panel> -->
+            </v-expansion-panel>
 
         </v-expansion-panels>
     </v-container>
 </template>
 
 <script>
+import storage from '../storage';
   //import gateway from '../api/gateway';
   export default {
     name: 'Perfil',
@@ -170,7 +142,8 @@
       userLogged: {
         type: 'none'
       }, 
-      userNew: {}
+      userNew: {},
+      company: {}
     }),
     methods: {
       save() {
@@ -187,6 +160,7 @@
     },
     beforeMount() {
       this.userLogged = JSON.parse(localStorage.getItem('user'));
+      this.company = storage.getCompany();
     }
   }
 </script>

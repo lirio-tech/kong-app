@@ -211,6 +211,9 @@
                         this.$router.push('/admin/users');
                     },
                     err => {
+                        if(err.response.status === 412) {
+                            alert(err.response.data.message)
+                        }                        
                         console.log(err);
                     }
             );

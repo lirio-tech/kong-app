@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
+import storage from '../storage'
 
 const axiosRequestIntercept = () => {
     axios.interceptors.request.use(
@@ -7,6 +8,9 @@ const axiosRequestIntercept = () => {
             let token = localStorage.getItem('TOKEN');
             if(token) {
                 request.headers.Authorization = 'Bearer ' + token;
+            }
+            if(localStorage.getItem('company')) {
+              request.headers.Company = storage.getCompany()._id;
             }
             return request;
         },
@@ -23,7 +27,7 @@ const axiosInterceptResponse = () => {
         return response;
       },
       error => {  
-          console.log('response', error.response);
+          console.log('response', error);
           if(error.response.status === 403) {
               localStorage.clear();
           }

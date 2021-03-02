@@ -62,8 +62,9 @@
 </template>
 
 <script>
-    import gateway from '../api/gateway';
-    import SnackBar from '../components/SnackBar';
+    import gateway from '../api/gateway'
+    import SnackBar from '../components/SnackBar'
+    import storage from '../storage'
     export default {
         components: {
           SnackBar
@@ -101,7 +102,7 @@
                             localStorage.setItem('user', JSON.stringify(res2));
                             gateway.getCompanyById(res2.company,
                               resCompany => {
-                                localStorage.setItem('company', JSON.stringify(resCompany));
+                                storage.setCompany(resCompany);
                                 this.$store.commit('companyStore/setCompany', resCompany); 
                                 this.$router.push('/');
                               }, err3 => {
