@@ -125,13 +125,13 @@
             getColor() {
                 let color = 'primary--text';
                 if(new Date().getDay() % 5 == 0) 
-                    color = 'green--text'
+                    color = 'primary--text'
                 else if(new Date().getDay() % 4 == 0) 
-                    color = 'purple--text'
+                    color = 'primary--text'
                 else if(new Date().getDay() % 3 == 0) 
                     color = 'primary--text'     
                 else if(new Date().getDay() % 2 == 0) 
-                    color = 'orange--text' 
+                    color = 'primary--text' 
                 return color; 
             } 
         },  

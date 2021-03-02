@@ -18,12 +18,14 @@
                 class="d-flex justify-center"
                 flex
             >
-                <v-img 
-                    @click="sendMessageWhatsapp"
-                    max-height="150"
-                    max-width="150"
-                    src="../assets/whatsapp.png"
-                ></v-img>
+                <a style="color: inherit; text-decoration: none"
+                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!">
+                    <v-img 
+                        max-height="150"
+                        max-width="150"
+                        src="../assets/whatsapp.png"
+                    ></v-img>
+                </a>
             </v-row>
             <br/><br/><br/>
             <v-row 

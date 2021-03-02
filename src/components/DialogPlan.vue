@@ -113,7 +113,7 @@
                   :color="plan.color" 
                   x-large
                 >
-                  <v-icon left>{{ plan.button.icon }}</v-icon>
+                  <v-icon left v-if="plan.button.icon">{{ plan.button.icon }}</v-icon>
                   {{ plan.button.label }}
                 </v-btn>          
               </v-card-actions>
@@ -170,7 +170,7 @@ export default {
             ],
             "button": {
               "label": "Voltar para o Plano Free",
-              "icon": "mdi-close"
+              "icon": ""
             },
             "color": "gray",
             "advantage": false
@@ -271,7 +271,11 @@ export default {
             "name": "Infinity",
             "type": "Infinity",
             "price": 1200.00,
-            "benefits": [                   
+            "benefits": [         
+              {
+                "icon": "mdi-google",
+                "description": "Pague uma única vez"
+              },                        
               {
                 "icon": "mdi-account",
                 "description": "3 Usuários Admin + 5 Usuários Comuns"
