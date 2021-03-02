@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
         <v-row>
             <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                 <v-btn icon small style="display: inline;"
@@ -86,7 +87,7 @@
                 <v-expansion-panel-content>
                     <br/>
                     <span class="d-flex justify-end" flex>
-                        <router-link to="/company" style="color: inherit; text-decoration: none">
+                        <router-link to="/" style="color: inherit; text-decoration: none">
                             <v-btn fab x-small>
                                 <v-icon>
                                     mdi-pencil
@@ -99,8 +100,7 @@
                     <span>Short Name: {{ company.shortName }} </span>
                     <br/>
                     <span>Endereco: {{ company.endereco }} </span>     
-                    <br/>          
-                    
+                    <br/><br/>                    
                     <v-card>
                         <br/>
                         <div 
@@ -115,10 +115,15 @@
                             class="overline green--text" 
                             align="center"
                             dark
-                        >
-                            <router-link to="/admin/plans" style="color: inherit; text-decoration: none">
-                                <v-btn small color="primary">Escolha um plano ideal para VC ;-)</v-btn>
-                            </router-link>                            
+                        >                            
+                            <v-btn 
+                                small 
+                                color="primary"
+                                @click="showPlanDialog(true)"
+                            >
+                                Escolha um plano ideal para VC ;-)
+                            </v-btn>
+                            
                         </div>
                         <br/>
                     </v-card>  
@@ -132,13 +137,18 @@
 
 <script>
 import storage from '../storage';
+import DialogPlan from '../components/DialogPlan'
   //import gateway from '../api/gateway';
-  export default {
+export default {
     name: 'Perfil',
+    components: {
+        DialogPlan
+    },
     data: () => ({
       isLoading: false,
       show: false,
       valid: true,
+      dialogPlan: false,
       userLogged: {
         type: 'none'
       }, 
@@ -146,17 +156,9 @@ import storage from '../storage';
       company: {}
     }),
     methods: {
-      save() {
-
-      },
-      saveNewUser() {
-        // gateway.saveUser(this.userNew, res => {
-        //   console.log(res);
-        //   alert('Usuario criado com sucesso');
-        // }, err => {
-        //   console.log(err);
-        // });
-      }
+        showPlanDialog(show) {
+            this.dialogPlan = show
+        }
     },
     beforeMount() {
       this.userLogged = JSON.parse(localStorage.getItem('user'));
