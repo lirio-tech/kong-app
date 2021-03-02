@@ -33,7 +33,7 @@
               dark
               
             >
-              Seu Plano Atual é o {{ company.plan.name }}
+              Seu Plano Atual é o {{ (company.plan.name === 'Free' ? '' : 'Premium ') + company.plan.name }}
             </div>
             <br/>
           </v-card>  
@@ -43,7 +43,7 @@
               outlined
             >
               <v-subheader class="overline">
-                Plano {{ plan.type }}
+                Plano {{ (plan.type === 'Free' ? '' : 'Premium ') + plan.type }}
               </v-subheader>
               <v-list-item two-line>
                 <v-list-item-content>
@@ -176,7 +176,7 @@ export default {
             "advantage": false
           },
           {
-            "name": "Azul",
+            "name": "Basico",
             "type": "Mensal",
             "price": 10.00,
             "benefits": [
@@ -203,7 +203,7 @@ export default {
             "benefits": [
               {
                 "icon": "mdi-google",
-                "description": "Mesmo plano do Azul sendo R$ 7,50 por Mês"
+                "description": "Mesmo plano do Premium Basico sendo R$ 7,50 por Mês"
               },              
               {
                 "icon": "mdi-account",
@@ -243,7 +243,7 @@ export default {
             "advantage": false
           },        
           {
-            "name": "Premium",
+            "name": "Tamo Junto",
             "type": "Anual",
             "price": 180.00,
             "benefits": [          
