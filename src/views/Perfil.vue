@@ -86,7 +86,7 @@
                 <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <br/>
-                    <span class="d-flex justify-end" flex>
+                    <span class="d-flex justify-end" flex v-if="userLogged.type === 'administrator'">
                         <router-link to="/" style="color: inherit; text-decoration: none">
                             <v-btn fab x-small>
                                 <v-icon>

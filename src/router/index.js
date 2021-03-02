@@ -7,6 +7,7 @@ import OrdemServico from '../views/OrdemServico'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
 import ContactUs from '../views/ContactUs'
+import Payment from '../views/Payment'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ const routes = [
     path: '/admin/users/:_id',
     name: 'UsuarioForm', 
     component: UsuarioForm
+  },    
+  {
+    path: '/admin/payment/:planName',
+    name: 'Payment', 
+    component: Payment
   },    
   {
     path: '/',

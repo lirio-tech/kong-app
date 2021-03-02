@@ -112,6 +112,7 @@
                   style="width: 100%"
                   :color="plan.color" 
                   x-large
+                  @click="goPayment(plan)"
                 >
                   <v-icon left v-if="plan.button.icon">{{ plan.button.icon }}</v-icon>
                   {{ plan.button.label }}
@@ -297,10 +298,11 @@ export default {
     },
     beforeMount() {
       this.company = JSON.parse(localStorage.getItem('company'))
+      this.userLooged = JSON.parse(localStorage.getItem('user'));
     },    
     methods: {
-      close() {
-        alert('Alert');
+      goPayment(plan) {
+        this.$router.push(`/admin/payment/${plan.name}`);
       }
     }
 }
