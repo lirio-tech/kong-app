@@ -10,7 +10,7 @@
         </v-card-text>
 
         <v-card-text>   
-          Versao: 0.3.4
+          Versao: 0.3.5
           <v-container >
             <v-row align="center">
               <v-col
