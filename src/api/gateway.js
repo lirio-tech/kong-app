@@ -246,7 +246,7 @@ export default{
               },
               "color": "cyan",
               "advantage": false,
-              "pixQrcode": "plano-premium-eh-nois-20.png",
+              "pixQrcode": "plano-premium-eh-nois-20.jpg",
               "pixCopyAndPast": "00020126680014BR.GOV.BCB.PIX0111353576598690231Wiskritorio APP - Plano Eh Nois520400005303986540520.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUGeBHB6SWFt63040E1F"              
             },        
             {

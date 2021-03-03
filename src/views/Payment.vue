@@ -45,6 +45,7 @@
               </v-btn>     
             </v-col>   
           </v-row>
+          <br/><br/><br/>
           <v-row>
             <v-col cols="12" align="center">
               <a 
@@ -53,10 +54,9 @@
                   <span 
                     class="green--text"
                   >
-                    Apos efetuar o pagamento Compartilhe o comprovante via WhatsApp 
-                    <v-btn>
+                    Apos efetuar o pagamento Compartilhe o comprovante via WhatsApp <br/>
+                    <v-btn color="green darken-1" fab small>
                       <v-icon
-                        color="green"
                       >
                         mdi-whatsapp
                       </v-icon>
