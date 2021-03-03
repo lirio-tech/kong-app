@@ -166,7 +166,7 @@ export default{
                 },
                 {
                   "icon": "mdi-content-cut",
-                  "description": "R$ 1.000,00 por Mês de Lançamentos"
+                  "description": "R$ 500,00 por Mês de Lançamentos"
                 }
               ],
               "button": {
@@ -183,7 +183,7 @@ export default{
               "benefits": [
                 {
                   "icon": "mdi-account",
-                  "description": "1 Usuário Admin + 1 Usuário Comum"
+                  "description": "2 Usuários (1 Admin + 1 Comum)"
                 },
                 {
                   "icon": "mdi-content-cut",
@@ -206,11 +206,11 @@ export default{
               "benefits": [
                 {
                   "icon": "mdi-google",
-                  "description": "Mesmo plano do Premium Basico sendo R$ 7,50 por Mês"
+                  "description": "Mesmo modelo do Plano Basico sendo R$ 7,50 por Mês"
                 },              
                 {
                   "icon": "mdi-account",
-                  "description": "1 Usuário Admin + 1 Usuário Comum"
+                  "description": "2 Usuários (1 Admin + 1 Comum)"
                 },
                 {
                   "icon": "mdi-content-cut",
@@ -233,7 +233,7 @@ export default{
               "benefits": [          
                 {
                   "icon": "mdi-account",
-                  "description": "2 Usuário Admin + 4 Usuários Comuns"
+                  "description": "6 Usuários (2 Admin + 4 Comuns)"
                 },
                 {
                   "icon": "mdi-content-cut",
@@ -256,11 +256,11 @@ export default{
               "benefits": [          
                 {
                   "icon": "mdi-google",
-                  "description": "Mesmo plano É Nóis sendo R$ 15,00 por Mês"
+                  "description": "Mesmo Plano É Nóis sendo R$ 15,00 por Mês"
                 },              
                 {
                   "icon": "mdi-account",
-                  "description": "2 Usuários Admin + 4 Usuários Comuns"
+                  "description": "6 Usuários (2 Admin + 4 Comuns)"
                 },
                 {
                   "icon": "mdi-content-cut",
@@ -287,7 +287,7 @@ export default{
                 },                        
                 {
                   "icon": "mdi-account",
-                  "description": "3 Usuários Admin + 5 Usuários Comuns"
+                  "description": "8 Usuários (3 Admin + 5 Comuns)"
                 },
                 {
                   "icon": "mdi-content-cut",
