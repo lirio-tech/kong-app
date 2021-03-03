@@ -227,9 +227,11 @@
                     },
                     err => {
                         console.log(err);
-                        if(err.response.status === 412) {
-                            alert(err.response.data.message)
-                        }                           
+                        if(err.response.status === 500) {
+                            alert('Erro ao Cadastrar usuario, tente novamente');
+                        } else {
+                            alert(err.response.data.message);
+                        }
                     }
             );            
         }    

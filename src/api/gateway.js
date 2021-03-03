@@ -31,6 +31,18 @@ export default{
                 errorCb(error);
             })
     },     
+    signUpWithCompanyAndUser(signup, callback,errorCb){       
+      let url = AUTH_API+'/signup/company';
+      console.log(url);
+      Axios.post(url, signup)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error);
+          })
+    },         
     getOrdersByDataBetween(dataInicio,dataFim,user,callback,errorCb){       
         let url = ORDERS_API+'/'+dataInicio+'/'+dataFim+'?username='+user.username+'&usertype='+user.type+'&company='+user.company;
         console.log(url);

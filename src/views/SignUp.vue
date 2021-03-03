@@ -5,13 +5,7 @@
         <v-row >
           
             <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
-            <v-form 
-                            id="form" 
-                            ref="form" 
-                            v-model="valid" 
-                            lazy-validation 
-                            v-on:submit.prevent="onSubmit"
-            >               
+     
                 <p class="mr-2 text-center primary--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
                     Cadastro
                 </p>  
@@ -28,29 +22,46 @@
                     </v-stepper-step>
 
                     <v-stepper-content step="1">
-                        
+                        <v-form 
+                            id="formCompany" 
+                            ref="formCompany" 
+                            v-model="valid" 
+                            lazy-validation 
+                            v-on:submit.prevent="onSubmit"
+                        >          
 
                                         <v-text-field
                                             autocomplete="off"
                                             label="Nome"
                                             prepend-icon="mdi-home"
                                             required
+                                            :rules="[ 
+                                                val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres'
+                                            ]"
+                                            @keyup="onChangeCompanyName"
                                             v-model="signup.company.name"
+                                            ref="companyName"
                                         />
                                         <v-text-field
                                             autocomplete="off"
                                             label="Nome Abreviado"
                                             prepend-icon="mdi-home"
+                                            :rules="[ 
+                                                val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
+                                                val => val && val.length <= 13 || 'tamanho maximo eh de 13 Caracteres',
+                                            ]"
                                             required
                                             v-model="signup.company.shortName"
+                                            ref="companyShortName"
                                         />
+                                        <br/>
                                         <v-btn
                                             color="green darken-2"
-                                            @click="e1 = 2"
+                                            type="submit"
                                         >
                                             Proximo
                                         </v-btn>
-
+                        </v-form>
                     </v-stepper-content>
 
                     <v-stepper-step
@@ -58,11 +69,17 @@
                     
                     >
                     Usuario 
-                     <small>Dono do estabelecimento</small>
+                     <small>Dono do Estabelecimento</small>
                     </v-stepper-step>
 
                     <v-stepper-content step="2">
-
+                        <v-form 
+                            id="formUser" 
+                            ref="formUser" 
+                            v-model="valid" 
+                            lazy-validation 
+                            v-on:submit.prevent="onSubmit"
+                        >        
                                         <v-text-field
                                             autocomplete="off"
                                             label="Nome"
@@ -105,22 +122,21 @@
                                             v-model="signup.user.confirmPassword"
                                             required filled
                                         />
-                    <v-btn
-                        color="green darken-2"
-                        large
-                    >
-                        Salvar
-                    </v-btn>
-                    
-                    <v-btn large dark  style="margin-left:50px" @click="e1 = 1">
-                        Voltar
-                    </v-btn>
-
+                                        <v-btn
+                                            color="green darken-2"
+                                            large
+                                            type="submit"
+                                        >
+                                            Salvar
+                                        </v-btn>
+                                        
+                                        <v-btn large dark  style="margin-left:50px" @click="e1 = 1">
+                                            Voltar
+                                        </v-btn>
+                        </v-form>
                     </v-stepper-content>
 
                 </v-stepper> 
-               
-            </v-form>
                 
             </v-col>
         
@@ -143,6 +159,9 @@
 </template>
 
 <script>
+import gateway from '../api/gateway'
+const STEP_COMPANY = 1;
+const STEP_USER = 2;
 export default {
     data: () => ({
         valid: true,
@@ -150,13 +169,72 @@ export default {
         loadingLogin: false,
         e1: 1,
         signup: {
-            company: {},
+            company: {
+                name: '',
+                shortName: ''
+            },
             user: {}
         }
     }),
     methods: {
+        onChangeCompanyName() {
+            console.log(this.signup.company.name.split(' '));
+            this.signup.company.shortName = this.signup.company.name.split(' ')[0];
+        },
         onSubmit() {
+            if(this.e1 === STEP_COMPANY) {
+                if(!this.$refs.formCompany.validate()) {
+                    return;
+                }
+                this.e1++;
+            } 
+            else if(this.e1 === STEP_USER) {
+                if(!this.$refs.formUser.validate()) {
+                    return;
+                }
+                alert(JSON.stringify(this.signup));
+                gateway.signUpWithCompanyAndUser(this.signup,
+                res => {
+                    console.log('res', res);
+                    if(!res.auth === true) {
+                        alert('Usuario ou Senha Invalido');
+                        this.loading = false;
+                        return;
+                    }
+                    localStorage.setItem('TOKEN', res.token);
+                    this.loading = false;
+                    gateway.getUserByUsername(this.user.username,
+                        res2 => {
+                            localStorage.setItem('user', JSON.stringify(res2));
+                            
+                            // TODO
+                            this.$router.push('/');
 
+
+                            // gateway.getCompanyById(res2.company,
+                            //     resCompany => {
+                            //         storage.setCompany(resCompany);
+                            //         this.$store.commit('companyStore/setCompany', resCompany); 
+                            //         this.$router.push('/');
+                            //     }, 
+                            //     err3 => {
+                            //         this.showMessage('error', err3.message);
+                            //     }
+                            // );
+                        }, 
+                    err2 => {
+                        this.showMessage('error', err2.message);
+                    }
+                );
+            },
+            (err) => {
+                if(err.response.status === 500) {
+                    alert('Erro ao se Cadastrar, tente novamente mais tarde ');
+                } else {
+                    alert(err.response.data.message);
+                }
+            });
+            }
         }
     }
 }
