@@ -8,9 +8,11 @@ import { VueMaskDirective } from 'v-mask'
 import { VueMaskFilter } from 'v-mask'
 import store from './store/'
 import './registerServiceWorker'
+import VueClipboard from 'vue-clipboard2'
 
 
 Vue.config.productionTip = false
+Vue.use(VueClipboard)
 Vue.use(VueMask);
 Vue.directive('mask', VueMaskDirective);
 Vue.filter('VMask', VueMaskFilter);

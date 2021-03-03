@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import gateway from '../api/gateway'
 export default {
     props:['dialog'],
     data () {
@@ -154,154 +155,19 @@ export default {
         company: {
           plan: { name: 'Free' }
         },
-        plans: [
-          {
-            "name": "Free",
-            "type": "Free",
-            "price": 0.00,
-            "benefits": [
-              {
-                "icon": "mdi-account",
-                "description": "1 Usuário Admin"
-              },
-              {
-                "icon": "mdi-content-cut",
-                "description": "R$ 1.000,00 por Mês de Lançamentos"
-              }
-            ],
-            "button": {
-              "label": "Voltar para o Plano Free",
-              "icon": ""
-            },
-            "color": "gray",
-            "advantage": false
-          },
-          {
-            "name": "Basico",
-            "type": "Mensal",
-            "price": 10.00,
-            "benefits": [
-              {
-                "icon": "mdi-account",
-                "description": "1 Usuário Admin + 1 Usuário Comum"
-              },
-              {
-                "icon": "mdi-content-cut",
-                "description": "R$ 2.000,00 por Mês de Lançamentos"
-              }
-            ],
-            "button": {
-              "label": "Quero Esse",
-              "icon": "mdi-rocket-launch"
-            },
-            "color": "blue",
-            "advantage": false
-          },         
-          {
-            "name": "Gold",
-            "type": "Anual",
-            "price": 90.00,
-            "benefits": [
-              {
-                "icon": "mdi-google",
-                "description": "Mesmo plano do Premium Basico sendo R$ 7,50 por Mês"
-              },              
-              {
-                "icon": "mdi-account",
-                "description": "1 Usuário Admin + 1 Usuário Comum"
-              },
-              {
-                "icon": "mdi-content-cut",
-                "description": "R$ 4.000,00 por Mês de Lançamentos"
-              }
-            ],
-            "button": {
-              "label": "Quero Esse",
-              "icon": "mdi-rocket-launch"
-            },
-            "color": "#d4af37",
-            "advantage": true
-          },        
-          {
-            "name": "É Nóis",
-            "type": "Mensal",
-            "price": 20.00,
-            "benefits": [          
-              {
-                "icon": "mdi-account",
-                "description": "2 Usuário Admin + 4 Usuários Comuns"
-              },
-              {
-                "icon": "mdi-content-cut",
-                "description": "R$ 6.000,00 por Mês de Lançamentos"
-              }
-            ],
-            "button": {
-              "label": "Quero Esse",
-              "icon": "mdi-rocket-launch"
-            },
-            "color": "cyan",
-            "advantage": false
-          },        
-          {
-            "name": "Tamo Junto",
-            "type": "Anual",
-            "price": 180.00,
-            "benefits": [          
-              {
-                "icon": "mdi-google",
-                "description": "Mesmo plano É Nóis sendo R$ 15,00 por Mês"
-              },              
-              {
-                "icon": "mdi-account",
-                "description": "2 Usuários Admin + 4 Usuários Comuns"
-              },
-              {
-                "icon": "mdi-content-cut",
-                "description": "R$ 12.000,00 por Mês de Lançamentos"
-              }
-            ],
-            "button": {
-              "label": "Quero Esse",
-              "icon": "mdi-rocket-launch"
-            },
-            "color": "orange",
-            "advantage": true
-          },           
-          {
-            "name": "Infinity",
-            "type": "Infinity",
-            "price": 1200.00,
-            "benefits": [         
-              {
-                "icon": "mdi-google",
-                "description": "Pague uma única vez"
-              },                        
-              {
-                "icon": "mdi-account",
-                "description": "3 Usuários Admin + 5 Usuários Comuns"
-              },
-              {
-                "icon": "mdi-content-cut",
-                "description": "R$ 30.000,00 por Mês de Lançamentos"
-              }
-            ],
-            "button": {
-              "label": "Quero Esse",
-              "icon": "mdi-rocket-launch"
-            },
-            "color": "purple",
-            "advantage": false
-          },                                     
-        ]
+        plans: [], 
       }
     },
     beforeMount() {
       this.company = JSON.parse(localStorage.getItem('company'))
       this.userLooged = JSON.parse(localStorage.getItem('user'));
+      this.plans = gateway.getAllPlans();
     },    
     methods: {
       goPayment(plan) {
+        if(plan.name === 'Free') {
+          return;
+        }
         this.$router.push(`/admin/payment/${plan.name}`);
       }
     }
