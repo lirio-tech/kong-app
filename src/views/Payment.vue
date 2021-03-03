@@ -9,18 +9,21 @@
             <v-col cols="10" align="center">   
                 <span style="font-size: 1.9rem !important;">Pagamento</span>
             </v-col>
-        </v-row>        
+        </v-row>    
+        <br />    
         <v-main class="">
           <v-row class="grey--text">
-            <v-col cols="12">
+            <v-col cols="12" align="center">
               <h2>Pix</h2>
               <h3 :style="'color:'+plan.color">Plano {{ plan.name }}</h3>
-              <span class="display-3">{{ plan.price | currency }}</span>
+              <span class="display-2">{{ plan.price | currency }}</span>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" align="center">
                 <v-img 
+                  width="250"
+                  height="250"
                   :src="plan.pixQrcode"
                 ></v-img>
             </v-col>
@@ -46,7 +49,7 @@
             <v-col cols="12" align="center">
               <a 
                 style="color: inherit; text-decoration: none"
-                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, quero efetuar o pagamento via PIX no Wiskritorio App e gostaria de tirar algumas duvidas!">              
+                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, estou no Wiskritorio App e efetuando o pagamento via PIX">              
                   <span 
                     class="green--text"
                   >
@@ -84,7 +87,7 @@ export default {
     this.plan = gateway
                   .getAllPlans()
                   .filter(p => p.name === this.$route.params.planName)[0];
-    this.plan.pixQrcode = require('../assets/plano-premium-basic-10.png');
+    this.plan.pixQrcode = require('../assets/'+this.plan.pixQrcode);
     console.log(this.plan);
   },
   methods: {

@@ -300,7 +300,7 @@ export default{
               },
               "color": "purple",
               "advantage": false,
-              "pixQrcode": "plano-premium-infinity-1200.png",
+              "pixQrcode": "plano-premium-infinity-1200.jpg",
               "pixCopyAndPast": "00020126690014BR.GOV.BCB.PIX0111353576598690232Wiskritorio APP - Plano Infinity52040000530398654071200.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUVVJaX5RR5j63042DAF"              
             },                                     
           ];

@@ -58,7 +58,7 @@
                             style="cursor: pointer;" @click="showPlanDialog(true)">                           
                             <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
-                                Planos <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
+                                Planos
                             </v-col>
                         </div>                        
                         
