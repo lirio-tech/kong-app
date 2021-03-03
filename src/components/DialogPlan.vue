@@ -26,7 +26,7 @@
           </v-toolbar>    
         </v-card>
         <v-container style="margin-top: -12px;">
-          <v-card>
+          <v-card v-if="company">
             <div 
               class="overline green--text" 
               align="center"
