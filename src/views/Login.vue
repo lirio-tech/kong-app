@@ -47,8 +47,16 @@
                       required
                     />
 
-                    <router-link :to="{ path: '/sign-up' }" style="color: inherit; text-decoration: none;">
-                      <span class="text-no-wrap cyan--text">Cadastre seu estabelecimento</span>
+                    <router-link 
+                      :to="{ path: '/sign-up' }" 
+                      style="color: inherit; text-decoration: none;"
+                    >
+                      <span 
+                        class="text-no-wrap cyan--text"
+                        style="font-size: 1.2rem;"
+                      >
+                        Cadastre seu estabelecimento
+                      </span>
                     </router-link>                    
                     <br /><br />
 
