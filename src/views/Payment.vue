@@ -90,10 +90,10 @@ export default {
   },
   methods: {
     onCopy() {
-        alert('Codigo PIX copiado')
+      alert('Codigo PIX copiado')
     },
     onError(){
-        alert('Erro ao Copiar Codigo Copie e Cole')
+      alert('Erro ao Copiar Codigo Copie e Cole')
     } 
   }
 }

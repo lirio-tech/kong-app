@@ -31,35 +31,35 @@
                             v-on:submit.prevent="onSubmit"
                         >          
 
-                                        <v-text-field
-                                            autocomplete="off"
-                                            label="Nome do seu Estabelecimento"
-                                            prepend-icon="mdi-home"
-                                            required
-                                            :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
-                                            @keyup="onChangeCompanyName"
-                                            v-model="signup.company.name"
-                                            ref="companyName"
-                                        />
-                                        <v-text-field
-                                            autocomplete="off"
-                                            label="Nome Abreviado"
-                                            prepend-icon="mdi-home"
-                                            :rules="[ 
-                                                val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
-                                                val => val && val.length <= 13 || 'tamanho maximo eh de 13 Caracteres',
-                                            ]"
-                                            required
-                                            v-model="signup.company.shortName"
-                                            ref="companyShortName"
-                                        />
-                                        <br/>
-                                        <v-btn
-                                            color="green darken-2"
-                                            type="submit"
-                                        >
-                                            Proximo
-                                        </v-btn>
+                            <v-text-field
+                                autocomplete="off"
+                                label="Nome do seu Estabelecimento"
+                                prepend-icon="mdi-home"
+                                required
+                                :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                                @keyup="onChangeCompanyName"
+                                v-model="signup.company.name"
+                                ref="companyName"
+                            />
+                            <v-text-field
+                                autocomplete="off"
+                                label="Nome Abreviado"
+                                prepend-icon="mdi-home"
+                                :rules="[ 
+                                    val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
+                                    val => val && val.length <= 13 || 'tamanho maximo eh de 13 Caracteres',
+                                ]"
+                                required
+                                v-model="signup.company.shortName"
+                                ref="companyShortName"
+                            />
+                            <br/>
+                            <v-btn
+                                color="green darken-2"
+                                type="submit"
+                            >
+                                Proximo
+                            </v-btn>
                         </v-form>
                     </v-stepper-content>
 
@@ -79,65 +79,65 @@
                             lazy-validation 
                             v-on:submit.prevent="onSubmit"
                         >        
-                                        <v-text-field
-                                            autocomplete="off"
-                                            label="Nome"
-                                            prepend-icon="mdi-account"
-                                            required filled
-                                            v-model="signup.user.name"
-                                            :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
-                                        />
-                                        <v-text-field
-                                            autocomplete="off"
-                                            label="Username"
-                                            prepend-icon="mdi-account"
-                                            required filled
-                                            v-model="signup.user.username"
-                                            @blur="signup.user.username = signup.user.username.toLowerCase()"
-                                            :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
-                                            @keyup="signup.user.username = removeSpecialChar(signup.user.username)"
-                                        />
-                                        <v-text-field 
-                                            v-model="signup.user.phone_number"
-                                            label="Celular/WhatsApp"
-                                            ref="phone"
-                                            required
-                                            v-mask="'(##) #####-####'"
-                                            prepend-icon="mdi-whatsapp"
-                                            filled
-                                        />
-                                        <v-text-field
-                                            label="Senha"
-                                            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                            :type="show ? 'text' : 'password'"
-                                            @click:append.prevent="show = !show"
-                                            prepend-icon="mdi-lock-outline"
-                                            v-model="signup.user.password"
-                                            :rules="[val => val && val.length > 3 || 'Senha deve conter no minimo 4 Caracteres']"
-                                            required filled
-                                        />
-                                        <v-text-field
-                                            label="Confirmacao de Senha"
-                                            prepend-icon="mdi-lock-outline"
-                                            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                            :type="show ? 'text' : 'password'"
-                                            @click:append.prevent="show = !show"
-                                            v-model="signup.user.confirmPassword"
-                                            :rules="[val => val && val === signup.user.password || 'Confirmacao da Senha nao confere']"
-                                            required filled
-                                        />
-                                        <v-btn
-                                            color="green darken-2"
-                                            large
-                                            type="submit"
-                                            :loading="loading"
-                                        >
-                                            Salvar
-                                        </v-btn>
-                                        
-                                        <v-btn large dark  style="margin-left:50px" @click="e1 = 1">
-                                            Voltar
-                                        </v-btn>
+                            <v-text-field
+                                autocomplete="off"
+                                label="Nome"
+                                prepend-icon="mdi-account"
+                                required filled
+                                v-model="signup.user.name"
+                                :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                            />
+                            <v-text-field
+                                autocomplete="off"
+                                label="Username"
+                                prepend-icon="mdi-account"
+                                required filled
+                                v-model="signup.user.username"
+                                @blur="signup.user.username = signup.user.username.toLowerCase()"
+                                :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                                @keyup="signup.user.username = removeSpecialChar(signup.user.username)"
+                            />
+                            <v-text-field 
+                                v-model="signup.user.phone_number"
+                                label="Celular/WhatsApp"
+                                ref="phone"
+                                required
+                                v-mask="'(##) #####-####'"
+                                prepend-icon="mdi-whatsapp"
+                                filled
+                            />
+                            <v-text-field
+                                label="Senha"
+                                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show ? 'text' : 'password'"
+                                @click:append.prevent="show = !show"
+                                prepend-icon="mdi-lock-outline"
+                                v-model="signup.user.password"
+                                :rules="[val => val && val.length > 3 || 'Senha deve conter no minimo 4 Caracteres']"
+                                required filled
+                            />
+                            <v-text-field
+                                label="Confirmacao de Senha"
+                                prepend-icon="mdi-lock-outline"
+                                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show ? 'text' : 'password'"
+                                @click:append.prevent="show = !show"
+                                v-model="signup.user.confirmPassword"
+                                :rules="[val => val && val === signup.user.password || 'Confirmacao da Senha nao confere']"
+                                required filled
+                            />
+                            <v-btn
+                                color="green darken-2"
+                                large
+                                type="submit"
+                                :loading="loading"
+                            >
+                                Salvar
+                            </v-btn>
+                            
+                            <v-btn large dark  style="margin-left:50px" @click="e1 = 1">
+                                Voltar
+                            </v-btn>
                         </v-form>
                     </v-stepper-content>
 
@@ -188,7 +188,7 @@ export default {
     }),
     methods: {
         onChangeCompanyName() {
-            this.signup.company.shortName = this.signup.company.name.split(' ')[0];
+            this.signup.company.shortName = this.signup.company.name.substring(0, 13);
         },
         removeSpecialChar(v) {
           return InputsUtils.usernameInputs(v);
