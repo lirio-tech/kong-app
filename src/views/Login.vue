@@ -1,11 +1,12 @@
 <template>
   <v-container fluid>
+    <AppBar />
     <v-row justify="center">
       <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
         <v-slide-y-transition appear>
           <v-form id="form" ref="form" v-model="valid" lazy-validation v-on:submit.prevent="onSubmit" style="margin-top: 50px;">
             <v-card class="pa-3 pa-md-6 mx-auto">
-                <p class="mr-2 text-center primary--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
+                <p class="mr-2 text-center white--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
                   Login
                 </p>
                 <center>
@@ -69,9 +70,11 @@
     import gateway from '../api/gateway'
     import SnackBar from '../components/SnackBar'
     import storage from '../storage'
+    import AppBar from '../components/AppBar'
     export default {
         components: {
-          SnackBar
+          SnackBar,
+          AppBar
         },
         data() {
             return {

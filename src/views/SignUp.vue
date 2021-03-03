@@ -1,13 +1,14 @@
 <template>
   <v-container fluid>
-
+    <AppBar />
     <v-main class="">
         <v-row >
           
             <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
      
-                <p class="mr-2 text-center primary--text" style="font-family: 'Frijole', cursive; font-size: 2rem;">
-                    Cadastro
+                <p class="mr-2 text-center grey--text" 
+                   style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
+                    Cadastre-se
                 </p>  
 
                 <v-stepper
@@ -32,7 +33,7 @@
 
                                         <v-text-field
                                             autocomplete="off"
-                                            label="Nome"
+                                            label="Nome do seu Estabelecimento"
                                             prepend-icon="mdi-home"
                                             required
                                             :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
@@ -150,8 +151,8 @@
                 :to="{ path: '/login' }" 
                 style="color: inherit; text-decoration: none;"
             >
-                <span class="text-no-wrap cyan--text">
-                    <v-icon color="cyan" small>
+                <span class="text-no-wrap cyan--text" style="font-size: 1.2rem;">
+                    <v-icon color="cyan">
                         mdi-arrow-left
                     </v-icon>
                     Ja sou cadastrado
@@ -164,10 +165,14 @@
 
 <script>
 import gateway from '../api/gateway'
+import AppBar from '../components/AppBar'
 import InputsUtils from '../utils/inputs'
 const STEP_COMPANY = 1;
 const STEP_USER = 2;
 export default {
+    components: {
+        AppBar
+    },
     data: () => ({
         valid: true,
         show: false,

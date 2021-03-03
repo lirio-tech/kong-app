@@ -6,8 +6,8 @@
         <v-row justify="start" align="center"> 
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
-                <span style="font-family: 'Frijole', cursive; font-size: 1.2rem;">
-                  <span :class="getColor()">{{ company.shortName }}</span>
+                <span style="font-family: 'Frijole', cursive; font-size: 1.1rem;">
+                  <span :class="getColor()">{{ company ? company.shortName : 'Wiskritório App' }}</span>
                 </span>  
               </v-btn>
             </router-link>
@@ -16,12 +16,17 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on" style="margin-bottom: 20px;">
-                    <v-icon style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
+                    <v-icon v-if="userLogged" style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
+                    <v-icon v-else style="font-size: 1.6rem">mdi-menu</v-icon>
                 </v-btn>
                 </template>
                 <v-card>
                     <v-list-item-content class="justify-center">
-                        <router-link :to="'/perfil'" style="color: inherit; text-decoration: none">
+                        <router-link 
+                            :to="'/perfil'" 
+                            style="color: inherit; text-decoration: none"
+                            v-if="userLogger"
+                        >
                             <v-row class="mr-0 ml-0">
                                 <v-col cols="3">
                                     <v-avatar size="40" color="grey">
@@ -54,7 +59,6 @@
                         </router-link>                              
 
                         <div 
-                            v-if="userLogger && userLogger.type === 'administrator'"
                             style="cursor: pointer;" @click="showPlanDialog(true)">                           
                             <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
@@ -78,7 +82,11 @@
                             </v-col>
                         </div>
 
-                        <div style="cursor: pointer;" @click="logout">                           
+                        <div 
+                            style="cursor: pointer;" 
+                            @click="logout"
+                            v-if="userLogger"
+                        >                           
                             <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
                                 Sair
@@ -97,7 +105,7 @@
 <script>
     import DialogSobre from './DialogSobre'
     import DialogPlan from './DialogPlan'
-    import { mapGetters } from 'vuex'
+    // import { mapGetters } from 'vuex'
     export default {
         components: {
             DialogSobre,
@@ -144,10 +152,10 @@
                 localStorage.clear();
             }
         },
-        computed: {
-            ...mapGetters({ 
-                company: "companyStore/company"
-            }), 
-        }       
+        // computed: {
+        //     ...mapGetters({ 
+        //         company: "companyStore/company"
+        //     }), 
+        // }       
     }
 </script>
