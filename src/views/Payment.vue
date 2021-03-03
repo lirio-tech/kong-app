@@ -46,7 +46,9 @@
             <v-col cols="12" align="center">
               <a 
                 style="color: inherit; text-decoration: none"
-                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, estou no Wiskritorio App e efetuando o pagamento via PIX">              
+                :href="`https://api.whatsapp.com/send
+                  ?phone=5511961409798
+                  &text=Olá, estou no Wiskritorio App e efetuando o pagamento via PIX, ${company.name}  ${company._id}`">              
                   <span 
                     class="green--text"
                   >
@@ -73,6 +75,7 @@ export default {
   components: { VueQrcode },
   data:() => ({
     loadingPay: false,
+    company: null,
     plan: {},
   }),
   computed: {
@@ -87,6 +90,7 @@ export default {
                   .filter(p => p.name === this.$route.params.planName)[0];
     this.plan.pixQrcode = require('../assets/'+this.plan.pixQrcode);
     console.log(this.plan);
+    this.company = JSON.stringify(localStorage.getItem('company'));
   },
   methods: {
     onCopy() {

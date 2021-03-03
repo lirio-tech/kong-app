@@ -53,7 +53,7 @@
                     >
                       <span 
                         class="text-no-wrap cyan--text"
-                        style="font-size: 1.2rem;"
+                        style="font-size: 1.1rem;"
                       >
                         Cadastre seu estabelecimento
                       </span>

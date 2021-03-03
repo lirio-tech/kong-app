@@ -16,7 +16,7 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on" style="margin-bottom: 20px;">
-                    <v-icon v-if="userLogged" style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
+                    <v-icon v-if="userLogger" style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
                     <v-icon v-else style="font-size: 1.6rem">mdi-menu</v-icon>
                 </v-btn>
                 </template>
@@ -103,8 +103,9 @@
 </template>
 
 <script>
-    import DialogSobre from './DialogSobre'
-    import DialogPlan from './DialogPlan'
+import DialogSobre from './DialogSobre'
+import DialogPlan from './DialogPlan'
+import gateway from '../api/gateway';
     // import { mapGetters } from 'vuex'
     export default {
         components: {
@@ -112,7 +113,8 @@
             DialogPlan
         },
         data:() => ({
-            userLogger: {},
+            userLogger: null,
+            company: null,
             dialog: false,
             dialogPlan: false
         }),
@@ -145,12 +147,21 @@
         },  
         beforeMount() {
             this.userLogger = JSON.parse(localStorage.getItem('user'));
-            let cpny = JSON.parse(localStorage.getItem('company'));
-            if(cpny) {
-                this.$store.commit('companyStore/setCompany', cpny); 
-            } else {
-                localStorage.clear();
+            this.company = JSON.parse(localStorage.getItem('company'));
+            if(!this.company) {
+                gateway.getCompanyById(this.userLogger.company,
+                res => {
+                    this.company = res;
+                },
+                () => {
+                    alert('Erro, tente novamente mais tarde');
+                })
             }
+            // if(cpny) {
+            //     this.$store.commit('companyStore/setCompany', cpny); 
+            // } else {
+            //     localStorage.clear();
+            // }
         },
         // computed: {
         //     ...mapGetters({ 
