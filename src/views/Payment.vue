@@ -21,11 +21,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" align="center">
-                <v-img 
-                  width="250"
-                  height="250"
-                  :src="plan.pixQrcode"
-                ></v-img>
+                <vue-qrcode :value="plan.pixCopyAndPast" />
             </v-col>
           </v-row>  
           <v-row>
@@ -71,8 +67,10 @@
 <script>
 // import { mapGetters } from 'vuex'
 import gateway from '../api/gateway'
+import VueQrcode from 'vue-qrcode'
 export default {
   name: 'Payment',
+  components: { VueQrcode },
   data:() => ({
     loadingPay: false,
     plan: {},

@@ -196,7 +196,6 @@ export default{
               },
               "color": "blue",
               "advantage": false,
-              "pixQrcode": "plano-premium-basic-10.png",
               "pixCopyAndPast": "00020126720014BR.GOV.BCB.PIX0111353576598690235WiskritorioApp-Plano Premium Basico520400005303986540510.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUAdeHEok7F463047A09"             
             },         
             {
@@ -223,7 +222,6 @@ export default{
               },
               "color": "#d4af37",
               "advantage": true,
-              "pixQrcode": "plano-premium-gold-90.jpg",
               "pixCopyAndPast": "00020126710014BR.GOV.BCB.PIX0111353576598690234Wiskritorio APP - Plano Gold anual520400005303986540590.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUAZ7l8FqpBH63043CE7"              
             },        
             {
@@ -246,7 +244,6 @@ export default{
               },
               "color": "cyan",
               "advantage": false,
-              "pixQrcode": "plano-premium-eh-nois-20.jpg",
               "pixCopyAndPast": "00020126680014BR.GOV.BCB.PIX0111353576598690231Wiskritorio APP - Plano Eh Nois520400005303986540520.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUGeBHB6SWFt63040E1F"              
             },        
             {
@@ -273,17 +270,16 @@ export default{
               },
               "color": "orange",
               "advantage": true,
-              "pixQrcode": "plano-premium-tamo-junto-180.jpg",
               "pixCopyAndPast": "00020126710014BR.GOV.BCB.PIX0111353576598690234Wiskritorio APP - Plano Tamo Junto5204000053039865406180.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUXWKzxEUVI763041B58"              
             },           
             {
               "name": "Infinity",
               "type": "Infinity",
-              "price": 1200.00,
+              "price": 900.00,
               "benefits": [         
                 {
                   "icon": "mdi-google",
-                  "description": "Pague uma única vez"
+                  "description": "Pague uma única vez e utilize o App sempre que quiser"
                 },                        
                 {
                   "icon": "mdi-account",
@@ -291,7 +287,7 @@ export default{
                 },
                 {
                   "icon": "mdi-content-cut",
-                  "description": "R$ 30.000,00 por Mês de Lançamentos"
+                  "description": "R$ 25.000,00 por Mês de Lançamentos"
                 }
               ],
               "button": {
@@ -300,8 +296,7 @@ export default{
               },
               "color": "purple",
               "advantage": false,
-              "pixQrcode": "plano-premium-infinity-1200.jpg",
-              "pixCopyAndPast": "00020126690014BR.GOV.BCB.PIX0111353576598690232Wiskritorio APP - Plano Infinity52040000530398654071200.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUVVJaX5RR5j63042DAF"              
+              "pixCopyAndPast": "00020126580014BR.GOV.BCB.PIX01366c1296f1-b36f-4b65-ac9c-5e7fd16cafb75204000053039865406900.005802BR5925DIEGO LIRIO DAMACENA PERE6009SAO PAULO622605226QEcoMRRZQlpCuF55gqxtO63047BBF"              
             },                                     
           ];
     }       

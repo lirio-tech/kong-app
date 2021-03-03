@@ -91,10 +91,12 @@
                 v-for="benefit in plan.benefits"
                 :key="benefit.description"
               >
-                  <v-list-item-icon>
-                    <v-icon>{{ benefit.icon }}</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-subtitle>{{ benefit.description }}</v-list-item-subtitle>
+                  
+                  <v-icon>
+                    {{ benefit.icon }}
+                  </v-icon>
+                  
+                  <span style="margin-left: 15px" class="subtitle-1 grey--text">{{ benefit.description }}</span>
               </v-list-item>
 
               <v-card-actions>
