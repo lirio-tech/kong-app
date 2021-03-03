@@ -35,9 +35,7 @@
                                             label="Nome"
                                             prepend-icon="mdi-home"
                                             required
-                                            :rules="[ 
-                                                val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres'
-                                            ]"
+                                            :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
                                             @keyup="onChangeCompanyName"
                                             v-model="signup.company.name"
                                             ref="companyName"
@@ -86,6 +84,7 @@
                                             prepend-icon="mdi-account"
                                             required filled
                                             v-model="signup.user.name"
+                                            :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
                                         />
                                         <v-text-field
                                             autocomplete="off"
@@ -94,6 +93,8 @@
                                             required filled
                                             v-model="signup.user.username"
                                             @blur="signup.user.username = signup.user.username.toLowerCase()"
+                                            :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                                            @keyup="signup.user.username = removeSpecialChar(signup.user.username)"
                                         />
                                         <v-text-field 
                                             v-model="signup.user.phone_number"
@@ -111,6 +112,7 @@
                                             @click:append.prevent="show = !show"
                                             prepend-icon="mdi-lock-outline"
                                             v-model="signup.user.password"
+                                            :rules="[val => val && val.length > 3 || 'Senha deve conter no minimo 4 Caracteres']"
                                             required filled
                                         />
                                         <v-text-field
@@ -120,12 +122,14 @@
                                             :type="show ? 'text' : 'password'"
                                             @click:append.prevent="show = !show"
                                             v-model="signup.user.confirmPassword"
+                                            :rules="[val => val && val === signup.user.password || 'Confirmacao da Senha nao confere']"
                                             required filled
                                         />
                                         <v-btn
                                             color="green darken-2"
                                             large
                                             type="submit"
+                                            :loading="loading"
                                         >
                                             Salvar
                                         </v-btn>
@@ -160,13 +164,14 @@
 
 <script>
 import gateway from '../api/gateway'
+import InputsUtils from '../utils/inputs'
 const STEP_COMPANY = 1;
 const STEP_USER = 2;
 export default {
     data: () => ({
         valid: true,
         show: false,
-        loadingLogin: false,
+        loading: false,
         e1: 1,
         signup: {
             company: {
@@ -178,9 +183,11 @@ export default {
     }),
     methods: {
         onChangeCompanyName() {
-            console.log(this.signup.company.name.split(' '));
             this.signup.company.shortName = this.signup.company.name.split(' ')[0];
         },
+        removeSpecialChar(v) {
+          return InputsUtils.usernameInputs(v);
+        }, 
         onSubmit() {
             if(this.e1 === STEP_COMPANY) {
                 if(!this.$refs.formCompany.validate()) {
@@ -192,48 +199,24 @@ export default {
                 if(!this.$refs.formUser.validate()) {
                     return;
                 }
-                alert(JSON.stringify(this.signup));
+                this.loading = true;
                 gateway.signUpWithCompanyAndUser(this.signup,
-                res => {
-                    console.log('res', res);
-                    if(!res.auth === true) {
-                        alert('Usuario ou Senha Invalido');
+                    res => {
+                        console.log(res);
                         this.loading = false;
-                        return;
-                    }
-                    localStorage.setItem('TOKEN', res.token);
-                    this.loading = false;
-                    gateway.getUserByUsername(this.user.username,
-                        res2 => {
-                            localStorage.setItem('user', JSON.stringify(res2));
-                            
-                            // TODO
-                            this.$router.push('/');
-
-
-                            // gateway.getCompanyById(res2.company,
-                            //     resCompany => {
-                            //         storage.setCompany(resCompany);
-                            //         this.$store.commit('companyStore/setCompany', resCompany); 
-                            //         this.$router.push('/');
-                            //     }, 
-                            //     err3 => {
-                            //         this.showMessage('error', err3.message);
-                            //     }
-                            // );
-                        }, 
-                    err2 => {
-                        this.showMessage('error', err2.message);
+                        localStorage.setItem('TOKEN', res.token);
+                        localStorage.setItem('user', JSON.stringify(res.user));
+                        localStorage.setItem('company', JSON.stringify(res.company));
+                        this.$router.push('/');                       
+                    },
+                    (err) => {
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Cadastrar, tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
                     }
                 );
-            },
-            (err) => {
-                if(err.response.status === 500) {
-                    alert('Erro ao se Cadastrar, tente novamente mais tarde ');
-                } else {
-                    alert(err.response.data.message);
-                }
-            });
             }
         }
     }
