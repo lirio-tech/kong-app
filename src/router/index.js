@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import SignUp from '../views/SignUp'
 import Home from '../views/Home'
 import Perfil from '../views/Perfil'
 import OrdemServico from '../views/OrdemServico'
@@ -17,6 +18,11 @@ const routes = [
     name: 'Login',
     component: Login
   },  
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUp
+  },    
   {
     path: '/perfil',
     name: 'Perfil', 
@@ -65,7 +71,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('TOKEN');
-  if(to.name !== 'Login') {
+  if(to.name !== 'Login' && to.name !== 'SignUp') {
     console.log(token);
     if (token || to.name === 'Login') {
       next()

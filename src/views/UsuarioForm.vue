@@ -34,7 +34,7 @@
                                     value="administrator"
                                 ></v-radio>
                                 <v-radio
-                                    label="Cabelereiro"
+                                    label="Comum"
                                     value="hairdresser"
                                 ></v-radio>
                             </v-radio-group>                                                           
@@ -108,7 +108,8 @@
                             <v-text-field v-model="user.phone_number"
                                         label="Celular/WhatsApp"
                                         ref="phone"
-                                        required
+                                        required 
+                                        v-mask="'(##) #####-####'"
                                         prepend-icon="mdi-whatsapp"
                                         filled>
                             </v-text-field>

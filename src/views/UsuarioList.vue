@@ -127,7 +127,7 @@
           return 'Administrador';
         } 
         if(type === 'hairdresser') {
-          return 'Cabelereiro';
+          return 'Comum';
         }
         return type;
       }

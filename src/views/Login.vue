@@ -45,8 +45,12 @@
                       ref="password"
                       required
                     />
-                    <br/>
-                    
+
+                    <router-link :to="{ path: '/sign-up' }" style="color: inherit; text-decoration: none;">
+                      <span class="text-no-wrap cyan--text">Cadastre seu estabelecimento</span>
+                    </router-link>                    
+                    <br /><br />
+
                     <v-btn type="submit" x-large dark :loading="loading">Entrar</v-btn>
                   </div>
                   <br />
