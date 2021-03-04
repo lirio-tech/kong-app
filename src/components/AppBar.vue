@@ -56,27 +56,27 @@
                             <v-col cols="10" class="font-weight-medium">
                             Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
+                            <v-divider class="my-1"></v-divider>
                         </router-link>                              
 
                         <div 
                             style="cursor: pointer;" @click="showPlanDialog(true)">                           
-                            <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
                                 Planos
                             </v-col>
+                            <v-divider class="my-1"></v-divider>
                         </div>                        
                         
                         <router-link 
                             to="/public/fale-conosco" 
                             style="color: inherit; text-decoration: none">
-                            <v-divider class="my-1"></v-divider>
                             <v-col cols="10" class="font-weight-medium">
                             Fale Conosco
                             </v-col>
+                            <v-divider class="my-1"></v-divider>
                         </router-link>                            
 
                         <div style="cursor: pointer;" @click="sobre">                           
-                            <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
                                 Sobre
                             </v-col>
@@ -108,6 +108,7 @@ import DialogPlan from './DialogPlan'
 import gateway from '../api/gateway';
     // import { mapGetters } from 'vuex'
     export default {
+        name: 'AppBar',
         components: {
             DialogSobre,
             DialogPlan
@@ -148,7 +149,7 @@ import gateway from '../api/gateway';
         beforeMount() {
             this.userLogger = JSON.parse(localStorage.getItem('user'));
             this.company = JSON.parse(localStorage.getItem('company'));
-            if(!this.company) {
+            if(!this.company && this.userLogger) {
                 gateway.getCompanyById(this.userLogger.company,
                 res => {
                     this.company = res;

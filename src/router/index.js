@@ -71,7 +71,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('TOKEN');
-  if(to.name !== 'Login' && to.name !== 'SignUp') {
+  if(to.path.startsWith('/public')) {
+    next()
+  } else if(to.name !== 'Login' && to.name !== 'SignUp') {
     console.log(token);
     if (token || to.name === 'Login') {
       next()

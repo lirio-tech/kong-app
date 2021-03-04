@@ -53,7 +53,7 @@
                   >
                     {{ plan.name }} 
                     <v-chip 
-                      v-if="company.plan.name === plan.name"
+                      v-if="company && company.plan.name === plan.name"
                       color="green" 
                       style="margin-left: 15px;" 
                       outlined
@@ -61,7 +61,7 @@
                         Seu plano Atual
                     </v-chip>
                     <v-chip 
-                      v-if="plan.advantage && company.plan.name !== plan.name"
+                      v-if="!company || (plan.advantage && company.plan.name !== plan.name)"
                       color="yellow" 
                       style="margin-left: 15px;" 
                       outlined
@@ -101,7 +101,7 @@
 
               <v-card-actions>
                 <v-btn 
-                  v-if="plan.name === company.plan.name"
+                  v-if="company && plan.name === company.plan.name"
                   style="width: 100%; color: green" 
                   x-large 
                   readonly
@@ -110,7 +110,7 @@
                   Plano Atual
                 </v-btn>             
                 <v-btn 
-                  v-if="plan.name !== company.plan.name"
+                  v-if="!company || plan.name !== company.plan.name"
                   style="width: 100%"
                   :color="plan.color" 
                   x-large
@@ -168,6 +168,10 @@ export default {
     methods: {
       goPayment(plan) {
         if(plan.name === 'Free') {
+          return;
+        }
+        if(!this.userLooged) {
+          alert('Cadastre-se ou Efetue o Login para escolher seu Plano');
           return;
         }
         this.$router.push(`/admin/payment/${plan.name}`);
