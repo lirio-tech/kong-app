@@ -50,7 +50,7 @@
                   <span 
                     class="green--text"
                   >
-                    Apos efetuar o pagamento Compartilhe o comprovante via WhatsApp <br/>
+                    Apos efetuar o pagamento Compartilhe o comprovante via WhatsApp clicando no icone abaixo<br/>
                     <v-btn color="green darken-1" fab small>
                       <v-icon
                       >

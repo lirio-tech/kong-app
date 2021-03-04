@@ -11,7 +11,7 @@
                   </v-btn>
               </v-col>
               <v-col cols="10" align="center">   
-                      <span style="font-size: 1.8rem !important;">Cadastro de Usuario</span>
+                      <span style="font-size: 1.8rem !important;">Cadastro de Usuário </span>
               </v-col>
           </v-row>          
         
@@ -88,7 +88,11 @@
                                     filled
                             />                                                    
                         </v-col>       
-                        <v-col cols="12" md="4" style="margin-left: 40%">
+                        <v-col 
+                            cols="12" md="4" 
+                            style="margin-left: 40%" 
+                            v-if="user._id !== userLogged._id"
+                        >
                                 <v-switch
                                     dense
                                     v-model="user.enabled"

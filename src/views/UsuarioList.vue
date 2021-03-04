@@ -11,7 +11,13 @@
                   </v-btn>
               </v-col>
               <v-col cols="7" align="center">   
-                  <span style="font-size: 1.8rem !important;">Usuarios</span>
+                  <span style="font-size: 1.8rem !important;">  
+                    <span v-if="users && users.length > 1">
+                      {{ users.length }} usuários <br/>
+                      <!-- <small class="grey--text">{{ users.filter(it => it.disabled === false).length }} ativos</small> -->
+                    </span>
+                    <span v-else>Usuários </span>
+                  </span>
               </v-col>
               <v-col cols="2" align="center">   
                   <v-btn 
@@ -35,17 +41,13 @@
                             @click:row="clickRow"
                         >                        
                             <template v-slot:item.disabled="{ item }">
-                                <v-chip>
+                                <v-chip :color="!item.disabled ? 'green' : 'red'">
                                   <v-icon 
-                                    color="green"
-                                    text-color="white"
                                     v-if="!item.disabled"
                                   >
                                     mdi-check 
                                   </v-icon>
                                   <v-icon 
-                                    color="red"
-                                    text-color="white"
                                     v-else
                                   >
                                     mdi-close 
@@ -77,7 +79,7 @@
                                         }) }}                            
                             </template> 
                             <template v-slot:item.type="{ item }">
-                               <v-chip>
+                               <v-chip :color="item.type === 'administrator' ? 'blue' : ''">
                                 {{ getTypePtBR(item.type) }}                            
                                </v-chip>
                             </template> 

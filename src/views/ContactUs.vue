@@ -13,7 +13,14 @@
                         <span style="font-size: 2.0rem !important;">Fale Conosco</span>
                 </v-col>       
             </v-row>    
-            <br/><br/><br/>
+            <br/><br/>
+            <v-row 
+                class="d-flex justify-center"
+                flex 
+            >
+                <span class="grey--text">clique no icone </span>
+            </v-row>   
+            <br/>   <br/>      
             <v-row 
                 class="d-flex justify-center"
                 flex

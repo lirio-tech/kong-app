@@ -1,10 +1,10 @@
 <template>
   <v-container fluid>
     <AppBar />
-    <v-main class="">
+    <v-main>
         <v-row >
-          
-            <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
+           
+            <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
      
                 <p class="mr-2 text-center grey--text" 
                    style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
