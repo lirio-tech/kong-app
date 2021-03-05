@@ -21,7 +21,7 @@
                 
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    <span class="grey--text">1. Primeiro passo é Abrir o <a href="app.wiskritorio.com.br" class="cyan--text" target="blank">app.wiskritorio.com.br</a> 
+                    <span class="grey--text">1. Primeiro passo é Abrir o <a href="https://app.wiskritorio.com.br" class="cyan--text" target="blank">app.wiskritorio.com.br</a> 
                     no</span> Safari
                 </p>  
                 <v-img 
