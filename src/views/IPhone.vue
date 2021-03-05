@@ -48,7 +48,7 @@
             <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    <span class="grey--text">3. Agora ja ate a opcao</span> Adicione na Tela de Inicio
+                    <span class="grey--text">3. Agora vá até a opção</span> Adicione na Tela de Início
                 </p>  
                 <v-img 
                     src="../assets/iphone-install-2.jpg"
@@ -61,7 +61,7 @@
             <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    <span class="grey--text">4. E por ultimo clique em <span class="blue--text">Adicionar</span> do Campo Superior Direito</span>
+                    <span class="grey--text">4. E por último clique em <span class="blue--text">Adicionar</span>, no Canto Superior Direito</span>
                 </p>  
                 <v-img 
                     src="../assets/iphone-install-3.jpg"
@@ -74,7 +74,7 @@
             <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    Pronto!!! <br/><span class="primary--text">Wiskritorio App</span> Instalado com Sucesso sem ocupar espaco no seu Celular
+                    Pronto!!! <br/><span class="primary--text">Wiskritório App</span> Instalado com Sucesso sem ocupar espaço no seu Celular
                 </p>  
                 <v-img 
                     src="../assets/iphone-installed.gif"

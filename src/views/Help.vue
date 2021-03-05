@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;">Wiskritório App</span>
-                        <br/><small class="grey--text">Versao: 0.3.5 </small>
+                        <br/><small class="grey--text">Versao: 0.4.0 </small>
                 </v-col>       
             </v-row>   
 
@@ -117,45 +117,6 @@
                     </v-col>                
                 </v-row>   
             </div>
-            
-<!--        
-            <v-row 
-                class="d-flex justify-center"
-                flex 
-            >
-                <span class="grey--text">clique no icone </span>
-            </v-row>   
-          -->
-            <br/>   <br/>      
-<!--          
-            <v-row 
-                class="d-flex justify-center"
-                flex
-            >
-                <a style="color: inherit; text-decoration: none"
-                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!">
-                    <v-img 
-                        max-height="150"
-                        max-width="150"
-                        src="../assets/whatsapp.png"
-                    ></v-img>
-                </a>
-            </v-row> -->
-
-            <br/><br/><br/>
-<!-- 
-            <v-row 
-                class="d-flex justify-center"
-                flex
-            >
-                <a href="tel:11961409798"
-                   style="color: inherit; text-decoration: none"
-                >
-                    <span class="display-1">(11) 96140-9798 </span>
-                </a>            
-                
-            </v-row>
-             -->
         </div>           
     </v-container>
 </template>
