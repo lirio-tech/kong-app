@@ -8,6 +8,9 @@ import OrdemServico from '../views/OrdemServico'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
 import ContactUs from '../views/ContactUs'
+import Help from '../views/Help'
+import Android from '../views/Android'
+import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
 
 Vue.use(VueRouter)
@@ -63,6 +66,21 @@ const routes = [
     name: 'FaleConosco', 
     component: ContactUs
   },     
+  {
+    path: '/public/help',
+    name: 'Help', 
+    component: Help
+  },   
+  {
+    path: '/public/android',
+    name: 'Android', 
+    component: Android
+  },    
+  {
+    path: '/public/iphone',
+    name: 'IPhone', 
+    component: IPhone
+  },      
 ]
 
 const router = new VueRouter({
