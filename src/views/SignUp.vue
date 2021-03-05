@@ -85,7 +85,10 @@
                                 prepend-icon="mdi-account"
                                 required filled
                                 v-model="signup.user.name"
-                                :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                                :rules="[
+                                    val =>  val && val.length > 3    || 'Deve ser maior do que 3 Caracteres',
+                                    val => (val && val.length <= 20) || 'Nome deve ser menor que 20 caracteres'
+                                ]"
                             />
                             <v-text-field
                                 autocomplete="off"
@@ -94,7 +97,10 @@
                                 required filled
                                 v-model="signup.user.username"
                                 @blur="signup.user.username = signup.user.username.toLowerCase()"
-                                :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                                :rules="[
+                                    val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
+                                    val => (val && val.length <= 15) || 'Username deve ser menor que 15 caracteres'
+                                ]"
                                 @keyup="signup.user.username = removeSpecialChar(signup.user.username)"
                             />
                             <v-text-field 

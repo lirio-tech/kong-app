@@ -22,33 +22,21 @@
                 id="userForm"
             >         
                 <v-row>
-                        <!-- <v-col cols="12" md="4"
-                            style="margin-left: 20%"
-                        >
-                            <v-radio-group
-                                v-model="user.type"
-                                row
-                            >
-                                <v-radio
-                                    label="Administrador"
-                                    value="administrator"
-                                ></v-radio>
-                                <v-radio
-                                    label="Comum"
-                                    value="hairdresser"
-                                ></v-radio>
-                            </v-radio-group>                                                           
-                        </v-col>                     -->
                         <v-col cols="12" md="4">                      
                             <v-text-field 
                                 v-model="user.username"
+                                autocomplete="off"
                                 label="Username"
                                 ref="username"
                                 prepend-icon="mdi-account"
-                                :rules="usernameRules"
+                                filled required
+                                :rules="[
+                                    val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
+                                    val => (val && val.length <= 15) || 'Username deve ser menor que 15 caracteres'
+                                ]"
                                 @blur="user.username = user.username.toLowerCase()"
-                                filled required>
-                            </v-text-field>  
+                                @keyup="user.username = removeSpecialChar(user.username)"
+                            ></v-text-field>  
                         </v-col>
                         <v-col cols="12" md="4">                      
                             <v-text-field v-model="user.name"
@@ -56,7 +44,10 @@
                                         ref="nome"
                                         required
                                         prepend-icon="mdi-account"
-                                        :rules="nameRules"
+                                        :rules="[
+                                            val =>  val && val.length > 3    || 'Deve ser maior do que 3 Caracteres',
+                                            val => (val && val.length <= 20) || 'Nome deve ser menor que 20 caracteres'
+                                        ]"
                                         filled>
                             </v-text-field>
                         </v-col>
@@ -162,6 +153,7 @@
   import gateway from '../api/gateway'
   import AppBar from '../components/AppBar'
   import SnackBar from '../components/SnackBar'
+  import InputsUtils from '../utils/inputs'
   export default {
     name: 'UsuarioForm',
     components: { 
@@ -177,15 +169,7 @@
             passwordConfirm: '',
             type: 'hairdresser'
         },
-        message: { },
-        usernameRules: [
-            v => !!v || 'Username Obrigatório',
-            v => (v && v.length <= 15) || 'Username deve ser menor que 15 caracteres',
-        ],        
-        nameRules: [
-            v => !!v || 'Nome do Usuario Obrigatório',
-            v => (v && v.length <= 20) || 'Nome deve ser menor que 20 caracteres',
-        ],   
+        message: { },      
         passwordRules: [
             v => !!v || 'Senha do Usuario Obrigatório',
             v => (v && v.length > 3) || 'Senha deve ser maior que 3 caracteres',
@@ -240,6 +224,9 @@
             );            
         }    
       },
+      removeSpecialChar(v) {
+        return InputsUtils.usernameInputs(v);
+      },       
       showMessage(color, text) {
             this.message.color = color;
             this.message.text = text;
