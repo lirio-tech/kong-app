@@ -21,7 +21,7 @@
                 
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    1. Primeiro passo é Abrir o <a href="app.wiskritorio.com.br" class="cyan--text" target="blank">app.wiskritorio.com.br</a> 
+                    1. Primeiro passo é Abrir o <a href="https://app.wiskritorio.com.br" class="cyan--text" target="blank">app.wiskritorio.com.br</a> 
                     no Google Chrome
                 </p>  
                 <v-img 
@@ -63,11 +63,11 @@
                    style="font-size: 1.3rem;">
                     Pronto!!! <br/><span class="primary--text">Wiskritório App</span> Instalado com Sucesso sem ocupar espaço no seu Celular
                 </p>  
-                <v-img 
+                <!-- <v-img 
                     src="../assets/android-installed.gif"
                     height="500"
                     width="250"
-                ></v-img>
+                ></v-img> -->
             </v-col>        
         </v-row>            
         <v-row >
