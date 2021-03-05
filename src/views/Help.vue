@@ -71,7 +71,7 @@
                     class="d-flex justify-center"
                     flex 
                 >
-                    <h2 class="grey--text">Android ou Iphone ? </h2>
+                    <h2 class="grey--text">Android ou IPhone ? </h2>
                 </v-row>      
                 <v-row 
                     class="d-flex justify-center"

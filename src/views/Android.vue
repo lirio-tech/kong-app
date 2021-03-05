@@ -56,72 +56,28 @@
                     width="80"
                 ></v-img> -->
             </v-col>        
-        </v-row>                    
+        </v-row>         
+        <v-row >
+            <v-container >
+                <p class="mr-2 text-center" 
+                   style="font-size: 1.3rem;">
+                    Duvidas ???
+                </p>                  
+                <Contact />
+            </v-container>
+        </v-row>           
+        <br/><br/><br/><br/>
     </v-main>
   </v-container>
 </template>
 
 <script>
-import gateway from '../api/gateway'
+import Contact from '../components/Contact'
 import AppBar from '../components/AppBar'
-import InputsUtils from '../utils/inputs'
-const STEP_COMPANY = 1;
-const STEP_USER = 2;
 export default {
     components: {
-        AppBar
-    },
-    data: () => ({
-        valid: true,
-        show: false,
-        loading: false,
-        e1: 1,
-        signup: {
-            company: {
-                name: '',
-                shortName: ''
-            },
-            user: {}
-        }
-    }),
-    methods: {
-        onChangeCompanyName() {
-            this.signup.company.shortName = this.signup.company.name.substring(0, 13);
-        },
-        removeSpecialChar(v) {
-          return InputsUtils.usernameInputs(v);
-        }, 
-        onSubmit() {
-            if(this.e1 === STEP_COMPANY) {
-                if(!this.$refs.formCompany.validate()) {
-                    return;
-                }
-                this.e1++;
-            } 
-            else if(this.e1 === STEP_USER) {
-                if(!this.$refs.formUser.validate()) {
-                    return;
-                }
-                this.loading = true;
-                gateway.signUpWithCompanyAndUser(this.signup,
-                    res => {
-                        console.log(res);
-                        this.loading = false;
-                        localStorage.setItem('TOKEN', res.token);
-                        localStorage.setItem('user', JSON.stringify(res.user));
-                        localStorage.setItem('company', JSON.stringify(res.company));
-                        this.$router.push('/');                       
-                    },
-                    (err) => {
-                        if(err.response.status === 500) {
-                            alert('Erro ao se Cadastrar, tente novamente mais tarde ');
-                        } else {
-                            alert(err.response.data.message);
-                        }
-                    }
-                );
-            }
-        }
+        AppBar,
+        Contact
     }
 }
 </script>
