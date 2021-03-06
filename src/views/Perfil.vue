@@ -71,11 +71,11 @@
                         {{ company.plan.payment.price | currency }} 
                     </span>     
                     <span 
-                        v-if="company.plan && company.plan.name !== 'Free'"
+                        v-if="company.plan && company.plan.name !== 'Free' && company.plan.name !== 'Infinity'"
                     >
-                        <br/>
+                        <br/> 
                         <span class="grey--text">Vencimento do Plano: </span> 
-                        {{ company.plan.dateEnd }} 
+                        {{ new Date(company.plan.dateEnd).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} 
                     </span>       
                     <span 
                         v-if="company.plan"
