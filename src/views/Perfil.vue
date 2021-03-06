@@ -36,14 +36,45 @@
                                         </v-text-field>  
                                     </v-col>
                                     <v-col cols="12" md="4">                      
-                                        <v-text-field v-model="userLogged.name"
-                                                    label="Nome"
-                                                    ref="nome"
-                                                    required
-                                                    readonly
-                                                    filled>
+                                        <v-text-field 
+                                            v-model="userLogged.name"
+                                            label="Nome"
+                                            ref="nome"
+                                            required
+                                            readonly
+                                            filled>
                                         </v-text-field>
                                     </v-col>
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.type"
+                                            label="Tipo"
+                                            ref="tipo"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>                 
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.email"
+                                            label="E-mail"
+                                            ref="email"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>       
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.phone_number"
+                                            label="Celular"
+                                            ref="phone"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>                                                                                                          
                                     <v-col cols="12" md="4">
                                         <v-text-field
                                             label="Criado"
@@ -52,23 +83,14 @@
                                             required filled disabled
                                         />
                                     </v-col>
-                                    <v-col cols="12" md="4">
+                                    <!-- <v-col cols="12" md="4">
                                         <v-text-field
                                             label="Alterado"
                                             v-model="userLogged.updatedAt"
                                             ref="updatedAt"
                                             required filled disabled
                                         />
-                                    </v-col>                                    
-                                </v-row>
-                                <v-row>
-                                    <v-btn 
-                                        type="submit" 
-                                        depressed 
-                                        color="success"
-                                        :loading="isLoading"
-                                        :disabled="isLoading"
-                                    >Salvar</v-btn>
+                                    </v-col>                                     -->
                                 </v-row>
                                 </v-container>
                             </v-form>                
@@ -76,7 +98,7 @@
                     </v-row>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel>
+            <v-expansion-panel v-if="false">
                 <v-expansion-panel-header>Alterar Senha</v-expansion-panel-header>
                 <v-expansion-panel-content>
 

@@ -33,10 +33,54 @@
               dark
               
             >
+              <br/>
               Seu Plano Atual é o {{ (company.plan.name === 'Free' ? '' : 'Premium ') + company.plan.name }}
             </div>
-            <br/>
+            <v-container>
+                    <span 
+                        v-if="company.plan && company.plan.payment"
+                    >
+                        <span class="grey--text">Pagamento: </span> 
+                        {{ company.plan.payment.price | currency }} 
+                    </span>     
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Vencimento do Plano: </span> 
+                        {{ company.plan.dateEnd }} 
+                    </span>       
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Valor/Mes: </span> 
+                        {{ company.plan.maxCash | currency }} 
+                    </span>     
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Numero Max de Usuarios: </span> 
+                        {{ company.plan.amountUsers }} 
+                    </span>                                                           
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Usuarios Admin: </span> 
+                        {{ company.plan.amountUsersAdmin }} 
+                    </span>                        
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Usuarios Common: </span> 
+                        {{ company.plan.amountUsersCommon }} 
+                    </span>     
+            </v-container>         
           </v-card>  
+          
           <v-card
               v-for="plan in plans" 
               :key="plan._id"
