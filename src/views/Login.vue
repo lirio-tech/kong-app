@@ -66,7 +66,14 @@
                     </router-link>                    
                     <br /><br />
 
-                    <v-btn type="submit" x-large color="primary" :loading="loading">Entrar</v-btn>
+                    <v-btn 
+                      type="submit" 
+                      x-large 
+                      :color="$vuetify.theme.dark ? 'dark' : 'primary'" 
+                      :loading="loading"
+                    >
+                      Entrar
+                    </v-btn>
                   </div>
                   <br />
                 </v-col>
