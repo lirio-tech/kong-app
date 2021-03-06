@@ -25,7 +25,7 @@
                                 value="APPLY_PLAN"
                             ></v-radio>                    
                             <v-radio
-                                label="Editar"
+                                label="Verificar Dados"
                                 value="EDIT"
                             ></v-radio>
                         </v-radio-group>
@@ -260,7 +260,7 @@
                                     />
                             </v-col>   
                     </v-row>    
-                    <v-row 
+                    <!-- <v-row 
                         align="center"
                         justify="space-around"
                     >
@@ -273,7 +273,7 @@
                                 :disabled="loadingSave"
                                 style="width: 50%"
                             >Salvar</v-btn>                                        
-                    </v-row>       
+                    </v-row>        -->
                 </v-form>    
               </v-col> 
           </v-row>                                           
