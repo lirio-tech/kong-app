@@ -12,7 +12,7 @@ export default {
         return JSON.parse(localStorage.getItem('user'));
     },
     setCompany(company) {
-        localStorage.setItem('company', JSON.stringify(company));
+        localStorage.setItem('company', company);
     },    
     getCompany() {
         if(localStorage.getItem('company')) {

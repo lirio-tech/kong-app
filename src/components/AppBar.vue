@@ -175,6 +175,7 @@ import storage from '../storage';
         beforeMount() {
             this.userLogger = storage.getUserLogged();
             this.company = storage.getCompany();
+            console.log(this.company);
             if(!this.company && this.userLogger) {
                 gateway.getCompanyById(this.userLogger.company,
                 res => {

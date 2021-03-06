@@ -150,47 +150,47 @@
                         </div>
                         <br/>
                     </v-card>  
-                    <br/>
                     <span 
                         v-if="company.plan && company.plan.payment"
                     >
+                        <br/>
                         <span class="grey--text">Pagamento: </span> 
                         {{ company.plan.payment.price | currency }} 
                     </span>     
-                    <br/>
                     <span 
-                        v-if="company.plan"
+                        v-if="company.plan && company.plan.name !== 'Free'"
                     >
+                        <br/>
                         <span class="grey--text">Vencimento do Plano: </span> 
                         {{ company.plan.dateEnd }} 
                     </span>       
-                    <br/>
                     <span 
                         v-if="company.plan"
                     >
+                        <br/>
                         <span class="grey--text">Valor/Mes: </span> 
-                        {{ company.plan.maxCash | currency }} 
+                        {{ company.plan.name === 'Free' ? 500 : company.plan.maxCash | currency }} 
                     </span>     
-                    <br/>
                     <span 
                         v-if="company.plan"
                     >
+                        <br/>
                         <span class="grey--text">Numero Max de Usuarios: </span> 
-                        {{ company.plan.amountUsers }} 
+                        {{ company.plan.name === 'Free' ? 1 : company.plan.amountUsers }} 
                     </span>                                                           
-                    <br/>
                     <span 
                         v-if="company.plan"
                     >
+                        <br/>
                         <span class="grey--text">Usuarios Admin: </span> 
-                        {{ company.plan.amountUsersAdmin }} 
+                        {{ company.plan.name === 'Free' ? 1 : company.plan.amountUsersAdmin }} 
                     </span>                        
-                    <br/>
                     <span 
                         v-if="company.plan"
                     >
+                        <br/>
                         <span class="grey--text">Usuarios Common: </span> 
-                        {{ company.plan.amountUsersCommon }} 
+                        {{ company.plan.name === 'Free' ? 0 : company.plan.amountUsersCommon }} 
                     </span>                                            
 
                 </v-expansion-panel-content>

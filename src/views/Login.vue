@@ -130,7 +130,7 @@
                             localStorage.setItem('user', JSON.stringify(res2));
                             gateway.getCompanyById(res2.company,
                               resCompany => {
-                                storage.setCompany(resCompany);
+                                storage.setCompany(JSON.stringify(resCompany));
                                 this.$store.commit('companyStore/setCompany', resCompany); 
                                 this.$router.push('/');
                               }, err3 => {
