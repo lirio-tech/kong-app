@@ -132,7 +132,10 @@
                               resCompany => {
                                 storage.setCompany(JSON.stringify(resCompany));
                                 this.$store.commit('companyStore/setCompany', resCompany); 
-                                this.$router.push('/');
+                                if(res2.type === 'sys_admin') {
+                                  this.$router.push('/system');  
+                                } 
+                                else { this.$router.push('/'); }
                               }, err3 => {
                                 this.showMessage('error', err3.message);
                               }

@@ -17,6 +17,14 @@
             ></v-progress-linear>
           </v-col>   
           <br/>
+          <v-row> 
+               <v-col cols="12">   
+                <p class="mr-2 text-center grey--text" 
+                   style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
+                    Administrador do Sistema
+                </p>  
+               </v-col>
+          </v-row>          
           <v-row v-if="companies.length !== 0 && !loading">
               <v-col cols="12" sm="12">
                   <v-sheet min-height="70vh" rounded="lg">

@@ -355,7 +355,10 @@ export default {
       this.userLogged = storage.getUserLogged();   
       gateway.getCompanyById(
                 this.$route.params._id,
-                res => this.company = res,
+                res => { 
+                    this.company = res;
+                    this.applyPlan.name = this.company.plan.name;
+                },
                 () => alert('Erro, tente novamente')
         );  
     }
