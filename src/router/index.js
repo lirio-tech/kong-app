@@ -12,6 +12,8 @@ import Help from '../views/Help'
 import Android from '../views/Android'
 import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
+import System from '../views/system/System'
+import SystemCompanyForm from '../views/system/SystemCompanyForm'
 import storage from '../storage'
 
 Vue.use(VueRouter)
@@ -81,7 +83,17 @@ const routes = [
     path: '/public/iphone',
     name: 'IPhone', 
     component: IPhone
-  },      
+  },     
+  {
+    path: '/system',
+    name: 'System', 
+    component: System
+  },    
+  {
+    path: '/system/companies/:_id',
+    name: 'SystemCompanyForm', 
+    component: SystemCompanyForm
+  },       
 ]
 
 const router = new VueRouter({

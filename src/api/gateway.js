@@ -154,6 +154,17 @@ export default{
                 errorCb(error)
             })        
     },      
+    getCompanies(callback, errorCb) {
+      let url = `${COMPANIES_API}`;
+      Axios.get(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })        
+  },        
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)

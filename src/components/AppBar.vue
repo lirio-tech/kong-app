@@ -40,7 +40,7 @@
                                 </v-col>
                                 <v-col cols="9"> 
                                     <div style="margin-top:10px;">
-                                        <span class="font-weight-black white--text" >
+                                        <span class="font-weight-black" >
                                             {{ userLogger.name.split(' ')[0] }}
                                         </span>
                                     </div>
@@ -53,7 +53,7 @@
                             <v-divider />                                                 
                         </router-link>
 
-                        <div style="cursor: pointer;" @click="setThemeLadyModoON(themeLadyModoON)">      
+                        <!-- <div style="cursor: pointer;" @click="setThemeLadyModoON(themeLadyModoON)">      
                             <v-list-item>
                                 <v-list-item-content>
                                     <v-list-item-title>
@@ -65,14 +65,21 @@
                                 </v-list-item-action>
                             </v-list-item>
                             <v-divider />                                                 
-                        </div>
+                        </div> -->
 
                         <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/users" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                             Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
-                        </router-link>                              
+                        </router-link>          
+
+                        <router-link v-if="userLogger && userLogger.type === 'sys_admin'" to="/system" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                System <v-chip color="cyan" style="margin-left: 15px;" outlined small>system</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                                                
 
                         <router-link v-if="!userLogger" to="/login" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
@@ -149,11 +156,11 @@ import storage from '../storage';
             themeLadyModoON: true
         }),
         methods: {
-            setThemeLadyModoON(isLadyModoON) {
-                storage.setThemeLadyModoON(isLadyModoON);
-                this.themeLadyModoON = isLadyModoON;
-                this.$vuetify.theme.dark = !this.themeLadyModoON;
-            },            
+            // setThemeLadyModoON(isLadyModoON) {
+            //     storage.setThemeLadyModoON(isLadyModoON);
+            //     this.themeLadyModoON = isLadyModoON;
+            //     this.$vuetify.theme.dark = !this.themeLadyModoON;
+            // },            
             logout() {
                 storage.logout();
                 this.$router.push('/login');
@@ -166,8 +173,8 @@ import storage from '../storage';
             }
         },  
         beforeMount() {
-            this.userLogger = JSON.parse(localStorage.getItem('user'));
-            this.company = JSON.parse(localStorage.getItem('company'));
+            this.userLogger = storage.getUserLogged();
+            this.company = storage.getCompany();
             if(!this.company && this.userLogger) {
                 gateway.getCompanyById(this.userLogger.company,
                 res => {
@@ -177,8 +184,8 @@ import storage from '../storage';
                     alert('Erro, tente novamente mais tarde');
                 })
             }
-            this.themeLadyModoON = Boolean(storage.getThemeLadyModoON());
-            this.$vuetify.theme.dark = !this.themeLadyModoON;
+            // this.themeLadyModoON = Boolean(storage.getThemeLadyModoON());
+            // this.$vuetify.theme.dark = !this.themeLadyModoON;
             
         },       
     }
