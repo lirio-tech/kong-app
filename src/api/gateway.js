@@ -164,7 +164,18 @@ export default{
               console.log(error);
               errorCb(error)
           })        
-  },        
+  },       
+  applyPlan(companyId, plan, callback, errorCb) {
+    let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
+    Axios.put(url, plan)
+        .then(data => {
+            callback(data.data)
+        })
+        .catch(error => {
+            console.log(error);
+            errorCb(error)
+        })      
+  },
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)

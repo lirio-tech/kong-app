@@ -45,6 +45,7 @@
                 >
                     <v-radio-group
                         v-model="applyPlan.name"
+                        @change="selectedPlan"
                     >
                         <v-radio
                             label="Free"
@@ -308,13 +309,46 @@ export default {
             return;
         }
       },
-      parseDate(date) {
-        if (!date) return null;
-        const [day, month, year] = date.split('/');
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-      },      
+      selectedPlan() {
+          switch(this.applyPlan.name) {
+              case 'Basico':
+                  this.applyPlan.payment.price = 10;
+                  break;
+              case 'Gold':
+                  this.applyPlan.payment.price = 90;
+                  break;                  
+              case 'É Nóis':
+                  this.applyPlan.payment.price = 20;
+                  break;                          
+              case 'Tamo Junto':
+                  this.applyPlan.payment.price = 180;
+                  break;                            
+              case 'Infinity':
+                  this.applyPlan.payment.price = 900;
+                  break;                            
+              case 'Custom':
+                  this.applyPlan.payment.price = 200;
+                  break;                                                                                          
+          }
+      },
       applyPlanNow() {
-          alert(JSON.stringify(this.applyPlan));
+        if(!this.applyPlan.name) {
+            alert('Selecione o Plano');
+            return;
+        }
+        if( this.applyPlan.name === 'Free') {
+            alert('Plano Free em desenvolvimento');
+            return;
+        }
+
+        gateway.applyPlan(this.company._id, this.applyPlan,
+        res => {
+            this.company = res;
+            alert('Plano Alterado com Sucesso');
+        },
+        () => {
+            alert('Erro, Tente novamente');
+        })
       }
     },
     beforeMount() {

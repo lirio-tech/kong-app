@@ -95,21 +95,22 @@
                             </v-btn>
                         </router-link>                          
                     </span> 
-                    <span>Nome: {{ company.name }} </span> 
+                    <span><span class="grey--text">Nome:</span> {{ company.name }} </span> 
                     <br/>
-                    <span>Short Name: {{ company.shortName }} </span>
+                    <span><span class="grey--text">Short Name:</span> {{ company.shortName }} </span>
                     <br/>
-                    <span>Endereco: {{ company.endereco }} </span>     
-                    <br/><br/>                    
+                    <span v-if="company.endereco"><span class="grey--text">Endereco:</span> {{ company.endereco }} </span>     
+                                 
                     <v-card>
                         <br/>
                         <div 
-                            class="overline green--text" 
-                            align="center"
+                            class="green--text" 
+                            align="center" style="font-size: 1.4rem"
                             dark
                         >
                             Seu Plano Atual é o {{ company.plan.name }}
                         </div>
+                        
                         <br/>
                         <div 
                             class="overline green--text" 
@@ -121,12 +122,54 @@
                                 color="primary"
                                 @click="showPlanDialog(true)"
                             >
-                                Escolha um plano ideal para VC ;-)
+                                Veja o plano ideal para VC ;-)
                             </v-btn>
                             
                         </div>
                         <br/>
                     </v-card>  
+                    <br/>
+                    <span 
+                        v-if="company.plan && company.plan.payment"
+                    >
+                        <span class="grey--text">Pagamento: </span> 
+                        {{ company.plan.payment.price | currency }} 
+                    </span>     
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Vencimento do Plano: </span> 
+                        {{ company.plan.dateEnd }} 
+                    </span>       
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Valor/Mes: </span> 
+                        {{ company.plan.maxCash | currency }} 
+                    </span>     
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Numero Max de Usuarios: </span> 
+                        {{ company.plan.amountUsers }} 
+                    </span>                                                           
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Usuarios Admin: </span> 
+                        {{ company.plan.amountUsersAdmin }} 
+                    </span>                        
+                    <br/>
+                    <span 
+                        v-if="company.plan"
+                    >
+                        <span class="grey--text">Usuarios Common: </span> 
+                        {{ company.plan.amountUsersCommon }} 
+                    </span>                                            
 
                 </v-expansion-panel-content>
             </v-expansion-panel>
