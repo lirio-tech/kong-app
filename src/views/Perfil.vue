@@ -16,6 +16,8 @@
         <v-expansion-panels
             v-model="panel"
             multiple
+            hover
+            focusable
             >        
             <v-expansion-panel>
                 <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
