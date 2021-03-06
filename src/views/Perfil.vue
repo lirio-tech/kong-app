@@ -35,77 +35,11 @@
                     <span><span class="grey--text">Short Name:</span> {{ company.shortName }} </span>
                     <br/>
                     <span v-if="company.endereco"><span class="grey--text">Endereco:</span> {{ company.endereco }} </span>     
-                                 
-                    <v-card>
-                        <br/>
-                        <div 
-                            class="green--text" 
-                            align="center" style="font-size: 1.4rem"
-                            dark
-                        >
-                            Seu Plano Atual é o {{ company.plan.name }}
-                        </div>
-                        
-                        <br/>
-                        <div 
-                            class="overline green--text" 
-                            align="center"
-                            dark
-                        >                            
-                            <v-btn 
-                                small 
-                                color="primary"
-                                @click="showPlanDialog(true)"
-                            >
-                                Veja o plano ideal para VC ;-)
-                            </v-btn>
-                            
-                        </div>
-                        <br/>
-                    </v-card>  
-                    <span 
-                        v-if="company.plan && company.plan.payment"
-                    >
-                        <br/>
-                        <span class="grey--text">Pagamento: </span> 
-                        {{ company.plan.payment.price | currency }} 
-                    </span>     
-                    <span 
-                        v-if="company.plan && company.plan.name !== 'Free' && company.plan.name !== 'Infinity'"
-                    >
-                        <br/> 
-                        <span class="grey--text">Vencimento do Plano: </span> 
-                        {{ new Date(company.plan.dateEnd).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} 
-                    </span>       
-                    <span 
-                        v-if="company.plan"
-                    >
-                        <br/>
-                        <span class="grey--text">Valor/Mes: </span> 
-                        {{ company.plan.name === 'Free' ? 500 : company.plan.maxCash | currency }} 
-                    </span>     
-                    <span 
-                        v-if="company.plan"
-                    >
-                        <br/>
-                        <span class="grey--text">Numero Max de Usuarios: </span> 
-                        {{ company.plan.name === 'Free' ? 1 : company.plan.amountUsers }} 
-                    </span>                                                           
-                    <span 
-                        v-if="company.plan"
-                    >
-                        <br/>
-                        <span class="grey--text">Usuarios Admin: </span> 
-                        {{ company.plan.name === 'Free' ? 1 : company.plan.amountUsersAdmin }} 
-                    </span>                        
-                    <span 
-                        v-if="company.plan"
-                    >
-                        <br/>
-                        <span class="grey--text">Usuarios Comum: </span> 
-                        {{ company.plan.name === 'Free' ? 0 : company.plan.amountUsersCommon }} 
-                    </span>                                            
-
+                    <br />
+                    <CardPlanData 
+                        :company="company" 
+                        :showBtnPlanDialog="true"
+                    />
                 </v-expansion-panel-content>
             </v-expansion-panel>            
             <v-expansion-panel>
@@ -207,10 +141,12 @@
 import storage from '../storage';
 import DialogPlan from '../components/DialogPlan'
   //import gateway from '../api/gateway';
+import CardPlanData from '../components/CardPlanData'  
 export default {
     name: 'Perfil',
     components: {
-        DialogPlan
+        DialogPlan,
+        CardPlanData
     },
     data: () => ({
       isLoading: false, 
