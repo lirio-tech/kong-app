@@ -3,17 +3,26 @@
     <AppBar />
     <v-main>
         <v-row >
-            <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
+            <v-col cols="2" style="margin-top: 16px;" >   
+                <v-btn icon small style="display: inline;"
+                    @click="$router.go(-1)"
+                > 
+                    <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                </v-btn>
+            </v-col>                
+            <v-col align="center" cols="8" class="pt-6" style="padding: 0">
                 <p class="mr-2 text-center green--text" 
                    style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
                     Android
-                </p>  
+                </p>             
+            </v-col>
+            <v-col align="center" cols="12" class="pt-6" style="padding: 0">
                 <v-img 
                     src="../assets/android.webp"
-                    height="75"
-                    width="75"
-                ></v-img>                
-            </v-col>
+                    height="120"
+                    width="120"
+                ></v-img>   
+            </v-col>            
         </v-row>
         <br/><br/><br/>
         <v-row >
