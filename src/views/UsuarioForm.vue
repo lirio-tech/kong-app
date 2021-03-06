@@ -153,6 +153,7 @@
   import gateway from '../api/gateway'
   import AppBar from '../components/AppBar'
   import SnackBar from '../components/SnackBar'
+import storage from '../storage'
   import InputsUtils from '../utils/inputs'
   export default {
     name: 'UsuarioForm',
@@ -234,7 +235,7 @@
       }        
     },
     beforeMount() {
-      this.userLogged = JSON.parse(localStorage.getItem('user'));   
+      this.userLogged = storage.getUserLogged();   
       if(this.$route.params._id !== '_newUser') {
         gateway.getUserById(
                 this.$route.params._id,

@@ -79,7 +79,7 @@
                                         }) }}                            
                             </template> 
                             <template v-slot:item.type="{ item }">
-                               <v-chip :color="item.type === 'administrator' ? 'blue' : ''">
+                               <v-chip :color="item.type === 'administrator' ? 'primary' : ''">
                                 {{ getTypePtBR(item.type) }}                            
                                </v-chip>
                             </template> 
@@ -94,6 +94,7 @@
 <script>
   import gateway from '../api/gateway';
   import AppBar from '../components/AppBar'
+import storage from '../storage';
   export default {
     name: 'UsuarioList',
     components: { AppBar },
@@ -135,7 +136,7 @@
       }
     },
     beforeMount() {
-      this.userLogged = JSON.parse(localStorage.getItem('user'));
+      this.userLogged = storage.getUserLogged();
       this.getUsers();
     }
   }

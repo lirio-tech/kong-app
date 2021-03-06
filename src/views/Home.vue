@@ -156,6 +156,7 @@
   import gateway from '../api/gateway';
   import AppBar from '../components/AppBar'
   import DialogPlan from '../components/DialogPlan'
+  import storage from '../storage';
   export default {
     name: 'Home',
     components: { 
@@ -296,10 +297,10 @@
         this.dialogPlan = show
       },
       verifyAccontPremium() {
-        let cpny = JSON.parse(localStorage.getItem('company'))
+        let cpny = storage.getCompany();
         let i = Number(localStorage.getItem('dialogPlan') ? localStorage.getItem('dialogPlan') : '0')+1;
         localStorage.setItem('dialogPlan', i)
-        if(i == 6
+        if(i % 8 === 0
             && cpny 
             && cpny.plan.name === 'Free' 
             && this.userLogged.type === 'administrator') {
@@ -308,7 +309,7 @@
       }        
     },
     beforeMount() {
-      this.userLogged = JSON.parse(localStorage.getItem('user'))
+      this.userLogged = storage.getUserLogged();
       this.periodo = this.formatarPeriodo(new Date(), new Date())
       this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()

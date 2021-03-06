@@ -15,9 +15,15 @@
                         color="black"
                         size="150"
                     >
-                  <v-img 
-                    avatar
-                    src="../assets/logo.png" />
+                      <!-- <v-img 
+                        v-if="$vuetify.theme.dark"
+                        avatar
+                        src="../assets/logo.png" 
+                      /> -->
+                      <v-img 
+                        avatar
+                        src="../assets/logo.png" 
+                      />                      
                    </v-avatar>
                   </center>
               <v-row justify="center">

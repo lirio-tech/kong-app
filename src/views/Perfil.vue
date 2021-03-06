@@ -161,7 +161,7 @@ export default {
         }
     },
     beforeMount() {
-      this.userLogged = JSON.parse(localStorage.getItem('user'));
+      this.userLogged = storage.getUserLogged();
       this.company = storage.getCompany();
     }
   }

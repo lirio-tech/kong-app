@@ -7,7 +7,7 @@
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.1rem;">
-                  <span :class="getColor()">{{ company ? company.shortName : 'Wiskritório App' }}</span>
+                  <span class="primary--text">{{ company ? company.shortName : 'Wiskritório App' }}</span>
                 </span>  
               </v-btn>
             </router-link>
@@ -49,10 +49,25 @@
                                     </div>
                                 </v-col>
                             </v-row>
+                            <br/>
+                            <v-divider />                                                 
                         </router-link>
 
+                        <div style="cursor: pointer;" @click="setThemeLadyModoON(themeLadyModoON)">      
+                            <v-list-item>
+                                <v-list-item-content>
+                                    <v-list-item-title>
+                                        White/Black
+                                    </v-list-item-title>
+                                </v-list-item-content>
+                                <v-list-item-action>
+                                    <v-switch v-model="themeLadyModoON" />
+                                </v-list-item-action>
+                            </v-list-item>
+                            <v-divider />                                                 
+                        </div>
+
                         <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/users" style="color: inherit; text-decoration: none">
-                            <v-divider class="my-1"></v-divider>
                             <v-col cols="10" class="font-weight-medium">
                             Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
                             </v-col>
@@ -119,6 +134,7 @@
 <script>
 import DialogPlan from './DialogPlan'
 import gateway from '../api/gateway';
+import storage from '../storage';
     // import { mapGetters } from 'vuex'
     export default {
         name: 'AppBar',
@@ -129,11 +145,17 @@ import gateway from '../api/gateway';
             userLogger: null,
             company: null,
             dialog: false,
-            dialogPlan: false
+            dialogPlan: false,
+            themeLadyModoON: true
         }),
         methods: {
+            setThemeLadyModoON(isLadyModoON) {
+                storage.setThemeLadyModoON(isLadyModoON);
+                this.themeLadyModoON = isLadyModoON;
+                this.$vuetify.theme.dark = !this.themeLadyModoON;
+            },            
             logout() {
-                localStorage.clear();
+                storage.logout();
                 this.$router.push('/login');
             },
             showDialog(show) {
@@ -141,19 +163,7 @@ import gateway from '../api/gateway';
             },
             showPlanDialog(show) {
                 this.dialogPlan = show
-            },
-            getColor() {
-                let color = 'primary--text';
-                if(new Date().getDay() % 5 == 0) 
-                    color = 'primary--text'
-                else if(new Date().getDay() % 4 == 0) 
-                    color = 'primary--text'
-                else if(new Date().getDay() % 3 == 0) 
-                    color = 'primary--text'     
-                else if(new Date().getDay() % 2 == 0) 
-                    color = 'primary--text' 
-                return color; 
-            } 
+            }
         },  
         beforeMount() {
             this.userLogger = JSON.parse(localStorage.getItem('user'));
@@ -167,16 +177,9 @@ import gateway from '../api/gateway';
                     alert('Erro, tente novamente mais tarde');
                 })
             }
-            // if(cpny) {
-            //     this.$store.commit('companyStore/setCompany', cpny); 
-            // } else {
-            //     localStorage.clear();
-            // }
-        },
-        // computed: {
-        //     ...mapGetters({ 
-        //         company: "companyStore/company"
-        //     }), 
-        // }       
+            this.themeLadyModoON = Boolean(storage.getThemeLadyModoON());
+            this.$vuetify.theme.dark = !this.themeLadyModoON;
+            
+        },       
     }
 </script>

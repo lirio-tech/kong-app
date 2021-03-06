@@ -5,11 +5,11 @@ import storage from '../storage'
 const axiosRequestIntercept = () => {
     axios.interceptors.request.use(
         request => {
-            let token = localStorage.getItem('TOKEN');
+            let token = storage.getToken();
             if(token) {
                 request.headers.Authorization = 'Bearer ' + token;
             }
-            if(localStorage.getItem('company')) {
+            if(storage.getCompany()) {
               request.headers.Company = storage.getCompany()._id;
             }
             return request;
@@ -28,8 +28,8 @@ const axiosInterceptResponse = () => {
       },
       error => {  
           console.log('response', error);
-          if(error.response.status === 403) {
-              localStorage.clear();
+          if(error.response.status === 401) {
+              storage.logout();
           }
           return new Promise((resolve, reject) => {
             reject(error);

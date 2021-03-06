@@ -150,6 +150,7 @@
 
 <script>
 import gateway from '../api/gateway'
+import storage from '../storage'
 export default {
     props:['dialog'],
     data () {
@@ -161,8 +162,8 @@ export default {
       }
     },
     beforeMount() {
-      this.company = JSON.parse(localStorage.getItem('company'))
-      this.userLooged = JSON.parse(localStorage.getItem('user'));
+      this.company = storage.getCompany();
+      this.userLooged = storage.getUserLogged();
       this.plans = gateway.getAllPlans();
     },    
     methods: {

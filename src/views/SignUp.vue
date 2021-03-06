@@ -152,6 +152,7 @@
             </v-col>
         
         </v-row>
+        <br/><br/>
         <v-row justify="center">
             <router-link 
                 :to="{ path: '/login' }" 
@@ -172,6 +173,7 @@
 <script>
 import gateway from '../api/gateway'
 import AppBar from '../components/AppBar'
+import storage from '../storage';
 import InputsUtils from '../utils/inputs'
 const STEP_COMPANY = 1;
 const STEP_USER = 2;
@@ -215,9 +217,9 @@ export default {
                     res => {
                         console.log(res);
                         this.loading = false;
-                        localStorage.setItem('TOKEN', res.token);
-                        localStorage.setItem('user', JSON.stringify(res.user));
-                        localStorage.setItem('company', JSON.stringify(res.company));
+                        storage.setToken(res.token);
+                        storage.setUserLogged(JSON.stringify(res.user));
+                        storage.setCompany(JSON.stringify(res.company));
                         this.$router.push('/');                       
                     },
                     (err) => {

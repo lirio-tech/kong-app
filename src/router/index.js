@@ -12,6 +12,7 @@ import Help from '../views/Help'
 import Android from '../views/Android'
 import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
+import storage from '../storage'
 
 Vue.use(VueRouter)
 
@@ -88,7 +89,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('TOKEN');
+  const token = storage.getToken();
   if(to.path.startsWith('/public')) {
     next()
   } else if(to.name !== 'Login' && to.name !== 'SignUp') {

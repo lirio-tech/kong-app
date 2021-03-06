@@ -240,6 +240,7 @@
   import gateway from '../api/gateway'
   import { mapGetters } from 'vuex'
   import DialogPlan from '../components/DialogPlan'
+import storage from '../storage'
   export default {
     name: 'OrdemServico',
     components: {
@@ -409,7 +410,7 @@
       }
     },
     beforeMount() {
-      this.userLogged = JSON.parse(localStorage.getItem('user'));
+      this.userLogged = storage.getUserLogged();
       console.log(this.$route.params._id);
       if(this.$route.params._id) {
         gateway.getOrderById(this.$route.params._id,
