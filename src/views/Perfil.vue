@@ -13,97 +13,10 @@
                     <span style="font-size: 2.0rem !important;">Perfil</span>
             </v-col>
         </v-row>
-        <v-expansion-panels accordion hover focusable>
-            <v-expansion-panel>
-                <v-expansion-panel-header>Perfil</v-expansion-panel-header>
-                <v-expansion-panel-content>
-
-                    <v-row>
-                        <v-col cols="12" sm="12">
-                            <v-form 
-                            v-model="valid" 
-                            v-on:submit.prevent="save"
-                            id="produtoForm"
-                            ref="produtoForm">
-                                <v-container>
-                                <v-row>
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field 
-                                            v-model="userLogged.username"
-                                            label="Username"
-                                            ref="username"
-                                            filled required readonly>
-                                        </v-text-field>  
-                                    </v-col>
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field 
-                                            v-model="userLogged.name"
-                                            label="Nome"
-                                            ref="nome"
-                                            required
-                                            readonly
-                                            filled>
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field 
-                                            v-model="userLogged.type"
-                                            label="Tipo"
-                                            ref="tipo"
-                                            required
-                                            readonly
-                                            filled>
-                                        </v-text-field>
-                                    </v-col>                 
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field 
-                                            v-model="userLogged.email"
-                                            label="E-mail"
-                                            ref="email"
-                                            required
-                                            readonly
-                                            filled>
-                                        </v-text-field>
-                                    </v-col>       
-                                    <v-col cols="12" md="4">                      
-                                        <v-text-field 
-                                            v-model="userLogged.phone_number"
-                                            label="Celular"
-                                            ref="phone"
-                                            required
-                                            readonly
-                                            filled>
-                                        </v-text-field>
-                                    </v-col>                                                                                                          
-                                    <v-col cols="12" md="4">
-                                        <v-text-field
-                                            label="Criado"
-                                            v-model="userLogged.createdAt"
-                                            ref="createdAt"
-                                            required filled disabled
-                                        />
-                                    </v-col>
-                                    <!-- <v-col cols="12" md="4">
-                                        <v-text-field
-                                            label="Alterado"
-                                            v-model="userLogged.updatedAt"
-                                            ref="updatedAt"
-                                            required filled disabled
-                                        />
-                                    </v-col>                                     -->
-                                </v-row>
-                                </v-container>
-                            </v-form>                
-                        </v-col>
-                    </v-row>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel v-if="false">
-                <v-expansion-panel-header>Alterar Senha</v-expansion-panel-header>
-                <v-expansion-panel-content>
-
-                </v-expansion-panel-content>
-            </v-expansion-panel>
+        <v-expansion-panels
+            v-model="panel"
+            multiple
+            >        
             <v-expansion-panel>
                 <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -194,6 +107,96 @@
                     </span>                                            
 
                 </v-expansion-panel-content>
+            </v-expansion-panel>            
+            <v-expansion-panel>
+                <v-expansion-panel-header>Perfil</v-expansion-panel-header>
+                <v-expansion-panel-content>
+
+                    <v-row>
+                        <v-col cols="12" sm="12">
+                            <v-form 
+                            v-model="valid" 
+                            v-on:submit.prevent="save"
+                            id="produtoForm"
+                            ref="produtoForm">
+                                <v-container>
+                                <v-row>
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.username"
+                                            label="Username"
+                                            ref="username"
+                                            filled required readonly>
+                                        </v-text-field>  
+                                    </v-col>
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.name"
+                                            label="Nome"
+                                            ref="nome"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.type"
+                                            label="Tipo"
+                                            ref="tipo"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>                 
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.email"
+                                            label="E-mail"
+                                            ref="email"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>       
+                                    <v-col cols="12" md="4">                      
+                                        <v-text-field 
+                                            v-model="userLogged.phone_number"
+                                            label="Celular"
+                                            ref="phone"
+                                            required
+                                            readonly
+                                            filled>
+                                        </v-text-field>
+                                    </v-col>                                                                                                          
+                                    <v-col cols="12" md="4">
+                                        <v-text-field
+                                            label="Criado"
+                                            v-model="userLogged.createdAt"
+                                            ref="createdAt"
+                                            required filled disabled
+                                        />
+                                    </v-col>
+                                    <!-- <v-col cols="12" md="4">
+                                        <v-text-field
+                                            label="Alterado"
+                                            v-model="userLogged.updatedAt"
+                                            ref="updatedAt"
+                                            required filled disabled
+                                        />
+                                    </v-col>                                     -->
+                                </v-row>
+                                </v-container>
+                            </v-form>                
+                        </v-col>
+                    </v-row>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel v-if="false">
+                <v-expansion-panel-header>Alterar Senha</v-expansion-panel-header>
+                <v-expansion-panel-content>
+
+                </v-expansion-panel-content>
             </v-expansion-panel>
 
         </v-expansion-panels>
@@ -210,10 +213,11 @@ export default {
         DialogPlan
     },
     data: () => ({
-      isLoading: false,
+      isLoading: false, 
       show: false,
       valid: true,
       dialogPlan: false,
+      panel: [0],
       userLogged: {
         type: 'none'
       }, 
