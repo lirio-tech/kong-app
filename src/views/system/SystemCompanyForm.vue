@@ -49,10 +49,6 @@
                         mandatory
                     >
                         <v-radio
-                            label="Free"
-                            value="Free"
-                        ></v-radio>
-                        <v-radio
                             label="Basico"
                             value="Basico"
                         ></v-radio>
@@ -78,7 +74,7 @@
                         ></v-radio>                                                                                                                                                                
                     </v-radio-group>                                                           
                 </v-col>    
-                <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
+                <v-col cols="12" md="4" v-if="applyPlan.name !== 'Free'">
                     <v-text-field 
                         v-model="applyPlan.payment.price"
                         label="Valor do Pagamento"
@@ -87,12 +83,68 @@
                         filled
                     />
                 </v-col>        
-                
+                <v-col cols="12" md="4" v-if="applyPlan.name !== 'Free'">
+                    <v-text-field 
+                        v-model="applyPlan.dateStartedPtBR"
+                        label="Inicio"
+                        ref="applyInicio"
+                        v-mask="'##/##/####'"
+                        prepend-icon="mdi-calendar"
+                        filled
+                    />
+                </v-col>
+                <v-col cols="12" md="4" v-if="applyPlan.name !== 'Free'">
+                    <v-text-field 
+                        v-model="applyPlan.dateEndPtBR"
+                        label="Final"
+                        v-mask="'##/##/####'"
+                        ref="applyFim"
+                        prepend-icon="mdi-calendar"
+                        filled
+                    />
+                </v-col>                                  
+                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
+                    <v-text-field 
+                        v-model="applyPlan.amountUsers"
+                        label="Qtde Usuarios"
+                        ref="applyAmountUsers"
+                        prepend-icon="mdi-account"
+                        filled
+                    />
+                </v-col>     
+                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
+                    <v-text-field 
+                        v-model="applyPlan.amountUsersAdmin"
+                        label="Qtde Usuarios"
+                        ref="applyamountUsersAdmin"
+                        prepend-icon="mdi-account"
+                        filled
+                    />
+                </v-col>
+                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
+                    <v-text-field 
+                        v-model="applyPlan.amountUsersCommon"
+                        label="Qtde Usuarios"
+                        ref="amountUsersCommon"
+                        prepend-icon="mdi-account"
+                        filled
+                    />
+                </v-col>                        
+                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
+                    <v-text-field 
+                        v-model="applyPlan.maxCash"
+                        label="R$ Max de Valor Lancado"
+                        ref="maxCash"
+                        prepend-icon="mdi-cash"
+                        filled
+                    />
+                </v-col>    
+
                     <v-btn 
                         type="submit" 
                         depressed  
                         x-large 
-                        color="primary"
+                        color="green"
                         :loading="loadingSave"
                         :disabled="loadingSave"
                         style="width: 100%"
@@ -295,7 +347,6 @@ export default {
         loadingSave: false,
         valid: true,
         show: false,
-        dateFormatted: '',
         company: { 
             plan: {}
         },
@@ -311,31 +362,104 @@ export default {
             return;
         }
       },
+      parseDate(date) {
+        if (!date) return null;
+        const [day, month, year] = date.split('/');
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      },           
       getPlan(planName) {
-          let result = 0;
+          let result = {
+              payment: { price: 0 },
+              dateStartedPtBR: new Date(),
+              dateEndPtBR: new Date(),
+              amountUsers: 1,
+              amountUsersAdmin: 1,
+              amountUsersCommon: 0,  
+              maxCash: 500,
+          };
           switch(planName) {
               case 'Basico':
-                  result = 10;
+                  result.payment.price = 10;
+                  result.amountUsers = 2;
+                  result.amountUsersAdmin = 1;
+                  result.amountUsersCommon = 1;
+                  result.maxCash = 2000;
+                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
+                  result.dateEndPtBR = new Date(
+                      result.dateEndPtBR.getFullYear(),
+                      result.dateEndPtBR.getMonth()+1,
+                      result.dateEndPtBR.getDate()
+                  ).toLocaleString('pt-BR').substring(0,10);
                   break;
               case 'Gold':
-                  result = 90;
+                  result.payment.price = 90;
+                  result.amountUsers = 2;
+                  result.amountUsersAdmin = 1;
+                  result.amountUsersCommon = 1;
+                  result.maxCash = 4000;                  
+                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
+                  result.dateEndPtBR = new Date(
+                      result.dateEndPtBR.getFullYear(),
+                      result.dateEndPtBR.getMonth()+12,
+                      result.dateEndPtBR.getDate()
+                  ).toLocaleString('pt-BR').substring(0,10);
                   break;                  
               case 'É Nóis':
-                  result = 20;
+                  result.payment.price = 20;
+                  result.amountUsers = 6;
+                  result.amountUsersAdmin = 2;
+                  result.amountUsersCommon = 4;     
+                  result.maxCash = 6000;             
+                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
+                  result.dateEndPtBR = new Date(
+                      result.dateEndPtBR.getFullYear(),
+                      result.dateEndPtBR.getMonth()+1,
+                      result.dateEndPtBR.getDate()
+                  ).toLocaleString('pt-BR').substring(0,10);
                   break;                          
               case 'Tamo Junto':
-                  result = 180;
+                  result.payment.price = 180;
+                  result.amountUsers = 6;
+                  result.amountUsersAdmin = 2;
+                  result.amountUsersCommon = 4;       
+                  result.maxCash = 12000;                             
+                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
+                  result.dateEndPtBR = new Date(
+                      result.dateEndPtBR.getFullYear(),
+                      result.dateEndPtBR.getMonth()+12,
+                      result.dateEndPtBR.getDate()
+                  ).toLocaleString('pt-BR').substring(0,10);
                   break;                            
               case 'Infinity':
-                  result = 900;
+                  result.payment.price = 900;
+                  result.amountUsers = 8;
+                  result.amountUsersAdmin = 3;
+                  result.amountUsersCommon = 5;    
+                  result.maxCash = 25000;                             
+                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
+                  result.dateEndPtBR = new Date(2099, 5, 20).toLocaleString('pt-BR').substring(0,10);
                   break;                            
               case 'Custom':
-                  result = 200;
+                  result.payment.price = 200;
+                  result.amountUsers = 3;
+                  result.amountUsersAdmin = 1;
+                  result.amountUsersCommon = 2;    
+                  result.maxCash = 4500;                      
+                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
+                  result.dateEndPtBR = new Date(
+                      result.dateEndPtBR.getFullYear(),
+                      result.dateEndPtBR.getMonth()+2,
+                      result.dateEndPtBR.getDate()                      
+                  ).toLocaleString('pt-BR').substring(0,10);
                   break;                                                                                          
           }
           return result;
       },
       applyPlanNow() {
+        this.applyPlan.dateStarted = this.parseDate(this.applyPlan.dateStartedPtBR);
+        this.applyPlan.dateEnd = this.parseDate(this.applyPlan.dateEndPtBR);
+        alert(JSON.stringify(this.applyPlan));
+
         if(!this.applyPlan.name) {
             alert('Selecione o Plano');
             return;
@@ -346,13 +470,13 @@ export default {
         }
 
         gateway.applyPlan(this.company._id, this.applyPlan,
-        res => {
-            this.company = res;
-            alert('Plano Alterado com Sucesso');
-        },
-        () => {
-            alert('Erro, Tente novamente');
-        })
+            res => {
+                this.company = res;
+                alert('Plano Alterado com Sucesso');
+            },
+            () => {
+                alert('Erro, Tente novamente');
+            })
       }
     },
     beforeMount() {
@@ -370,7 +494,14 @@ export default {
         applyPlan: {
             deep: true,
             handler()  {
-                this.applyPlan.payment.price = this.getPlan(this.applyPlan.name);
+                let getPlan = this.getPlan(this.applyPlan.name);
+                this.applyPlan.payment.price = getPlan.payment.price;
+                this.applyPlan.dateStartedPtBR = getPlan.dateStartedPtBR;
+                this.applyPlan.dateEndPtBR = getPlan.dateEndPtBR;
+                this.applyPlan.amountUsers = getPlan.amountUsers;
+                this.applyPlan.amountUsersAdmin = getPlan.amountUsersAdmin;
+                this.applyPlan.amountUsersCommon = getPlan.amountUsersCommon;    
+                this.applyPlan.maxCash = getPlan.maxCash;
             }   
         }
     },
