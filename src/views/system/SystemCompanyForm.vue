@@ -115,7 +115,7 @@
                 <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
                     <v-text-field 
                         v-model="applyPlan.amountUsersAdmin"
-                        label="Qtde Usuarios"
+                        label="Qtde Usuarios Admin"
                         ref="applyamountUsersAdmin"
                         prepend-icon="mdi-account"
                         filled
@@ -124,7 +124,7 @@
                 <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
                     <v-text-field 
                         v-model="applyPlan.amountUsersCommon"
-                        label="Qtde Usuarios"
+                        label="Qtde Usuarios Comum"
                         ref="amountUsersCommon"
                         prepend-icon="mdi-account"
                         filled
