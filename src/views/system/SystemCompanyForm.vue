@@ -43,6 +43,7 @@
                 <v-col cols="12" md="4"
                     style="margin-left: 20%"
                 >
+                    <h3>Plano: {{ applyPlan.name }}</h3>
                     <v-radio-group
                         v-model="applyPlan.name"
                         mandatory
@@ -300,6 +301,7 @@ export default {
         },
         view: 'CHOOSE',
         applyPlan: {
+            name: '',
             payment: {}
         }
     }),
@@ -369,7 +371,7 @@ export default {
             deep: true,
             handler()  {
                 this.applyPlan.payment.price = this.getPlan(this.applyPlan.name);
-            }      
+            }   
         }
     },
   }
