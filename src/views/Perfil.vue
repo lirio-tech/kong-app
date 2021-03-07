@@ -41,6 +41,7 @@
                     <CardPlanData 
                         :company="company" 
                         :showBtnPlanDialog="true"
+                        v-on:show-plan-dialog="showPlanDialog"
                     />
                 </v-expansion-panel-content>
             </v-expansion-panel>            

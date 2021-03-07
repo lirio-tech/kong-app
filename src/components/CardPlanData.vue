@@ -15,10 +15,10 @@
             dark
             v-if="showBtnPlanDialog"
         >                            
-            <v-btn 
+            <v-btn  
                 small 
                 color="primary"
-                @click="showPlanDialog(true)"
+                @click="$emit('show-plan-dialog',true)"
             >
                 Veja o plano ideal para VC ;-)
             </v-btn>
