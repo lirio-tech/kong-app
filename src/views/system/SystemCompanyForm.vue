@@ -45,7 +45,7 @@
                 >
                     <v-radio-group
                         v-model="applyPlan.name"
-                        @click="selectedPlan"
+                        mandatory
                     >
                         <v-radio
                             label="Free"
@@ -309,27 +309,29 @@ export default {
             return;
         }
       },
-      selectedPlan() {
-          switch(this.applyPlan.name) {
+      getPlan(planName) {
+          let result = 0;
+          switch(planName) {
               case 'Basico':
-                  this.applyPlan.payment.price = 10;
+                  result = 10;
                   break;
               case 'Gold':
-                  this.applyPlan.payment.price = 90;
+                  result = 90;
                   break;                  
               case 'É Nóis':
-                  this.applyPlan.payment.price = 20;
+                  result = 20;
                   break;                          
               case 'Tamo Junto':
-                  this.applyPlan.payment.price = 180;
+                  result = 180;
                   break;                            
               case 'Infinity':
-                  this.applyPlan.payment.price = 900;
+                  result = 900;
                   break;                            
               case 'Custom':
-                  this.applyPlan.payment.price = 200;
+                  result = 200;
                   break;                                                                                          
           }
+          return result;
       },
       applyPlanNow() {
         if(!this.applyPlan.name) {
@@ -361,6 +363,14 @@ export default {
                 },
                 () => alert('Erro, tente novamente')
         );  
-    }
+    },
+    watch: {
+        applyPlan: {
+            deep: true,
+            handler()  {
+                this.applyPlan.payment.price = this.getPlan(this.applyPlan.name);
+            }      
+        }
+    },
   }
 </script>
