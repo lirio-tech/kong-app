@@ -45,7 +45,7 @@
                 >
                     <v-radio-group
                         v-model="applyPlan.name"
-                        @change="selectedPlan"
+                        @click="selectedPlan"
                     >
                         <v-radio
                             label="Free"
