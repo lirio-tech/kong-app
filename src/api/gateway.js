@@ -132,6 +132,17 @@ export default{
                 errorCb(error)
             })                
     },    
+    becomeUserAdmin(_idUser, callback, errorCb) {
+      let url = `${USERS_API}/${_idUser}/become-admin`;
+      Axios.patch(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })         
+    },
     UpdatePassword(_idUser, userPasswords, callback, errorCb) {
         let url = USERS_API+'/'+_idUser;
         Axios.patch(url, userPasswords)

@@ -173,7 +173,7 @@
                                         size="1" 
                                         :items="users"
                                         prepend-icon="mdi-account"
-                                        label="Cabeleiro"
+                                        label="Profissional"
                                         ref="user"
                                         required filled 
                                         item-text='name'

@@ -173,7 +173,7 @@
       },
       headers: [
           { text: "Data", value: "date" },
-          { text: "Cabelereiro", value: "user.name" },
+          { text: "Profissional", value: "user.name" },
           { sortable: false, text: "Servicos", value: "servicess" },
           { text: "Valor", value: "total" },
           { text: "Cliente", value: "customer.name" },

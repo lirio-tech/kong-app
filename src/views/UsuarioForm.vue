@@ -132,6 +132,7 @@
                     align="center"
                     justify="space-around"
                 >
+                    <v-col cols="12" md="12" align="center">
                         <v-btn 
                             type="submit" 
                             depressed  
@@ -139,8 +140,20 @@
                             color="success"
                             :loading="loadingSave"
                             :disabled="loadingSave"
-                            style="width: 50%"
-                        >Salvar</v-btn>                                        
+                            style="width: 48%"
+                        >Salvar</v-btn>        
+                        <v-btn 
+                            v-if="user._id"
+                            type="button" 
+                            depressed  
+                            x-large 
+                            color="primary"
+                            :loading="loadingAdm"
+                            :disabled="loadingAdm"
+                            style="width: 48%"
+                            @click="becomeAdmin"
+                        >Tornar Admin</v-btn>         
+                    </v-col>                                                  
                 </v-row>                    
             </v-form>                                                
             <br/><br/>
@@ -150,12 +163,12 @@
 </template>
 
 <script>
-  import gateway from '../api/gateway'
-  import AppBar from '../components/AppBar'
-  import SnackBar from '../components/SnackBar'
+import gateway from '../api/gateway'
+import AppBar from '../components/AppBar'
+import SnackBar from '../components/SnackBar'
 import storage from '../storage'
-  import InputsUtils from '../utils/inputs'
-  export default {
+import InputsUtils from '../utils/inputs'
+export default {
     name: 'UsuarioForm',
     components: { 
         AppBar, 
@@ -163,6 +176,7 @@ import storage from '../storage'
     },
     data: () => ({
         loadingSave: false,
+        loadingAdm: false,
         valid: true,
         show: false,
         user: { 
@@ -180,6 +194,21 @@ import storage from '../storage'
         ],                                  
     }),
     methods: {
+      becomeAdmin() {
+          gateway.becomeUserAdmin(this.user._id,
+            res => {
+                console.log(res);
+                this.$router.push('/admin/users');                
+            }, err => {
+                if(err.response.status === 412 || 
+                   err.response.status === 422 ||
+                   err.response.status === 403) {
+                    alert(err.response.data.message)
+                } else {                        
+                    alert('Erro ao tornar o usuario um Admin, tente novamente');                
+                }
+            })
+      },
       save() {
         this.user.disabled = !this.user.enabled;
         if(!this.$refs.userForm.validate()) {

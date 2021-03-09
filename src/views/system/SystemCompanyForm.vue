@@ -458,8 +458,7 @@ export default {
       applyPlanNow() {
         this.applyPlan.dateStarted = this.parseDate(this.applyPlan.dateStartedPtBR);
         this.applyPlan.dateEnd = this.parseDate(this.applyPlan.dateEndPtBR);
-        alert(JSON.stringify(this.applyPlan));
-
+        
         if(!this.applyPlan.name) {
             alert('Selecione o Plano');
             return;
@@ -473,6 +472,7 @@ export default {
             res => {
                 this.company = res;
                 alert('Plano Alterado com Sucesso');
+                this.view = 'EDIT'
             },
             () => {
                 alert('Erro, Tente novamente');
