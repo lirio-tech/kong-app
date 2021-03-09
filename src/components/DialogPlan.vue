@@ -45,7 +45,7 @@
                     class="headline " 
                     :style="'color:'+plan.color"
                   >
-                    {{ plan.name }} 
+                    {{ plan.name }}
                     <v-chip 
                       v-if="company && company.plan.name === plan.name"
                       color="green" 
@@ -161,7 +161,7 @@ export default {
     },
     beforeMount() {
       this.company = storage.getCompany();
-      this.userLooged = storage.getUserLogged();
+      this.userLogged = storage.getUserLogged();
       this.plans = gateway.getAllPlans();
     },    
     methods: {
@@ -169,7 +169,7 @@ export default {
         if(plan.name === 'Free') {
           return;
         }
-        if(!this.userLooged) {
+        if(!this.userLogged) {
           alert('Cadastre-se ou Efetue o Login para escolher seu Plano');
           return;
         }
