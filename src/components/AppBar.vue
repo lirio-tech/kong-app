@@ -67,19 +67,19 @@
                             <v-divider />                                                 
                         </div> -->
 
-                        <router-link v-if="userLogger && userLogger.type === 'administrator'" to="/admin/users" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                            Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>admin</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>          
-
                         <router-link v-if="userLogger && userLogger.type === 'sys_admin'" to="/system" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                                System <v-chip color="cyan" style="margin-left: 15px;" outlined small>system</v-chip>
+                                System <v-chip color="red" style="margin-left: 15px;" outlined small>SYSTEM</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>                                                
+
+                        <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                            Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>          
 
                         <router-link v-if="!userLogger" to="/login" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
@@ -142,6 +142,7 @@
 import DialogPlan from './DialogPlan'
 import gateway from '../api/gateway';
 import storage from '../storage';
+import UserTypes from '../utils/UserTypes'
     // import { mapGetters } from 'vuex'
     export default {
         name: 'AppBar',
@@ -170,6 +171,9 @@ import storage from '../storage';
             },
             showPlanDialog(show) {
                 this.dialogPlan = show
+            },
+            isAdmin() {
+                return UserTypes.isAdmin(this.userLogger.type);
             }
         },  
         beforeMount() {

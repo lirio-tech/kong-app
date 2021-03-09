@@ -65,16 +65,30 @@
                       outlined
                   >
                       <v-list-item three-line>
-                      <v-list-item-content>                
-                              <div class="overline mb-4">
+                      <v-list-item-content>        
+                            <v-col cols="11">
+                              <div class="overline mb-4 grey--text">
                                   Periodo: 
                                   <!-- {{ periodo.inicio.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} a 
                                   {{ periodo.fim.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} -->
                                   <span class="orange--text">{{ consolidado.periodoDescricao }}</span>
-                              </div>
+                              </div>                           
+                            </v-col>
+                            <v-col cols="1" v-if="false">
+                              <span class="d-flex justify-end" flex v-if="isAdmin">
+                                  <router-link to="/analytics" style="color: inherit; text-decoration: none">
+                                      <v-btn fab small color="primary">
+                                          <v-icon>
+                                              mdi-chart-bar
+                                          </v-icon>    
+                                      </v-btn>
+                                  </router-link>                          
+                              </span>     
+                            </v-col>                         
+
                               
-                              <v-list-item-title class="headline mb-1" v-if="userLogged.type === 'administrator'">
-                                  <div v-if="!loading">
+                              <v-list-item-title class="headline mb-1" v-if="isAdmin()">
+                                  <div v-if="!loading" class="display-1">
                                     Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
                                   </div>
                                   <div v-else>
@@ -88,17 +102,17 @@
                               <v-list-item-subtitle>
                                   <br/>
                                   <div v-if="!loading">
-                                    <h3>
+                                    <span class="headline">
                                       Quantidade: <span class="primary--text">{{ orders.length }}</span>
-                                    </h3>
+                                    </span>
                                   </div>                                
                               </v-list-item-subtitle>                                              
                               <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
                                   <br/>
                                   <div v-if="!loading">
-                                    <h3 v-if="userLogged.name === cab[0] || userLogged.type ==='administrator'">
+                                    <span class="headline" v-if="userLogged.name === cab[0] || isAdmin()">
                                       {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
-                                    </h3>
+                                    </span>
                                   </div>
                               </v-list-item-subtitle>                
                       </v-list-item-content>
@@ -153,10 +167,11 @@
 </template>
 
 <script>
-  import gateway from '../api/gateway';
+  import gateway from '../api/gateway'
   import AppBar from '../components/AppBar'
   import DialogPlan from '../components/DialogPlan'
-  import storage from '../storage';
+  import storage from '../storage'
+  import UserTypes from '../utils/UserTypes'
   export default {
     name: 'Home',
     components: { 
@@ -190,6 +205,9 @@
       }
     }),
     methods: {
+      isAdmin() {
+        return UserTypes.isAdmin(this.userLogged.type);
+      },
       selectedPeriodo() {
         if(this.selectPeriodo === 'Ontem') {
            let ontem = new Date();
@@ -303,7 +321,7 @@
         if(i % 8 === 0
             && cpny 
             && cpny.plan.name === 'Free' 
-            && this.userLogged.type === 'administrator') {
+            && this.isAdmin()) {
           this.dialogPlan = true
         }
       }        

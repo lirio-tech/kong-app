@@ -22,8 +22,7 @@
             <v-expansion-panel>
                 <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <br/>
-                    <span class="d-flex justify-end" flex v-if="userLogged.type === 'administrator'">
+                    <span class="d-flex justify-end" flex v-if="isAdmin">
                         <router-link to="/" style="color: inherit; text-decoration: none">
                             <v-btn fab x-small>
                                 <v-icon>
@@ -145,6 +144,7 @@ import storage from '../storage';
 import DialogPlan from '../components/DialogPlan'
   //import gateway from '../api/gateway';
 import CardPlanData from '../components/CardPlanData'  
+import UserTypes from '../utils/UserTypes'
 export default {
     name: 'Perfil',
     components: {
@@ -166,6 +166,9 @@ export default {
     methods: {
         showPlanDialog(show) {
             this.dialogPlan = show
+        },
+        isAdmin() {
+            return UserTypes.isAdmin(this.userLogged.type);
         }
     },
     beforeMount() {

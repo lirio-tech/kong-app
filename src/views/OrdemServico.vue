@@ -23,7 +23,7 @@
                               {{ order.total | currency }}
                         </h1>
                       </v-col>
-                      <v-col cols="12" sm="12" v-if="(userLogged.type && userLogged.type === 'administrator') || !order._id">
+                      <v-col cols="12" sm="12" v-if="isAdmin() || !order._id">
                           <div class="d-flex">
                             <v-col cols="6">
                               <v-select
@@ -77,8 +77,8 @@
                                     <td>{{ item.price | currency }}</td>
                                     <td>
                                       <v-icon 
-                                        small @click="deleteItem(item)" class="error--text"
-                                        v-if="userLogged.type === 'administrator' || !order._id">
+                                        @click="deleteItem(item)" class="error--text"
+                                        v-if="isAdmin() || !order._id">
                                         mdi-delete
                                       </v-icon>
                                     </td>
@@ -178,7 +178,7 @@
                                         required filled 
                                         item-text='name'
                                         item-value='_id'          
-                                        v-if="userLogged.type === 'administrator' || order._id"                              
+                                        v-if="isAdmin() || order._id"                              
                                     ></v-combobox>                                              
                                 </v-col>
                               </v-row>
@@ -204,7 +204,7 @@
                               </v-row>                                                            
                               <v-row align="center"
                                      justify="space-around"
-                                     v-if="userLogged.type === 'administrator' || !order._id">
+                                     v-if="isAdmin() || !order._id">
                                   <v-btn 
                                       type="submit" 
                                       depressed  
@@ -216,7 +216,7 @@
                                     >Salvar</v-btn>
                                   <v-btn 
                                     color="error" 
-                                    v-if="userLogged.type === 'administrator' && order._id"
+                                    v-if="isAdmin() && order._id"
                                     :loading="loadingDelete"
                                        x-large 
                                       style="width: 50%"
@@ -237,10 +237,11 @@
 </template>
 
 <script>
-  import gateway from '../api/gateway'
-  import { mapGetters } from 'vuex'
-  import DialogPlan from '../components/DialogPlan'
+import gateway from '../api/gateway'
+import { mapGetters } from 'vuex'
+import DialogPlan from '../components/DialogPlan'
 import storage from '../storage'
+import UserTypes from '../utils/UserTypes'
   export default {
     name: 'OrdemServico',
     components: {
@@ -289,6 +290,9 @@ import storage from '../storage'
         }
     }),
     methods: {
+      isAdmin() {
+        return UserTypes.isAdmin(this.userLogged.type);
+      },
       save() {
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
           this.order.date = this.date;
@@ -392,7 +396,7 @@ import storage from '../storage'
           return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
       },      
       deleteOrder() {        
-        if (this.userLogged.type === 'administrator' && confirm('Deseja Relamente Excluir?')) {
+        if (this.isAdmin() && confirm('Deseja Relamente Excluir?')) {
           this.loadingDelete = true;          
           gateway.deleteOrder(this.order._id,
             () => {
@@ -428,7 +432,7 @@ import storage from '../storage'
             this.loadingSave = false;            
           });
       }
-      if(this.userLogged.type === 'administrator') {
+      if(this.isAdmin()) {
         gateway.getUsers('enabled', res => {
           this.users = res;
           console.log(this.users);

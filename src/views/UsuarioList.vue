@@ -79,7 +79,7 @@
                                         }) }}                            
                             </template> 
                             <template v-slot:item.type="{ item }">
-                               <v-chip :color="item.type === 'administrator' ? 'primary' : ''">
+                               <v-chip :color="isAdmin(item.type) ? 'primary' : ''">
                                 {{ getTypePtBR(item.type) }}                            
                                </v-chip>
                             </template> 
@@ -92,9 +92,10 @@
 </template>
 
 <script>
-  import gateway from '../api/gateway';
-  import AppBar from '../components/AppBar'
+import gateway from '../api/gateway';
+import AppBar from '../components/AppBar'
 import storage from '../storage';
+import UserTypes from '../utils/UserTypes';
   export default {
     name: 'UsuarioList',
     components: { AppBar },
@@ -110,6 +111,9 @@ import storage from '../storage';
       users: []
     }),
     methods: {
+      isAdmin(type) {
+        return UserTypes.isAdmin(type);
+      },
       getUsers() {
         gateway.getUsers('all', res => {
           this.users = res;
@@ -126,13 +130,7 @@ import storage from '../storage';
           })        
       },
       getTypePtBR(type) {
-        if(type === 'administrator') {
-          return 'Administrador';
-        } 
-        if(type === 'hairdresser') {
-          return 'Comum';
-        }
-        return type;
+        return UserTypes.getDescriptionPtBR(type);
       }
     },
     beforeMount() {
