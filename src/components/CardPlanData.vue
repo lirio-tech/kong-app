@@ -7,7 +7,7 @@
             dark
         >
             <br />
-            Seu Plano Atual é o {{ company.plan.name }}
+            Seu Plano Atual é o {{ company.plan.name === 'Custom' ? 'Personalizado' : company.plan.name  }}
         </div>
         <div 
             class="overline green--text" 

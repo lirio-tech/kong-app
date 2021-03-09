@@ -166,7 +166,7 @@
     data: () => ({
       loading: false,
       dialogPlan: false,
-      itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Customizado'],
+      itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior'], //, 'Customizado'],
       periodo: {
         inicio: new Date(),
         fim: new Date()

@@ -69,7 +69,7 @@
                             value="Infinity"
                         ></v-radio>        
                         <v-radio
-                            label="Custom"
+                            label="Personalizado"
                             value="Custom"
                         ></v-radio>                                                                                                                                                                
                     </v-radio-group>                                                           
@@ -249,7 +249,7 @@
                                         value="Infinity"
                                     ></v-radio>        
                                     <v-radio
-                                        label="Custom"
+                                        label="Personalizado"
                                         value="Custom"
                                     ></v-radio>                                                                                                                                                                
                                 </v-radio-group>                                                           
