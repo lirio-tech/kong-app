@@ -65,27 +65,24 @@
                       outlined
                   >
                       <v-list-item three-line>
-                      <v-list-item-content>        
-                            <v-col cols="11">
+                      <v-list-item-content>       
+                            <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                               <div class="overline mb-4 grey--text">
                                   Periodo: 
-                                  <!-- {{ periodo.inicio.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} a 
-                                  {{ periodo.fim.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) }} -->
                                   <span class="orange--text">{{ consolidado.periodoDescricao }}</span>
                               </div>                           
                             </v-col>
                             <v-col cols="1" v-if="false">
-                              <span class="d-flex justify-end" flex v-if="isAdmin">
+                              <span v-if="isAdmin" style="margin-left: -15px;">
                                   <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                                      <v-btn fab small color="primary">
+                                      <v-btn fab x-small color="primary">
                                           <v-icon>
                                               mdi-chart-bar
                                           </v-icon>    
                                       </v-btn>
                                   </router-link>                          
                               </span>     
-                            </v-col>                         
-
+                            </v-col>                            
                               
                               <v-list-item-title class="headline mb-1" v-if="isAdmin()">
                                   <div v-if="!loading" class="display-1">
