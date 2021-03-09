@@ -143,8 +143,7 @@ import DialogPlan from './DialogPlan'
 import gateway from '../api/gateway';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes'
-    // import { mapGetters } from 'vuex'
-    export default {
+export default {
         name: 'AppBar',
         components: {
             DialogPlan
@@ -173,7 +172,7 @@ import UserTypes from '../utils/UserTypes'
                 this.dialogPlan = show
             },
             isAdmin() {
-                return UserTypes.isAdmin(this.userLogger.type);
+                return this.userLogger && UserTypes.isAdmin(this.userLogger.type);
             }
         },  
         beforeMount() {

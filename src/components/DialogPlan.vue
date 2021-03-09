@@ -55,7 +55,7 @@
                         Seu plano Atual
                     </v-chip>
                     <v-chip 
-                      v-if="!company || (plan.advantage && company.plan.name !== plan.name)"
+                      v-if="(plan.advantage && !userLogged) || (plan.advantage && company && company.plan.name !== plan.name)"
                       color="yellow" 
                       style="margin-left: 15px;" 
                       outlined
