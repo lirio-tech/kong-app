@@ -60,10 +60,10 @@
             <br/>
 
             <v-card
-                      class="mx-auto"
-                      max-width="800"
-                      outlined
-                  >
+              class="mx-auto"
+              max-width="800"
+              outlined
+            >
                       <v-list-item three-line>
                       <v-list-item-content>       
                             <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
@@ -84,45 +84,52 @@
                               </span>     
                             </v-col>                            
                               
-                              <v-list-item-title class="headline mb-1" v-if="isAdmin()">
-                                  <div v-if="!loading" class="display-1">
-                                    Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
-                                  </div>
-                                  <div v-else>
-                                    <v-skeleton-loader
-                                      v-bind="attrs"
-                                      type="list-item-two-line"
-                                    ></v-skeleton-loader>
-                                  </div>
-                              </v-list-item-title>
-                              <br/>
-                              <v-list-item-subtitle>
-                                  <br/>
-                                  <div v-if="!loading">
-                                    <span class="headline">
-                                      Quantidade: <span class="primary--text">{{ orders.length }}</span>
-                                    </span>
-                                  </div>                                
-                              </v-list-item-subtitle>                                              
-                              <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
-                                  <br/>
-                                  <div v-if="!loading">
-                                    <span class="headline" v-if="userLogged.name === cab[0] || isAdmin()">
-                                      {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
-                                    </span>
-                                  </div>
-                              </v-list-item-subtitle>                
+                            <v-list-item-title class="headline mb-1" v-if="isAdmin()">
+                                <div v-if="!loading" class="display-1">
+                                  Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
+                                </div>
+                            </v-list-item-title>
+                            <br/>
+
+                            <v-list-item-subtitle>
+                                <br/>
+                                <div v-if="!loading">
+                                  <span class="headline">
+                                    Quantidade: <span class="primary--text">{{ orders.length }}</span>
+                                  </span>
+                                </div>                                
+                            </v-list-item-subtitle>                                              
+                            <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
+                                <br/>
+                                <div v-if="!loading">
+                                  <span class="headline" v-if="userLogged.name === cab[0] || isAdmin()">
+                                    {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
+                                  </span>
+                                </div>                           
+                            </v-list-item-subtitle>    
+
+                          <div v-if="loading">
+                            <v-skeleton-loader
+                              v-bind="attrs"
+                              type="article, actions"
+                            ></v-skeleton-loader>
+                          </div>                               
+
                       </v-list-item-content>
                       </v-list-item>
                       <v-card-actions class="text-right"> 
+                        <v-col cols="12" class="justify-end">
                           <v-btn 
+                              v-if="!loading"
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
+                              flex
                               large
+                              style="width: 50%"
                               outlined
                               color="cyan"
-                              :loading="loading"
-                          >Novo</v-btn>                
+                          >Novo</v-btn>                                            
+                        </v-col>  
                       </v-card-actions>
             </v-card>   
             <br/>
