@@ -87,13 +87,13 @@
                             <v-list-item-title class="headline mb-1" v-if="isAdmin()">
                                 <div v-if="!loading" class="display-1">
                                   Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
+                                  <br/>
                                 </div>
                             </v-list-item-title>
-                            <br/>
 
                             <v-list-item-subtitle>
-                                <br/>
                                 <div v-if="!loading">
+                                  <br/>
                                   <span class="headline">
                                     Quantidade: <span class="primary--text">{{ orders.length }}</span>
                                   </span>
