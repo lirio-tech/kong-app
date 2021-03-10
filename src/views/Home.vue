@@ -43,11 +43,14 @@
                             </v-col>                     
                           </v-row>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" class="text-right">
                           <v-btn 
                               v-on:click="filterOrders"
-                              class="ma-2" large
-                              outlined :loading="loading"
+                              class="ma-2" 
+                              large
+                              outlined 
+                              style="width: 50%"
+                              :loading="loading"
                           >Atualizar</v-btn>    
                         </v-col>
                     </v-row>
@@ -123,7 +126,6 @@
                               v-if="!loading"
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
-                              flex
                               large
                               style="width: 50%"
                               outlined
