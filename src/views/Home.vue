@@ -43,7 +43,7 @@
                             </v-col>                     
                           </v-row>
                         </v-col>
-                        <v-col cols="12" class="text-right">
+                        <v-col cols="12" >
                           <v-btn 
                               v-on:click="filterOrders"
                               class="ma-2" 
@@ -120,7 +120,7 @@
 
                       </v-list-item-content>
                       </v-list-item>
-                      <v-card-actions class="text-right"> 
+                      <v-card-actions > 
                         <v-col cols="12" class="justify-end">
                           <v-btn 
                               v-if="!loading"
