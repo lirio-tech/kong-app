@@ -1,4 +1,8 @@
 <template>
+  <VuePullRefresh 
+    :on-refresh="onRefresh"
+    :config="config"
+  >
     <v-container>
         <AppBar />             
         <v-main class="">
@@ -170,21 +174,30 @@
             </v-row>              
         </v-main>
     </v-container>
+  </VuePullRefresh>
 </template>
 
 <script>
-  import gateway from '../api/gateway'
-  import AppBar from '../components/AppBar'
-  import DialogPlan from '../components/DialogPlan'
-  import storage from '../storage'
-  import UserTypes from '../utils/UserTypes'
-  export default {
+import gateway from '../api/gateway'
+import AppBar from '../components/AppBar'
+import DialogPlan from '../components/DialogPlan'
+import storage from '../storage'
+import UserTypes from '../utils/UserTypes'
+import VuePullRefresh from 'vue-pull-refresh'
+export default {
     name: 'Home',
     components: { 
       AppBar,
-      DialogPlan
+      DialogPlan,
+      VuePullRefresh
     },
     data: () => ({
+      config: {
+        //errorLabel: "ERROR",
+        //startLabel: "START",
+        readyLabel: "Atualizar",
+        //loadingLabel: "LOADING"
+      },
       loading: false,
       dialogPlan: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior'], //, 'Customizado'],
@@ -211,6 +224,9 @@
       }
     }),
     methods: {
+      onRefresh() {
+        this.filterOrders();
+      },
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
       },
@@ -294,6 +310,7 @@
           })
       },
       filterOrders() {
+        this.config.readyLabel = `Atualizado as ${new Date().toLocaleString('pt-BR')}`;
         this.orders = [];
         this.loading = true;
         gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim, this.userLogged,
