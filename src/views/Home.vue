@@ -1,9 +1,10 @@
 <template>
-  <VuePullRefresh 
-    :on-refresh="onRefresh"
-    :config="config"
-  >
-    <v-container>
+  <v-container>
+      <VuePullRefresh 
+        :on-refresh="onRefresh"
+        :config="config"
+      >
+
         <AppBar />             
         <v-main class="">
           <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
@@ -173,8 +174,9 @@
                 </v-col>
             </v-row>              
         </v-main>
-    </v-container>
-  </VuePullRefresh>
+      </VuePullRefresh>
+  </v-container>
+  
 </template>
 
 <script>
@@ -193,10 +195,10 @@ export default {
     },
     data: () => ({
       config: {
-        //errorLabel: "ERROR",
-        //startLabel: "START",
+        errorLabel: "Erro ao buscar Servicos realizados",
+        startLabel: "Iniciando Pesquisa...",
         readyLabel: "Atualizar",
-        //loadingLabel: "LOADING"
+        loadingLabel: "Carregando..."
       },
       loading: false,
       dialogPlan: false,
