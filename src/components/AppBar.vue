@@ -115,7 +115,7 @@
                             to="/public/help" 
                             style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                                Sobre o App
+                                Ajuda
                             </v-col>
                         </router-link>                                                   
 
