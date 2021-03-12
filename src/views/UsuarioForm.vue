@@ -26,7 +26,7 @@
                             <v-text-field 
                                 v-model="user.username"
                                 autocomplete="off"
-                                label="Username"
+                                label="Username (Login)"
                                 ref="username"
                                 prepend-icon="mdi-account"
                                 filled required
@@ -40,7 +40,7 @@
                         </v-col>
                         <v-col cols="12" md="4">                      
                             <v-text-field v-model="user.name"
-                                        label="Nome"
+                                        label="Nome do Novo Usuario"
                                         ref="nome"
                                         required
                                         prepend-icon="mdi-account"
