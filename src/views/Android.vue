@@ -40,45 +40,68 @@
                 ></v-img>
             </v-col>        
         </v-row>    
+        <br/><br/><br/>
         <v-row >
-            <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
+            <v-col align="center" cols="12">
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    2. No menu clique em Install e adicione na Tela Principal
+                    2. No Menu <v-icon>mdi-dots-vertical</v-icon>
+                     clique em <b>Instalar aplicativo</b>
                 </p>  
-                <!-- <v-img 
-                    src="../assets/chrome.png"
-                    height="80"
-                    width="80"
-                ></v-img> -->
+                <v-img 
+                    src="../assets/android/WhatsApp-1.jpeg"
+                    height="500"
+                    width="250"
+                ></v-img>
             </v-col>        
-        </v-row>         
+        </v-row>    
+        <br/><br/><br/>
         <v-row >
-            <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
+            <v-col align="center" cols="12">
+                
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    3. 
+                    2.1. No Menu <v-icon>mdi-dots-vertical</v-icon>
+                     clique em <b>Instalar aplicativo</b>
                 </p>  
-                <!-- <v-img 
-                    src="../assets/chrome.png"
-                    height="80"
-                    width="80"
-                ></v-img> -->
+                <v-img 
+                    src="../assets/android/WhatsApp-2.jpeg"
+                    height="500"
+                    width="250"
+                ></v-img>
             </v-col>        
-        </v-row>         
+        </v-row>    
+        <br/><br/><br/>
         <v-row >
-            <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
+            <v-col align="center" cols="12">
+                
+                <p class="mr-2 text-center" 
+                   style="font-size: 1.3rem;">
+                    3. Agora clique no Link Instalar
+                </p>  
+                <v-img 
+                    src="../assets/android/WhatsApp-3.jpeg"
+                    height="500"
+                    width="250"
+                ></v-img>
+            </v-col>        
+        </v-row>    
+        <br/><br/><br/>
+        <v-row >
+            <v-col align="center" cols="12">
+                
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
                     Pronto!!! <br/><span class="primary--text">Wiskritório App</span> Instalado com Sucesso sem ocupar espaço no seu Celular
                 </p>  
-                <!-- <v-img 
-                    src="../assets/android-installed.gif"
+                <v-img 
+                    src="../assets/android/WhatsApp-4.jpeg"
                     height="500"
                     width="250"
-                ></v-img> -->
+                ></v-img>
             </v-col>        
-        </v-row>            
+        </v-row>    
+        <br/><br/><br/>
         <v-row >
             <v-container >
                 <p class="mr-2 text-center" 
