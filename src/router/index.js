@@ -15,6 +15,7 @@ import Payment from '../views/Payment'
 import System from '../views/system/System'
 import SystemCompanyForm from '../views/system/SystemCompanyForm'
 import storage from '../storage'
+import PasswordRecovery from '../views/PasswordRecovery'
 
 Vue.use(VueRouter)
 
@@ -88,6 +89,11 @@ const routes = [
     path: '/system',
     name: 'System', 
     component: System
+  },    
+  {
+    path: '/public/recovery/:code',
+    name: 'Recovery', 
+    component: PasswordRecovery
   },    
   {
     path: '/system/companies/:_id',
