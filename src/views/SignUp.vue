@@ -81,7 +81,7 @@
                         >        
                             <v-text-field
                                 autocomplete="off"
-                                label="Nome"
+                                label="Nome do Dono"
                                 prepend-icon="mdi-account"
                                 required filled
                                 v-model="signup.user.name"
@@ -92,7 +92,7 @@
                             />
                             <v-text-field
                                 autocomplete="off"
-                                label="Username"
+                                label="Username (Login)"
                                 prepend-icon="mdi-account"
                                 required filled
                                 v-model="signup.user.username"
