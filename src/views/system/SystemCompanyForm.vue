@@ -313,11 +313,11 @@
                                     />
                             </v-col>   
                     </v-row>    
-                    <!-- <v-row 
+                    <v-row 
                         align="center"
                         justify="space-around"
                     >
-                            <v-btn 
+                            <!-- <v-btn 
                                 type="submit" 
                                 depressed  
                                 x-large 
@@ -325,8 +325,16 @@
                                 :loading="loadingSave"
                                 :disabled="loadingSave"
                                 style="width: 50%"
-                            >Salvar</v-btn>                                        
-                    </v-row>        -->
+                            >Salvar</v-btn> -->
+                            <v-btn 
+                                type="button" 
+                                depressed  
+                                x-large 
+                                color="primary"
+                                style="width: 50%"
+                                @click="selectCompany"
+                            >Selecionar</v-btn>                                
+                    </v-row>       
                 </v-form>    
               </v-col> 
           </v-row>                                           
@@ -361,6 +369,12 @@ export default {
         if(!this.$refs.companyForm.validate()) {
             return;
         }
+      },
+      selectCompany() {
+          this.userLogged.company = this.company._id;
+          storage.setUserLogged(JSON.stringify(this.userLogged));
+          storage.setCompany(JSON.stringify(this.company));
+          this.$router.push('/');
       },
       parseDate(date) {
         if (!date) return null;
