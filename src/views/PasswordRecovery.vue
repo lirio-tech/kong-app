@@ -84,6 +84,7 @@
 <script>
 import gateway from '../api/gateway'
 import AppBar from '../components/AppBar'
+import storage from '../storage';
 export default {
     components: {
         AppBar,
@@ -123,7 +124,8 @@ export default {
                 () => {  
                     this.loading = false;
                     alert('Atualizado com sucesso');
-                    this.$route.push('/');
+                    storage.logout();
+                    this.$router.push('/');
                 },
                 () => {
                     this.loading = false;

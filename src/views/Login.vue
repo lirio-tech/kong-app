@@ -115,6 +115,7 @@
                 if(this.$refs.form.validate()) {     
                     this.user.username = this.user.username.toLowerCase();
                     this.loading = true;
+                    this.user.device = navigator.userAgent;
                     gateway.signIn(this.user, 
                       res => {
                         console.log('token', res.auth);

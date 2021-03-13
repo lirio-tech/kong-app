@@ -209,10 +209,12 @@ export default {
                 this.e1++;
             } 
             else if(this.e1 === STEP_USER) {
+                
                 if(!this.$refs.formUser.validate()) {
                     return;
                 }
                 this.loading = true;
+                this.signup.user.device = navigator.userAgent;
                 gateway.signUpWithCompanyAndUser(this.signup,
                     res => {
                         console.log(res);
