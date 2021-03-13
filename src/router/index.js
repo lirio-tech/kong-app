@@ -8,13 +8,15 @@ import OrdemServico from '../views/OrdemServico'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
 import ContactUs from '../views/ContactUs'
-import Help from '../views/Help'
+import Help from '../views/Help' 
 import Android from '../views/Android'
 import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
 import System from '../views/system/System'
 import SystemCompanyForm from '../views/system/SystemCompanyForm'
 import SystemCompanyList from '../views/system/SystemCompanyList'
+import SystemUserList from '../views/system/SystemUserList'
+import SystemUser from '../views/system/SystemUser'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
 
@@ -106,6 +108,16 @@ const routes = [
     name: 'SystemCompanyForm', 
     component: SystemCompanyForm
   },       
+  {
+    path: '/system/users',
+    name: 'SystemUserList', 
+    component: SystemUserList
+  },     
+  {
+    path: '/system/users/:_id',
+    name: 'SystemUser', 
+    component: SystemUser
+  },   
 ]
 
 const router = new VueRouter({

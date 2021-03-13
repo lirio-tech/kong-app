@@ -98,7 +98,18 @@ export default{
                 console.log(error);
                 errorCb(error)
             })        
-    },        
+    },    
+    newRecoveryCode(_userId, callback, errorCb) {
+      let url = `${USERS_API}/${_userId}/recovery`;
+      Axios.post(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })  
+    },
     getUserByRecoveryCode(code, callback, errorCb) {
       let url = `${USERS_API}/recovery/${code}`;
       Axios.patch(url)

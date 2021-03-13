@@ -27,17 +27,46 @@
           </v-row>          
           <v-row>
               <v-col cols="12" sm="12" align="center">
-                  <router-link to="/system/companies">
+                  <router-link to="/system/companies"
+                    style="color: inherit; text-decoration: none">
                     <v-btn 
                         type="button" 
                         depressed  
                         x-large 
                         color="primary"
                         style="width: 96%"
-                    >Estabelecimentos</v-btn>                    
+                    >Aplicar Planos</v-btn>                    
                   </router-link>
               </v-col>
-          </v-row>              
+          </v-row>                   
+          <v-row>
+              <v-col cols="12" sm="12" align="center">
+                  <router-link to="/system/users"
+                   style="color: inherit; text-decoration: none">
+                    <v-btn 
+                        type="button" 
+                        depressed  
+                        x-large 
+                        color="secondary"
+                        style="width: 96%"
+                    >Usuarios</v-btn>                    
+                  </router-link>
+              </v-col>
+          </v-row>   
+          <v-row>
+              <v-col cols="12" sm="12" align="center">
+                  <router-link to="/system"
+                   style="color: inherit; text-decoration: none">
+                    <v-btn 
+                        type="button" 
+                        depressed  
+                        x-large 
+                        color="accent"
+                        style="width: 96%"
+                    >Dashboards</v-btn>                    
+                  </router-link>
+              </v-col>
+          </v-row>                          
         </v-main>
     </v-container>
 </template>
