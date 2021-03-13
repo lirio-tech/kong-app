@@ -150,9 +150,10 @@
                             :loading="loadingSave"
                             :disabled="loadingSave"
                             style="width: 48%"
-                        >Salvar</v-btn>        
+                        >Salvar</v-btn>     
+                        &nbsp;&nbsp;   
                         <v-btn 
-                            v-if="user._id"
+                            v-if="user._id && user._id !== userLogged._id && user.type === 'hairdresser'"
                             type="button" 
                             depressed  
                             x-large 
@@ -161,7 +162,19 @@
                             :disabled="loadingAdm"
                             style="width: 48%"
                             @click="becomeAdmin"
-                        >Tornar Admin</v-btn>         
+                        >Tornar Admin</v-btn>    
+                        
+                        <v-btn 
+                            v-if="user._id && user._id !== userLogged._id && user.type === 'administrator'"
+                            type="button" 
+                            depressed  
+                            x-large 
+                            color="grey"
+                            :loading="loadingAdm"
+                            :disabled="loadingAdm"
+                            style="width: 48%"
+                            @click="becomeCommon"
+                        >Tornar Comum</v-btn>                               
                     </v-col>                                                  
                 </v-row>                    
             </v-form>                                                
@@ -215,6 +228,20 @@ export default {
                     alert(err.response.data.message)
                 } else {                        
                     alert('Erro ao tornar o usuario um Admin, tente novamente');                
+                }
+            })
+      },
+      becomeCommon() {
+          gateway.becomeUserCommon(this.user._id,
+            () => {
+                this.$router.push('/admin/users');              
+            }, err => {
+                if(err.response.status === 412 || 
+                   err.response.status === 422 ||
+                   err.response.status === 403) {
+                    alert(err.response.data.message)
+                } else {                        
+                    alert('Erro ao alterar usuario para Comum, tente novamente');                
                 }
             })
       },
