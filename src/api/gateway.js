@@ -8,7 +8,7 @@ const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users
 
 export default{
     signIn(user, callback,errorCb){       
-        let url = AUTH_API+'/signin';
+        let url = `${AUTH_API}/signin?device=${navigator.userAgent}`;
         console.log(url);
         Axios.post(url, user)
             .then(data => {
@@ -32,7 +32,7 @@ export default{
             })
     },     
     signUpWithCompanyAndUser(signup, callback,errorCb){       
-      let url = AUTH_API+'/signup/company';
+      let url = `${AUTH_API}/signup/company?device=${navigator.userAgent}`;
       console.log(url);
       Axios.post(url, signup)
           .then(data => {

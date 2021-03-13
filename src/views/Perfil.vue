@@ -134,7 +134,7 @@
 
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel v-if="false">
+            <v-expansion-panel v-if="userLogged.type === 'sys_admin'">
                 <v-expansion-panel-header>Configurações</v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <v-row>
@@ -162,6 +162,11 @@
                                                 ></v-radio>
                                             </v-radio-group>  
                                         </v-col>      
+                                    </v-row>
+                                    <v-row v-if="userLogged.type === 'sys_admin'">
+                                        <v-col cols="12">
+                                            {{ getDevice() }}
+                                        </v-col>
                                     </v-row>
                                 </v-container>
                             </v-form>                
@@ -203,6 +208,9 @@ export default {
         },
         isAdmin() {
             return UserTypes.isAdmin(this.userLogged.type);
+        },
+        getDevice() {
+            return navigator.userAgent;
         }
     },
     beforeMount() {
