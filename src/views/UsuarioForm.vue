@@ -127,6 +127,15 @@
                                 required filled disabled
                                 />
                         </v-col>   
+                        <v-col cols="12" md="4" v-if="userLogged.type === 'sys_admin'">                      
+                            <v-text-field v-model="user.device"
+                                        label="System Operation"
+                                        ref="device"
+                                        required 
+                                        prepend-icon="mdi-smarthphone"
+                                        filled>
+                            </v-text-field>
+                        </v-col>                              
                 </v-row>    
                 <v-row 
                     align="center"

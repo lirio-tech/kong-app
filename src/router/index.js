@@ -14,6 +14,7 @@ import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
 import System from '../views/system/System'
 import SystemCompanyForm from '../views/system/SystemCompanyForm'
+import SystemCompanyList from '../views/system/SystemCompanyList'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
 
@@ -86,15 +87,20 @@ const routes = [
     component: IPhone
   },     
   {
-    path: '/system',
-    name: 'System', 
-    component: System
-  },    
-  {
     path: '/public/recovery/:code',
     name: 'Recovery', 
     component: PasswordRecovery
   },    
+  {
+    path: '/system',
+    name: 'System', 
+    component: System
+  },   
+  {
+    path: '/system/companies',
+    name: 'SystemCompanyList', 
+    component: SystemCompanyList
+  },      
   {
     path: '/system/companies/:_id',
     name: 'SystemCompanyForm', 

@@ -25,17 +25,21 @@
                 </p>  
                </v-col>
           </v-row>          
-          <v-row>
-              <v-col cols="12" sm="12" align="center">
-                  <router-link to="/system/companies">
-                    <v-btn 
-                        type="button" 
-                        depressed  
-                        x-large 
-                        color="primary"
-                        style="width: 96%"
-                    >Estabelecimentos</v-btn>                    
-                  </router-link>
+          <v-row v-if="companies.length !== 0 && !loading">
+              <v-col cols="12" sm="12">
+                  <v-sheet min-height="70vh" rounded="lg">
+                      <v-data-table 
+                          :headers="headers" 
+                          :items="companies" 
+                          item-key="code"
+                          class="elevation-1"
+                          :items-per-page="companies.length"
+                          hide-default-footer
+                          loading-text="Carregando... Por favor aguarde"
+                          @click:row="clickRow"
+                      >
+                      </v-data-table>               
+                  </v-sheet>
               </v-col>
           </v-row>              
         </v-main>

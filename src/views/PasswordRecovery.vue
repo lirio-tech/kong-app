@@ -16,13 +16,6 @@
                         <p class="accent--text" style="font-size: 1.5rem !important;">Vamos Recuperar sua Senha?</p>
                 </v-col>
             </v-row>          
-            <v-row>
-                <v-container>
-                    <v-col cols="12"> 
-                        <h2 class="">Então Vamos Lá!!!</h2>
-                    </v-col>
-                </v-container>
-            </v-row>
             <v-form 
                 v-model="valid" 
                 v-on:submit.prevent="updateRecoveryPassword"

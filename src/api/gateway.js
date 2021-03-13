@@ -271,7 +271,7 @@ export default{
               "price": 90.00,
               "benefits": [
                 {
-                  "icon": "mdi-google",
+                  "icon": "mdi-cash",
                   "description": "Mesmo modelo do Plano Basico sendo R$ 7,50 por Mês"
                 },              
                 {
@@ -319,7 +319,7 @@ export default{
               "price": 180.00,
               "benefits": [          
                 {
-                  "icon": "mdi-google",
+                  "icon": "mdi-cash",
                   "description": "Mesmo Plano É Nóis sendo R$ 15,00 por Mês"
                 },              
                 {
@@ -345,7 +345,7 @@ export default{
               "price": 900.00,
               "benefits": [         
                 {
-                  "icon": "mdi-google",
+                  "icon": "mdi-cash",
                   "description": "Pague uma única vez e utilize o App sempre que quiser"
                 },                        
                 {
