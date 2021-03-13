@@ -134,7 +134,41 @@
 
                 </v-expansion-panel-content>
             </v-expansion-panel>
-
+            <v-expansion-panel v-if="false">
+                <v-expansion-panel-header>Configurações</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    <v-row>
+                        <v-col cols="12" sm="12">
+                          <v-form 
+                            id="configForm"
+                            ref="configForm">
+                                <v-container>
+                                    <v-row>
+                                        <v-col 
+                                            cols="12" md="4" 
+                                        >
+                                            Tabela: 
+                                            <v-radio-group
+                                                v-model="userLogged.table"
+                                                row
+                                            >
+                                                <v-radio
+                                                    label="Tabela Simples"
+                                                    value="simple"
+                                                ></v-radio>
+                                                <v-radio
+                                                    label="Tabela Mobile"
+                                                    value="data"
+                                                ></v-radio>
+                                            </v-radio-group>  
+                                        </v-col>      
+                                    </v-row>
+                                </v-container>
+                            </v-form>                
+                        </v-col>
+                    </v-row>                    
+                </v-expansion-panel-content>
+            </v-expansion-panel>
         </v-expansion-panels>
     </v-container>
 </template>

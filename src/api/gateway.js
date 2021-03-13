@@ -100,8 +100,8 @@ export default{
             })        
     },        
     getUserByRecoveryCode(code, callback, errorCb) {
-      let url = USERS_API+'/recovery/'+code;
-      Axios.get(url)
+      let url = `${USERS_API}/recovery/${code}`;
+      Axios.patch(url)
           .then(data => {
               callback(data.data)
           })
@@ -109,7 +109,18 @@ export default{
               console.log(error);
               errorCb(error)
           })        
-    },        
+    },    
+    recoveryUpdatePassword(recPass, callback, errorCb) {
+      let url = `${AUTH_API}/recovery`;
+      Axios.patch(url, recPass)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })          
+    },    
     getUserById(_id, callback, errorCb) {
         let url = `${USERS_API}/_/${_id}`;
         Axios.get(url)
