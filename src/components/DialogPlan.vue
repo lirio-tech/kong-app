@@ -95,13 +95,22 @@
 
               <v-card-actions>
                 <v-btn 
-                  v-if="company && plan.name === company.plan.name"
+                  v-if="company && plan.name === company.plan.name && 'Free' === company.plan.name"
                   style="width: 100%; color: green" 
                   x-large 
                   readonly
                 >
                   <v-icon left>mdi-check</v-icon>
                   Plano Atual
+                </v-btn>                  
+                <v-btn 
+                  v-if="company && plan.name === company.plan.name && 'Free' !== company.plan.name"
+                  style="width: 100%; color: green" 
+                  x-large 
+                  @click="goPayment(plan)"
+                >
+                  <v-icon left>mdi-check</v-icon>
+                  Renovar Plano
                 </v-btn>             
                 <v-btn 
                   v-if="!company || plan.name !== company.plan.name"

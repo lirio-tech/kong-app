@@ -97,7 +97,7 @@
                         <div 
                             style="cursor: pointer;" @click="showPlanDialog(true)">                           
                             <v-col cols="12" class="font-weight-medium">
-                                Planos
+                                Planos <v-chip color="orange" style="margin-left: 15px;" outlined small>Seja Premium</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </div>                        

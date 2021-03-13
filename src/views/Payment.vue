@@ -85,7 +85,6 @@ export default {
     this.plan = gateway
                   .getAllPlans()
                   .filter(p => p.name === this.$route.params.planName)[0];
-    this.plan.pixQrcode = require('../assets/'+this.plan.pixQrcode);
     console.log(this.plan);
   },
   methods: {
