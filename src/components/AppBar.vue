@@ -110,7 +110,14 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>     
-
+                        <router-link 
+                            to="/public/avalie-nos" 
+                            style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Avalie-nos
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>    
                         <router-link 
                             to="/public/help" 
                             style="color: inherit; text-decoration: none">

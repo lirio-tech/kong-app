@@ -5,6 +5,7 @@ const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/c
 //const PLANS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/plans';
 const AUTH_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/auth';
 const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users';
+const RATE_US_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/rate-us';
 
 export default{
     signIn(user, callback,errorCb){       
@@ -231,6 +232,17 @@ export default{
             errorCb(error)
         })      
   },
+  rateUs(rateUs, callback, errorCb) {
+    let url = `${RATE_US_API}`;
+    Axios.post(url, rateUs)
+        .then(data => {
+            callback(data.data)
+        })
+        .catch(error => {
+            console.log(error);
+            errorCb(error)
+        })      
+  },  
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)

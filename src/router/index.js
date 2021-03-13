@@ -19,6 +19,7 @@ import SystemUserList from '../views/system/SystemUserList'
 import SystemUser from '../views/system/SystemUser'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
+import RateUs from '../views/RateUs'
 
 Vue.use(VueRouter)
 
@@ -93,6 +94,11 @@ const routes = [
     name: 'Recovery', 
     component: PasswordRecovery
   },    
+  {
+    path: '/public/avalie-nos',
+    name: 'RateUs', 
+    component: RateUs
+  },     
   {
     path: '/system',
     name: 'System', 
