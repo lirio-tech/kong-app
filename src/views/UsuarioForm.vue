@@ -20,6 +20,7 @@
                 v-on:submit.prevent="save"
                 ref="userForm"
                 id="userForm"
+                v-if="!loading"
             >         
                 <v-row>
                         <v-col cols="12" md="4">                      
@@ -108,11 +109,20 @@
                                         prepend-icon="mdi-whatsapp"
                                         filled>
                             </v-text-field>
-                        </v-col>                                                         
+                        </v-col>         
+                        <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser'">
+                                <v-text-field
+                                label="Desativado em"
+                                v-model="user.disabledAtPtBr"
+                                ref="updatedAt"
+                                prepend-icon="mdi-calendar"
+                                required filled disabled
+                                />
+                        </v-col>                                                                          
                         <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser'">
                             <v-text-field
                                 label="Criado"
-                                v-model="user.createdAt"
+                                v-model="user.createdAtPtBr"
                                 ref="createdAt"
                                 prepend-icon="mdi-calendar"
                                 required filled disabled
@@ -121,7 +131,7 @@
                         <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser'">
                                 <v-text-field
                                 label="Alterado"
-                                v-model="user.updatedAt"
+                                v-model="user.updatedAtPtBr"
                                 ref="updatedAt"
                                 prepend-icon="mdi-calendar"
                                 required filled disabled
@@ -129,7 +139,7 @@
                         </v-col>   
                         <v-col cols="12" md="4" v-if="userLogged.type === 'sys_admin'">                      
                             <v-text-field v-model="user.device"
-                                        label="System Operation"
+                                        label="Device"
                                         ref="device"
                                         required 
                                         prepend-icon="mdi-smarthphone"
@@ -197,6 +207,7 @@ export default {
         SnackBar
     },
     data: () => ({
+        loading: false,
         loadingSave: false,
         loadingAdm: false,
         valid: true,
@@ -206,6 +217,7 @@ export default {
             passwordConfirm: '',
             type: 'hairdresser'
         },
+        enabled: true,
         message: { },      
         passwordRules: [
             v => !!v || 'Senha do Usuario Obrigatório',
@@ -256,31 +268,41 @@ export default {
             this.showMessage('red', 'Confirmacao de Senha deve ser equivalente');
             return;
         }
+        this.loadingSave = true;
         this.user.company = this.userLogged.company;
         if(this.$route.params._id && this.$route.params._id !== '_newUser') {
-                gateway.updateUser(
-                    this.$route.params._id,
-                    this.user,
-                    res => {
-                        console.log(res);
-                        this.$router.push('/admin/users');
-                    },
-                    err => {
-                        if(err.response.status === 412 || err.response.status === 422) {
-                            alert(err.response.data.message)
-                        }                        
-                        console.log(err);
-                    }
+            let desabilitando = this.enabled === true && this.user.enabled === false;
+            if(desabilitando && !confirm('Apos desativar o usuario voce podera ativa-lo novamente apos 3 dias, deseja realmente desativar usuario?')) {
+                this.loadingSave = false;
+                return;
+            }
+            gateway.updateUser(
+                this.$route.params._id,
+                this.user,
+                res => {
+                    console.log(res);
+                    this.loadingSave = false;
+                    this.$router.push('/admin/users');
+                },
+                err => {
+                    this.loadingSave = false;
+                    if(err.response.status === 412 || err.response.status === 422) {
+                        alert(err.response.data.message)
+                    }                        
+                    console.log(err);
+                }
             );
         } else {
                 gateway.signUp(
                     this.user,
                     res => {
                         console.log(res);
+                        this.loadingSave = false;
                         this.$router.push('/admin/users');
                     },
                     err => {
                         console.log(err);
+                        this.loadingSave = false;
                         if(err.response.status === 500) {
                             alert('Erro ao Cadastrar usuario, tente novamente');
                         } else {
@@ -302,13 +324,22 @@ export default {
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
       if(this.$route.params._id !== '_newUser') {
+        this.loading = true;
         gateway.getUserById(
                 this.$route.params._id,
                 res => {
                     this.user = res;
+                    this.user.disabledAtPtBr = new Date(this.user.disabledAt).toLocaleDateString('pt-BR');
+                    this.user.createdAtPtBr = new Date(this.user.createdAt).toLocaleDateString('pt-BR');
+                    this.user.updatedAtPtBr = new Date(this.user.updatedAt).toLocaleDateString('pt-BR');
                     this.user.enabled = !this.user.disabled;
+                    this.enabled = this.user.enabled;
+                    this.loading = false;
                 },
-                err => console.log(err)
+                err => { 
+                    this.loading = false;
+                    console.log(err)
+                }
         );  
       }
     }
