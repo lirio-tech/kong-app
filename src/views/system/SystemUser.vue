@@ -37,12 +37,12 @@
           </v-row>      
           <v-row v-if="messageCode">
               <v-col cols="12" sm="12" align="center" >
-                {{ messageCode.message }}
+                Copie o Link e envie para pessoa Refazer a Senha
                 <v-btn 
                   color="accent "
                   x-large
                   style="width:100%"
-                  v-clipboard:copy="messageCode.message"
+                  v-clipboard:copy="messageCode.link"
                   v-clipboard:success="onCopy"
                   v-clipboard:error="onError"                  
                 >
