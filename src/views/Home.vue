@@ -80,7 +80,7 @@
                                   <span class="orange--text">{{ consolidado.periodoDescricao }}</span>
                               </div>                           
                             </v-col>
-                            <v-col cols="1" v-if="isAdmin && userLogged.username === 'sys_admin'">
+                            <v-col cols="1" v-if="isAdmin && userLogged.username === 'diego'">
                               <span style="margin-left: -15px;">
                                   <router-link to="/analytics" style="color: inherit; text-decoration: none">
                                       <v-btn fab small outlined color="purple">
