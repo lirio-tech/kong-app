@@ -6,13 +6,18 @@
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/'}"
                   >
-                      <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                      <v-icon large color="blue-grey">mdi-arrow-left</v-icon>
                   </v-btn>
               </v-col>
-              <v-col cols="7" align="center">   
+              <v-col cols="8" align="center">   
                   <span style="font-size: 1.8rem !important;">  
                     Graficos
                   </span>
+              </v-col>
+              <v-col cols="2" align="center" style="margin-top: 12px;">   
+                  <v-btn icon small style="display: inline;">
+                      <v-icon large color="blue-grey">mdi-menu</v-icon>
+                  </v-btn>
               </v-col>
 
           </v-row>          

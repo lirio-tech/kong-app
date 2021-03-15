@@ -80,10 +80,10 @@
                                   <span class="orange--text">{{ consolidado.periodoDescricao }}</span>
                               </div>                           
                             </v-col>
-                            <v-col cols="1" v-if="isAdmin && userLogged.type === 'sys_admin'">
+                            <v-col cols="1" v-if="isAdmin && userLogged.username === 'sys_admin'">
                               <span style="margin-left: -15px;">
                                   <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                                      <v-btn fab small outlined color="primary">
+                                      <v-btn fab small outlined color="purple">
                                           <v-icon>
                                               mdi-chart-bar
                                           </v-icon>    
