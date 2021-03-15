@@ -23,6 +23,7 @@
 
 <script>
 import storage from '../storage';
+import UserTypes from '../utils/UserTypes'
 export default {
     name: 'Analytics',
     data: () => ({

@@ -83,7 +83,7 @@
                             <v-col cols="1" v-if="isAdmin && userLogged.type === 'sys_admin'">
                               <span style="margin-left: -15px;">
                                   <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                                      <v-btn fab x-small color="primary">
+                                      <v-btn fab small outlined color="primary">
                                           <v-icon>
                                               mdi-chart-bar
                                           </v-icon>    

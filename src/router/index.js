@@ -18,6 +18,7 @@ import SystemCompanyList from '../views/system/SystemCompanyList'
 import SystemUserList from '../views/system/SystemUserList'
 import SystemUser from '../views/system/SystemUser'
 import SystemPayments from '../views/system/SystemPayments'
+import Analytics from '../views/Analytics'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
 import RateUs from '../views/RateUs' 
@@ -130,6 +131,11 @@ const routes = [
     name: 'SystemPayments', 
     component: SystemPayments
   },    
+  {
+    path: '/analytics',
+    name: 'Analytics',
+    component: Analytics
+  }
 ]
 
 const router = new VueRouter({
