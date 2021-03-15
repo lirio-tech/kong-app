@@ -57,7 +57,7 @@ export default{
             })
     },
     saveOrder(order, callback, errorCb) {
-        let url = `${ORDERS_API}/v2`;
+        let url = `${ORDERS_API}/v3`;
         Axios.post(url, order)
             .then(data => {
                 callback(data.data)
