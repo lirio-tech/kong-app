@@ -3,6 +3,7 @@ import Axios from "axios";
 const ORDERS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/orders';
 const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies';
 //const PLANS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/plans';
+const PAYMENT_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/payments-historic';
 const AUTH_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/auth';
 const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users';
 const RATE_US_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/rate-us';
@@ -220,29 +221,40 @@ export default{
               console.log(error);
               errorCb(error)
           })        
-  },       
-  applyPlan(companyId, plan, callback, errorCb) {
-    let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
-    Axios.put(url, plan)
-        .then(data => {
-            callback(data.data)
-        })
-        .catch(error => {
-            console.log(error);
-            errorCb(error)
-        })      
-  },
-  rateUs(rateUs, callback, errorCb) {
-    let url = `${RATE_US_API}`;
-    Axios.post(url, rateUs)
-        .then(data => {
-            callback(data.data)
-        })
-        .catch(error => {
-            console.log(error);
-            errorCb(error)
-        })      
-  },  
+    },       
+    applyPlan(companyId, plan, callback, errorCb) {
+      let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
+      Axios.put(url, plan)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })      
+    },
+    rateUs(rateUs, callback, errorCb) {
+      let url = `${RATE_US_API}`;
+      Axios.post(url, rateUs)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })      
+    },  
+    getPaymentsHist(callback, errorCb) {
+      let url = `${PAYMENT_API}`;
+      Axios.get(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })         
+    },
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)
