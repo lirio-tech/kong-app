@@ -33,22 +33,22 @@
                     </template>
                     <v-list>
                       <v-list-item
-                        @click="() => dataView = BY_DAYS"
+                        @click="() => setDataView(BY_DAYS)"
                       >
                         <v-list-item-title>Grafico por dias</v-list-item-title>
                       </v-list-item>
                       <v-list-item
-                        @click="() => dataView = BY_MONTH"
+                        @click="() => setDataView(BY_MONTH)"
                       >
-                        <v-list-item-title>Grafico por dias</v-list-item-title>
+                        <v-list-item-title>Grafico por Meses</v-list-item-title>
                       </v-list-item>                      
                       <v-list-item
-                        @click="() => dataView = BY_DAYS_OF_THE_WEEK"
+                        @click="() => setDataView(BY_DAYS_OF_THE_WEEK)"
                       >
                         <v-list-item-title>Grafico por dias da semana</v-list-item-title>
                       </v-list-item>    
                       <v-list-item
-                        @click="() => dataView = BY_USERS"
+                        @click="() => setDataView(BY_USERS)"
                       >
                         <v-list-item-title>Grafico por usuario</v-list-item-title>
                       </v-list-item>                                                            
@@ -113,9 +113,6 @@
                 />
               </v-col>
           </v-row>
-          <v-row>
-              {{ daysOfTheWeek }}
-          </v-row>
           
         </v-main>
     </v-container>
@@ -126,6 +123,7 @@ import storage from '../storage';
 import UserTypes from '../utils/UserTypes'
 import { GChart } from 'vue-google-charts'
 import gateway from '../api/gateway';
+import date from '../utils/date'
 export default {
     // https://codesandbox.io/s/z699l6oq4p?file=/src/App.vue:989-1008
 
@@ -136,7 +134,7 @@ export default {
     },
     data: () => ({
       dataView: null,
-      dates: ['2021-03-10', '2021-03-11'],
+      dates: [date.getNewDateAddDay(-7), date.dateToStringEnUS(new Date())],
       BY_DAYS: 'DAYS',
       BY_MONTH: 'MONTH',
       BY_DAYS_OF_THE_WEEK: 'DAYS_OF_THE_WEEK',
@@ -144,10 +142,6 @@ export default {
       chartsLibDaysOfTheWeek: null, 
       // Array will be automatically processed with visualization.arrayToDataTable function
       daysOfTheWeek: {},
-      chartDataDaysOfTheWeek: [
-        ['Dias da semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-        ['R$', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
-      ],      
       //date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -172,10 +166,15 @@ export default {
           return;
         }
         alert('Outros');
-      }
+      },
+      setDataView(dv) {
+        this.dataView = dv;
+        this.getDaysOfTheWeek(this.dates);
+      },
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.setDataView(this.BY_DAYS_OF_THE_WEEK);
     },
     computed: {
       title() {
@@ -197,6 +196,19 @@ export default {
         let ini = this.dates[0].split('-');
         return `${ini[2]}/${ini[1]}/${ini[0]}`;
       },
+      chartDataDaysOfTheWeek() {
+        return [
+          ['Dias da semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+          ['R$', 
+            this.daysOfTheWeek.monday, 
+            this.daysOfTheWeek.tuesday, 
+            this.daysOfTheWeek.wednesday, 
+            this.daysOfTheWeek.thursday, 
+            this.daysOfTheWeek.friday, 
+            this.daysOfTheWeek.saturday, 
+            this.daysOfTheWeek.sunday],
+        ];
+      },      
       chartOptionsDaysOfTheWeek() {
         if (!this.chartsLibDaysOfTheWeek) return null
         return this.chartsLibDaysOfTheWeek.charts.Bar.convertOptions({
