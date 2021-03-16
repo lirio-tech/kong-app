@@ -54,7 +54,7 @@ export default {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ['Dias das Semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-        ['Lucro', 650, 410, 1450, 1230, 1650, 2300, 800],
+        ['Lucro', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
       ]         
     }),
     methods: {
@@ -77,14 +77,16 @@ export default {
             title: 'Total Lucro por Dias da Semana',
             subtitle: ''
           },
-          backgroundColor: {
-              fill: '#F4F4F4',
-              opacity: 100
-          },          
+          // backgroundColor: {
+          //     fill: '#F4F4F4',
+          //     opacity: 100
+          // },          
           language: 'pt',
           bars: 'horizontal', // Required for Material Bar Charts.
-          hAxis: { format: 'decimal' },
-          prefix: 'R$ ',
+          //hAxis: { format: 'decimal' },
+          //hAxis: { format:'##.###,##', title: 'Ano: <?php echo date("Y"); ?>',  titleTextStyle: {color: '#333'}},
+          //hAxis: { format: '#,###.##' },
+          format: 'currency',
           height: 400,
           colors: ['#C62828', '#1565C0', '#00695C', '#4527A0', '#FF8F00', '#424242', '#AB47BC']
         })
