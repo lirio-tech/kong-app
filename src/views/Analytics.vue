@@ -15,23 +15,49 @@
                   </span>
               </v-col>
               <v-col cols="2" align="right" style="margin-top: 12px;">   
-                  <v-btn icon small style="display: inline;">
-                      <v-icon large color="blue-grey">mdi-menu</v-icon>
-                  </v-btn>
+
+                  <v-menu
+                    bottom
+                    offset-y
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn 
+                        icon 
+                        small 
+                        style="display: inline;"
+                        v-bind="attrs"
+                        v-on="on"                        
+                      >
+                          <v-icon large color="blue-grey">mdi-menu</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item
+                        @click="() => dataView = 'DAYS'"
+                      >
+                        <v-list-item-title>Grafico por dias</v-list-item-title>
+                      </v-list-item>
+                      <v-list-item
+                        @click="() => dataView = 'MONTHS'"
+                      >
+                        <v-list-item-title>Grafico por dias</v-list-item-title>
+                      </v-list-item>                      
+                      <v-list-item
+                        @click="() => dataView = 'WEEK_DAYS'"
+                      >
+                        <v-list-item-title>Grafico por dias da semana</v-list-item-title>
+                      </v-list-item>    
+                      <v-list-item
+                        @click="() => dataView = 'USERS'"
+                      >
+                        <v-list-item-title>Grafico por usuario</v-list-item-title>
+                      </v-list-item>                                                            
+                    </v-list>
+                  </v-menu>
+
               </v-col>
 
           </v-row>     
-          <!-- <v-row>
-            <v-col
-              cols="12"
-              sm="6"
-            >
-              <v-date-picker
-                v-model="dates"
-                range
-              ></v-date-picker>
-            </v-col>
-          </v-row>                -->
           <v-col
                 cols="12"
                 sm="6"
@@ -75,8 +101,8 @@
                     </v-btn>
                   </v-date-picker>
                 </v-dialog>
-              </v-col>          
-          <v-row>
+          </v-col>          
+          <v-row v-if="dataView === 'WEEK_DAYS'">
               <v-col cols="12">
                 <GChart
                   :settings="{packages: ['bar']}"    
@@ -106,6 +132,7 @@ export default {
     },
     data: () => ({
       chartsLib: null, 
+      dataView: null,
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ['Dias das Semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
@@ -116,6 +143,8 @@ export default {
       menu: false,
       modal: false,
       menu2: false,      
+      on: '',
+      attrs: ''
     }),
     methods: {
       isAdmin(type) {
@@ -123,7 +152,7 @@ export default {
       },
       onChartReady (chart, google) {
         this.chartsLib = google
-        console.lof(chart);
+        console.log(chart);
       }       
     },
     beforeMount() {
