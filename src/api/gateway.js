@@ -3,6 +3,7 @@ import Axios from "axios";
 const ORDERS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/orders';
 const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies';
 //const PLANS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/plans';
+const ANALYTICS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/analytics';
 const PAYMENT_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/payments-historic';
 const AUTH_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/auth';
 const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users';
@@ -254,6 +255,17 @@ export default{
               console.log(error);
               errorCb(error)
           })         
+    },
+    getDaysOfTheWeek(dates, callback, errorCb) {
+      let url = `${ANALYTICS_API}/days-of-the-week`;
+      Axios.post(url, dates)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })   
     },
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;

@@ -10,8 +10,8 @@
                   </v-btn>
               </v-col>
               <v-col cols="8" align="center">   
-                  <span style="font-size: 1.8rem !important;">  
-                    Graficos
+                  <span style="font-size: 1.2rem !important;">  
+                    {{ title }}
                   </span>
               </v-col>
               <v-col cols="2" align="right" style="margin-top: 12px;">   
@@ -33,22 +33,22 @@
                     </template>
                     <v-list>
                       <v-list-item
-                        @click="() => dataView = 'DAYS'"
+                        @click="() => dataView = BY_DAYS"
                       >
                         <v-list-item-title>Grafico por dias</v-list-item-title>
                       </v-list-item>
                       <v-list-item
-                        @click="() => dataView = 'MONTHS'"
+                        @click="() => dataView = BY_MONTH"
                       >
                         <v-list-item-title>Grafico por dias</v-list-item-title>
                       </v-list-item>                      
                       <v-list-item
-                        @click="() => dataView = 'DAYS_OF_THE_WEEK'"
+                        @click="() => dataView = BY_DAYS_OF_THE_WEEK"
                       >
                         <v-list-item-title>Grafico por dias da semana</v-list-item-title>
                       </v-list-item>    
                       <v-list-item
-                        @click="() => dataView = 'USERS'"
+                        @click="() => dataView = BY_USERS"
                       >
                         <v-list-item-title>Grafico por usuario</v-list-item-title>
                       </v-list-item>                                                            
@@ -113,6 +113,9 @@
                 />
               </v-col>
           </v-row>
+          <v-row>
+              {{ daysOfTheWeek }}
+          </v-row>
           
         </v-main>
     </v-container>
@@ -122,6 +125,7 @@
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes'
 import { GChart } from 'vue-google-charts'
+import gateway from '../api/gateway';
 export default {
     // https://codesandbox.io/s/z699l6oq4p?file=/src/App.vue:989-1008
 
@@ -133,8 +137,13 @@ export default {
     data: () => ({
       dataView: null,
       dates: ['2021-03-10', '2021-03-11'],
+      BY_DAYS: 'DAYS',
+      BY_MONTH: 'MONTH',
+      BY_DAYS_OF_THE_WEEK: 'DAYS_OF_THE_WEEK',
+      BY_USERS: 'USERS',
       chartsLibDaysOfTheWeek: null, 
       // Array will be automatically processed with visualization.arrayToDataTable function
+      daysOfTheWeek: {},
       chartDataDaysOfTheWeek: [
         ['Dias da semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
         ['R$', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
@@ -153,8 +162,13 @@ export default {
         console.log(chart);
       },
       getDaysOfTheWeek(dates) {
-        if(this.dataView === 'DAYS_OF_THE_WEEK') {
-          alert(JSON.stringify(dates));
+        if(this.dataView === this.BY_DAYS_OF_THE_WEEK) {
+          gateway.getDaysOfTheWeek(dates,
+            res => {
+              this.daysOfTheWeek = res;
+            }, () => {
+              alert('Erro ao buscar dias da semana');
+            });
           return;
         }
         alert('Outros');
@@ -164,6 +178,15 @@ export default {
       this.userLogged = storage.getUserLogged();
     },
     computed: {
+      title() {
+        switch(this.dataView) {
+          case this.BY_DAYS: return 'Dados por Dias';
+          case this.BY_MONTH: return 'Dados por Meses';
+          case this.BY_DAYS_OF_THE_WEEK: return 'Dados por Dia da Semana';
+          case this.BY_USERS: return 'Dados por Profissinais';
+        }
+        return 'Dados por Dias';
+      },
       datesDisplay() {
         console.log(this.dates);
         if(this.dates[0] && this.dates[1]) {
@@ -178,7 +201,7 @@ export default {
         if (!this.chartsLibDaysOfTheWeek) return null
         return this.chartsLibDaysOfTheWeek.charts.Bar.convertOptions({
           chart: {
-            title: 'Total de Receita por Dias da Semana',
+            title: '',
             subtitle: ''
           },
           // backgroundColor: {
