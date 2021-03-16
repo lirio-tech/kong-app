@@ -9,11 +9,12 @@ import { VueMaskFilter } from 'v-mask'
 import store from './store/'
 import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
-
+import VueGoogleCharts from 'vue-google-charts'
 
 Vue.config.productionTip = false
 Vue.use(VueClipboard)
 Vue.use(VueMask);
+Vue.use(VueGoogleCharts)
 Vue.directive('mask', VueMaskDirective);
 Vue.filter('VMask', VueMaskFilter);
 
