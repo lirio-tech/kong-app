@@ -43,7 +43,7 @@
                         <v-list-item-title>Grafico por dias</v-list-item-title>
                       </v-list-item>                      
                       <v-list-item
-                        @click="() => dataView = 'WEEK_DAYS'"
+                        @click="() => dataView = 'DAYS_OF_THE_WEEK'"
                       >
                         <v-list-item-title>Grafico por dias da semana</v-list-item-title>
                       </v-list-item>    
@@ -72,7 +72,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="dates"
+                      v-model="datesDisplay"
                       label="Picker in dialog"
                       prepend-icon="mdi-calendar"
                       readonly
@@ -95,19 +95,19 @@
                     <v-btn
                       text
                       color="primary"
-                      @click="$refs.dialog.save(date)"
+                      @click="$refs.dialog.save(date); getDaysOfTheWeek(dates);"
                     >
                       OK
                     </v-btn>
                   </v-date-picker>
                 </v-dialog>
           </v-col>          
-          <v-row v-if="dataView === 'WEEK_DAYS'">
+          <v-row v-if="dataView === 'DAYS_OF_THE_WEEK'">
               <v-col cols="12">
                 <GChart
                   :settings="{packages: ['bar']}"    
-                  :data="chartData"
-                  :options="chartOptions"
+                  :data="chartDataDaysOfTheWeek"
+                  :options="chartOptionsDaysOfTheWeek"
                   :createChart="(el, google) => new google.charts.Bar(el)"
                   @ready="onChartReady"
                 />
@@ -131,37 +131,52 @@ export default {
       GChart
     },
     data: () => ({
-      chartsLib: null, 
       dataView: null,
-      // Array will be automatically processed with visualization.arrayToDataTable function
-      chartData: [
-        ['Dias das Semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-        ['R$', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
-      ],
       dates: ['2021-03-10', '2021-03-11'],
+      chartsLibDaysOfTheWeek: null, 
+      // Array will be automatically processed with visualization.arrayToDataTable function
+      chartDataDaysOfTheWeek: [
+        ['Dias da semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+        ['R$', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
+      ],      
       //date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
-      menu2: false,      
-      on: '',
-      attrs: ''
+      menu2: false,     
     }),
     methods: {
       isAdmin(type) {
         return UserTypes.isAdmin(type);
       },
       onChartReady (chart, google) {
-        this.chartsLib = google
+        this.chartsLibDaysOfTheWeek = google
         console.log(chart);
-      }       
+      },
+      getDaysOfTheWeek(dates) {
+        if(this.dataView === 'DAYS_OF_THE_WEEK') {
+          alert(JSON.stringify(dates));
+          return;
+        }
+        alert('Outros');
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
     },
     computed: {
-      chartOptions () {
-        if (!this.chartsLib) return null
-        return this.chartsLib.charts.Bar.convertOptions({
+      datesDisplay() {
+        console.log(this.dates);
+        if(this.dates[0] && this.dates[1]) {
+          let ini = this.dates[0].split('-');
+          let end = this.dates[1].split('-');
+          return `${ini[2]}/${ini[1]}/${ini[0]} - ${end[2]}/${end[1]}/${end[0]}`; 
+        } 
+        let ini = this.dates[0].split('-');
+        return `${ini[2]}/${ini[1]}/${ini[0]}`;
+      },
+      chartOptionsDaysOfTheWeek() {
+        if (!this.chartsLibDaysOfTheWeek) return null
+        return this.chartsLibDaysOfTheWeek.charts.Bar.convertOptions({
           chart: {
             title: 'Total de Receita por Dias da Semana',
             subtitle: ''
@@ -171,7 +186,7 @@ export default {
           //     opacity: 100
           // },          
           language: 'pt',
-          bars: 'horizontal', // Required for Material Bar Charts.
+          //bars: 'horizontal', // Required for Material Bar Charts.
           //hAxis: { format: 'decimal' },
           //hAxis: { format:'##.###,##', title: 'Ano: <?php echo date("Y"); ?>',  titleTextStyle: {color: '#333'}},
           //hAxis: { format: '#,###.##' },

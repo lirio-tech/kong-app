@@ -77,13 +77,13 @@
                             <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                               <div class="overline mb-4 grey--text">
                                   Periodo: 
-                                  <span class="orange--text">{{ consolidado.periodoDescricao }}</span>
+                                  <span class="">{{ consolidado.periodoDescricao }}</span>
                               </div>                           
                             </v-col>
                             <v-col cols="1" v-if="isAdmin && userLogged.username === 'diego'">
                               <span style="margin-left: -15px;">
                                   <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                                      <v-btn fab small outlined color="purple">
+                                      <v-btn fab x-small outlined color="cyan">
                                           <v-icon>
                                               mdi-chart-bar
                                           </v-icon>    
