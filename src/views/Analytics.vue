@@ -102,18 +102,34 @@
                   </v-date-picker>
                 </v-dialog>
           </v-col>          
-          <v-row v-if="dataView === 'DAYS_OF_THE_WEEK'">
+          <div v-if="dataView === 'DAYS_OF_THE_WEEK'">
+            <v-row>
+                <v-col cols="12">
+                  <GChart
+                    :settings="{packages: ['bar']}"    
+                    :data="chartDataDaysOfTheWeek"
+                    :options="chartOptionsDaysOfTheWeek"
+                    :createChart="(el, google) => new google.charts.Bar(el)"
+                    @ready="onChartReady"
+                  />
+                </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12">
-                <GChart
-                  :settings="{packages: ['bar']}"    
-                  :data="chartDataDaysOfTheWeek"
-                  :options="chartOptionsDaysOfTheWeek"
-                  :createChart="(el, google) => new google.charts.Bar(el)"
-                  @ready="onChartReady"
-                />
+                  <div class="green--text">
+                    <span>Melhor dia da Semana: </span> <br/>
+                    <span>{{ betterDayOfTheWeek.dayOfTheWeek }} </span><br/>
+                    <span>{{ betterDayOfTheWeek.value | currency }} </span>
+                  </div>
+                  <br/>
+                  <div class="red--text">
+                    <span>Pior dia da Semana: </span> <br/>
+                    <span>{{ worstDayOfTheWeek.dayOfTheWeek }} </span><br/>
+                    <span>{{ worstDayOfTheWeek.value | currency }} </span>
+                  </div>                  
               </v-col>
-          </v-row>
-          
+            </v-row>
+          </div>
         </v-main>
     </v-container>
 </template>
@@ -139,6 +155,14 @@ export default {
       BY_MONTH: 'MONTH',
       BY_DAYS_OF_THE_WEEK: 'DAYS_OF_THE_WEEK',
       BY_USERS: 'USERS',
+      betterDayOfTheWeek: {
+        dayOfTheWeek: '',
+        value: 0
+      },
+      worstDayOfTheWeek: {
+        dayOfTheWeek: '',
+        value: 0
+      },      
       chartsLibDaysOfTheWeek: null, 
       // Array will be automatically processed with visualization.arrayToDataTable function
       daysOfTheWeek: {},

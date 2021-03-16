@@ -1,6 +1,6 @@
 {
   "name": "appw",
-  "version": "0.4.7",
+  "version": "0.5.3",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
