@@ -109,7 +109,7 @@ export default {
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: [
         ['Dias das Semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-        ['Lucro', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
+        ['R$', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
       ],
       dates: ['2021-03-10', '2021-03-11'],
       //date: new Date().toISOString().substr(0, 10),
@@ -134,7 +134,7 @@ export default {
         if (!this.chartsLib) return null
         return this.chartsLib.charts.Bar.convertOptions({
           chart: {
-            title: 'Total Lucro por Dias da Semana',
+            title: 'Total de Receita por Dias da Semana',
             subtitle: ''
           },
           // backgroundColor: {
