@@ -110,7 +110,7 @@
                                         filled>
                             </v-text-field>
                         </v-col>         
-                        <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser'">
+                        <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser' && user.disabledAt">
                                 <v-text-field
                                 label="Desativado em"
                                 v-model="user.disabledAtPtBr"

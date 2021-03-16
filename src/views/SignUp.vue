@@ -47,7 +47,7 @@
                                 prepend-icon="mdi-home"
                                 :rules="[ 
                                     val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
-                                    val => val && val.length <= 13 || 'tamanho maximo eh de 13 Caracteres',
+                                    val => val && val.length <= 16 || 'tamanho maximo eh de 13 Caracteres',
                                 ]"
                                 required
                                 v-model="signup.company.shortName"
