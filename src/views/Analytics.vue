@@ -14,13 +14,68 @@
                     Graficos
                   </span>
               </v-col>
-              <v-col cols="2" align="center" style="margin-top: 12px;">   
+              <v-col cols="2" align="right" style="margin-top: 12px;">   
                   <v-btn icon small style="display: inline;">
                       <v-icon large color="blue-grey">mdi-menu</v-icon>
                   </v-btn>
               </v-col>
 
-          </v-row>          
+          </v-row>     
+          <!-- <v-row>
+            <v-col
+              cols="12"
+              sm="6"
+            >
+              <v-date-picker
+                v-model="dates"
+                range
+              ></v-date-picker>
+            </v-col>
+          </v-row>                -->
+          <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal"
+                  :return-value.sync="date"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="dates"
+                      label="Picker in dialog"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="dates"
+                    range
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="modal = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.dialog.save(date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>          
           <v-row>
               <v-col cols="12">
                 <GChart
@@ -55,7 +110,12 @@ export default {
       chartData: [
         ['Dias das Semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
         ['Lucro', 650.99, 410.50, 1450.55, 1230.32, 1650.85, 2300.14, 800.30],
-      ]         
+      ],
+      dates: ['2021-03-10', '2021-03-11'],
+      //date: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,      
     }),
     methods: {
       isAdmin(type) {
