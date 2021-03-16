@@ -2,7 +2,7 @@
     <v-container style="">
         <v-main class="">
           <v-row>
-              <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
+              <v-col cols="1" style="margin-left: 10px; margin-top: 5px;">   
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/'}"
                   >
@@ -14,7 +14,7 @@
                     {{ title }}
                   </span>
               </v-col>
-              <v-col cols="2" align="right" style="margin-top: 12px;">   
+              <v-col cols="2" align="right" style="margin-top: 5px;">   
 
                   <v-menu
                     bottom
@@ -115,17 +115,17 @@
                 </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" style="font-size: 1.4rem">
                   <div class="green--text">
                     <span>Melhor dia da Semana: </span> <br/>
                     <span>{{ betterDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>{{ betterDayOfTheWeek.value | currency }} </span>
+                    <span>Média de {{ betterDayOfTheWeek.value | currency }} </span>
                   </div>
                   <br/>
                   <div class="red--text">
                     <span>Pior dia da Semana: </span> <br/>
                     <span>{{ worstDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>{{ worstDayOfTheWeek.value | currency }} </span>
+                    <span>Média de {{ worstDayOfTheWeek.value | currency }} </span>
                   </div>                  
               </v-col>
             </v-row>
@@ -179,11 +179,39 @@ export default {
         this.chartsLibDaysOfTheWeek = google
         console.log(chart);
       },
+      setBetterAndWorstDayOfTheWeek(daysOfTheWeek) {
+        let betterValue = Number.MIN_VALUE;
+        let betterDay = '';
+        if(daysOfTheWeek.monday > betterValue) { betterValue = daysOfTheWeek.monday; betterDay = 'Segunda-Feira'; }
+        if(daysOfTheWeek.tuesday > betterValue) { betterValue = daysOfTheWeek.tuesday; betterDay = 'Terça-Feira'; }
+        if(daysOfTheWeek.wednesday > betterValue) { betterValue = daysOfTheWeek.wednesday; betterDay = 'Quarta-Feira'; }
+        if(daysOfTheWeek.thursday > betterValue) { betterValue = daysOfTheWeek.thursday; betterDay = 'Quinta-Feira'; }
+        if(daysOfTheWeek.friday > betterValue) { betterValue = daysOfTheWeek.friday; betterDay = 'Sexta-Feira'; }
+        if(daysOfTheWeek.saturday > betterValue) { betterValue = daysOfTheWeek.saturday; betterDay = 'Sabado'; }
+        if(daysOfTheWeek.sunday > betterValue) { betterValue = daysOfTheWeek.sunday; betterDay = 'Domingo'; }
+
+        let worstValue = Number.MAX_VALUE;
+        let worstDay = '';
+        if(daysOfTheWeek.monday < worstValue) { worstValue = daysOfTheWeek.monday; worstDay = 'Segunda-Feira'; }
+        if(daysOfTheWeek.tuesday < worstValue) { worstValue = daysOfTheWeek.tuesday; worstDay = 'Terça-Feira'; }
+        if(daysOfTheWeek.wednesday < worstValue) { worstValue = daysOfTheWeek.wednesday; worstDay = 'Quarta-Feira'; }
+        if(daysOfTheWeek.thursday < worstValue) { worstValue = daysOfTheWeek.thursday; worstDay = 'Quinta-Feira'; }
+        if(daysOfTheWeek.friday < worstValue) { worstValue = daysOfTheWeek.friday; worstDay = 'Sexta-Feira'; }
+        if(daysOfTheWeek.saturday < worstValue) { worstValue = daysOfTheWeek.saturday; worstDay = 'Sabado'; }
+        if(daysOfTheWeek.sunday < worstValue) { worstValue = daysOfTheWeek.sunday; worstDay = 'Domingo'; }
+
+        this.betterDayOfTheWeek.dayOfTheWeek = betterDay;
+        this.betterDayOfTheWeek.value = betterValue;
+        this.worstDayOfTheWeek.dayOfTheWeek = worstDay;
+        this.worstDayOfTheWeek.value = worstValue;
+
+      },
       getDaysOfTheWeek(dates) {
         if(this.dataView === this.BY_DAYS_OF_THE_WEEK) {
           gateway.getDaysOfTheWeek(dates,
             res => {
               this.daysOfTheWeek = res;
+              this.setBetterAndWorstDayOfTheWeek(this.daysOfTheWeek);
             }, () => {
               alert('Erro ao buscar dias da semana');
             });
