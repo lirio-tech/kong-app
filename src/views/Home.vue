@@ -326,7 +326,7 @@ export default {
       getMesPtBr(mes) {
           if(mes === 0) return 'Janeiro';
           if(mes === 1) return 'Fevereiro';
-          if(mes === 2) return 'Marco';
+          if(mes === 2) return 'Março';
           if(mes === 3) return 'Abril';
           if(mes === 4) return 'Maio';
           if(mes === 5) return 'Junho';
