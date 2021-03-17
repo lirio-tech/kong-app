@@ -36,24 +36,24 @@
                         v-if="false"
                         @click="() => setDataView(BY_DAYS)"
                       >
-                        <v-list-item-title>Grafico por dias</v-list-item-title>
+                        <v-list-item-title>Ganhos (R$) Ganhos por dias</v-list-item-title>
                       </v-list-item>
                       <v-list-item
                         v-if="false"
                         @click="() => setDataView(BY_MONTH)"
                       >
-                        <v-list-item-title>Grafico por Meses</v-list-item-title>
+                        <v-list-item-title>Ganhos (R$) por Meses</v-list-item-title>
                       </v-list-item>                      
                       <v-list-item
                         @click="() => setDataView(BY_DAYS_OF_THE_WEEK)"
                       >
-                        <v-list-item-title>Grafico por dias da semana</v-list-item-title>
-                      </v-list-item>    
+                        <v-list-item-title>Ganhos (R$) por Dia da semana</v-list-item-title>
+                      </v-list-item>   
                       <v-list-item
                         v-if="isAdmin(userLogged.type)"
                         @click="() => setDataView(BY_USERS)"
                       >
-                        <v-list-item-title>Grafico por Profissionais</v-list-item-title>
+                        <v-list-item-title>Ganhos (R$) por Profissionais</v-list-item-title>
                       </v-list-item>                                                            
                     </v-list>
                   </v-menu>
@@ -380,10 +380,10 @@ export default {
     computed: {
       title() {
         switch(this.dataView) {
-          case this.BY_DAYS: return 'Dados por Dias';
-          case this.BY_MONTH: return 'Dados por Meses';
-          case this.BY_DAYS_OF_THE_WEEK: return 'Dados por Dia da Semana';
-          case this.BY_USERS: return 'Dados por Profissinais';
+          case this.BY_DAYS: return 'Ganhos (R$) por Dias';
+          case this.BY_MONTH: return 'Ganhos (R$) por Meses';
+          case this.BY_DAYS_OF_THE_WEEK: return 'Ganhos (R$) por Dia da Semana';
+          case this.BY_USERS: return 'Ganhos (R$) por Profissinais';
         }
         return 'Dados por Dias';
       },
