@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;">Wiskritório App</span>
-                        <br/><small class="grey--text">Versao: 0.5.3 </small>
+                        <br/><small class="grey--text">Versao: 0.5.5 </small>
                 </v-col>       
             </v-row>   
 

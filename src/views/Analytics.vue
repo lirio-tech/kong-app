@@ -19,7 +19,7 @@
                   <v-menu
                     bottom
                     offset-y
-                  >
+                  > 
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn 
                         icon 
@@ -103,10 +103,62 @@
                   </v-date-picker>
                 </v-dialog>
           </v-col>          
-          <div v-if="dataView === 'DAYS_OF_THE_WEEK'">
+          <v-alert
+                dense
+                border="bottom"
+                type="error"
+                outlined
+                v-if="!dataReturnOK && !loading"
+              >
+                Dados nao Encontrados para este periodo
+          </v-alert>
+          <v-dialog
+            v-model="loading"
+            hide-overlay
+            persistent
+            width="300"
+          >
+            <v-card
+              color="primary"
+              dark
+            >
+              <v-card-text>
+                Por favor aguarde...
+                <v-progress-linear
+                  indeterminate
+                  color="white"
+                  class="mb-0"
+                ></v-progress-linear>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+
+          <!-- <div v-if="loading">
+            <v-skeleton-loader
+              ref="skeleton"
+              type="image"
+              :tile="true"
+              class="mx-auto"
+            ></v-skeleton-loader>
+            <br/> 
+            <v-skeleton-loader
+              ref="skeleton"
+              type="sentences"
+              :tile="true"
+              class="mx-auto"
+            ></v-skeleton-loader>          
+            <br/>
+            <v-skeleton-loader
+              ref="skeleton"
+              type="sentences"
+              :tile="true"
+              class="mx-auto"
+            ></v-skeleton-loader>                      
+          </div> -->
+          <div v-if="dataView === 'DAYS_OF_THE_WEEK' && dataReturnOK">
             <v-row>
                 <v-col cols="12">
-                  <GChart
+                  <GChart 
                     :settings="{packages: ['bar']}"    
                     :data="chartDataDaysOfTheWeek"
                     :options="chartOptionsDaysOfTheWeek"
@@ -152,6 +204,8 @@ export default {
       GChart
     },
     data: () => ({
+      dataReturnOK: false,
+      loading: false,
       dataView: null,
       dates: [date.getNewDateAddDay(-7), date.dateToStringEnUS(new Date())],
       BY_DAYS: 'DAYS',
@@ -272,15 +326,33 @@ export default {
         this.worstDayOfTheWeek.amount = worstAmount;
 
       },
+      isDataReturnOK(daysOfTheWeek) {
+        return daysOfTheWeek.monday.amount > 0 ||
+          daysOfTheWeek.tuesday.amount > 0 ||
+          daysOfTheWeek.wednesday.amount > 0 ||
+          daysOfTheWeek.thursday.amount > 0 ||
+          daysOfTheWeek.friday.amount > 0 ||
+          daysOfTheWeek.saturday.amount > 0 ||
+          daysOfTheWeek.sunday.amount > 0;
+      },
       getDaysOfTheWeek(dates) {
         if(this.dataView === this.BY_DAYS_OF_THE_WEEK) {
+          this.loading = true;
           gateway.getDaysOfTheWeek(dates,
             res => {
               console.log(res);
               this.daysOfTheWeek = res.data;
-              this.chartDataDaysOfTheWeekResult = res.chartData;
-              this.setBetterAndWorstDayOfTheWeek(this.daysOfTheWeek);
+              if(this.isDataReturnOK(this.daysOfTheWeek)) {
+                this.dataReturnOK = true;
+                this.chartDataDaysOfTheWeekResult = res.chartData;
+                this.setBetterAndWorstDayOfTheWeek(this.daysOfTheWeek);
+              } else {
+                this.dataReturnOK = false;
+              }
+              this.loading = false;
             }, () => {
+              this.dataReturnOK = false;
+              this.loading = false;
               alert('Erro ao buscar dias da semana');
             });
           return;

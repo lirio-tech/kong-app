@@ -148,7 +148,7 @@
                 v-if="orders.length === 0 && !loading"
               >
                 Dados nao Encontrados para este periodo
-              </v-alert>
+            </v-alert>
 
             <v-row v-if="orders.length !== 0 && !loading">
                 <v-col cols="12" sm="12">
