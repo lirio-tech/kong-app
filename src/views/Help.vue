@@ -161,9 +161,9 @@ export default {
         },
         share() {
             const shareData = {
-            title: 'MDN',
-            text: 'Aprenda desenvolvimento web no MDN!',
-            url: 'https://developer.mozilla.org',
+            title: 'Wiskritorio App',
+            text: '💈Gerencie seus cortes ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱',
+            url: 'https://app.wiskritorio.com.br',
             }            
             return navigator.share(shareData)
         }                         
