@@ -1,0 +1,57 @@
+<template>
+    <v-container>
+        <AppBar />
+        <v-row style="margin-top:100px;">
+            <v-container class="text-center">
+                <v-progress-circular
+                    :rotate="-90"
+                    :size="100"
+                    :width="15"
+                    :value="value"
+                    color="primary"
+                >
+                    {{ value }}
+                </v-progress-circular>        
+            </v-container>
+        </v-row>
+    </v-container>
+</template>
+<script>
+import AppBar from '../components/AppBar';
+import device from '../utils/device'
+export default {
+    components: { AppBar },
+    data () {
+      return {
+        interval: {},
+        value: 0,
+        myDevice: null
+      }
+    },    
+    beforeDestroy () {
+      clearInterval(this.interval);
+      if(device.isAndroid()) {
+          this.myDevice = 'ANDROID';
+      }
+      if(device.isIphone()) {
+          this.myDevice = 'IPHONE';
+      }      
+    },
+    mounted () {
+      this.interval = setInterval(() => {
+        if (this.value === 100) {
+            if(this.myDevice === 'ANDROID') {
+                this.$router.push('/public/android');
+                return;
+            }
+            if(this.myDevice === 'IPHONE') {
+                this.$router.push('/public/iphone');
+                return;
+            }                
+            this.$router.push('/public/help');
+        }
+        this.value += 10
+      }, 250)
+    },     
+} 
+</script>

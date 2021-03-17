@@ -122,6 +122,7 @@
 </template>
 <script>
 import VueQrcode from 'vue-qrcode'
+import device from '../utils/device'
 export default {
     components: {
         VueQrcode
@@ -136,34 +137,22 @@ export default {
             this.$router.go(-1)
         },
         isMobile() {
-            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                return true
-            } else {
-                return false
-            }
+            return device.isMobile();
         },
         isAndroid() {
-            if(/Android/i.test(navigator.userAgent)) {
-                return true
-            } else {
-                return false
-            }
+            return device.isAndroid();
         },        
         isIphone() {
-            if(/iPhone|iPad/i.test(navigator.userAgent)) {
-                return true
-            } else {
-                return false
-            }
+            return device.isIphone();
         },
         agent() {
-            return navigator.userAgent;
+            return device.agent();
         },
         share() {
             const shareData = {
             title: 'Wiskritorio App',
             text: '💈Gerencie seus cortes ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱',
-            url: 'https://app.wiskritorio.com.br',
+            url: 'https://app.wiskritorio.com.br/#/public/identify-device',
             }            
             return navigator.share(shareData)
         }                         

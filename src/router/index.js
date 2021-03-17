@@ -12,6 +12,7 @@ import Help from '../views/Help'
 import Android from '../views/Android'
 import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
+import IdentifyDeviceRedirect from '../views/IdentifyDeviceRedirect'
 import System from '../views/system/System'
 import SystemCompanyForm from '../views/system/SystemCompanyForm'
 import SystemCompanyList from '../views/system/SystemCompanyList'
@@ -101,6 +102,11 @@ const routes = [
     name: 'RateUs', 
     component: RateUs
   },     
+  {
+    path: '/public/identify-device',
+    name: 'IdentifyDevice', 
+    component: IdentifyDeviceRedirect
+  },      
   {
     path: '/system',
     name: 'System', 
