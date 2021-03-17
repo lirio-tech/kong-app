@@ -158,7 +158,18 @@ export default {
         },
         agent() {
             return navigator.userAgent;
-        }                
+        },
+        share() {
+            const shareData = {
+            title: 'MDN',
+            text: 'Aprenda desenvolvimento web no MDN!',
+            url: 'https://developer.mozilla.org',
+            }            
+            return navigator.share(shareData)
+        }                         
+    },
+    computed: {
+       
     }
 }
 </script>
