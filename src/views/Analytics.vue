@@ -104,7 +104,17 @@
                     </v-btn>
                   </v-date-picker>
                 </v-dialog>
-          </v-col>          
+          </v-col>     
+          <v-col 
+            style="margin-top:-30px;"
+            cols="12"
+            sm="12"
+            md="12"
+            v-if="dataReturnOK && total"
+          >
+            <span class="grey--text caption">Total no periodo</span><br/>  
+            <span style="font-size: 1.6rem">{{ total | currency }}</span>
+          </v-col>               
           <v-alert
                 dense
                 border="bottom"
@@ -203,6 +213,7 @@ export default {
       modal: false,
       menu2: false,         
       dataReturnOK: false,
+      total: 0,
       loading: false,
       dataView: null,
       dates: [date.getNewDateAddDay(-6), date.dateToStringEnUS(new Date())],
@@ -334,6 +345,7 @@ export default {
       getDaysOfTheWeek(dates) {
         if(this.dataView === this.BY_DAYS_OF_THE_WEEK) {
           this.loading = true;
+          this.total = 0;
           gateway.getDaysOfTheWeek(dates,
             res => {
               console.log(res);
@@ -344,11 +356,13 @@ export default {
                 this.setBetterAndWorstDayOfTheWeek(this.daysOfTheWeek);
               } else {
                 this.dataReturnOK = false;
+                this.total = 0;
               }
               this.loading = false;
             }, () => {
               this.dataReturnOK = false;
               this.loading = false;
+              this.total = 0;
               alert('Erro ao buscar dias da semana');
           });
           return;
@@ -361,9 +375,14 @@ export default {
               this.chartDataUsers = res.chartData;
               this.dataReturnOK = true;
               this.loading = false;
+              this.total = 0;
+              res.data.forEach(d => {
+                this.total += d.totalValue;
+              });
             }, () => {
               this.dataReturnOK = false;
               this.loading = false;
+              this.total = 0;
               alert('Erro ao buscar dias da semana');
           });                                
         }
