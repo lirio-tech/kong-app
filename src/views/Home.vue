@@ -171,12 +171,12 @@
                             </template>                                                         
                         </v-data-table>               
                         <v-simple-table 
-                          v-if="userLogged.configuration || userLogged.configuration.table === 'simple'"
+                          v-if="userLogged.configuration && userLogged.configuration.table === 'simple'"
                         >
                           <template v-slot:default>
                             <thead>
                               <tr>
-                                <th class="text-center">
+                                <th class="text-center caption">
                                   Date
                                 </th>
                                 <th class="text-left">
@@ -196,10 +196,10 @@
                                 :key="ord._id"
                                 @click="clickRow(ord)"
                               >
-                                <td>{{ getDateFormated(ord.date) }}</td>
-                                <td>{{ ord.user.name }}</td>
-                                <td>{{ ord.customer.name }}</td>
-                                <td>{{ ord.total | currency }}</td>
+                                <td class="text-center caption">{{ getDateFormated(ord.date).substring(0,5) }}</td>
+                                <td class="caption">{{ ord.user.name }}</td>
+                                <td class="caption">{{ ord.customer.name }}</td>
+                                <td class="text-right">{{ ord.total | currency }}</td>
                               </tr>
                             </tbody>
                           </template>
