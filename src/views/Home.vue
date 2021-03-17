@@ -118,7 +118,6 @@
 
                           <div v-if="loading">
                             <v-skeleton-loader
-                              v-bind="attrs"
                               type="article, actions"
                             ></v-skeleton-loader>
                           </div>                               
@@ -152,8 +151,9 @@
 
             <v-row v-if="orders.length !== 0 && !loading">
                 <v-col cols="12" sm="12">
-                    <v-sheet min-height="70vh" rounded="lg">
+                    <v-sheet min-height="70vh" rounded="lg" >
                         <v-data-table 
+                            v-if="!userLogged.configuration || !userLogged.configuration.table || userLogged.configuration.table === 'mobile'"
                             :headers="headers" 
                             :items="orders" 
                             item-key="code"
@@ -170,6 +170,40 @@
                                 {{ item.total | currency }}                            
                             </template>                                                         
                         </v-data-table>               
+                        <v-simple-table 
+                          v-if="userLogged.configuration || userLogged.configuration.table === 'simple'"
+                        >
+                          <template v-slot:default>
+                            <thead>
+                              <tr>
+                                <th class="text-center">
+                                  Date
+                                </th>
+                                <th class="text-left">
+                                  Profissional
+                                </th>              
+                                <th class="text-center">
+                                  Cliente
+                                </th>                                                                
+                                <th class="text-center">
+                                  Total
+                                </th>                                                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="ord in orders"
+                                :key="ord._id"
+                                @click="clickRow(ord)"
+                              >
+                                <td>{{ getDateFormated(ord.date) }}</td>
+                                <td>{{ ord.user.name }}</td>
+                                <td>{{ ord.customer.name }}</td>
+                                <td>{{ ord.total | currency }}</td>
+                              </tr>
+                            </tbody>
+                          </template>
+                        </v-simple-table>                        
                     </v-sheet>
                 </v-col>
             </v-row>              
@@ -303,7 +337,8 @@ export default {
           if(mes === 10) return 'Novembro';
           if(mes === 11) return 'Dezembro';
       },
-      clickRow(row) {
+      clickRow(row) { 
+        console.log(row);
           this.orders.map((item) => {
               let selected = item === row;
               if(selected) {
