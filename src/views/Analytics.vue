@@ -33,11 +33,13 @@
                     </template>
                     <v-list>
                       <v-list-item
+                        v-if="false"
                         @click="() => setDataView(BY_DAYS)"
                       >
                         <v-list-item-title>Grafico por dias</v-list-item-title>
                       </v-list-item>
                       <v-list-item
+                        v-if="false"
                         @click="() => setDataView(BY_MONTH)"
                       >
                         <v-list-item-title>Grafico por Meses</v-list-item-title>
@@ -48,8 +50,8 @@
                         <v-list-item-title>Grafico por dias da semana</v-list-item-title>
                       </v-list-item>    
                       <v-list-item
-                        @click="() => setDataView(BY_USERS)"
                         v-if="isAdmin(userLogged.type)"
+                        @click="() => setDataView(BY_USERS)"
                       >
                         <v-list-item-title>Grafico por Profissionais</v-list-item-title>
                       </v-list-item>                                                            
@@ -133,29 +135,13 @@
             </v-card>
           </v-dialog>
 
-          <!-- <div v-if="loading">
-            <v-skeleton-loader
-              ref="skeleton"
-              type="image"
-              :tile="true"
-              class="mx-auto"
-            ></v-skeleton-loader>
-            <br/> 
-            <v-skeleton-loader
-              ref="skeleton"
-              type="sentences"
-              :tile="true"
-              class="mx-auto"
-            ></v-skeleton-loader>          
-            <br/>
-            <v-skeleton-loader
-              ref="skeleton"
-              type="sentences"
-              :tile="true"
-              class="mx-auto"
-            ></v-skeleton-loader>                      
-          </div> -->
-          <div v-if="dataView === 'DAYS_OF_THE_WEEK' && dataReturnOK">
+          <div v-if="dataView === BY_DAYS_OF_THE_WEEK && dataReturnOK">
+              <!-- <DaysOfTheWeek
+                :dataReturnOK="dataReturnOK"
+                :chartDataDaysOfTheWeek="chartDataDaysOfTheWeek"
+                :daysOfTheWeek="daysOfTheWeek"
+              /> -->
+            
             <v-row>
                 <v-col cols="12">
                   <GChart 
@@ -185,6 +171,16 @@
               </v-col>
             </v-row>
           </div>
+
+          <div v-if="dataView === BY_USERS && dataReturnOK">
+              <GChart
+                style="width: 100%"
+                type="PieChart"
+                :data="chartDataUsers"
+                :options="{height: 380,width: '100%',legend:{ position: 'top', maxLines: 3 }}"
+              />  
+          </div>
+
         </v-main>
     </v-container>
 </template>
@@ -195,19 +191,21 @@ import UserTypes from '../utils/UserTypes'
 import { GChart } from 'vue-google-charts'
 import gateway from '../api/gateway';
 import date from '../utils/date'
+//import DaysOfTheWeek from '../components/analytics/DaysOfTheWeek'
 export default {
-    // https://codesandbox.io/s/z699l6oq4p?file=/src/App.vue:989-1008
-
-    // https://codesandbox.io/s/rr9zl088n4
     name: 'Analytics',
     components: {
-      GChart
+      GChart,
+      //DaysOfTheWeek
     },
     data: () => ({
+      menu: false,
+      modal: false,
+      menu2: false,         
       dataReturnOK: false,
       loading: false,
       dataView: null,
-      dates: [date.getNewDateAddDay(-7), date.dateToStringEnUS(new Date())],
+      dates: [date.getNewDateAddDay(-6), date.dateToStringEnUS(new Date())],
       BY_DAYS: 'DAYS',
       BY_MONTH: 'MONTH',
       BY_DAYS_OF_THE_WEEK: 'DAYS_OF_THE_WEEK',
@@ -226,10 +224,8 @@ export default {
       // Array will be automatically processed with visualization.arrayToDataTable function
       daysOfTheWeek: {},
       chartDataDaysOfTheWeekResult: null,
-      //date: new Date().toISOString().substr(0, 10),
-      menu: false,
-      modal: false,
-      menu2: false,     
+      date: new Date().toISOString().substr(0, 10),
+      chartDataUsers: []
     }),
     methods: {
       isAdmin(type) {
@@ -354,10 +350,23 @@ export default {
               this.dataReturnOK = false;
               this.loading = false;
               alert('Erro ao buscar dias da semana');
-            });
+          });
           return;
         }
-        alert('Outros');
+        if(this.dataView === this.BY_USERS) {
+          this.loading = true;
+          gateway.getAnalyticsDataUsers(dates,
+            res => {
+              console.log(res);
+              this.chartDataUsers = res.chartData;
+              this.dataReturnOK = true;
+              this.loading = false;
+            }, () => {
+              this.dataReturnOK = false;
+              this.loading = false;
+              alert('Erro ao buscar dias da semana');
+          });                                
+        }
       },
       setDataView(dv) {
         this.dataView = dv;

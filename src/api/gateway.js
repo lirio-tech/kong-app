@@ -267,6 +267,17 @@ export default{
               errorCb(error)
           })   
     },
+    getAnalyticsDataUsers(dates, callback, errorCb) {
+      let url = `${ANALYTICS_API}/users`;
+      Axios.post(url, dates)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })   
+    },
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)
