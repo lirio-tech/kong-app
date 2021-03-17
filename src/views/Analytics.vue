@@ -49,8 +49,9 @@
                       </v-list-item>    
                       <v-list-item
                         @click="() => setDataView(BY_USERS)"
+                        v-if="isAdmin(userLogged.type)"
                       >
-                        <v-list-item-title>Grafico por usuario</v-list-item-title>
+                        <v-list-item-title>Grafico por Profissionais</v-list-item-title>
                       </v-list-item>                                                            
                     </v-list>
                   </v-menu>
@@ -66,7 +67,7 @@
                 <v-dialog
                   ref="dialog"
                   v-model="modal"
-                  :return-value.sync="date"
+                  :return-value.sync="date" 
                   persistent
                   width="290px"
                 >
@@ -119,13 +120,15 @@
                   <div class="green--text">
                     <span>Melhor dia da Semana: </span> <br/>
                     <span>{{ betterDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>Média de {{ betterDayOfTheWeek.value | currency }} </span>
+                    <span>Média de {{ betterDayOfTheWeek.value | currency }} </span> <br/>
+                    <small>{{ betterDayOfTheWeek.amount }} </small> 
                   </div>
                   <br/>
                   <div class="red--text">
                     <span>Pior dia da Semana: </span> <br/>
                     <span>{{ worstDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>Média de {{ worstDayOfTheWeek.value | currency }} </span>
+                    <span>Média de {{ worstDayOfTheWeek.value | currency }} </span> <br/>
+                    <small>{{ worstDayOfTheWeek.amount }} </small> 
                   </div>                  
               </v-col>
             </v-row>
@@ -157,15 +160,18 @@ export default {
       BY_USERS: 'USERS',
       betterDayOfTheWeek: {
         dayOfTheWeek: '',
-        value: 0
+        value: 0,
+        amount: 0
       },
       worstDayOfTheWeek: {
         dayOfTheWeek: '',
-        value: 0
+        value: 0,
+        amount: 0
       },      
       chartsLibDaysOfTheWeek: null, 
       // Array will be automatically processed with visualization.arrayToDataTable function
       daysOfTheWeek: {},
+      chartDataDaysOfTheWeekResult: null,
       //date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -182,35 +188,97 @@ export default {
       setBetterAndWorstDayOfTheWeek(daysOfTheWeek) {
         let betterValue = Number.MIN_VALUE;
         let betterDay = '';
-        if(daysOfTheWeek.monday > betterValue) { betterValue = daysOfTheWeek.monday; betterDay = 'Segunda-Feira'; }
-        if(daysOfTheWeek.tuesday > betterValue) { betterValue = daysOfTheWeek.tuesday; betterDay = 'Terça-Feira'; }
-        if(daysOfTheWeek.wednesday > betterValue) { betterValue = daysOfTheWeek.wednesday; betterDay = 'Quarta-Feira'; }
-        if(daysOfTheWeek.thursday > betterValue) { betterValue = daysOfTheWeek.thursday; betterDay = 'Quinta-Feira'; }
-        if(daysOfTheWeek.friday > betterValue) { betterValue = daysOfTheWeek.friday; betterDay = 'Sexta-Feira'; }
-        if(daysOfTheWeek.saturday > betterValue) { betterValue = daysOfTheWeek.saturday; betterDay = 'Sabado'; }
-        if(daysOfTheWeek.sunday > betterValue) { betterValue = daysOfTheWeek.sunday; betterDay = 'Domingo'; }
+        let betterAmount = 0;
+        if(daysOfTheWeek.monday.average > betterValue) { 
+          betterValue = daysOfTheWeek.monday.average; 
+          betterDay = 'Segunda-Feira'; 
+          betterAmount = daysOfTheWeek.monday.amount + ' segunda(s) contabilizado';
+        }
+        if(daysOfTheWeek.tuesday.average > betterValue) { 
+          betterValue = daysOfTheWeek.tuesday.average; 
+          betterDay = 'Terça-Feira'; 
+          betterAmount = daysOfTheWeek.tuesday.amount + ' terça(s) contabilizado';
+        }
+        if(daysOfTheWeek.wednesday.average > betterValue) { 
+          betterValue = daysOfTheWeek.wednesday.average; 
+          betterDay = 'Quarta-Feira'; 
+          betterAmount = daysOfTheWeek.wednesday.amount + ' quarta(s) contabilizado';
+        }
+        if(daysOfTheWeek.thursday.average > betterValue) { 
+          betterValue = daysOfTheWeek.thursday.average; 
+          betterDay = 'Quinta-Feira'; 
+          betterAmount = daysOfTheWeek.thursday.amount + ' quinta(s) contabilizado';
+        }
+        if(daysOfTheWeek.friday.average > betterValue) { 
+          betterValue = daysOfTheWeek.friday.average; 
+          betterDay = 'Sexta-Feira'; 
+          betterAmount = daysOfTheWeek.friday.amount + ' sexta(s) contabilizado';
+        }
+        if(daysOfTheWeek.saturday.average > betterValue) { 
+          betterValue = daysOfTheWeek.saturday.average; 
+          betterDay = 'Sábado'; 
+          betterAmount = daysOfTheWeek.saturday.amount + ' sábado(s) contabilizado';
+        }
+        if(daysOfTheWeek.sunday.average > betterValue) { 
+          betterValue = daysOfTheWeek.sunday.average; 
+          betterDay = 'Domingo'; 
+          betterAmount = daysOfTheWeek.sunday.amount + ' domingo(s) contabilizado';
+        }
 
         let worstValue = Number.MAX_VALUE;
         let worstDay = '';
-        if(daysOfTheWeek.monday < worstValue) { worstValue = daysOfTheWeek.monday; worstDay = 'Segunda-Feira'; }
-        if(daysOfTheWeek.tuesday < worstValue) { worstValue = daysOfTheWeek.tuesday; worstDay = 'Terça-Feira'; }
-        if(daysOfTheWeek.wednesday < worstValue) { worstValue = daysOfTheWeek.wednesday; worstDay = 'Quarta-Feira'; }
-        if(daysOfTheWeek.thursday < worstValue) { worstValue = daysOfTheWeek.thursday; worstDay = 'Quinta-Feira'; }
-        if(daysOfTheWeek.friday < worstValue) { worstValue = daysOfTheWeek.friday; worstDay = 'Sexta-Feira'; }
-        if(daysOfTheWeek.saturday < worstValue) { worstValue = daysOfTheWeek.saturday; worstDay = 'Sabado'; }
-        if(daysOfTheWeek.sunday < worstValue) { worstValue = daysOfTheWeek.sunday; worstDay = 'Domingo'; }
+        let worstAmount = 0;
+        if(daysOfTheWeek.monday.average > 0 && daysOfTheWeek.monday.average < worstValue) { 
+          worstValue = daysOfTheWeek.monday.average; 
+          worstDay = 'Segunda-Feira'; 
+          worstAmount = daysOfTheWeek.monday.amount + ' segunda(s) contabilizado';
+        }
+        if(daysOfTheWeek.tuesday.average > 0 && daysOfTheWeek.tuesday.average < worstValue) { 
+          worstValue = daysOfTheWeek.tuesday.average; 
+          worstDay = 'Terça-Feira'; 
+          worstAmount = daysOfTheWeek.tuesday.amount + ' terça(s) contabilizado';
+        }
+        if(daysOfTheWeek.wednesday.average > 0 && daysOfTheWeek.wednesday.average < worstValue) { 
+          worstValue = daysOfTheWeek.wednesday.average; 
+          worstDay = 'Quarta-Feira'; 
+          worstAmount = daysOfTheWeek.wednesday.amount + ' quarta(s) contabilizado';
+        }
+        if(daysOfTheWeek.thursday.average > 0 && daysOfTheWeek.thursday.average < worstValue) { 
+          worstValue = daysOfTheWeek.thursday.average; 
+          worstDay = 'Quinta-Feira'; 
+          worstAmount = daysOfTheWeek.thursday.amount + ' quinta(s) contabilizado';
+        }
+        if(daysOfTheWeek.friday.average > 0 && daysOfTheWeek.friday.average < worstValue) { 
+          worstValue = daysOfTheWeek.friday.average; 
+          worstDay = 'Sexta-Feira'; 
+          worstAmount = daysOfTheWeek.friday.amount + ' sexta(s) contabilizado';
+        }
+        if(daysOfTheWeek.saturday.average > 0 && daysOfTheWeek.saturday.average < worstValue) { 
+          worstValue = daysOfTheWeek.saturday.average; 
+          worstDay = 'Sábado'; 
+          worstAmount = daysOfTheWeek.saturday.amount + ' sábado(s) contabilizado';
+        }
+        if(daysOfTheWeek.sunday.average > 0 && daysOfTheWeek.sunday.average < worstValue) { 
+          worstValue = daysOfTheWeek.sunday.average; 
+          worstDay = 'Domingo'; 
+          worstAmount = daysOfTheWeek.sunday.amount + ' domingo(s) contabilizado';
+        }
 
         this.betterDayOfTheWeek.dayOfTheWeek = betterDay;
         this.betterDayOfTheWeek.value = betterValue;
+        this.betterDayOfTheWeek.amount = betterAmount;
         this.worstDayOfTheWeek.dayOfTheWeek = worstDay;
         this.worstDayOfTheWeek.value = worstValue;
+        this.worstDayOfTheWeek.amount = worstAmount;
 
       },
       getDaysOfTheWeek(dates) {
         if(this.dataView === this.BY_DAYS_OF_THE_WEEK) {
           gateway.getDaysOfTheWeek(dates,
             res => {
-              this.daysOfTheWeek = res;
+              console.log(res);
+              this.daysOfTheWeek = res.data;
+              this.chartDataDaysOfTheWeekResult = res.chartData;
               this.setBetterAndWorstDayOfTheWeek(this.daysOfTheWeek);
             }, () => {
               alert('Erro ao buscar dias da semana');
@@ -249,17 +317,7 @@ export default {
         return `${ini[2]}/${ini[1]}/${ini[0]}`;
       },
       chartDataDaysOfTheWeek() {
-        return [
-          ['Dias da semana', 'Seg' ,'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-          ['R$', 
-            this.daysOfTheWeek.monday, 
-            this.daysOfTheWeek.tuesday, 
-            this.daysOfTheWeek.wednesday, 
-            this.daysOfTheWeek.thursday, 
-            this.daysOfTheWeek.friday, 
-            this.daysOfTheWeek.saturday, 
-            this.daysOfTheWeek.sunday],
-        ];
+        return this.chartDataDaysOfTheWeekResult;
       },      
       chartOptionsDaysOfTheWeek() {
         if (!this.chartsLibDaysOfTheWeek) return null
@@ -279,7 +337,7 @@ export default {
           //hAxis: { format: '#,###.##' },
           format: 'currency',
           height: 400,
-          colors: ['#C62828', '#1565C0', '#00695C', '#4527A0', '#FF8F00', '#424242', '#AB47BC']
+          colors: ['#C62828', '#FBC02D', '#2E7D32', '#512DA8', '#FF8F00', '#1565C0', '#F06292']
         })
       }    
     },
