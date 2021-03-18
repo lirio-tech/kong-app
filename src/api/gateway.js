@@ -289,6 +289,18 @@ export default{
               errorCb(error)
           })   
     },
+    getAnalyticsCompaniesActives(dates, callback, errorCb) {
+      let url = `${ANALYTICS_API}/companies-actives`;
+      Axios.post(url, dates)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })   
+    },
+        
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)
