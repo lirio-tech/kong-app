@@ -54,7 +54,7 @@
                     <v-btn
                       text
                       color="primary"
-                      @click="$refs.dialog.save(date);"
+                      @click="$refs.dialog.save(date); getCompaniesActives(dates)"
                     >
                       OK
                     </v-btn>
@@ -86,22 +86,25 @@ export default {
       userLogged: { 
         type: 'none'
       },
-      dates: [date.getNewDateAddDay(-1), date.dateToStringEnUS(new Date())],
+      dates: [date.getNewDateAddDay(0), date.dateToStringEnUS(new Date())], 
       date: new Date().toISOString().substr(0, 10),
       companies: []
     }),
     methods: {
-    },
-    beforeMount() {
-      this.userLogged = storage.getUserLogged();
-      gateway.getAnalyticsCompaniesActives(this.dates,
+      getCompaniesActives(dates) {
+      gateway.getAnalyticsCompaniesActives(dates,
         res => {
             this.loading = false;
             this.companies = res;
         }, err => {
             console.log(err);
             this.loading = false;
-        });      
+        });           
+      }
+    },
+    beforeMount() {
+      this.userLogged = storage.getUserLogged();   
+      this.getCompaniesActives(this.dates);
     },
     computed: {
       datesDisplay() {
