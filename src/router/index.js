@@ -13,9 +13,11 @@ import Android from '../views/Android'
 import IPhone from '../views/IPhone'
 import Payment from '../views/Payment'
 import IdentifyDeviceRedirect from '../views/IdentifyDeviceRedirect'
-import System from '../views/system/System'
-import SystemCompanyForm from '../views/system/SystemCompanyForm'
-import SystemCompanyList from '../views/system/SystemCompanyList'
+import SystemCompanyApplyPlan from '../views/system/SystemCompanyApplyPlan'
+import SystemCompanyOption from '../views/system/SystemCompanyOption'
+import SystemControlPlan from '../views/system/SystemControlPlan'
+import SystemCompanyList2 from '../views/system/SystemCompanyList2'
+import SystemCompaniesActives from '../views/system/SystemCompaniesActives'
 import SystemUserList from '../views/system/SystemUserList'
 import SystemUser from '../views/system/SystemUser'
 import SystemPayments from '../views/system/SystemPayments'
@@ -109,18 +111,28 @@ const routes = [
   },      
   {
     path: '/system',
-    name: 'System', 
-    component: System
+    name: 'SystemControlPlan',  
+    component: SystemControlPlan
   },   
   {
     path: '/system/companies',
-    name: 'SystemCompanyList', 
-    component: SystemCompanyList
+    name: 'SystemCompanyList2',  
+    component: SystemCompanyList2
+  },    
+  {
+    path: '/system/companies/actives',
+    name: 'SystemCompaniesActives',  
+    component: SystemCompaniesActives
+  },      
+  {
+    path: '/system/companies/:_id/options',
+    name: 'SystemCompanyOption', 
+    component: SystemCompanyOption
   },      
   {
     path: '/system/companies/:_id',
-    name: 'SystemCompanyForm', 
-    component: SystemCompanyForm
+    name: 'SystemCompanyApplyPlan', 
+    component: SystemCompanyApplyPlan
   },       
   {
     path: '/system/users',

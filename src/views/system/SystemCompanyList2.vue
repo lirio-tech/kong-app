@@ -18,13 +18,25 @@
           </v-col>   
           <br/>
           <v-row> 
-               <v-col cols="12">   
+              <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
+                    <v-btn icon small style="display: inline;"
+                        @click="$router.go(-1)"
+                    >
+                        <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                    </v-btn>
+              </v-col>                 
+              <v-col cols="10">   
                 <p class="mr-2 text-center grey--text" 
-                   style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
-                    Administrador do Sistema
+                   style="font-family: cursive; font-size: 2.0rem;">
+                    Estabelecimentos
                 </p>  
-               </v-col>
-          </v-row>          
+              </v-col>
+          </v-row>     
+          <!-- <v-row>
+              <v-col cols="12">   
+                Pesquisar
+              </v-col>
+          </v-row>              -->
           <v-row v-if="companies.length !== 0 && !loading">
               <v-col cols="12" sm="12">
                   <v-sheet min-height="70vh" rounded="lg">
@@ -75,7 +87,7 @@
           this.companies.map((item) => {
               let selected = item === row;
               if(selected) {
-                  this.$router.push('/system/companies/'+item._id);
+                  this.$router.push(`/system/companies/${item._id}/options`);
               }
           })
       },

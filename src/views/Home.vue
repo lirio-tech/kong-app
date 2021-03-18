@@ -178,7 +178,7 @@
                             <thead>
                               <tr>
                                 <th class="text-center caption">
-                                  Date
+                                  Data
                                 </th>
                                 <th class="text-left">
                                   Profissional

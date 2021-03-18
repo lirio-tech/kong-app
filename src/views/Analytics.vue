@@ -164,19 +164,19 @@
                 </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" style="font-size: 1.4rem">
+              <v-col cols="12" style="font-size: 1.2rem">
                   <div class="green--text">
                     <span>Melhor dia da Semana: </span> <br/>
                     <span>{{ betterDayOfTheWeek.dayOfTheWeek }} </span><br/>
                     <span>Média de {{ betterDayOfTheWeek.value | currency }} </span> <br/>
-                    <small>{{ betterDayOfTheWeek.amount }} </small> 
+                    <span class="caption">{{ betterDayOfTheWeek.amount }} </span> 
                   </div>
                   <br/>
                   <div class="red--text">
                     <span>Pior dia da Semana: </span> <br/>
                     <span>{{ worstDayOfTheWeek.dayOfTheWeek }} </span><br/>
                     <span>Média de {{ worstDayOfTheWeek.value | currency }} </span> <br/>
-                    <small>{{ worstDayOfTheWeek.amount }} </small> 
+                    <span class="caption">{{ worstDayOfTheWeek.amount }} </span> 
                   </div>                  
               </v-col>
             </v-row>

@@ -3,31 +3,23 @@
         <AppBar />             
         <v-main class="">
           <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
-          
-          <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
-            <v-progress-linear
-              indeterminate
-              rounded
-              :active="loading"
-              background-opacity="0.42"
-              buffer-value="100"
-              height="7"
-              value="0"
-              color="light-blue"
-            ></v-progress-linear>
-          </v-col>   
+
           <br/>
-          <v-row> 
-               <v-col cols="12">   
-                <p class="mr-2 text-center grey--text" 
-                   style="font-family: 'Frijole', cursive; font-size: 1.8rem;">
-                    Administrador do Sistema
-                </p>  
-               </v-col>
-          </v-row>          
+          <v-row>
+              <v-col cols="1" style="margin-left: 10px; margin-top: 5px;">   
+                  <v-btn icon small style="display: inline;"
+                      @click="$router.go(-1)"
+                  >
+                      <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                  </v-btn>
+              </v-col>
+              <v-col cols="9" align="center">   
+                      <span style="font-size: 1.8rem !important;">{{ company.shortName }}</span>
+              </v-col>
+          </v-row>       
           <v-row>
               <v-col cols="12" sm="12" align="center">
-                  <router-link to="/system/companies"
+                  <router-link :to="{path: `/system/companies/${company._id}`}"
                     style="color: inherit; text-decoration: none">
                     <v-btn 
                         type="button" 
@@ -38,21 +30,21 @@
                     >Aplicar Planos</v-btn>                    
                   </router-link>
               </v-col>
-          </v-row>                   
+          </v-row>         
           <v-row>
               <v-col cols="12" sm="12" align="center">
-                  <router-link to="/system/users"
+                  <router-link to="/system/"
                    style="color: inherit; text-decoration: none">
                     <v-btn 
                         type="button" 
                         depressed  
                         x-large 
-                        color="secondary"
+                        color="amber darken-3"
                         style="width: 96%"
-                    >Usuarios</v-btn>                    
+                    >Ativos por Periodo</v-btn>                    
                   </router-link>
               </v-col>
-          </v-row>   
+          </v-row>                        
           <v-row>
               <v-col cols="12" sm="12" align="center">
                   <router-link to="/system/payments"
@@ -66,21 +58,21 @@
                     >Pagamentos</v-btn>                    
                   </router-link>
               </v-col>
-          </v-row>              
+          </v-row>               
           <v-row>
               <v-col cols="12" sm="12" align="center">
-                  <router-link to="/system"
+                  <router-link to="/system/users"
                    style="color: inherit; text-decoration: none">
                     <v-btn 
                         type="button" 
                         depressed  
                         x-large 
-                        color="accent"
+                        color="red"
                         style="width: 96%"
-                    >Dashboards</v-btn>                    
+                    >Usuarios</v-btn>                    
                   </router-link>
               </v-col>
-          </v-row>                          
+          </v-row>                                 
         </v-main>
     </v-container>
 </template>
@@ -98,33 +90,19 @@
     },
     data: () => ({
       loading: false,
-      dialogPlan: false,
-      headers: [
-          { text: "Nome", value: "name" },
-          { sortable: false, text: "Nome Abreviado", value: "shortName" },
-          { sortable: false, text: "Plano", value: "plan.name" }
-      ],                
-      companies: [],      
+      dialogPlan: false,              
+      company: [],      
       userLogged: {
         type: 'none'
       }
     }),
     methods: {
-      clickRow(row) {
-          this.companies.map((item) => {
-              let selected = item === row;
-              if(selected) {
-                  this.$router.push('/system/companies/'+item._id);
-              }
-          })
-      },
-      findCompanies() {
-        this.companies = [];
+      findCompany() {
         this.loading = true;
-        gateway.getCompanies(
+        gateway.getCompanyById(this.$route.params._id,
           res => {
               this.loading = false;
-              this.companies = res;
+              this.company = res;
           }, err => {
               console.log(err);
               this.loading = false;
@@ -136,7 +114,7 @@
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.findCompanies();
+      this.findCompany();
     }
   }
 </script>
