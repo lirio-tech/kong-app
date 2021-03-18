@@ -134,7 +134,7 @@
 
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel v-if="userLogged.type === 'sys_admin'">
+            <v-expansion-panel>
                 <v-expansion-panel-header>Configurações</v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <v-row>
