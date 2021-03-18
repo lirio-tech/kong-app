@@ -124,6 +124,17 @@ export default{
               errorCb(error)
           })        
     },    
+    updateConfigurationUser(_userId, configuration, callback, errorCb) {
+      let url = `${USERS_API}/${_userId}/configuration`;
+      Axios.patch(url, configuration)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          }) 
+    },
     recoveryUpdatePassword(recPass, callback, errorCb) {
       let url = `${AUTH_API}/recovery`;
       Axios.patch(url, recPass)

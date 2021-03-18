@@ -10,6 +10,7 @@
 </template>
 <script>
 export default {
+    name: 'SnackBar',
     props: ['show', 'text', 'color']
 }
 </script>

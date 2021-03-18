@@ -147,9 +147,9 @@
                                         <v-col 
                                             cols="12" md="4" 
                                         >
-                                            Tabela: 
+                                            Visualização da Tabela: 
                                             <v-radio-group
-                                                v-model="userLogged.table"
+                                                v-model="userLogged.configuration.table"
                                                 row
                                             >
                                                 <v-radio
@@ -158,16 +158,25 @@
                                                 ></v-radio>
                                                 <v-radio
                                                     label="Tabela Mobile"
-                                                    value="data"
+                                                    value="mobile"
                                                 ></v-radio>
                                             </v-radio-group>  
                                         </v-col>      
                                     </v-row>
-                                    <v-row v-if="userLogged.type === 'sys_admin'">
-                                        <v-col cols="12">
-                                            {{ getDevice() }}
-                                        </v-col>
+                                    <v-row>
+                                        <v-col cols="12" class="text-center">
+                                            <v-btn 
+                                                :loading="isLoading"
+                                                @click="updateConfiguration"
+                                                class="ma-2"
+                                                large
+                                                style="width: 75%"
+                                                outlined
+                                                color="green"
+                                            >Salvar</v-btn>                                            
+                                        </v-col>  
                                     </v-row>
+                                    
                                 </v-container>
                             </v-form>                
                         </v-col>
@@ -175,20 +184,23 @@
                 </v-expansion-panel-content>
             </v-expansion-panel>
         </v-expansion-panels>
+        <SnackBar :color="message.color" :text="message.text" :show="message.show" />
     </v-container>
 </template>
 
 <script>
-import storage from '../storage';
+import storage from '../storage'
 import DialogPlan from '../components/DialogPlan'
-  //import gateway from '../api/gateway';
+import gateway from '../api/gateway'
 import CardPlanData from '../components/CardPlanData'  
 import UserTypes from '../utils/UserTypes'
+import SnackBar from '../components/SnackBar'
 export default {
     name: 'Perfil',
     components: {
         DialogPlan,
-        CardPlanData
+        CardPlanData,
+        SnackBar
     },
     data: () => ({
       isLoading: false, 
@@ -200,7 +212,12 @@ export default {
         type: 'none'
       }, 
       userNew: {},
-      company: {}
+      company: {},
+      message: {
+        show: false,
+        color: 'green',
+        text: 'Hi'
+      },          
     }),
     methods: {
         showPlanDialog(show) {
@@ -209,12 +226,31 @@ export default {
         isAdmin() {
             return UserTypes.isAdmin(this.userLogged.type);
         },
-        getDevice() {
-            return navigator.userAgent;
-        }
+        updateConfiguration() {
+            this.isLoading = true;
+            gateway.updateConfigurationUser(this.userLogged._id, this.userLogged.configuration,
+                () => {
+                    this.isLoading = false;
+                    storage.setUserLogged(JSON.stringify(this.userLogged));
+                    this.showMessage('green', 'Configurações Atualizada')
+                },
+                () => {
+                    this.isLoading = false;
+                    this.showMessage('error', 'Erro ao Atualizar Configurações');
+                }
+            )
+        },
+        showMessage(color, text) {
+            this.message.color = color;
+            this.message.text = text;
+            this.message.show = true;
+        }                        
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      if(!this.userLogged.configuration) {
+          this.userLogged.configuration = {};
+      }
       this.company = storage.getCompany();
     }
   }

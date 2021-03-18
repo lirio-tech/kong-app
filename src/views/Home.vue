@@ -72,7 +72,7 @@
               max-width="800"
               outlined
             >
-                      <v-list-item three-line>
+                    <v-list-item three-line>
                       <v-list-item-content>       
                             <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                               <div class="overline mb-4 grey--text">
@@ -92,9 +92,10 @@
                               </span>     
                             </v-col>                            
                               
-                            <v-list-item-title class="headline mb-1" v-if="isAdmin()">
+                            <v-list-item-title class="headline mb-1" v-if="isAdmin()" style="margin-top: -35px;">
+                                <span class="caption grey--text">Total</span><br/>
                                 <div v-if="!loading" class="display-1">
-                                  Total: <span class="primary--text">{{ consolidado.total | currency }} </span>
+                                  <span class="primary--text">{{ consolidado.total | currency }} </span>
                                   <br/>
                                 </div>
                             </v-list-item-title>
@@ -123,8 +124,8 @@
                           </div>                               
 
                       </v-list-item-content>
-                      </v-list-item>
-                      <v-card-actions > 
+                    </v-list-item>
+                    <v-card-actions > 
                         <v-col cols="12" class="justify-end">
                           <v-btn 
                               v-if="!loading"
@@ -136,7 +137,7 @@
                               color="cyan"
                           >Novo</v-btn>                                            
                         </v-col>  
-                      </v-card-actions>
+                    </v-card-actions>
             </v-card>   
             <br/>
 
