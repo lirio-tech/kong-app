@@ -249,7 +249,7 @@ export default {
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       if(!this.userLogged.configuration) {
-          this.userLogged.configuration = {};
+          this.userLogged.configuration = {table: 'mobile'};
       }
       this.company = storage.getCompany();
     }

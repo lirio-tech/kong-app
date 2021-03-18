@@ -12,6 +12,7 @@
                 >
                     {{ value }}
                 </v-progress-circular>        
+                <span v-if="value === 40">{{ myDevice }}</span>
             </v-container>
         </v-row>
     </v-container>
