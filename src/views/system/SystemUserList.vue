@@ -51,7 +51,7 @@ export default {
         { text: "Tipo", value: "type" },
         { text: "Criado", value: "createdAt" },
         { text: "Alterado", value: "updatedAt" },
-        { text: "Ativo", value: "disabled" },
+        { text: "Desativado", value: "disabled" },
       ],                
       users: []
     }),

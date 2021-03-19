@@ -42,49 +42,21 @@
               </v-list-item>
             </v-card>   
           </v-row>
-          <!-- <v-row justify="start" style="margin-top: 20px">
-
-            <v-expansion-panels class="px-3" hover focusable>
-              <v-expansion-panel>
-                <v-expansion-panel-header> Filtro </v-expansion-panel-header>
-                <v-expansion-panel-content>
-
-                  <v-row>
-                      
-                      <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
-                        
-                        <v-row>
-                          <v-col
-                            class="d-flex"
-                            cols="12"
-                            sm="6"
-                          >
-                            <v-select
-                              :items="itemsPeriodo"
-                              v-model="selectPeriodo"
-                              label="Periodo"
-                              v-on:change="selectedPeriodo"
-                            ></v-select>
-                          </v-col>                     
-                        </v-row>
-                      </v-col>
-                      <v-col cols="12" >
-                        <v-btn 
-                            v-on:click="filterOrders"
-                            class="ma-2" 
-                            large
-                            outlined 
-                            style="width: 50%"
-                            :loading="loading"
-                        >Atualizar</v-btn>    
-                      </v-col>
-                  </v-row>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-
-          </v-row>     -->
-               
+          <v-row>
+            <v-col cols="12">
+              <v-sheet min-height="70vh" rounded="lg">
+                  <v-data-table 
+                      :headers="headers" 
+                      :items="paymentsHistoric" 
+                      item-key="code"
+                      class="elevation-1"
+                      hide-default-footer
+                      loading-text="Carregando... Por favor aguarde"
+                  >                        
+                  </v-data-table>               
+              </v-sheet>              
+            </v-col>
+          </v-row>
         </v-main>
     </v-container>
 </template>
@@ -96,7 +68,14 @@ export default {
     name: 'SystemPayments',
     components: {  },
     data: () => ({
-      paymentsHistoric: []
+      paymentsHistoric: [],
+      headers: [
+        { text: "Estabelecimento", value: "company.shortName" },
+        { text: "Plano", value: "plan.name" },
+        { text: "Valor Pago", value: "plan.payment.price" },
+        { text: "Inicio", value: "plan.dateStarted" },
+        { text: "Inicio", value: "plan.dateEnd" },
+      ],         
     }),
     methods: {
     },
