@@ -11,7 +11,7 @@
               </v-col>                 
               <v-col cols="10">   
                 <p class="mr-2 text-center grey--text" 
-                   style="font-family: cursive; font-size: 2.0rem;">
+                   style="font-size: 2.0rem;">
                     Estabelecimentos Ativos
                 </p>  
               </v-col>

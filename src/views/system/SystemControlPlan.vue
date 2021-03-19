@@ -8,7 +8,7 @@
           <v-row>        
               <v-col cols="12">   
                 <p class="mr-2 text-center grey--text" 
-                   style="font-family: cursive; font-size: 2.0rem;">
+                   style="font-size: 2.0rem;">
                     Painel de Controle
                 </p>  
               </v-col>

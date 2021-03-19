@@ -88,11 +88,11 @@
 </template>
 
 <script>
-    import gateway from '../api/gateway'
-    import SnackBar from '../components/SnackBar'
-    import storage from '../storage'
-    import AppBar from '../components/AppBar'
-    export default {
+import gateway from '../api/gateway'
+import SnackBar from '../components/SnackBar'
+import storage from '../storage'
+import AppBar from '../components/AppBar'
+export default {
         components: {
           SnackBar,
           AppBar
