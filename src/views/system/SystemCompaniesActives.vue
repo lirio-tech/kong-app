@@ -136,7 +136,7 @@ export default {
         if(this.dates[0] && this.dates[1]) {
           let ini = this.dates[0].split('-');
           let end = this.dates[1].split('-');
-          return `${ini[2]}/${ini[1]}/${ini[0]} - ${end[2]}/${end[1]}/${end[0]}`; 
+          return `${ini[2]}/${ini[1]} à ${end[2]}/${end[1]}`; 
         } 
         let ini = this.dates[0].split('-');
         return `${ini[2]}/${ini[1]}/${ini[0]}`;
