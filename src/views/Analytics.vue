@@ -180,6 +180,7 @@
                   </div>                  
               </v-col>
             </v-row>
+            <br/><br/><br/><br/>
           </div>
 
           <div v-if="dataView === BY_USERS && dataReturnOK">
