@@ -110,6 +110,10 @@ export default {
                this.loadingBtn = false;
                this.availabled = true;
                alert('Avaliado com sucesso');
+               if(this.userLogged) {
+                    this.userLogged.rateUs = true;
+                    storage.setUserLogged(JSON.stringify(this.userLogged));
+               }
             }, () => {
                 this.loadingBtn = false;
                 alert('Erro ao Avaliar');
