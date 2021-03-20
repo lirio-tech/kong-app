@@ -10,13 +10,13 @@
                     </v-btn>
               </v-col>                 
               <v-col cols="10">   
-                <p class="mr-2 text-center grey--text" 
+                <span class="mr-2 text-center grey--text" 
                    style="font-size: 2.0rem;">
                     Estabelecimentos Ativos
-                </p>  
+                </span>  
               </v-col>
           </v-row>     
-            <v-row justify="start">
+          <v-row justify="start">
 
               <v-expansion-panels class="px-3" hover focusable>
                 <v-expansion-panel>
@@ -45,80 +45,83 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
-              <br/><br/>
-          <v-dialog
-            v-model="loading"
-            hide-overlay
-            persistent
-            width="300"
-          >
-            <v-card
-              color="primary"
-              dark
-            >
-              <v-card-text>
-                Por favor aguarde...
-                <v-progress-linear
-                  indeterminate
-                  color="white"
-                  class="mb-0"
-                ></v-progress-linear>
-              </v-card-text>
-            </v-card>
-          </v-dialog>          
-          <v-row>
-            <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-                >
-                  <v-dialog
-                    ref="dialog"
-                    v-model="modal"
-                    :return-value.sync="date" 
-                    persistent
-                    width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="datesDisplay"
-                        label="Escolha o Periodo"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      v-model="dates"
-                      range
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="modal = false"
-                      >
-                        Cancel
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.dialog.save(date); getCompaniesActives(dates)"
-                      >
-                        OK
-                      </v-btn>
-                    </v-date-picker>
-                  </v-dialog>
-            </v-col>     
-          </v-row> 
-          <v-row> 
-            <v-col cols="12">
-               Total: {{ companies.length }} <br /><br />
-               <h3 v-for="o in companies" :key="o._id">{{o.shortName}} - {{o.total | currency}} <br /><br /></h3>
-            </v-col>
           </v-row>
-            
+            <br/><br/>
+            <v-row justify="start">
+                <v-dialog
+                  v-model="loading"
+                  hide-overlay
+                  persistent
+                  width="300"
+                >
+                  <v-card
+                    color="primary"
+                    dark
+                  >
+                    <v-card-text>
+                      Por favor aguarde...
+                      <v-progress-linear
+                        indeterminate
+                        color="white"
+                        class="mb-0"
+                      ></v-progress-linear>
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>          
+            </v-row>
+            <v-row>
+              <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-dialog
+                      ref="dialog"
+                      v-model="modal"
+                      :return-value.sync="date" 
+                      persistent
+                      width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="datesDisplay"
+                          label="Escolha o Periodo"
+                          prepend-icon="mdi-calendar"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="dates"
+                        range
+                      >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="modal = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="$refs.dialog.save(date); getCompaniesActives(dates)"
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+              </v-col>     
+            </v-row> 
+            <v-row> 
+              <v-col cols="12">
+                Total: {{ companies.length }} <br /><br />
+                <h3 v-for="o in companies" :key="o._id">{{o.shortName}} - {{o.total | currency}} <br /><br /></h3>
+              </v-col>
+            </v-row>
+                
         </v-main>
     </v-container>
 </template>
