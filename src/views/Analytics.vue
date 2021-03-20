@@ -395,7 +395,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.setDataView(this.BY_DAYS_OF_THE_WEEK);
+      this.setDataView(this.isAdmin(this.userLogged.type) ? this.BY_USERS : this.BY_DAYS_OF_THE_WEEK); 
     },
     computed: {
       title() {
