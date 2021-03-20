@@ -20,7 +20,7 @@
 
               <v-expansion-panels class="px-3" hover focusable>
                 <v-expansion-panel>
-                  <v-expansion-panel-header> Filtro </v-expansion-panel-header>
+                  <v-expansion-panel-header> Metricas </v-expansion-panel-header>
                   <v-expansion-panel-content>
 
                     <v-row>
@@ -45,6 +45,7 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
+              <br/><br/>
           <v-dialog
             v-model="loading"
             hide-overlay
