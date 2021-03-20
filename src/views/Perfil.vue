@@ -22,20 +22,27 @@
             <v-expansion-panel>
                 <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <span class="d-flex justify-end" flex v-if="isAdmin">
-                        <router-link to="/" style="color: inherit; text-decoration: none">
-                            <v-btn fab x-small>
-                                <v-icon>
-                                    mdi-pencil
-                                </v-icon>    
-                            </v-btn>
-                        </router-link>                          
-                    </span> 
-                    <span><span class="grey--text">Nome:</span> {{ company.name }} </span> 
-                    <br/>
-                    <span><span class="grey--text">Short Name:</span> {{ company.shortName }} </span>
-                    <br/>
-                    <span v-if="company.endereco"><span class="grey--text">Endereco:</span> {{ company.endereco }} </span>     
+                    <v-row style="margin-top:15px">
+                        <v-col cols="10">
+                            <span><span class="grey--text">Nome:</span> {{ company.name }} </span>                     
+                            <br/>
+                            <span><span class="grey--text">Short Name:</span> {{ company.shortName }} </span>
+                            <br/>
+                            <span v-if="company.endereco"><span class="grey--text">Endereco:</span> {{ company.endereco }} </span>     
+                        </v-col>
+                        <v-col cols="1" v-if="isAdmin()">
+                            <span style="margin-left: -15px;">
+                                <router-link to="/perfil" style="color: inherit; text-decoration: none">
+                                    <v-btn fab small outlined color="cyan">
+                                        <v-icon>
+                                            mdi-pencil
+                                        </v-icon>    
+                                    </v-btn>
+                                </router-link>  
+                            </span>     
+                        </v-col>    
+                    </v-row>
+
                     <br />
                     <CardPlanData 
                         :company="company" 
@@ -221,7 +228,7 @@ export default {
     }),
     methods: {
         showPlanDialog(show) {
-            this.dialogPlan = show
+            this.dialogPlan = show 
         },
         isAdmin() {
             return UserTypes.isAdmin(this.userLogged.type);
