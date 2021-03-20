@@ -16,6 +16,35 @@
                 </p>  
               </v-col>
           </v-row>     
+            <v-row justify="start">
+
+              <v-expansion-panels class="px-3" hover focusable>
+                <v-expansion-panel>
+                  <v-expansion-panel-header> Filtro </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+
+                    <v-row>
+                        
+                        <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                            <h3>Objetivos</h3>
+                            <p>Fev: fechar com 1 Estabelecimento ativo</p>
+                            <p>Mar: fechar com 5 Estabelecimentos ativos</p>
+                            <p>Abr: fechar com 10 Estabelecimentos ativos</p>
+                            <p>Maio: fechar com 20 Estabelecimentos ativos</p>
+                            <p>Jun: fechar com 30 Estabelecimentos ativos</p>
+                        </v-col>
+                        <!-- <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                            <h3>Faturamento por qtde de Estabelecimento</h3>
+                            
+                        </v-col> -->
+                                                
+                        <!-- <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                            <h3>CAC</h3>
+                        </v-col>                         -->
+                    </v-row>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
           <v-dialog
             v-model="loading"
             hide-overlay
