@@ -74,7 +74,7 @@ export default {
         { text: "Plano", value: "plan.name" },
         { text: "Valor Pago", value: "plan.payment.price" },
         { text: "Inicio", value: "plan.dateStarted" },
-        { text: "Inicio", value: "plan.dateEnd" },
+        { text: "Fim", value: "plan.dateEnd" },
       ],         
     }),
     methods: {

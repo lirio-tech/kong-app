@@ -24,7 +24,7 @@ import SystemPayments from '../views/system/SystemPayments'
 import Analytics from '../views/Analytics'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
-import RateUs from '../views/RateUs' 
+import RateUsView from '../views/RateUsView' 
 
 Vue.use(VueRouter)
 
@@ -101,8 +101,8 @@ const routes = [
   },    
   {
     path: '/public/avalie-nos',
-    name: 'RateUs', 
-    component: RateUs
+    name: 'RateUsView', 
+    component: RateUsView
   },     
   {
     path: '/public/identify-device',

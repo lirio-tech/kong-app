@@ -8,6 +8,7 @@
         <AppBar />             
         <v-main class="">
           <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+          <DialogRateUs :dialog="dialogRateUs" />
           
           <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
             <v-progress-linear
@@ -218,6 +219,7 @@
 import gateway from '../api/gateway'
 import AppBar from '../components/AppBar'
 import DialogPlan from '../components/DialogPlan'
+import DialogRateUs from '../components/DialogRateUs'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
@@ -226,6 +228,7 @@ export default {
     components: { 
       AppBar,
       DialogPlan,
+      DialogRateUs,
       VuePullRefresh
     },
     data: () => ({
@@ -237,6 +240,7 @@ export default {
       },
       loading: false,
       dialogPlan: false,
+      dialogRateUs: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior'], //, 'Customizado'],
       periodo: {
         inicio: new Date(),
@@ -385,6 +389,15 @@ export default {
             && this.isAdmin()) {
           this.dialogPlan = true
         }
+      },
+      verifyUserRateUS(userLogged) {
+        if(userLogged.ratedUs !== true) {
+          let i = Number(localStorage.getItem('dialogRateUs') ? localStorage.getItem('dialogRateUs') : '0')+1;
+          localStorage.setItem('dialogRateUs', i);
+          if(i % 8 === 0) {
+              this.dialogRateUs = true;
+          }
+        }
       }        
     },
     beforeMount() {
@@ -393,6 +406,7 @@ export default {
       this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()
       this.verifyAccontPremium();
+      this.verifyUserRateUS(this.userLogged);
     }
   }
 </script>
