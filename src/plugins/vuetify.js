@@ -17,10 +17,10 @@ Vue.use(VueCurrencyFilter,
 
 export default new Vuetify({
     theme: { 
-      dark: true,
+      dark: process.env.VUE_APP_THEME !== 'LIGHT',
       themes: {
         light: {
-          // primary: '#FF4081',
+          primary: '#FF4081',
           // secondary: '#b0bec5',
           // accent: '#8c9eff',
           // error: '#b71c1c',

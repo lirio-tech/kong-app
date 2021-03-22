@@ -76,7 +76,7 @@
 
                         <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                            Usuarios <v-chip color="cyan" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            Usuarios <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          

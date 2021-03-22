@@ -47,13 +47,19 @@
                       <v-list-item
                         @click="() => setDataView(BY_DAYS_OF_THE_WEEK)"
                       >
-                        <v-list-item-title>Ganhos (R$) por Dia da semana</v-list-item-title>
+                        <v-list-item-title>
+                          Ganhos (R$) por Dia da semana
+                          <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                        </v-list-item-title>
                       </v-list-item>   
                       <v-list-item
                         v-if="isAdmin(userLogged.type)"
                         @click="() => setDataView(BY_USERS)"
                       >
-                        <v-list-item-title>Ganhos (R$) por Profissionais</v-list-item-title>
+                        <v-list-item-title>
+                          Ganhos (R$) por Profissionais 
+                          <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                        </v-list-item-title>
                       </v-list-item>                                                            
                     </v-list>
                   </v-menu>
