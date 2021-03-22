@@ -15,14 +15,15 @@
                         color="black"
                         size="150"
                     >
-                      <!-- <v-img 
+                      <v-img 
                         v-if="$vuetify.theme.dark"
                         avatar
                         src="../assets/logo.png" 
-                      /> -->
+                      />
                       <v-img 
+                        v-else
                         avatar
-                        src="../assets/logo.png" 
+                        src="../assets/lady.png" 
                       />                      
                    </v-avatar>
                   </center>
