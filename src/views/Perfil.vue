@@ -30,9 +30,9 @@
                             <br/>
                             <span v-if="company.endereco"><span class="grey--text">Endereco:</span> {{ company.endereco }} </span>     
                         </v-col>
-                        <v-col cols="1" v-if="isAdmin()">
+                        <v-col cols="1" v-if="userLogged.type === 'sys_admin'">
                             <span style="margin-left: -15px;">
-                                <router-link to="/perfil" style="color: inherit; text-decoration: none">
+                                <router-link :to="{path: '/company/'+company._id}" style="color: inherit; text-decoration: none">
                                     <v-btn fab small outlined color="cyan">
                                         <v-icon>
                                             mdi-pencil

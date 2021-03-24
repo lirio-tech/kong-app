@@ -1,0 +1,259 @@
+<template>
+    <v-container>
+        <v-main class="">
+          <v-row>
+              <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
+                  <v-btn icon small style="display: inline;"
+                      :to="{ 'path': '/perfil'}"
+                  >
+                      <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                  </v-btn>
+              </v-col>
+              <v-col cols="10" align="center">   
+                      <span style="font-size: 1.8rem !important;">{{ company.shortName }} </span>
+              </v-col>
+          </v-row>      
+          <v-row>
+            <v-expansion-panels
+                    v-model="panel"
+                    multiple
+                    hover
+                    focusable
+            >        
+                <v-expansion-panel>
+                    <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12">  
+                            <v-form 
+                                id="formCompany" 
+                                ref="formCompany" 
+                                v-model="valid" 
+                                lazy-validation 
+                                v-on:submit.prevent="onSubmit"
+                            >          
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Nome do seu Estabelecimento"
+                                        prepend-icon="mdi-home"
+                                        required
+                                        :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
+                                        @keyup="onChangeCompanyName"
+                                        v-model="company.name"
+                                        ref="companyName"
+                                    />
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Nome Abreviado"
+                                        prepend-icon="mdi-home"
+                                        :rules="[ 
+                                            val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
+                                            val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
+                                        ]"
+                                        required
+                                        v-model="company.shortName"
+                                        ref="companyShortName"
+                                    />
+                                </v-col>
+                                <br/>
+                                <v-btn
+                                    color="green darken-2"
+                                    type="submit"
+                                >
+                                    Salvar
+                                </v-btn>                                
+                            </v-form>
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Serviços</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                                <v-col cols=12>
+                                    <span>Serviços</span>
+                                    <v-divider></v-divider>
+                                </v-col>                   
+                                <v-row >
+                                    <v-col cols="6">
+                                        <v-text-field
+                                            autocomplete="off"
+                                            label="Serviço"
+                                            v-model="service.type"
+                                            filled
+                                        />                        
+                                    </v-col>                    
+                                    <v-col cols="4">
+                                        <v-text-field
+                                            autocomplete="off"
+                                            label="Valor"
+                                            v-model="service.priceBR"
+                                            @focus="$event.target.select()"
+                                            ref="servicePrice"
+                                            @keyup="service.priceBR = maskCurrency(service.priceBR)"
+                                            filled
+                                        />
+                                    </v-col>
+                                    <v-col cols="1">
+                                        <v-btn icon outlined class="mt-3" @click="addService">
+                                            <v-icon>mdi-plus</v-icon>
+                                        </v-btn>                            
+                                    </v-col>
+                                </v-row>              
+                                <v-row>
+                                <v-col cols="12"  class="mt-0 pt-0">
+
+                                        <v-simple-table dense >
+                                        <template v-slot:default>
+                                            <thead >
+                                            <tr>
+                                                <th class="text-left">
+                                                Serviço
+                                                </th>
+                                                <th class="text-left">
+                                                Valor
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="item in company.services" :key="item.type">
+                                                <td>{{ item.type }}</td>
+                                                <td>{{ item.price | currency }}</td>
+                                                <td>
+                                                <v-icon 
+                                                    @click="deleteService(item)" class="error--text"
+                                                    v-if="isAdmin()">
+                                                    mdi-delete
+                                                </v-icon>
+                                                </td>
+                                            </tr>
+                                            <tr v-if="!company.services || company.services.length === 0">
+                                                <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
+                                            </tr>
+                                            </tbody>
+                                        </template>
+                                        </v-simple-table>
+                                </v-col> 
+                                </v-row>
+                                <br/>
+                                <v-btn
+                                    color="green darken-2"
+                                    type="button"
+                                    @click="onSubmit"
+                                >
+                                    Salvar
+                                </v-btn>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel v-if="false">
+                    <v-expansion-panel-header>Percentual da Comissão</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                            <br/>
+                            <v-btn
+                                color="green darken-2"
+                                type="submit"
+                            >
+                                Salvar
+                            </v-btn>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                
+            </v-expansion-panels>
+          </v-row>
+
+        </v-main>
+        <SnackBar :show="message.show" :text="message.text" :color="message.color" />
+    </v-container>
+</template>
+
+<script>
+import gateway from '../api/gateway'
+import SnackBar from '../components/SnackBar'
+import storage from '../storage'
+import UserTypes from '../utils/UserTypes'
+export default {
+    name: 'UsuarioForm',
+    components: { 
+        SnackBar
+    },
+    data: () => ({
+        panel: [0],
+        loading: false,
+        valid: true,
+        company: {},
+        message: {},   
+        service: {
+            type: '',
+            price: 0.00,
+            priceBR: "0,00",                       
+        },
+    }),
+    methods: {
+      showMessage(color, text) {
+            this.message.color = color;
+            this.message.text = text;
+            this.message.show = true;
+      },
+      onChangeCompanyName() {
+            this.company.shortName = this.company.name.substring(0, 15);
+      },      
+      maskCurrency(v) {
+          v=String(v);
+          v=v.replace(/\D/g,"");//Remove tudo o que não é numero
+          v=String(Number(v));
+          v=v.replace(/(\d)(\d{8})$/,"$1.$2");//coloca o ponto dos milhões
+          v=v.replace(/(\d)(\d{5})$/,"$1.$2");//coloca o ponto dos milhares
+          v=v.replace(/(\d)(\d{2})$/,"$1,$2");//coloca a virgula antes dos 2 últimos dígitos
+          return v;
+      },     
+      addService() {
+          console.log(this.service);
+          if(!this.company.services) {
+              this.company.services = []
+          }
+          if(!this.service.type) {
+              alert('Descricao do servico Obrigatorio');
+              return;
+          }
+          this.service.price = this.numberBrToUS(this.service.priceBR);
+          if(this.service.price <= 0) {
+              alert('Valor do Servico deve ser maior que ZERO');
+              return;
+          }          
+          this.company.services.push({type: this.service.type, price: this.service.price});
+          this.service.type = '';
+          this.service.price = 0;
+          this.service.priceBR = '0,00';
+      },
+      numberBrToUS(v) {
+        return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
+      },                 
+      deleteService(svc) {
+          console.log(svc);
+          this.company.services.splice(this.company.services.indexOf(svc), 1);
+      },
+      isAdmin() {
+        return UserTypes.isAdmin(this.userLogged.type);
+      },        
+      onSubmit() {
+          gateway.saveCompany(this.company,
+            () => {
+                alert('Atualizado com Sucesso!!!');
+                storage.setCompany(JSON.stringify(this.company));
+            }, () => {
+                alert('Erro ao Salvar');
+            });
+      }
+    },
+    beforeMount() {
+      this.userLogged = storage.getUserLogged();   
+      gateway.getCompanyById(this.$route.params._id,
+      res => {
+          this.company = res;
+      }, () => {
+          alert('Erro ao buscar informacoes do Estabelecimento');
+      })
+    }
+  }
+</script>

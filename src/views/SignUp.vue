@@ -47,7 +47,7 @@
                                 prepend-icon="mdi-home"
                                 :rules="[ 
                                     val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
-                                    val => val && val.length <= 16 || 'tamanho maximo eh de 13 Caracteres',
+                                    val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
                                 ]"
                                 required
                                 v-model="signup.company.shortName"
@@ -196,7 +196,7 @@ export default {
     }),
     methods: {
         onChangeCompanyName() {
-            this.signup.company.shortName = this.signup.company.name.substring(0, 13);
+            this.signup.company.shortName = this.signup.company.name.substring(0, 15);
         },
         removeSpecialChar(v) {
           return InputsUtils.usernameInputs(v);

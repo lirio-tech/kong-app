@@ -7,6 +7,7 @@ import Perfil from '../views/Perfil'
 import OrdemServico from '../views/OrdemServico'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
+import CompanyForm from '../views/CompanyForm'
 import ContactUs from '../views/ContactUs'
 import Help from '../views/Help' 
 import Android from '../views/Android'
@@ -74,6 +75,11 @@ const routes = [
     name: 'EditOrdemServico',
     component: OrdemServico
   },   
+  {
+    path: '/company/:_id',
+    name: 'CompanyForm',
+    component: CompanyForm
+  },     
   {
     path: '/public/fale-conosco',
     name: 'FaleConosco', 

@@ -233,7 +233,18 @@ export default{
               console.log(error);
               errorCb(error)
           })        
-    },       
+    },   
+    saveCompany(company, callback, errorCb)     {
+      let url = `${COMPANIES_API}`;
+      Axios.post(url, company)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })   
+    },
     applyPlan(companyId, plan, callback, errorCb) {
       let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
       Axios.put(url, plan)
