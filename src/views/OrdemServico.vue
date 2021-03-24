@@ -301,7 +301,7 @@ import UserTypes from '../utils/UserTypes'
           price: 0,
           priceBR: "0",
         },
-        typeServices: ['Corte de Cabelo', 'Barba', 'Sobrancelha'],
+        typeServices: ['Corte de Cabelo','Barba','Sobrancelha','Penteado','Pigmentação','Coloração','Luzes','Platinado','Relaxamento','Progressiva','Gel','Pomada','Laquê'],
         users: [],
         userLogged: {
           type: null
