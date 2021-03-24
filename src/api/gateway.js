@@ -245,6 +245,17 @@ export default{
               errorCb(error)
           })   
     },
+    setPlanFreeCompany(companyId, callback, errorCb) {
+      let url = `${COMPANIES_API}/${companyId}/downgrade-plan-free`;
+      Axios.patch(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })         
+    },
     applyPlan(companyId, plan, callback, errorCb) {
       let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
       Axios.put(url, plan)

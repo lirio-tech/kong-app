@@ -12,7 +12,8 @@ import ContactUs from '../views/ContactUs'
 import Help from '../views/Help' 
 import Android from '../views/Android'
 import IPhone from '../views/IPhone'
-import Payment from '../views/Payment'
+import PaymentPremium from '../views/PaymentPremium'
+import PaymentFree from '../views/PaymentFree'
 import IdentifyDeviceRedirect from '../views/IdentifyDeviceRedirect'
 import SystemCompanyApplyPlan from '../views/system/SystemCompanyApplyPlan'
 import SystemCompanyOption from '../views/system/SystemCompanyOption'
@@ -57,9 +58,14 @@ const routes = [
   },    
   {
     path: '/admin/payment/:planName',
-    name: 'Payment', 
-    component: Payment
+    name: 'PaymentPremium', 
+    component: PaymentPremium
   },    
+  {
+    path: '/admin/payment-free',
+    name: 'PaymentFree', 
+    component: PaymentFree
+  },      
   {
     path: '/',
     name: 'Home',

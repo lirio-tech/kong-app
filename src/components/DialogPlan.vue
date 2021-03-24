@@ -175,13 +175,14 @@ export default {
     },    
     methods: {
       goPayment(plan) {
-        if(plan.name === 'Free') {
-          return;
-        }
         if(!this.userLogged) {
           alert('Cadastre-se ou Efetue o Login para escolher seu Plano');
           return;
         }
+        if(plan.name === 'Free' && this.company && this.company.plan.name !== 'Free') {
+          this.$router.push(`/admin/payment-free`);
+          return;
+        }        
         this.$router.push(`/admin/payment/${plan.name}`);
       }
     }
