@@ -26,16 +26,15 @@
                       <v-col cols="12" sm="12" v-if="isAdmin() || !order._id">
                           <div class="d-flex">
                             <v-col cols="6">
-                              <v-select
-                                v-model="service.type"
-                                :items="typeServices"
-                                item-text="name"
-                                item-value="name"
-                                filled
-                                ref="serviceType"
-                                @change="setFocusServicePrice"
-                                label="Servico"
-                              ></v-select>
+                              <v-combobox 
+                                  v-model="service.type"
+                                  size="1" 
+                                  :items="typeServices"
+                                  label="Serviço"
+                                  ref="serviceType"
+                                  required filled 
+                                  @change="setFocusServicePrice"                             
+                              ></v-combobox>                                    
                             </v-col>
                             
                             <v-col cols="4">
@@ -63,7 +62,7 @@
                                 <thead >
                                   <tr>
                                     <th class="text-left">
-                                      Servico
+                                      Serviço
                                     </th>
                                     <th class="text-left">
                                       Valor
@@ -99,7 +98,25 @@
                             ref="orderForm"
                             id="orderForm"
                           >
-                              <v-container>
+                            <v-container>
+                              <v-row>
+                                <v-col cols="12" md="6" xs="12" >                                  
+                                  <v-radio-group
+                                    v-model="order.paymentType"
+                                    row
+                                    style="margin-left: 20%;"
+                                  >
+                                    <v-radio
+                                      label="Dinheiro"
+                                      value="cash"
+                                    ></v-radio>
+                                    <v-radio
+                                      label="Cartão"
+                                      value="card"
+                                    ></v-radio>
+                                  </v-radio-group>                              
+                                </v-col>
+                              </v-row>
                               <v-row>
                                 <v-col cols="12" md="12" xs="12">                      
                                     <v-text-field v-model="order.customer.name"
@@ -276,7 +293,8 @@ import UserTypes from '../utils/UserTypes'
           priceBR: "40,00",
           user: {},
           customer: {},
-          company: ''
+          company: '',
+          paymentType: 'cash'
         },
         service: {
           type: "",
@@ -333,7 +351,7 @@ import UserTypes from '../utils/UserTypes'
       },
       orderHasServices() {
         if(!this.order.services || this.order.services.length <= 0) {
-          alert('Obrigatorio adicionar 1 servico');
+          alert('Obrigatorio adicionar 1 Serviço');
           this.$refs.serviceType.focus();
           return false;
         }
@@ -341,7 +359,7 @@ import UserTypes from '../utils/UserTypes'
       },
       addService() {
         if(!this.service.type) {
-          alert('Selecione o Servico');
+          alert('Selecione o Serviço');
           this.$refs.serviceType.focus();
           return;
         }

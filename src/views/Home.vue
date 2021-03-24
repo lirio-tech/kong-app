@@ -393,7 +393,7 @@ export default {
         if(userLogged.ratedUs !== true) {
           let i = Number(localStorage.getItem('dialogRateUs') ? localStorage.getItem('dialogRateUs') : '0')+1;
           localStorage.setItem('dialogRateUs', i);
-          if(i % 8 === 0) {
+          if(i % 11 === 0) {
               this.dialogRateUs = true;
           }
         }

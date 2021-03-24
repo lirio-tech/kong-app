@@ -34,7 +34,7 @@
                                         hover
                                         v-model="scoreRating"
                                         length="5"
-                                        size="50"
+                                        size="40"
                                     ></v-rating>
                                     <h3 class="text-center"></h3>
                                     <v-row justify="center" align="center">
