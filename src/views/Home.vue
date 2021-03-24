@@ -171,7 +171,7 @@
                                 <v-icon color="green" v-if="item.paymentType === 'cash'">
                                   mdi-cash
                                 </v-icon> 
-                                <v-icon color="purple" v-if="ord.paymentType === 'card'">
+                                <v-icon color="purple" v-if="item.paymentType === 'card'">
                                   mdi-credit-card
                                 </v-icon>                                 
                                 {{ item.total | currency }}
