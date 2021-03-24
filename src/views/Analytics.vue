@@ -47,20 +47,26 @@
                       <v-list-item
                         @click="() => setDataView(BY_DAYS_OF_THE_WEEK)"
                       >
-                        <v-list-item-title>
+                        <v-list-item-subtitle>
                           Ganhos (R$) por Dia da semana
-                          <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                        </v-list-item-title>
+                        </v-list-item-subtitle>
                       </v-list-item>   
                       <v-list-item
                         v-if="isAdmin(userLogged.type)"
                         @click="() => setDataView(BY_USERS)"
                       >
-                        <v-list-item-title>
+                        <v-list-item-subtitle>
                           Ganhos (R$) por Profissionais 
-                          <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                        </v-list-item-title>
-                      </v-list-item>                                                            
+                        </v-list-item-subtitle>
+                      </v-list-item>      
+                      <v-list-item
+                        v-if="userLogged.type === 'sys_admin'"
+                        @click="() => setDataView(BY_PAYMENT_TYPE)"
+                      >
+                        <v-list-item-subtitle>
+                          Ganhos (R$) por Tipo de Pagamento 
+                        </v-list-item-subtitle>
+                      </v-list-item>                                                                               
                     </v-list>
                   </v-menu>
 
@@ -228,6 +234,7 @@ export default {
       BY_MONTH: 'MONTH',
       BY_DAYS_OF_THE_WEEK: 'DAYS_OF_THE_WEEK',
       BY_USERS: 'USERS',
+      BY_PAYMENT_TYPE: 'PAYMENT_TYPE',
       betterDayOfTheWeek: {
         dayOfTheWeek: '',
         value: 0,
@@ -392,6 +399,19 @@ export default {
               this.total = 0;
               alert('Erro ao buscar dias da semana');
           });                                
+        }
+        if(this.dataView === this.BY_PAYMENT_TYPE) {
+          alert('Em Desenvolvimento');
+          // gateway.getAnalyticsByPaymentsType(dates,
+          //   res => {
+          //     console.log(res);
+          //     //this.chartDataUsers = res.chartData;
+          //   }, () => {
+          //     this.dataReturnOK = false;
+          //     this.loading = false;
+          //     this.total = 0;
+          //     alert('Erro ao buscar tipos de pagamento');
+          // });                                
         }
       },
       setDataView(dv) {

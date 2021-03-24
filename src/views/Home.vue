@@ -168,7 +168,13 @@
                                 {{ getDateFormated(item.date) }}                            
                             </template>           
                             <template v-slot:item.total="{ item }">
-                                {{ item.total | currency }}                            
+                                <v-icon color="green" v-if="item.paymentType === 'cash'">
+                                  mdi-cash
+                                </v-icon> 
+                                <v-icon color="purple" v-if="ord.paymentType === 'card'">
+                                  mdi-credit-card
+                                </v-icon>                                 
+                                {{ item.total | currency }}
                             </template>                                                         
                         </v-data-table>               
                         <v-simple-table 
@@ -200,7 +206,15 @@
                                 <td class="text-center caption">{{ getDateFormated(ord.date).substring(0,5) }}</td>
                                 <td class="caption">{{ ord.user.name }}</td>
                                 <td class="caption">{{ ord.customer.name }}</td>
-                                <td class="text-right">{{ ord.total | currency }}</td>
+                                <td class="text-right">
+                                  <v-icon color="green" v-if="ord.paymentType === 'cash'">
+                                    mdi-cash
+                                  </v-icon>
+                                  <v-icon color="purple" v-if="ord.paymentType === 'card'">
+                                    mdi-credit-card
+                                  </v-icon>                                                                   
+                                  {{ ord.total | currency }}
+                                </td>
                               </tr>
                             </tbody>
                           </template>
