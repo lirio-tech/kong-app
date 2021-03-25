@@ -16,14 +16,14 @@
           <v-row class="grey--text">
             <v-col cols="12" align="center">
               <h2>{{ company.name }}</h2>
-              <h3 >Plano Atual eh o {{ company.plan.name }}</h3>
+              <h3 >Plano Atual é o {{ company.plan.name }}</h3>
               <span>Data de Vencimento: {{ getDatePtBr(new Date(company.plan.dateEnd)) }}</span>
             </v-col>
           </v-row>          
 
           <v-row class="grey--text">
             <v-col cols="12" align="center">
-              <p>Seu Plano atual eh o Basico, apos o vencimento o plano Free sera assumido como seu plano Atual.</p>
+              <p>Seu Plano atual é o Basico, após o vencimento o plano Free será assumido como seu plano Atual.</p>
             </v-col>
           </v-row>          
           <br/>
@@ -33,7 +33,7 @@
               <span class="display-1">Deseja continuar?</span>
               <br/>
               <br/>
-              <v-btn large color="secondary">Nao</v-btn> &nbsp;
+              <v-btn large color="secondary" @click="$route.go(-1)">Nao</v-btn> &nbsp;
               <v-btn large color="primary" @click="activePlanFree">Sim, quero o Plano Free</v-btn>
             </v-col>
           </v-row>          
