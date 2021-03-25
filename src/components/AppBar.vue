@@ -7,7 +7,7 @@
             <router-link to="/" style="color: inherit; text-decoration: none">
               <v-btn text >
                 <span style="font-family: 'Frijole', cursive; font-size: 1.1rem;">
-                  <span class="primary--text">{{ company ? company.shortName : ($vuetify.theme.dark ? 'Wiskritório App' : 'Lady App') }}</span>
+                  <span class="primary--text">{{ company ? company.shortName : ($vuetify.theme.dark ? 'Kong Barber' : 'Lady App') }}</span>
                 </span>  
               </v-btn>
             </router-link>

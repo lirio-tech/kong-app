@@ -92,7 +92,7 @@
                 
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    Pronto!!! <br/><span class="primary--text">Wiskritório App</span> Instalado com Sucesso sem ocupar espaço no seu Celular
+                    Pronto!!! <br/><span class="primary--text">Kong Barber App</span> Instalado com Sucesso sem ocupar espaço no seu Celular
                 </p>  
                 <v-img 
                     src="../assets/android/WhatsApp-4.jpeg"

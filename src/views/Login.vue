@@ -18,7 +18,7 @@
                       <v-img 
                         v-if="$vuetify.theme.dark"
                         avatar
-                        src="../assets/logo.png" 
+                        src="../assets/kong.png" 
                       />
                       <v-img 
                         v-else

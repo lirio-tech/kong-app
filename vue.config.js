@@ -4,7 +4,7 @@ module.exports = {
   ],
   pwa: {
     themeColor: '#3399FF',
-    name: 'Wiskritorio', 
+    name: 'Kong Barber', 
     workboxOptions: {
         skipWaiting: true
     }

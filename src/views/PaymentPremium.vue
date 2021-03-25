@@ -46,7 +46,7 @@
             <v-col cols="12" align="center">
               <a 
                 style="color: inherit; text-decoration: none"
-                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, estou no Wiskritorio App e efetuando o pagamento via PIX">              
+                href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, estou no Kong Barber App e efetuando o pagamento via PIX">              
                   <span 
                     class="green--text"
                   >

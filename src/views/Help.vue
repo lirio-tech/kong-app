@@ -10,8 +10,8 @@
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  
-                        <span style="font-size: 2.0rem !important;">Wiskritório App</span>
-                        <br/><small class="grey--text">Versão: 0.6.9 </small>
+                        <span style="font-size: 2.0rem !important;">Kong Barber App</span>
+                        <br/><small class="grey--text">Versão: 0.7.0 </small>
                 </v-col>       
             </v-row>   
 
@@ -130,7 +130,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                "https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!"
+                "https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!"
             );
         },        
         goBack() {
@@ -150,7 +150,7 @@ export default {
         },
         share() {
             const shareData = {
-            title: 'Wiskritorio App',
+            title: 'Kong Barber App',
             text: '💈Gerencie seus cortes ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱',
             url: 'https://app.wiskritorio.com.br/#/public/identify-device',
             }            
