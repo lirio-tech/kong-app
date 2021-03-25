@@ -16,7 +16,6 @@
           <v-row>
             <v-expansion-panels
                     v-model="panel"
-                    multiple
                     hover
                     focusable
             >        
@@ -79,11 +78,7 @@
                                         <v-text-field
                                             autocomplete="off"
                                             label="Serviço"
-                                            v-model="service.type"
-                                            :rules="[ 
-                                                val => val && val.length > 1 || 'Deve ser maior do que 1 Caracteres',
-                                                val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
-                                            ]"                                            
+                                            v-model="service.type"                    
                                             filled
                                         />                        
                                     </v-col>                    

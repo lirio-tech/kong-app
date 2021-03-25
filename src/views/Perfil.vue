@@ -214,7 +214,7 @@ export default {
       show: false,
       valid: true,
       dialogPlan: false,
-      panel: [0],
+      panel: [],
       userLogged: {
         type: 'none'
       }, 
@@ -255,6 +255,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.panel = this.isAdmin() ? [0] : [];      
       if(!this.userLogged.configuration) {
           this.userLogged.configuration = {table: 'mobile'};
       }
