@@ -109,7 +109,8 @@
                                     <v-radio
                                       label="Dinheiro"
                                       value="cash"
-                                    ></v-radio>
+                                    >
+                                    </v-radio>
                                     <v-radio
                                       label="Cartão"
                                       value="card"
@@ -301,7 +302,8 @@ import UserTypes from '../utils/UserTypes'
           price: 0,
           priceBR: "0",
         },
-        typeServices: ['Corte de Cabelo','Barba','Sobrancelha','Penteado','Pigmentação','Coloração','Luzes','Platinado','Relaxamento','Progressiva','Gel','Pomada','Laquê'],
+        myCompany: {},
+        typeServices: [],
         users: [],
         userLogged: {
           type: null
@@ -347,6 +349,7 @@ import UserTypes from '../utils/UserTypes'
         }
       },
       setFocusServicePrice() {
+        this.service.priceBR = this.maskCurrency(this.myCompany.services.filter(it => it.type === this.service.type)[0].price);
         this.$refs.servicePrice.focus(); 
       },
       orderHasServices() {
@@ -433,6 +436,23 @@ import UserTypes from '../utils/UserTypes'
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.myCompany = storage.getCompany();
+      this.myCompany.services = [
+        { type: 'Corte de Cabelo', price: 20.00},
+        { type: 'Barba', price: 14.99},
+        { type: 'Sobrancelha',price: 0},
+        { type: 'Penteado',price: 0},
+        { type: 'Pigmentação',price: 0},
+        { type: 'Coloração',price: 0},
+        { type: 'Luzes',price: 0},
+        { type: 'Platinado',price: 0},
+        { type: 'Relaxamento',price: 0},
+        { type: 'Progressiva',price: 0},
+        { type: 'Gel',price: 0},
+        { type: 'Pomada',price: 0},
+        { type: 'Laquê', price: 0}
+      ];
+      this.myCompany.services.forEach(s => this.typeServices.push(s.type) );
       console.log(this.$route.params._id);
       if(this.$route.params._id) {
         gateway.getOrderById(this.$route.params._id,

@@ -38,7 +38,6 @@
                                         prepend-icon="mdi-home"
                                         required
                                         :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
-                                        @keyup="onChangeCompanyName"
                                         v-model="company.name"
                                         ref="companyName"
                                     />
@@ -81,6 +80,10 @@
                                             autocomplete="off"
                                             label="Serviço"
                                             v-model="service.type"
+                                            :rules="[ 
+                                                val => val && val.length > 1 || 'Deve ser maior do que 1 Caracteres',
+                                                val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
+                                            ]"                                            
                                             filled
                                         />                        
                                     </v-col>                    
@@ -195,9 +198,6 @@ export default {
             this.message.text = text;
             this.message.show = true;
       },
-      onChangeCompanyName() {
-            this.company.shortName = this.company.name.substring(0, 15);
-      },      
       maskCurrency(v) {
           v=String(v);
           v=v.replace(/\D/g,"");//Remove tudo o que não é numero
@@ -237,13 +237,15 @@ export default {
         return UserTypes.isAdmin(this.userLogged.type);
       },        
       onSubmit() {
-          gateway.saveCompany(this.company,
-            () => {
-                alert('Atualizado com Sucesso!!!');
-                storage.setCompany(JSON.stringify(this.company));
-            }, () => {
-                alert('Erro ao Salvar');
-            });
+          if(this.$refs.formCompany.validate()) {
+            gateway.saveCompany(this.company,
+                () => {
+                    alert('Atualizado com Sucesso!!!');
+                    storage.setCompany(JSON.stringify(this.company));
+                }, () => {
+                    alert('Erro ao Salvar');
+                });
+          }
       }
     },
     beforeMount() {
