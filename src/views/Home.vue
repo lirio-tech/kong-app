@@ -110,7 +110,7 @@
                                   </div>
                               </v-list-item-title>
                             </v-col>                            
-                            <hr style="margin-top: 15px; border: 1px dotted grey;border-radius: 5px;" />
+                            <hr style="border: 1px dotted grey;border-radius: 5px;" />
                             <v-col cols="6" style="margin-top:5px" class="text-center">
                                 <v-icon color="green" style="margin-top: -5px">
                                   mdi-cash
