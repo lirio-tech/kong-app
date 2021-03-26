@@ -97,7 +97,7 @@
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
                                   <span class="caption grey--text">Total</span><br/>
                                   <div v-if="!loading" style="font-size: 1.7rem">
-                                    <span class="primary--text">{{ consolidado.total | currency }} </span>
+                                    <span class="green--text">{{ consolidado.total | currency }} </span>
                                   </div>
                               </v-list-item-title>
                             </v-col>
@@ -105,7 +105,7 @@
                               <v-list-item-title class="headline mb-1 text-center" style="margin-top: -35px;">
                                   <span class="caption grey--text">Qtde.</span><br/>
                                   <div v-if="!loading" style="font-size: 1.7rem">
-                                    <span class="primary--text">{{ orders.length }} </span>
+                                    <span class="green--text">{{ orders.length }} </span>
                                     <br/>
                                   </div>
                               </v-list-item-title>
@@ -136,7 +136,7 @@
                                 <v-col cols="5" class="grey--text" style="font-size: 1.3rem">
                                       {{ cab[0] }}
                                 </v-col> 
-                                <v-col cols="4" :style="'font-size: '+(cab[1] > 10000 ? '1.1' : '1.2')+'rem; color: #007826;'">
+                                <v-col cols="4" class="grey--text" :style="'font-size: '+(cab[1] > 10000 ? '1.1' : '1.2')+'rem; '">
                                       {{ cab[1] | currency }}
                                 </v-col>
                             </v-row>
