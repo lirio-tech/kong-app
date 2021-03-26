@@ -110,7 +110,7 @@
                                   </div>
                               </v-list-item-title>
                             </v-col>                            
-                            <hr style="margin-top: 15px; border: 1px solid grey;border-radius: 5px;" />
+                            <hr style="margin-top: 15px; border: 1px dotted grey;border-radius: 5px;" />
                             <v-col cols="6" style="margin-top:5px" class="text-center">
                                 <v-icon color="green" style="margin-top: -5px">
                                   mdi-cash
@@ -126,8 +126,8 @@
                                 <span class="grey--text" style="font-size: 1.2rem">
                                   {{ 980 | currency }}
                                 </span>                                
-                            </v-col>
-                            <hr style="border: 1px solid grey;border-radius: 10px;" />
+                            </v-col> 
+                            <hr style="border: 1px dotted grey;border-radius: 5px;" />
                             <br/>
                             <v-row v-for="cab in consolidado.cabelereiros" :key="cab[0]" style="margin-top:1px">
                                 <v-col cols="2" class="text-center">
@@ -140,7 +140,7 @@
                                       {{ cab[1] | currency }}
                                 </v-col>
                             </v-row>
-                            <hr style="margin-top: 15px; border: 1px solid grey;border-radius: 5px;" />
+                            <hr style="margin-top: 15px; border: 1px dotted grey;border-radius: 5px;" />
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-actions > 
