@@ -12,7 +12,7 @@
             flex
         >
             <a style="color: inherit; text-decoration: none"
-            href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!">
+            href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!">
                 <v-img 
                     max-height="110"
                     max-width="110"
@@ -39,7 +39,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                "https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Wiskritorio App!"
+                "https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!"
             );
         },        
         goBack() {
