@@ -110,13 +110,13 @@
                                   </div>
                               </v-list-item-title>
                             </v-col>                            
-                            <hr style="border: 1px dotted grey;border-radius: 5px;" />
+                            <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <v-col cols="6" style="margin-top:5px" class="text-center">
                                 <v-icon color="green" style="margin-top: -5px">
                                   mdi-cash
                                 </v-icon> 
                                 <span class="grey--text" style="font-size: 1.2rem">
-                                  {{ 1253.50 | currency }}
+                                  {{ sumPaymentType.cash | currency }}
                                 </span>
                             </v-col>
                             <v-col cols="6" style="margin-top:5px" class="text-center">
@@ -124,10 +124,10 @@
                                   mdi-credit-card
                                 </v-icon>                                    
                                 <span class="grey--text" style="font-size: 1.2rem">
-                                  {{ 980 | currency }}
+                                  {{ sumPaymentType.card | currency }}
                                 </span>                                
                             </v-col> 
-                            <hr style="border: 1px dotted grey;border-radius: 5px;" />
+                            <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <br/>
                             <v-row v-for="cab in consolidado.cabelereiros" :key="cab[0]" style="margin-top:1px">
                                 <v-col cols="2" class="text-center">
@@ -136,11 +136,11 @@
                                 <v-col cols="5" class="grey--text" style="font-size: 1.3rem">
                                       {{ cab[0] }}
                                 </v-col> 
-                                <v-col cols="4" style="font-size: 1.3rem; color: #007826">
+                                <v-col cols="4" :style="'font-size: '+(cab[1] > 10000 ? '1.1' : '1.2')+'rem; color: #007826;'">
                                       {{ cab[1] | currency }}
                                 </v-col>
                             </v-row>
-                            <hr style="margin-top: 15px; border: 1px dotted grey;border-radius: 5px;" />
+                            <hr v-if="orders.length" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-actions > 
@@ -357,6 +357,10 @@ export default {
           { text: "Valor", value: "total" },
           { text: "Cliente", value: "customer.name" },
       ],                
+      sumPaymentType: {
+        cash: 0,
+        card: 0
+      },
       orders: [],      
       selectPeriodo: 'Hoje',
       consolidado: {
@@ -474,7 +478,18 @@ export default {
                 o.services.forEach(e => {
                   o.servicess.push(e.type);
                 });
-              });              
+              });  
+              
+              this.sumPaymentType.cash = 0;
+              this.sumPaymentType.card = 0;
+              this.orders.forEach(o => {
+                if(o.paymentType === 'cash') {
+                  this.sumPaymentType.cash +=  o.total;
+                } else if(o.paymentType === 'card') {
+                  this.sumPaymentType.card +=  o.total;
+                }
+              });                 
+
           }, err => {
               console.log(err);
               this.loading = false;
