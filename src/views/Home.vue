@@ -280,7 +280,7 @@
                                 <th class="text-left">
                                   Profissional
                                 </th>              
-                                <th class="text-center">
+                                <th>
                                   Cliente
                                 </th>                                                                
                                 <th class="text-center">
