@@ -18,6 +18,7 @@
                     v-model="panel"
                     hover
                     focusable
+                    multiple
             >        
                 <v-expansion-panel>
                     <v-expansion-panel-header>{{ company.shortName }}</v-expansion-panel-header>
@@ -102,7 +103,7 @@
                                 <v-row>
                                 <v-col cols="12"  class="mt-0 pt-0">
 
-                                        <v-simple-table dense >
+                                    <v-simple-table dense >
                                         <template v-slot:default>
                                             <thead >
                                             <tr>
@@ -132,7 +133,7 @@
                                             </tr>
                                             </tbody>
                                         </template>
-                                        </v-simple-table>
+                                    </v-simple-table>
                                 </v-col> 
                                 </v-row>
                                 <br/>
@@ -176,7 +177,7 @@ export default {
         SnackBar
     },
     data: () => ({
-        panel: [0],
+        panel: [],
         loading: false,
         valid: true,
         company: {},
@@ -246,11 +247,15 @@ export default {
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
       gateway.getCompanyById(this.$route.params._id,
-      res => {
-          this.company = res;
-      }, () => {
-          alert('Erro ao buscar informacoes do Estabelecimento');
-      })
+        res => {
+            this.company = res;
+        }, () => {
+            alert('Erro ao buscar informacoes do Estabelecimento');
+        });
+        
+      if(this.$route.query.panel) {
+         this.panel.push(Number(this.$route.query.panel));
+      }
     }
   }
 </script>
