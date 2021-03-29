@@ -7,7 +7,7 @@
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/'}"
                   >
-                      <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                      <v-icon large color="blue-grey">mdi-arrow-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="9" align="center">   
@@ -26,6 +26,7 @@
               </v-col>
               <v-col cols="12">
                 <v-slider
+                    style="margin-top: -20px"
                     v-model="amountUsersCommon"
                     min="0"
                     label="Usuario Comum"
@@ -35,6 +36,7 @@
               </v-col>         
               <v-col cols="12">
                 <v-slider
+                    style="margin-top: -20px"
                     v-model="cashMouth"
                     min="2"
                     label="R$ 1K p/ Mes"
@@ -44,6 +46,7 @@
               </v-col>       
               <v-col cols="12">
                 <v-slider
+                    style="margin-top: -20px"
                     v-model="amountMouth"
                     min="1"
                     label="Qtde de Meses"
