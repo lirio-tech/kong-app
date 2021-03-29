@@ -19,21 +19,21 @@
             <v-col cols="12">
                 <v-simple-table dense >
                     <template v-slot:default>
-                        <thead >
+                      <thead >
                         <tr>
                             <th class="text-center">Usuario</th>
                             <th class="text-center">Score</th>
                             <th class="text-left">Description</th>
                             <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
+                      </thead>
+                      <tbody>
                         <tr v-for="rate in rates" :key="rate._id">
                             <td class="text-center">{{ rate.userId }}</td>
                             <td class="text-center">{{ rate.scoreRating }}</td>
                             <td>{{ rate.ratingDescription }}</td>
                         </tr>
-                        </tbody>
+                      </tbody>
                     </template>
                 </v-simple-table>
 

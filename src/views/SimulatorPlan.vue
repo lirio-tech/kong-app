@@ -64,6 +64,7 @@
               <v-col cols="12">
                     <v-card
                         outlined
+                        style="margin-top: -10px"
                     >
                         <v-subheader class="overline">
                             Plano Premium <span class="amber--text">{{ ' - ' + amountMouth + ' ' + (amountMouth > 1 ? 'Meses' : 'Mês') }} </span>
@@ -83,6 +84,13 @@
                             <v-col
                                 cols="12"
                             >
+                                <span 
+                                    class="text-decoration-line-through subtitle-1 grey--text" 
+                                    v-if="plan.priceWithoutDiscount > plan.price"
+                                >
+                                    {{ plan.priceWithoutDiscount | currency }}
+                                </span> 
+                                <br/>
                                 <span class="display-3">
                                     {{ plan.price | currency }}
                                 </span>
@@ -130,7 +138,7 @@ export default {
         amountUsersCommon: 0,
         amountMouth: 1,
         cashMouth: 2,
-        userLogged: {}
+        userLogged: {},
     }),
     methods: {
         goPayment(plan) {
@@ -151,41 +159,45 @@ export default {
     },
     computed: {
         plan() {
-            let price = ((this.amountUsersAdmin*5)+(this.amountUsersCommon*2.5)+(this.cashMouth*0.75))*this.amountMouth;
-            let descountPercent = (this.amountMouth*0.01);
-            if(descountPercent > 0.3) {
-                descountPercent = 0.3
+            let priceWithoutDiscount = ((this.amountUsersAdmin*5)+(this.amountUsersCommon*2.5)+(this.cashMouth*0.75))*this.amountMouth;
+            let discountPercentage = (this.amountMouth*0.01);
+            if(discountPercentage > 0.20) {
+                discountPercentage = 0.20
             }
-            console.log('Valor sem desconto', price);
-            console.log('valor percentual do desconto', descountPercent*100);
-            console.log('price do desconto', (price*descountPercent))
-            console.log('price com desconto aplicado', price - (price*descountPercent))
-            price = price - (price*descountPercent);
-            if(price < 9.99) {
-                price = 9.99
+            
+            let priceWithDiscount = priceWithoutDiscount * discountPercentage;
+            let priceAppliedDiscount = priceWithoutDiscount - (priceWithoutDiscount*discountPercentage);
+            if(priceAppliedDiscount < 9.99) {
+                priceAppliedDiscount = 9.99
             }
-            let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
+            //let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
+            //let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson520400005303986          5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
+            //let codePix = "00020126620014BR.GOV.BCB.PIX0111353576598690225kongPerson-AddValorDoSeuPlanoPerson5204000053039865406199.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUc6nHIvbCiH6304DCEF"
+              let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson520400005303986${priceAppliedDiscount}5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
             return {
                 name: "Personalizado",
-                type: "Mensal",
-                price: price,
+                type: `Meses=${this.amountMouth}`,
+                price: priceAppliedDiscount,
+                priceWithoutDiscount: priceWithoutDiscount,
+                priceWithDiscount: priceWithDiscount,
+                discountPercentage: discountPercentage,
                 benefits: [
-                {
-                    icon: "mdi-account",
-                    description: `${this.amountUsersAdmin} Usuário(s) Admin`
-                },
-                {
-                    icon: "mdi-account",
-                    description: `${this.amountUsersCommon} Usuário(s) Comum`
-                },                
-                {
-                    icon: "mdi-content-cut",
-                    description: `R$${ this.numberUsToBr(this.cashMouth*1000)} por Mês de Lançamentos`
-                }
+                    {
+                        icon: "mdi-account",
+                        description: `${this.amountUsersAdmin} Usuário(s) Admin`
+                    },
+                    {
+                        icon: "mdi-account",
+                        description: `${this.amountUsersCommon} Usuário(s) Comum`
+                    },                
+                    {
+                        icon: "mdi-content-cut",
+                        description: `R$${ this.numberUsToBr(this.cashMouth*1000)} por Mês de Lançamentos`
+                    }
                 ],
                 button: {
-                label: "Quero Esse",
-                icon: "mdi-rocket-launch"
+                    label: "Quero Esse",
+                    icon: "mdi-rocket-launch"
                 },
                 color: "blue",
                 advantage: false,
