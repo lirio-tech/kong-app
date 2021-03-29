@@ -125,7 +125,7 @@
               </v-card-actions>
 
           </v-card>
-          <v-card style="margin-top: 0px; margin-bottom: -30px;" v-if="userLogged.type === 'sys_admin'" outlined>
+          <v-card style="margin-top: 0px; margin-bottom: -30px;" outlined>
             <v-alert        
               prominent
             >
@@ -144,25 +144,6 @@
               <br/>
             </v-alert>
           </v-card>
-          <v-card style="margin-top: 0px; margin-bottom: -30px;" v-if="userLogged.type !== 'sys_admin'" outlined>
-            <v-alert        
-              prominent      
-            >
-              <br/>
-              <v-row>
-                <v-col cols="12">
-                  Nao encontrou um plano ideal para voce? 
-                  Entre em contato com a Gente ;-)
-                </v-col>
-                <v-col cols="12">
-                  <router-link to="/public/fale-conosco" style="color: inherit; text-decoration: none">
-                    <v-btn small>Entrar em contato</v-btn>
-                  </router-link>
-                </v-col>
-              </v-row>
-              <br/>
-            </v-alert>
-          </v-card>          
         </v-container>
       </div>      
 

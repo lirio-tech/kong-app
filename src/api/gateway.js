@@ -333,7 +333,17 @@ export default{
               errorCb(error)
           })   
     },
-        
+    savePlanCustom(plan, callback, errorCb) {
+        let url = `${COMPANIES_API}/plan-custom`;
+        Axios.post(url, plan)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+    },
     // getAllPlans(callback, errorCb) {
     //     let url = PLANS_API;
     //     Axios.get(url)

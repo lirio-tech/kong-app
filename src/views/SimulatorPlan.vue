@@ -64,22 +64,25 @@
               <v-col cols="12">
                     <v-card
                         outlined
-                        style="margin-top: -10px"
+                        style="margin-top: -20px"
                     >
                         <v-subheader class="overline">
-                            Plano Premium <span class="amber--text">{{ ' - ' + amountMouth + ' ' + (amountMouth > 1 ? 'Meses' : 'Mês') }} </span>
+                            Plano Premium 
+                            <span class="amber--text" style="margin-left:15px">
+                                {{ amountMouth + ' ' + (amountMouth > 1 ? 'Meses' : 'Mês') }} 
+                            </span>
                         </v-subheader>
                         <v-list-item two-line>
                             <v-list-item-content>
-                            <v-list-item-title 
-                                class="headline " 
-                            >
-                                Personalizado
-                            </v-list-item-title>
+                                <v-list-item-title 
+                                    class="headline " 
+                                >
+                                    Personalizado               
+                                </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-card-text>
+                        <v-card-text style="margin-top: -15px">
                             <v-row align="center">
                             <v-col
                                 cols="12"
@@ -90,6 +93,13 @@
                                 >
                                     {{ plan.priceWithoutDiscount | currency }}
                                 </span> 
+                                <span 
+                                    style="margin-left: 10px;"
+                                    class="subtitle-1 grey--text" 
+                                    v-if="plan.priceWithoutDiscount > plan.price"
+                                >
+                                    {{ Math.trunc(plan.discountPercentage * 100) }}% OFF
+                                </span>                                 
                                 <br/>
                                 <span class="display-3">
                                     {{ plan.price | currency }}
@@ -170,10 +180,7 @@ export default {
             if(priceAppliedDiscount < 9.99) {
                 priceAppliedDiscount = 9.99
             }
-            //let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
-            //let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson520400005303986          5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
-            //let codePix = "00020126620014BR.GOV.BCB.PIX0111353576598690225kongPerson-AddValorDoSeuPlanoPerson5204000053039865406199.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUc6nHIvbCiH6304DCEF"
-              let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson520400005303986${priceAppliedDiscount}5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
+            let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
             return {
                 name: "Personalizado",
                 type: `Meses=${this.amountMouth}`,
@@ -199,7 +206,7 @@ export default {
                     label: "Quero Esse",
                     icon: "mdi-rocket-launch"
                 },
-                color: "blue",
+                color: "cyan",
                 advantage: false,
                 pixCopyAndPast: codePix
             };

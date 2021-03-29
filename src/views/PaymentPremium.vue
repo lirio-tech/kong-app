@@ -65,7 +65,7 @@
     </v-container>
 </template>
 <script>
-// import { mapGetters } from 'vuex'
+import UserTypes from '../utils/UserTypes'
 import gateway from '../api/gateway'
 import VueQrcode from 'vue-qrcode'
 import storage from '../storage';
@@ -75,6 +75,7 @@ export default {
   data:() => ({
     loadingPay: false,
     plan: {},
+    userLogged: {}
   }),
   computed: {
       // ...mapGetters({ 
@@ -82,12 +83,16 @@ export default {
       // }), 
   },
   beforeMount() {
+    this.userLogged = storage.getUserLogged();
     if(this.$route.params.planName !== 'Personalizado') {
       this.plan = gateway
                 .getAllPlans()
                 .filter(p => p.name === this.$route.params.planName)[0];
     } else {
       this.plan = storage.getPlanCustom();
+      if(this.isAdmin()) {
+        gateway.savePlanCustom(this.plan, () => {}, () => {})
+      }
     }
     console.log(this.plan);
   },
@@ -97,7 +102,10 @@ export default {
     },
     onError(){
       alert('Erro ao Copiar Codigo Copie e Cole')
-    } 
+    },
+    isAdmin() {
+      return UserTypes.isAdmin(this.userLogged.type);
+    }
   }
 }
 </script>
