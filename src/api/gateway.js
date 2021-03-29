@@ -371,7 +371,7 @@ export default{
             {
               "name": "Basico",
               "type": "Mensal",
-              "price": 10.00,
+              "price": 9.90,
               "benefits": [
                 {
                   "icon": "mdi-account",
@@ -388,16 +388,16 @@ export default{
               },
               "color": "blue",
               "advantage": false,
-              "pixCopyAndPast": "00020126720014BR.GOV.BCB.PIX0111353576598690235WiskritorioApp-Plano Premium Basico520400005303986540510.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUAdeHEok7F463047A09"             
+              "pixCopyAndPast": "00020126660014BR.GOV.BCB.PIX0111353576598690229KongBarber-PlanoPremiumBascio52040000530398654049.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUbEjC3K1y9t63040DA2"             
             },         
             {
               "name": "Gold",
               "type": "Anual",
-              "price": 90.00,
+              "price": 99.90,
               "benefits": [
                 {
                   "icon": "mdi-cash",
-                  "description": "Mesmo modelo do Plano Basico sendo R$ 7,50 por Mês"
+                  "description": "Mesmo modelo do Plano Basico sendo R$ 8,32 por Mês"
                 },              
                 {
                   "icon": "mdi-account",
@@ -414,12 +414,12 @@ export default{
               },
               "color": "#d4af37",
               "advantage": true,
-              "pixCopyAndPast": "00020126710014BR.GOV.BCB.PIX0111353576598690234Wiskritorio APP - Plano Gold anual520400005303986540590.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUAZ7l8FqpBH63043CE7"              
+              "pixCopyAndPast": "00020126640014BR.GOV.BCB.PIX0111353576598690227KongBarber-PlanoPremiumGold520400005303986540599.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUJvbhtX80b16304B9D1"              
             },        
             {
               "name": "É Nóis",
               "type": "Mensal",
-              "price": 20.00,
+              "price": 21.90,
               "benefits": [          
                 {
                   "icon": "mdi-account",
@@ -436,16 +436,16 @@ export default{
               },
               "color": "cyan",
               "advantage": false,
-              "pixCopyAndPast": "00020126680014BR.GOV.BCB.PIX0111353576598690231Wiskritorio APP - Plano Eh Nois520400005303986540520.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUGeBHB6SWFt63040E1F"              
+              "pixCopyAndPast": "00020126660014BR.GOV.BCB.PIX0111353576598690229KongBarber-PlanoPremiumEhNoiz520400005303986540521.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NU3EgBD45bdL6304F0BA"
             },        
             {
               "name": "Tamo Junto",
               "type": "Anual",
-              "price": 180.00,
+              "price": 199.90,
               "benefits": [          
                 {
                   "icon": "mdi-cash",
-                  "description": "Mesmo Plano É Nóis sendo R$ 15,00 por Mês"
+                  "description": "Mesmo Plano É Nóis sendo R$ 16,65 por Mês"
                 },              
                 {
                   "icon": "mdi-account",
@@ -453,7 +453,7 @@ export default{
                 },
                 {
                   "icon": "mdi-content-cut",
-                  "description": "R$ 12.000,00 por Mês de Lançamentos"
+                  "description": "R$ 10.000,00 por Mês de Lançamentos"
                 }
               ],
               "button": {
@@ -462,7 +462,7 @@ export default{
               },
               "color": "orange",
               "advantage": true,
-              "pixCopyAndPast": "00020126710014BR.GOV.BCB.PIX0111353576598690234Wiskritorio APP - Plano Tamo Junto5204000053039865406180.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUXWKzxEUVI763041B58"              
+              "pixCopyAndPast": "00020126620014BR.GOV.BCB.PIX0111353576598690225KongBarber-PlanoTamoJunto5204000053039865406199.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUc6nHIvbCiH6304DCEF"
             },           
             // {
             //   "name": "Infinity",

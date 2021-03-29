@@ -152,12 +152,19 @@ export default {
     computed: {
         plan() {
             let price = ((this.amountUsersAdmin*5)+(this.amountUsersCommon*2.5)+(this.cashMouth*0.75))*this.amountMouth;
-            //price = price - (price * (this.amountMouth*0.05))
+            let descountPercent = (this.amountMouth*0.01);
+            if(descountPercent > 0.3) {
+                descountPercent = 0.3
+            }
+            console.log('Valor sem desconto', price);
+            console.log('valor percentual do desconto', descountPercent*100);
+            console.log('price do desconto', (price*descountPercent))
+            console.log('price com desconto aplicado', price - (price*descountPercent))
+            price = price - (price*descountPercent);
             if(price < 9.99) {
                 price = 9.99
             }
-            let codePix = `00020126530014BR.GOV.BCB.PIX0111353576598690216KongBarberPerson52040000530398654079999.995802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUigqGegmaJk63042AA2`;
-            //let codePix = `00020126530014BR.GOV.BCB.PIX0111353576598690216KongBarberPerson5204000053039865407${price}5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUigqGegmaJk63042AA2`;
+            let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
             return {
                 name: "Personalizado",
                 type: "Mensal",
