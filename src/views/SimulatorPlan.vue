@@ -111,7 +111,7 @@
                     </v-card>         
               </v-col>
           </v-row>
-                                                    
+          <br/><br/><br/>
         </v-main>
     </v-container>
 </template>
@@ -156,7 +156,8 @@ export default {
             if(price < 9.99) {
                 price = 9.99
             }
-            let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235WiskritorioApp-Plano Premium Personalizado5204000053039865405${price}5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUAdeHEok7F463047A09`;
+            //let codePix = `00020126530014BR.GOV.BCB.PIX0111353576598690216KongBarberPerson52040000530398654079999.995802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUigqGegmaJk63042AA2`;
+            let codePix = `00020126530014BR.GOV.BCB.PIX0111353576598690216KongBarberPerson5204000053039865407${price}5802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUigqGegmaJk63042AA2`;
             return {
                 name: "Personalizado",
                 type: "Mensal",
