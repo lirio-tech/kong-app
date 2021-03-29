@@ -16,10 +16,12 @@
           </v-row>    
           <v-row>
               <v-col cols="12">
+                  
                 <v-slider
                     v-model="amountUsersAdmin"
                     min="1"
-                    label="Usuario Admin"
+                    label="Admin"
+                    prepend-icon="mdi-account"
                     max="5"
                     thumb-label
                 ></v-slider>                
@@ -29,7 +31,8 @@
                     style="margin-top: -20px"
                     v-model="amountUsersCommon"
                     min="0"
-                    label="Usuario Comum"
+                    prepend-icon="mdi-account"
+                    label="Comum"
                     max="20"
                     thumb-label
                 ></v-slider>                
@@ -39,7 +42,8 @@
                     style="margin-top: -20px"
                     v-model="cashMouth"
                     min="2"
-                    label="R$ 1K p/ Mes"
+                    prepend-icon="mdi-content-cut"
+                    label="1K Mes"
                     max="50"
                     thumb-label
                 ></v-slider>                
@@ -49,7 +53,8 @@
                     style="margin-top: -20px"
                     v-model="amountMouth"
                     min="1"
-                    label="Qtde de Meses"
+                    prepend-icon="mdi-calendar"
+                    label="Meses"
                     max="60"
                     thumb-label
                 ></v-slider>                
