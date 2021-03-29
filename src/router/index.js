@@ -23,10 +23,12 @@ import SystemCompaniesActives from '../views/system/SystemCompaniesActives'
 import SystemUserList from '../views/system/SystemUserList'
 import SystemUser from '../views/system/SystemUser'
 import SystemPayments from '../views/system/SystemPayments'
+import SystemRateUsList from '../views/system/SystemRateUsList'
 import Analytics from '../views/Analytics'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
 import RateUsView from '../views/RateUsView' 
+import SimulatorPlan from '../views/SimulatorPlan'
 
 Vue.use(VueRouter)
 
@@ -122,6 +124,11 @@ const routes = [
     component: IdentifyDeviceRedirect
   },      
   {
+    path: '/public/simulator-plan',
+    name: 'SimulatorPlan', 
+    component: SimulatorPlan
+  },     
+  {
     path: '/system',
     name: 'SystemControlPlan',  
     component: SystemControlPlan
@@ -151,6 +158,12 @@ const routes = [
     name: 'SystemUserList', 
     component: SystemUserList
   },     
+  {
+    path: '/system/rated-us',
+    name: 'SystemRateUsList', 
+    component: SystemRateUsList
+  },     
+
   {
     path: '/system/users/:_id',
     name: 'SystemUser', 

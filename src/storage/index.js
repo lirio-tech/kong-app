@@ -31,5 +31,11 @@ export default {
         localStorage.removeItem('company');
         localStorage.removeItem('user');
         localStorage.removeItem('TOKEN');
-    }
+    },
+    setPlanCustom(planCustom) {
+        localStorage.setItem('planCustom', planCustom);
+    },
+    getPlanCustom() {
+        return JSON.parse(localStorage.getItem('planCustom'));
+    }    
 }

@@ -35,7 +35,7 @@
                         type="button" 
                         depressed  
                         x-large 
-                        color="amber darken-3"
+                        color="purple darken-3"
                         style="width: 96%"
                     >Estabelecimentos Ativos</v-btn>                    
                   </router-link>
@@ -55,6 +55,20 @@
                   </router-link>
               </v-col>
           </v-row>                                            
+          <v-row>
+              <v-col cols="12" sm="12" align="center">
+                  <router-link to="/system/rated-us"
+                   style="color: inherit; text-decoration: none">
+                    <v-btn 
+                        type="button" 
+                        depressed  
+                        x-large 
+                        color="yellow darken-2 darken-3"
+                        style="width: 96%"
+                    >Avaliacoes</v-btn>                    
+                  </router-link>
+              </v-col>
+          </v-row>                                                      
         </v-main>
     </v-container>
 </template>

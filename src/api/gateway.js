@@ -278,6 +278,17 @@ export default{
               errorCb(error)
           })      
     },  
+    getAllRatedUs(callback, errorCb) {
+      let url = `${RATE_US_API}`;
+      Axios.get(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })      
+    },      
     getPaymentsHist(callback, errorCb) {
       let url = `${PAYMENT_API}`;
       Axios.get(url)
@@ -453,32 +464,32 @@ export default{
               "advantage": true,
               "pixCopyAndPast": "00020126710014BR.GOV.BCB.PIX0111353576598690234Wiskritorio APP - Plano Tamo Junto5204000053039865406180.005802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUXWKzxEUVI763041B58"              
             },           
-            {
-              "name": "Infinity",
-              "type": "Infinity",
-              "price": 900.00,
-              "benefits": [         
-                {
-                  "icon": "mdi-cash",
-                  "description": "Pague uma única vez e utilize o App sempre que quiser"
-                },                        
-                {
-                  "icon": "mdi-account",
-                  "description": "8 Usuários (3 Admin + 5 Comuns)"
-                },
-                {
-                  "icon": "mdi-content-cut",
-                  "description": "R$ 25.000,00 por Mês de Lançamentos"
-                }
-              ],
-              "button": {
-                "label": "Quero Esse",
-                "icon": "mdi-rocket-launch"
-              },
-              "color": "purple",
-              "advantage": false,
-              "pixCopyAndPast": "00020126580014BR.GOV.BCB.PIX01366c1296f1-b36f-4b65-ac9c-5e7fd16cafb75204000053039865406900.005802BR5925DIEGO LIRIO DAMACENA PERE6009SAO PAULO622605226QEcoMRRZQlpCuF55gqxtO63047BBF"              
-            },                                     
+            // {
+            //   "name": "Infinity",
+            //   "type": "Infinity",
+            //   "price": 900.00,
+            //   "benefits": [         
+            //     {
+            //       "icon": "mdi-cash",
+            //       "description": "Pague uma única vez e utilize o App sempre que quiser"
+            //     },                        
+            //     {
+            //       "icon": "mdi-account",
+            //       "description": "8 Usuários (3 Admin + 5 Comuns)"
+            //     },
+            //     {
+            //       "icon": "mdi-content-cut",
+            //       "description": "R$ 25.000,00 por Mês de Lançamentos"
+            //     }
+            //   ],
+            //   "button": {
+            //     "label": "Quero Esse",
+            //     "icon": "mdi-rocket-launch"
+            //   },
+            //   "color": "purple",
+            //   "advantage": false,
+            //   "pixCopyAndPast": "00020126580014BR.GOV.BCB.PIX01366c1296f1-b36f-4b65-ac9c-5e7fd16cafb75204000053039865406900.005802BR5925DIEGO LIRIO DAMACENA PERE6009SAO PAULO622605226QEcoMRRZQlpCuF55gqxtO63047BBF"              
+            // },                                     
           ];
     }       
 }

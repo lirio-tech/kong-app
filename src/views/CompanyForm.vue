@@ -45,7 +45,7 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         autocomplete="off"
-                                        label="Nome Abreviado"
+                                        label="Nome no App"
                                         prepend-icon="mdi-home"
                                         :rules="[ 
                                             val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',

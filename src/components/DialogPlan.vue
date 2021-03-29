@@ -125,10 +125,28 @@
               </v-card-actions>
 
           </v-card>
-          <v-card style="margin-top: 0px; margin-bottom: -30px;">
+          <v-card style="margin-top: 0px; margin-bottom: -30px;" v-if="userLogged.type === 'sys_admin'" outlined>
             <v-alert        
               prominent
-              type="blue-grey darken-4 "        
+            >
+              <br/>
+              <v-row>
+                <v-col cols="12" class="overline">
+                  Não encontrou um plano ideal? <br/>
+                  Simule um Plano Ideal para você ;-)
+                </v-col>
+                <v-col cols="12" class="text-center">
+                  <router-link to="/public/simulator-plan" style="color: inherit; text-decoration: none">
+                    <v-btn x-large style="width: 100%;">Simular Plano</v-btn>
+                  </router-link>
+                </v-col>
+              </v-row>
+              <br/>
+            </v-alert>
+          </v-card>
+          <v-card style="margin-top: 0px; margin-bottom: -30px;" v-if="userLogged.type !== 'sys_admin'" outlined>
+            <v-alert        
+              prominent      
             >
               <br/>
               <v-row>
@@ -144,7 +162,7 @@
               </v-row>
               <br/>
             </v-alert>
-          </v-card>
+          </v-card>          
         </v-container>
       </div>      
 
@@ -155,6 +173,7 @@
 import gateway from '../api/gateway'
 import storage from '../storage'
 import CardPlanData from '../components/CardPlanData'
+import UserTypes from '../utils/UserTypes'
 export default {
     props:['dialog'],
     components: {
@@ -184,6 +203,9 @@ export default {
           return;
         }        
         this.$router.push(`/admin/payment/${plan.name}`);
+      },
+      isAdmin() {
+        return UserTypes.isAdmin(this.userLogged.type)
       }
     }
 }

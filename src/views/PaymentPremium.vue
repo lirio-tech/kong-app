@@ -68,6 +68,7 @@
 // import { mapGetters } from 'vuex'
 import gateway from '../api/gateway'
 import VueQrcode from 'vue-qrcode'
+import storage from '../storage';
 export default {
   name: 'Payment',
   components: { VueQrcode },
@@ -81,10 +82,13 @@ export default {
       // }), 
   },
   beforeMount() {
-    console.log(this.$route.params.planName);
-    this.plan = gateway
-                  .getAllPlans()
-                  .filter(p => p.name === this.$route.params.planName)[0];
+    if(this.$route.params.planName !== 'Personalizado') {
+      this.plan = gateway
+                .getAllPlans()
+                .filter(p => p.name === this.$route.params.planName)[0];
+    } else {
+      this.plan = storage.getPlanCustom();
+    }
     console.log(this.plan);
   },
   methods: {
