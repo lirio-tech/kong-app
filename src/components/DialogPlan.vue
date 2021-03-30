@@ -29,6 +29,7 @@
           <CardPlanData 
               :company="company" 
               :showBtnPlanDialog="false"
+              :userView="userLogged"
           />   
 
           <v-card

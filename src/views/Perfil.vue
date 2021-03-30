@@ -48,6 +48,7 @@
                         :company="company" 
                         :showBtnPlanDialog="true"
                         v-on:show-plan-dialog="showPlanDialog"
+                        :userView="userLogged"
                     />
                 </v-expansion-panel-content>
             </v-expansion-panel>            

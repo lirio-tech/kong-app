@@ -26,7 +26,7 @@
         </div>            
         <v-container>
                 <span 
-                    v-if="company.plan && company.plan.payment"
+                    v-if="company.plan && company.plan.payment && isAdmin(userView.type)"
                 >
                     <br/>
                     <span class="grey--text">Pagamento: </span> 
@@ -73,7 +73,13 @@
     </div>
 </template>
 <script>
+import UserTypes from '../utils/UserTypes'
 export default {
-    props: ['company', 'showBtnPlanDialog'],
+    props: ['company', 'showBtnPlanDialog', 'userView'],
+    methods: {
+        isAdmin(type) {
+            return UserTypes.isAdmin(type)
+        }
+    }
 }
 </script>

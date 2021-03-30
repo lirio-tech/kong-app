@@ -22,40 +22,40 @@
                     min="1"
                     label="Admin"
                     prepend-icon="mdi-account"
-                    max="5"
+                    max="8"
                     thumb-label
                 ></v-slider>                
               </v-col>
               <v-col cols="12">
                 <v-slider
-                    style="margin-top: -20px"
+                    style="margin-top: -25px"
                     v-model="amountUsersCommon"
                     min="0"
                     prepend-icon="mdi-account"
                     label="Comum"
-                    max="20"
+                    max="12"
                     thumb-label
                 ></v-slider>                
               </v-col>         
               <v-col cols="12">
                 <v-slider
-                    style="margin-top: -20px"
+                    style="margin-top: -25px"
                     v-model="cashMouth"
                     min="2"
                     prepend-icon="mdi-content-cut"
                     label="1K Mes"
-                    max="50"
+                    max="40"
                     thumb-label
                 ></v-slider>                
               </v-col>       
               <v-col cols="12">
                 <v-slider
-                    style="margin-top: -20px"
+                    style="margin-top: -25px"
                     v-model="amountMouth"
                     min="1"
                     prepend-icon="mdi-calendar"
                     label="Meses"
-                    max="60"
+                    max="24"
                     thumb-label
                 ></v-slider>                
               </v-col>                                   
@@ -72,7 +72,7 @@
                                 {{ amountMouth + ' ' + (amountMouth > 1 ? 'Meses' : 'Mês') }} 
                             </span>
                         </v-subheader>
-                        <v-list-item two-line>
+                        <v-list-item two-line style="margin-top: -20px">
                             <v-list-item-content>
                                 <v-list-item-title 
                                     class="headline " 
@@ -82,7 +82,7 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-card-text style="margin-top: -15px">
+                        <v-card-text style="margin-top: -20px">
                             <v-row align="center">
                             <v-col
                                 cols="12"
@@ -108,7 +108,7 @@
                             </v-row>
                         </v-card-text>
 
-                        <v-list-item v-for="benefit in plan.benefits" :key="benefit._id">                            
+                        <v-list-item v-for="benefit in plan.benefits" :key="benefit._id" style="margin-top: -7px">                            
                             <v-icon>
                                 {{ benefit.icon }}
                             </v-icon>                            
@@ -166,6 +166,9 @@ export default {
     },
     beforeMount() {
         this.userLogged = storage.getUserLogged();
+        if(storage.getPlanCustom()) {
+            this.plan = storage.getPlanCustom();
+        }
     },
     computed: {
         plan() {
@@ -175,8 +178,8 @@ export default {
                 discountPercentage = 0.20
             }
             
-            let priceWithDiscount = priceWithoutDiscount * discountPercentage;
-            let priceAppliedDiscount = priceWithoutDiscount - (priceWithoutDiscount*discountPercentage);
+            let priceOfTheDiscount = priceWithoutDiscount * discountPercentage;
+            let priceAppliedDiscount = priceWithoutDiscount - priceOfTheDiscount;
             if(priceAppliedDiscount < 9.99) {
                 priceAppliedDiscount = 9.99
             }
@@ -186,7 +189,7 @@ export default {
                 type: `Meses=${this.amountMouth}`,
                 price: priceAppliedDiscount,
                 priceWithoutDiscount: priceWithoutDiscount,
-                priceWithDiscount: priceWithDiscount,
+                priceOfTheDiscount: priceOfTheDiscount,
                 discountPercentage: discountPercentage,
                 benefits: [
                     {

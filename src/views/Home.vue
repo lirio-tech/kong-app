@@ -153,7 +153,12 @@
                               style="width: 70%"
                               outlined
                               color="cyan"
-                          >Novo</v-btn>                                            
+                          >
+                            <v-icon style="margin-right: 10px;">
+                              mdi-content-cut
+                            </v-icon>
+                            Novo
+                          </v-btn>                                            
                         </v-col>  
                     </v-card-actions>
             </v-card>   

@@ -91,7 +91,7 @@ export default {
     } else {
       this.plan = storage.getPlanCustom();
       if(this.isAdmin()) {
-        gateway.savePlanCustom(this.plan, () => {}, () => {})
+        gateway.savePlanCustom(JSON.stringify(this.plan), () => {}, () => {})
       }
     }
     console.log(this.plan);
