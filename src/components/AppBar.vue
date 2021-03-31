@@ -112,7 +112,16 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </div>                        
-                        
+
+                        <router-link 
+                            to="/public/simulator-plan" 
+                            style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Simulador de Plano
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>     
+
                         <router-link 
                             to="/public/fale-conosco" 
                             style="color: inherit; text-decoration: none">

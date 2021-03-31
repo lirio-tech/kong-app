@@ -19,7 +19,7 @@
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>      
-            <v-toolbar-title >
+            <v-toolbar-title style="margin-left:-17px;">
                 Escolha o Plano melhor para VC :-)
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -40,7 +40,7 @@
               <v-subheader class="overline">
                 Plano {{ (plan.type === 'Free' ? '' : 'Premium ') + plan.type }}
               </v-subheader>
-              <v-list-item two-line>
+              <v-list-item two-line style="margin-top: -15px">
                 <v-list-item-content>
                   <v-list-item-title 
                     class="headline " 
@@ -67,7 +67,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-card-text>
+              <v-card-text style="margin-top: -20px">
                 <v-row align="center">
                   <v-col
                     cols="12"
