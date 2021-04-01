@@ -36,19 +36,19 @@
                         v-if="false"
                         @click="() => setDataView(BY_DAYS)"
                       >
-                        <v-list-item-title>Ganhos (R$) Ganhos por dias</v-list-item-title>
+                        <v-list-item-title>Dia a Dia</v-list-item-title>
                       </v-list-item>
                       <v-list-item
                         v-if="false"
                         @click="() => setDataView(BY_MONTH)"
                       >
-                        <v-list-item-title>Ganhos (R$) por Meses</v-list-item-title>
+                        <v-list-item-title>Mes a Mes</v-list-item-title>
                       </v-list-item>                      
                       <v-list-item
                         @click="() => setDataView(BY_DAYS_OF_THE_WEEK)"
                       >
                         <v-list-item-subtitle>
-                          Ganhos (R$) por Dia da semana
+                          Dia da semana
                         </v-list-item-subtitle>
                       </v-list-item>   
                       <v-list-item
@@ -56,7 +56,7 @@
                         @click="() => setDataView(BY_USERS)"
                       >
                         <v-list-item-subtitle>
-                          Ganhos (R$) por Profissionais 
+                          Profissionais 
                         </v-list-item-subtitle>
                       </v-list-item>      
                       <v-list-item
@@ -64,7 +64,7 @@
                         @click="() => setDataView(BY_PAYMENT_TYPE)"
                       >
                         <v-list-item-subtitle>
-                          Ganhos (R$) por Tipo de Pagamento 
+                          Tipo de Pagamento 
                         </v-list-item-subtitle>
                       </v-list-item>                                                                               
                     </v-list>
@@ -158,12 +158,6 @@
           </v-dialog>
 
           <div v-if="dataView === BY_DAYS_OF_THE_WEEK && dataReturnOK">
-              <!-- <DaysOfTheWeek
-                :dataReturnOK="dataReturnOK"
-                :chartDataDaysOfTheWeek="chartDataDaysOfTheWeek"
-                :daysOfTheWeek="daysOfTheWeek"
-              /> -->
-            
             <v-row>
                 <v-col cols="12">
                   <GChart 
@@ -246,7 +240,6 @@ export default {
         amount: 0
       },      
       chartsLibDaysOfTheWeek: null, 
-      // Array will be automatically processed with visualization.arrayToDataTable function
       daysOfTheWeek: {},
       chartDataDaysOfTheWeekResult: null,
       date: new Date().toISOString().substr(0, 10),
@@ -421,7 +414,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.setDataView(this.isAdmin(this.userLogged.type) ? this.BY_USERS : this.BY_DAYS_OF_THE_WEEK); 
+      this.setDataView(this.BY_DAYS_OF_THE_WEEK); 
     },
     computed: {
       title() {

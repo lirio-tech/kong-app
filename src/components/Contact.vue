@@ -14,8 +14,8 @@
             <a style="color: inherit; text-decoration: none"
             href="https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!">
                 <v-img 
-                    max-height="110"
-                    max-width="110"
+                    max-height="90"
+                    max-width="90"
                     src="../assets/whatsapp.png"
                 ></v-img>
             </a>

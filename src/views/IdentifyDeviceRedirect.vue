@@ -12,7 +12,7 @@
                 >
                     {{ value }}
                 </v-progress-circular>        
-                <span v-if="value === 40">{{ myDevice }}</span>
+                <span v-if="value > 40">{{ myDevice }}</span>
             </v-container>
         </v-row>
     </v-container>
@@ -29,7 +29,7 @@ export default {
         myDevice: null
       }
     },    
-    beforeDestroy () {
+    beforeMount () {
       clearInterval(this.interval);
       if(device.isAndroid()) {
           this.myDevice = 'ANDROID';
