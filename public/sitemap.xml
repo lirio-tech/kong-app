@@ -6,7 +6,11 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
   <url>
-    <loc>https://app.wiskritorio.com.br/</loc>
+    <loc>https://kongbarber.com</loc>
+    <lastmod>2020-04-01</lastmod>
+  </url>
+  <url>
+    <loc>https://app.kongbarber.com</loc>
     <lastmod>2020-11-23</lastmod>
   </url>
 </urlset>

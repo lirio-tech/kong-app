@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;">Kong Barber App</span>
-                        <br/><small class="grey--text">Versão: 0.7.6 </small>
+                        <br/><small class="grey--text">Versão: 0.7.7 </small>
                 </v-col>       
             </v-row>   
 
@@ -37,7 +37,7 @@
                             align="center"
                         >
                             <vue-qrcode 
-                                value="https://app.wiskritorio.com.br" 
+                                value="https://app.kongbarber.com.br" 
                                 style="margin-left:50px;"
                             />
                         </v-col>
@@ -152,7 +152,7 @@ export default {
             const shareData = {
             title: 'Kong Barber App',
             text: '💈Gerencie seus cortes ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱',
-            url: 'https://app.wiskritorio.com.br/#/public/identify-device',
+            url: 'https://app.kongbarber.com/#/public/identify-device',
             }            
             return navigator.share(shareData)
         }                         
