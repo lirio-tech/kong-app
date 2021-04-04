@@ -60,7 +60,7 @@
                         </v-list-item-subtitle>
                       </v-list-item>      
                       <v-list-item
-                        v-if="userLogged.type === 'sys_admin'"
+                        v-if="isAdmin(userLogged.type)"
                         @click="() => setDataView(BY_PAYMENT_TYPE)"
                       >
                         <v-list-item-subtitle>
