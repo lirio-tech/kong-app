@@ -197,6 +197,14 @@
                 :options="{height: 380,width: '100%',legend:{ position: 'top', maxLines: 3 }}"
               />  
           </div>
+          <div v-if="dataView === BY_PAYMENT_TYPE && dataReturnOK">
+              <GChart
+                style="width: 100%"
+                type="PieChart"
+                :data="chartDataPaymentTypes"
+                :options="{height: 380,width: '100%',legend:{ position: 'top', maxLines: 3 }}"
+              />  
+          </div>          
 
         </v-main>
     </v-container>
@@ -207,6 +215,7 @@ import storage from '../storage';
 import UserTypes from '../utils/UserTypes'
 import { GChart } from 'vue-google-charts'
 import gateway from '../api/gateway';
+import analyticsGateway from '../api/analyticsGateway';
 import date from '../utils/date'
 //import DaysOfTheWeek from '../components/analytics/DaysOfTheWeek'
 export default {
@@ -243,7 +252,8 @@ export default {
       daysOfTheWeek: {},
       chartDataDaysOfTheWeekResult: null,
       date: new Date().toISOString().substr(0, 10),
-      chartDataUsers: []
+      chartDataUsers: [],
+      chartDataPaymentTypes: []
     }),
     methods: {
       isAdmin(type) {
@@ -394,17 +404,22 @@ export default {
           });                                
         }
         if(this.dataView === this.BY_PAYMENT_TYPE) {
-          alert('Em Desenvolvimento');
-          // gateway.getAnalyticsByPaymentsType(dates,
-          //   res => {
-          //     console.log(res);
-          //     //this.chartDataUsers = res.chartData;
-          //   }, () => {
-          //     this.dataReturnOK = false;
-          //     this.loading = false;
-          //     this.total = 0;
-          //     alert('Erro ao buscar tipos de pagamento');
-          // });                                
+          this.loading = true;
+          analyticsGateway.getPaymentsTypeByDateBetween(dates,
+            res => {
+              console.log(res);
+              this.dataReturnOK = true;
+              this.chartDataPaymentTypes = [['Pagamento', 'Valor']];
+              res.forEach(i => {
+                this.chartDataPaymentTypes.push([i.paymentType, i.total]);
+              })
+              this.loading = false;
+            }, () => {
+              this.dataReturnOK = false;
+              this.loading = false;
+              this.total = 0;
+              alert('Erro ao buscar tipos de pagamento');
+          });                                
         }
       },
       setDataView(dv) {
@@ -414,7 +429,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.setDataView(this.BY_DAYS_OF_THE_WEEK); 
+      this.setDataView(this.BY_PAYMENT_TYPE); 
     },
     computed: {
       title() {
