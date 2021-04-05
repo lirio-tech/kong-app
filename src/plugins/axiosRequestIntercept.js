@@ -8,6 +8,7 @@ const axiosRequestIntercept = () => {
             let token = storage.getToken();
             if(token) {
                 request.headers.Authorization = 'Bearer ' + token;
+                request.headers['x-api-key'] = 'f2rnfa';
             }
             if(storage.getCompany()) {
               request.headers.Company = storage.getCompany()._id;

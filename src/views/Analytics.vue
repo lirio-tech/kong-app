@@ -429,7 +429,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.setDataView(this.BY_PAYMENT_TYPE); 
+      this.setDataView(this.BY_DAYS_OF_THE_WEEK); 
     },
     computed: {
       title() {
