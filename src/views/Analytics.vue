@@ -434,12 +434,13 @@ export default {
     computed: {
       title() {
         switch(this.dataView) {
-          case this.BY_DAYS: return 'Ganhos (R$) por Dias';
-          case this.BY_MONTH: return 'Ganhos (R$) por Meses';
-          case this.BY_DAYS_OF_THE_WEEK: return 'Ganhos (R$) por Dia da Semana';
-          case this.BY_USERS: return 'Ganhos (R$) por Profissinais';
+          case this.BY_DAYS: return 'Por Dias';
+          case this.BY_MONTH: return 'Por Meses';
+          case this.BY_DAYS_OF_THE_WEEK: return 'Por Dia da Semana';
+          case this.BY_USERS: return 'Por Profissinais';
+          case this.BY_PAYMENT_TYPE: return 'Por Tipo de Pagamento';
         }
-        return 'Dados por Dias';
+        return 'Grafico';
       },
       datesDisplay() {
         console.log(this.dates);
