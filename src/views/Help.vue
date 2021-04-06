@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;">Kong Barber App</span>
-                        <br/><small class="grey--text">Versão: 0.7.8 </small>
+                        <br/><small class="grey--text">Versão: 0.7.9 </small>
                 </v-col>       
             </v-row>   
 
