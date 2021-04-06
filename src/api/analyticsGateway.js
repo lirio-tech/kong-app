@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const ANALYTICS_API = process.env.VUE_APP_BACKEND_API + '/api/analytics';
+const ANALYTICS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/analytics';
 
 export default{ 
     getPaymentsTypeByDateBetween(dates, callback, errorCb) {
