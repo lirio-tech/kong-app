@@ -334,7 +334,9 @@ export default{
     },
     savePlanCustom(planJsonString, callback, errorCb) {
         let url = `${COMPANIES_API}/plan-custom`;
-        Axios.post(url, { plan: planJsonString })
+        let plan = { plan: planJsonString };
+        console.log('plan => ', plan);
+        Axios.post(url, plan)
             .then(data => {
                 callback(data.data)
             })
