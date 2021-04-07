@@ -6,7 +6,7 @@
 
 ### Development
 
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1605dbef-ebf4-4e5e-9403-a67965d72785/deploy-status)](https://app.netlify.com/sites/kong-app-develop/deploys)
 
 ## Project setup
 ```
