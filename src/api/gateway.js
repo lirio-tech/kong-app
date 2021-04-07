@@ -2,7 +2,6 @@ import Axios from "axios";
 
 const ORDERS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/orders';
 const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies';
-//const PLANS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/plans';
 const ANALYTICS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/analytics';
 const PAYMENT_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/payments-historic';
 const AUTH_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/auth';
@@ -333,8 +332,10 @@ export default{
               errorCb(error)
           })   
     },
-    savePlanCustom(plan, callback, errorCb) {
+    savePlanCustom(planJsonString, callback, errorCb) {
         let url = `${COMPANIES_API}/plan-custom`;
+        let plan = { plan: planJsonString };
+        console.log('plan => ', plan);
         Axios.post(url, plan)
             .then(data => {
                 callback(data.data)
@@ -344,17 +345,6 @@ export default{
                 errorCb(error)
             })   
     },
-    // getAllPlans(callback, errorCb) {
-    //     let url = PLANS_API;
-    //     Axios.get(url)
-    //         .then(data => {
-    //             callback(data.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //             errorCb(error)
-    //         })                
-    // },
     getAllPlans() {
         return [
             {
