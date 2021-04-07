@@ -1,6 +1,12 @@
 # Kong Barber
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/81bc7c08-22cc-458d-8bb4-7a7cd4ffa070/deploy-status)](https://app.netlify.com/sites/wiskritorio/deploys)
+### Production
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/438a86e0-77af-47ff-b1de-25e5913ddaaa/deploy-status)](https://app.netlify.com/sites/kongbarber/deploys)
+
+### Development
+
+
 
 ## Project setup
 ```
