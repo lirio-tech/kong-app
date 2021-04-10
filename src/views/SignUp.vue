@@ -11,6 +11,25 @@
                     Cadastre-se
                 </p>  
 
+                <center>
+                   <v-avatar
+                        class="profile"
+                        color="black"
+                        size="90"
+                    >
+                      <v-img 
+                        v-if="$vuetify.theme.dark"
+                        avatar
+                        src="../assets/kong.png" 
+                      />
+                      <v-img 
+                        v-else
+                        avatar
+                        src="../assets/lady.png" 
+                      />                      
+                   </v-avatar>
+                </center>                
+                <br/>
                 <v-stepper
                     v-model="e1"
                     vertical
@@ -53,6 +72,16 @@
                                 v-model="signup.company.shortName"
                                 ref="companyShortName"
                             />
+                            <br/><br/>
+                            <v-slider
+                                style="margin-top: -25px"
+                                v-model="signup.company.signupAmountUsers"
+                                min="1"
+                                prepend-icon="mdi-account"
+                                label="Profissinais"
+                                max="5"
+                                thumb-label
+                            ></v-slider>                           
                             <br/>
                             <v-btn
                                 color="green darken-2"
@@ -189,7 +218,9 @@ export default {
         signup: {
             company: {
                 name: '',
-                shortName: ''
+                shortName: '',
+                signupAmountUsers: 1,
+                companyType: 'BARBER'
             },
             user: {}
         }
