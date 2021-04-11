@@ -78,7 +78,7 @@
                                 v-model="signup.company.signupAmountUsers"
                                 min="1"
                                 prepend-icon="mdi-account"
-                                label="Profissinais"
+                                label="Profissionais"
                                 max="5"
                                 thumb-label
                             ></v-slider>                           
