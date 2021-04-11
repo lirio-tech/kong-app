@@ -119,34 +119,23 @@ export default {
                     this.user.device = navigator.userAgent;
                     gateway.signIn(this.user, 
                       res => {
-                        console.log('token', res.auth);
                         if(!res.auth === true) {
                             alert('Usuario ou Senha Invalido');
                             this.loading = false;
                             return;
                         }
                         localStorage.setItem('TOKEN', res.token);
+                        localStorage.setItem('user', JSON.stringify(res.user));
+                        storage.setCompany(JSON.stringify(res.company));
                         this.loading = false;
-                        gateway.getUserByUsername(this.user.username,
-                          res2 => {
-                            localStorage.setItem('user', JSON.stringify(res2));
-                            gateway.getCompanyById(res2.company,
-                              resCompany => {
-                                storage.setCompany(JSON.stringify(resCompany));
-                                this.$store.commit('companyStore/setCompany', resCompany); 
-                                if(res2.type === 'sys_admin') {
-                                  this.$router.push('/system');  
-                                } 
-                                else { this.$router.push('/'); }
-                              }, err3 => {
-                                this.showMessage('error', err3.message);
-                              }
-                            );
-                          }, err2 => {
-                            this.showMessage('error', err2.message);
-                          });
+                        if(res.user.type === 'sys_admin') {
+                          this.$router.push('/system');  
+                        } 
+                        else { 
+                          this.$router.push('/'); 
+                        }                        
+
                       }, err => {
-                        //this.showMessage('error', err.message);
                         console.log('err', err.response); 
                         if(err.response.status === 401) {
                           this.loading = false;
