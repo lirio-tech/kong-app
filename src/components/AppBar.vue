@@ -79,9 +79,9 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
-                        <router-link v-if="isAdmin()" :to="'/company/'+company._id+'?panel=1'" style="color: inherit; text-decoration: none">
+                        <router-link :to="'/company/'+company._id+'?panel=1'" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                            Serviços <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            Serviços 
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          

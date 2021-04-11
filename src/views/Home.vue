@@ -65,13 +65,12 @@
               </v-expansion-panels>
 
             </v-row>
-
             <br/>
             <v-card
               class="mx-auto"
               max-width="800"
               outlined
-              v-if="isAdmin()"
+              v-if="isAdmin() && !loading"
             >
                     <v-list-item three-line>
                       <v-list-item-content>       
@@ -94,17 +93,17 @@
                             </v-col>                            
                               
                             <v-col cols="7">
-                              <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
+                              <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
                                   <span class="caption grey--text">Total</span><br/>
-                                  <div v-if="!loading" style="font-size: 1.7rem">
+                                  <div style="font-size: 1.5rem">
                                     <span class="green--text">{{ consolidado.total | currency }} </span>
                                   </div>
                               </v-list-item-title>
                             </v-col>
                             <v-col cols="4">
-                              <v-list-item-title class="headline mb-1 text-center" style="margin-top: -35px;">
+                              <v-list-item-title class="headline mb-1 text-center" style="margin-top: -40px;">
                                   <span class="caption grey--text">Qtde.</span><br/>
-                                  <div v-if="!loading" style="font-size: 1.7rem">
+                                  <div style="font-size: 1.5rem">
                                     <span class="green--text">{{ orders.length }} </span>
                                     <br/>
                                   </div>
@@ -112,41 +111,64 @@
                             </v-col>                            
                             <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <v-col cols="6" style="margin-top:5px" class="text-center">
-                                <v-icon color="green" style="margin-top: -5px">
+                                <v-icon color="green" style="margin-top: -4px">
                                   mdi-cash
                                 </v-icon> 
-                                <span class="grey--text" style="font-size: 1.2rem">
+                                <span class="grey--text" style="font-size: 1.1rem">
                                   {{ sumPaymentType.cash | currency }}
                                 </span>
                             </v-col>
-                            <v-col cols="6" style="margin-top:5px" class="text-center">
-                                <v-icon color="purple" style="margin-top: -5px">
+                            <v-col cols="6" style="margin-top:5px" class="text-center" small>
+                                <v-icon color="purple" style="margin-top: -2px">
                                   mdi-credit-card
                                 </v-icon>                                    
-                                <span class="grey--text" style="font-size: 1.2rem">
+                                <span class="grey--text" style="font-size: 1.1rem">
                                   {{ sumPaymentType.card | currency }}
                                 </span>                                
                             </v-col> 
                             <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <br/>
-                            <v-row v-for="cab in consolidado.cabelereiros" :key="cab[0]" style="margin-top:1px">
+                            <div class="caption grey--text">
+                                <span class="">Comissao de {{ company.percentCommission }}%</span>
+                            </div>                              
+                            <v-row 
+                              v-for="cab in consolidado.cabelereiros" 
+                              :key="cab[0]" 
+                              style="margin-top:-5px"
+                            >
                                 <v-col cols="2" class="text-center">
                                     <v-icon color="grey">mdi-account</v-icon>
                                 </v-col>
-                                <v-col cols="5" class="grey--text" style="font-size: 1.3rem">
+                                <v-col cols="5" class="grey--text" style="font-size: 1.1rem">
                                       {{ cab[0] }}
                                 </v-col> 
-                                <v-col cols="4" class="grey--text" :style="'font-size: '+(cab[1] > 10000 ? '1.1' : '1.2')+'rem; '">
-                                      {{ cab[1] | currency }}
+                                <v-col cols="4" class="grey--text" :style="'font-size: 1.1rem;'">
+                                      {{ cab[1] * company.percentCommission / 100 | currency }}
                                 </v-col>
                             </v-row>
+                            <v-row 
+                              v-if="consolidado.total * (100-company.percentCommission) / 100 > 0"
+                            >
+                                <v-col cols="2" class="text-center">
+                                    <v-icon color="grey">mdi-home</v-icon>
+                                </v-col>
+                                <v-col cols="5" class="grey--text" style="font-size: 1.1rem">
+                                      {{ company.shortName }}
+                                </v-col> 
+                                <v-col 
+                                  cols="4" 
+                                  class="grey--text" 
+                                  :style="'font-size: 1.1rem;'"
+                                >
+                                      {{ consolidado.total * (100-company.percentCommission) / 100 | currency }}
+                                </v-col>
+                            </v-row>                            
                             <hr v-if="orders.length" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-actions > 
                         <v-col cols="12" class="text-center" style="margin-top: -15px;">
                           <v-btn 
-                              v-if="!loading"
                               :to="{ path:'/ordem-servico'}" 
                               large
                               style="width: 70%"
@@ -162,11 +184,11 @@
                         </v-col>  
                     </v-card-actions>
             </v-card>   
-           <v-card
+            <v-card
               class="mx-auto"
               max-width="800"
               outlined
-              v-else
+              v-if="!isAdmin() && !loading"
             >
                     <v-list-item three-line>
                       <v-list-item-content>       
@@ -190,16 +212,16 @@
                               
                             <v-col cols="7">
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
-                                  <span class="caption grey--text">Total de {{ userLogged.name.split(" ")[0] }}</span><br/>
-                                  <div v-if="!loading" style="font-size: 1.7rem">
-                                    <span class="green--text">{{ consolidado.total | currency }} </span>
+                                  <span class="caption grey--text">Valor de {{ company.percentCommission }}% de {{ userLogged.name.split(" ")[0] }}</span><br/>
+                                  <div style="font-size: 1.5rem">
+                                    <span class="green--text">{{ consolidado.total * company.percentCommission / 100 | currency }} </span>
                                   </div>
                               </v-list-item-title>
                             </v-col>
                             <v-col cols="4">
                               <v-list-item-title class="headline mb-1 text-center" style="margin-top: -35px;">
                                   <span class="caption grey--text">Qtde.</span><br/>
-                                  <div v-if="!loading" style="font-size: 1.7rem">
+                                  <div style="font-size: 1.5rem">
                                     <span class="green--text">{{ orders.length }} </span>
                                     <br/>
                                   </div>
@@ -210,7 +232,7 @@
                                 <v-icon color="green" style="margin-top: -5px">
                                   mdi-cash
                                 </v-icon> 
-                                <span class="grey--text" style="font-size: 1.2rem">
+                                <span class="grey--text" style="font-size: 1.1rem">
                                   {{ sumPaymentType.cash | currency }}
                                 </span>
                             </v-col>
@@ -218,7 +240,7 @@
                                 <v-icon color="purple" style="margin-top: -5px">
                                   mdi-credit-card
                                 </v-icon>                                    
-                                <span class="grey--text" style="font-size: 1.2rem">
+                                <span class="grey--text" style="font-size: 1.1rem">
                                   {{ sumPaymentType.card | currency }}
                                 </span>                                
                             </v-col> 
@@ -228,7 +250,6 @@
                     <v-card-actions > 
                         <v-col cols="12" class="text-center" style="margin-top: -15px;">
                           <v-btn 
-                              v-if="!loading"
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
                               large
@@ -244,88 +265,15 @@
                         </v-col>  
                     </v-card-actions>
             </v-card>               
-            <!-- <v-card
-              class="mx-auto"
-              max-width="800"
-              outlined
-              v-else
-            >
-                    <v-list-item three-line>
-                      <v-list-item-content>       
-                            <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
-                              <div class="overline mb-4 grey--text">
-                                  Periodo: 
-                                  <span class="">{{ consolidado.periodoDescricao }}</span>
-                              </div>                           
-                            </v-col>
-                            <v-col cols="1" v-if="isAdmin()">
-                              <span style="margin-left: -15px;">
-                                  <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                                      <v-btn fab x-small outlined color="cyan">
-                                          <v-icon>
-                                              mdi-chart-bar
-                                          </v-icon>    
-                                      </v-btn>
-                                  </router-link>                          
-                              </span>     
-                            </v-col>                            
-                              
-                            <v-list-item-title class="headline mb-1" v-if="isAdmin()" style="margin-top: -35px;">
-                                <span class="caption grey--text">Total</span><br/>
-                                <div v-if="!loading" class="display-1">
-                                  <span class="primary--text">{{ consolidado.total | currency }} </span>
-                                  <br/>
-                                </div>
-                            </v-list-item-title>
-
-                            <v-list-item-subtitle>
-                                <div v-if="!loading">
-                                  <br/>
-                                  <span class="headline">
-                                    Quantidade: <span class="primary--text">{{ orders.length }}</span>
-                                  </span>
-                                </div>                                
-                            </v-list-item-subtitle>                                              
-                            <v-list-item-subtitle v-for="cab in consolidado.cabelereiros" :key="cab[0]">
-                                <br/>
-                                <div v-if="!loading">
-                                  <span class="headline" v-if="userLogged.name === cab[0] || isAdmin()">
-                                    {{ cab[0] }}: <span class="success--text">{{ cab[1] | currency }}</span>
-                                  </span>
-                                </div>                           
-                            </v-list-item-subtitle>    
-
-                          <div v-if="loading">
-                            <v-skeleton-loader
-                              type="article, actions"
-                            ></v-skeleton-loader>
-                          </div>                               
-
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-card-actions > 
-                        <v-col cols="12" class="justify-end">
-                          <v-btn 
-                              v-if="!loading"
-                              :to="{ path:'/ordem-servico'}" 
-                              class="ma-2"
-                              large
-                              style="width: 50%"
-                              outlined
-                              color="cyan"
-                          >Novo</v-btn>                                            
-                        </v-col>  
-                    </v-card-actions>
-            </v-card>    -->
-            
+     
             <br/>
 
             <v-alert
-                dense
+                outlined
                 type="error"
                 v-if="orders.length === 0 && !loading"
               >
-                Dados nao Encontrados para este periodo
+                Dados não Encontrados para este período
             </v-alert>
 
             <v-row v-if="orders.length !== 0 && !loading">
@@ -457,7 +405,8 @@ export default {
       },
       userLogged: {
         type: 'none'
-      }
+      },
+      company: {}
     }),
     methods: {
       onRefresh() {
@@ -589,7 +538,7 @@ export default {
         let cpny = storage.getCompany();
         let i = Number(localStorage.getItem('dialogPlan') ? localStorage.getItem('dialogPlan') : '0')+1;
         localStorage.setItem('dialogPlan', i)
-        if(i % 8 === 0
+        if(i % 10 === 0
             && cpny 
             && cpny.plan.name === 'Free' 
             && this.isAdmin()) {
@@ -600,7 +549,7 @@ export default {
         if(userLogged.ratedUs !== true) {
           let i = Number(localStorage.getItem('dialogRateUs') ? localStorage.getItem('dialogRateUs') : '0')+1;
           localStorage.setItem('dialogRateUs', i);
-          if(i % 11 === 0) {
+          if(i % 13 === 0) {
               this.dialogRateUs = true;
           }
         }
@@ -608,6 +557,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.company = storage.getCompany();
       this.periodo = this.formatarPeriodo(new Date(), new Date())
       this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()
