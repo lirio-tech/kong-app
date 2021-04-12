@@ -161,7 +161,7 @@
                                   class="grey--text" 
                                   :style="'font-size: 1.1rem;'"
                                 >
-                                      {{ consolidado.total * (100-company.percentCommission) / 100 | currency }}
+                                    {{ consolidado.total * (100-company.percentCommission) / 100 | currency }}
                                 </v-col>
                             </v-row>                            
                             <hr v-if="orders.length" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
