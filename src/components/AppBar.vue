@@ -79,7 +79,7 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
-                        <router-link :to="'/company/'+company._id+'?panel=1'" style="color: inherit; text-decoration: none">
+                        <router-link v-if="company" :to="'/company/'+company._id+'?panel=1'" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                             Serviços 
                             </v-col>

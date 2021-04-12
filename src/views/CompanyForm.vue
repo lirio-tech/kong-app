@@ -169,7 +169,7 @@
                                 <v-switch
                                     dense
                                     v-model="company.viewOnlyCommission"
-                                    label="Funcionarios visualizarao somente valor da comissao"
+                                    label="Funcionarios visualizarao somente valor da comissão"
                                 ></v-switch>    
                             </v-col>                              
                             <br/>
@@ -178,7 +178,7 @@
                                 v-model="company.percentCommission"
                                 min="1"
                                 prepend-icon="mdi-account"
-                                :label="company.percentCommission + ' % da Comissao'"
+                                :label="company.percentCommission + ' % da Comissão'"
                                 max="100"
                                 thumb-label
                             ></v-slider>  

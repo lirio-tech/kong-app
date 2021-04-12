@@ -129,7 +129,7 @@
                             <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <br/>
                             <div class="caption grey--text">
-                                <span class="">Comissao de {{ company.percentCommission }}%</span>
+                                <span class="">Comissão de {{ company.percentCommission }}%</span>
                             </div>                              
                             <v-row 
                               v-for="cab in consolidado.cabelereiros" 
@@ -143,11 +143,12 @@
                                       {{ cab[0] }}
                                 </v-col> 
                                 <v-col cols="4" class="grey--text" :style="'font-size: 1.1rem;'">
-                                      {{ cab[1] * company.percentCommission / 100 | currency }}
+                                      {{ cab[1] | currency }}
                                 </v-col>
                             </v-row>
                             <v-row 
                               v-if="consolidado.total * (100-company.percentCommission) / 100 > 0"
+                              style="margin-top:-5px"
                             >
                                 <v-col cols="2" class="text-center">
                                     <v-icon color="grey">mdi-home</v-icon>
@@ -212,7 +213,7 @@
                               
                             <v-col cols="7">
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
-                                  <span class="caption grey--text">Valor de {{ company.percentCommission }}% de {{ userLogged.name.split(" ")[0] }}</span><br/>
+                                  <span class="caption grey--text">Valor de {{ company.percentCommission }}%</span><br/>
                                   <div style="font-size: 1.5rem">
                                     <span class="green--text">{{ consolidado.total * company.percentCommission / 100 | currency }} </span>
                                   </div>
@@ -509,7 +510,7 @@ export default {
               this.orders.forEach(o => {
                 o.servicess = [];
                 let key = this.consolidado.cabelereiros.get(o.user.name) ? this.consolidado.cabelereiros.get(o.user.name) : 0;
-                this.consolidado.cabelereiros.set(o.user.name, key + o.total);
+                this.consolidado.cabelereiros.set(o.user.name, key + o.commission );
                 this.consolidado.total += o.total;
                 o.services.forEach(e => {
                   o.servicess.push(e.type);
