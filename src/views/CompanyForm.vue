@@ -40,6 +40,7 @@
                                         :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
                                         v-model="company.name"
                                         ref="companyName"
+                                        :disabled="!isAdmin()"
                                     />
                                 </v-col>
                                 <v-col cols="12">
@@ -54,12 +55,14 @@
                                         required
                                         v-model="company.shortName"
                                         ref="companyShortName"
+                                        :disabled="!isAdmin()"
                                     />
                                 </v-col>
                                 <br/>
                                 <v-btn
                                     color="green darken-2"
                                     type="submit"
+                                    :disabled="!isAdmin()"
                                 >
                                     Salvar
                                 </v-btn>                                
@@ -71,8 +74,7 @@
                     <v-expansion-panel-header>Serviços</v-expansion-panel-header>
                     <v-expansion-panel-content>
                                 <v-col cols=12>
-                                    <span>Serviços</span>
-                                    <v-divider></v-divider>
+                                    <span>Serviço</span>                                    
                                 </v-col>                   
                                 <v-row >
                                     <v-col cols="6">
@@ -146,16 +148,48 @@
                                 </v-btn>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
-                <v-expansion-panel v-if="false">
-                    <v-expansion-panel-header>Percentual da Comissão</v-expansion-panel-header>
+                <v-expansion-panel v-if="isAdmin()">
+                    <v-expansion-panel-header>
+                        Comissão
+                    </v-expansion-panel-header>
                     <v-expansion-panel-content>
+                        <v-form 
+                            id="formCompany" 
+                            ref="formCompany" 
+                            v-model="valid" 
+                            lazy-validation 
+                            v-on:submit.prevent="onSubmit"
+                        >                             
                             <br/>
+                            <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            <br/>
+                            <v-col 
+                                cols="12" md="4" 
+                            >
+                                <v-switch
+                                    dense
+                                    v-model="company.viewOnlyCommission"
+                                    label="Funcionarios visualizarao somente valor da comissão"
+                                ></v-switch>    
+                            </v-col>                              
+                            <br/>
+                            <v-slider
+                                style="margin-top: -25px"
+                                v-model="company.percentCommission"
+                                min="1"
+                                prepend-icon="mdi-account"
+                                :label="company.percentCommission + ' % da Comissão'"
+                                max="100"
+                                thumb-label
+                            ></v-slider>  
+                            <br/>                            
                             <v-btn
-                                color="green darken-2"
+                                color="green"
                                 type="submit"
                             >
                                 Salvar
                             </v-btn>
+                        </v-form>
                     </v-expansion-panel-content>
                 </v-expansion-panel>                
             </v-expansion-panels>
