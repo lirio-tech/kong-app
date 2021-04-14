@@ -49,6 +49,51 @@
                             </v-col>                     
                           </v-row>
                         </v-col>
+                        <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                              v-if="selectPeriodo === 'Personalizado'"
+                            >
+                              <v-dialog
+                                ref="dialog"
+                                v-model="modal"
+                                :return-value.sync="date" 
+                                persistent
+                                width="290px"
+                              >
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-text-field
+                                    v-model="datesDisplay"
+                                    label="Escolha o Periodo"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-text-field>
+                                </template>
+                                <v-date-picker
+                                  v-model="dates"
+                                  range
+                                >
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    text
+                                    color="primary"
+                                    @click="modal = false"
+                                  >
+                                    Cancel
+                                  </v-btn>
+                                  <v-btn
+                                    text
+                                    color="primary"
+                                    @click="$refs.dialog.save(date); buscarPorPeriodo(dates); modal = false; "
+                                  >
+                                    OK
+                                  </v-btn>
+                                </v-date-picker>
+                              </v-dialog>
+                        </v-col>                           
                         <v-col cols="12" >
                           <v-btn 
                               v-on:click="filterOrders"
@@ -363,6 +408,7 @@ import DialogRateUs from '../components/DialogRateUs'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
+import dateUtils from '../utils/date'
 export default {
     name: 'Home',
     components: { 
@@ -381,7 +427,7 @@ export default {
       loading: false,
       dialogPlan: false,
       dialogRateUs: false,
-      itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior'], //, 'Customizado'],
+      itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Personalizado'],
       periodo: {
         inicio: new Date(),
         fim: new Date()
@@ -407,7 +453,10 @@ export default {
       userLogged: {
         type: 'none'
       },
-      company: {}
+      company: {},
+      modal: false,
+      date: new Date().toISOString().substr(0, 10),
+      dates: [dateUtils.getNewDateAddDay(-6), dateUtils.dateToStringEnUS(new Date())],
     }),
     methods: {
       onRefresh() {
@@ -451,8 +500,8 @@ export default {
            this.filterOrders();
            this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
         }                
-        if(this.selectPeriodo === 'customizado') {
-          alert(this.selectPeriodo);
+        if(this.selectPeriodo === 'Personalizado') {
+          this.consolidado.periodoDescricao = this.datesDisplay;
         }                        
       },
       formatarPeriodo(dateStart, dateEnd) {
@@ -554,7 +603,20 @@ export default {
               this.dialogRateUs = true;
           }
         }
-      }        
+      },
+      buscarPorPeriodo(dates) {
+        if(dates && dates.length > 0) {
+          if(dates.length > 1) {
+            this.periodo.inicio = dates[0];
+            this.periodo.fim = dates[1];
+          } else {
+            this.periodo.inicio = dates[0];
+            this.periodo.fim = dates[0];
+          }
+          this.consolidado.periodoDescricao = this.datesDisplay;
+          this.filterOrders();
+        }
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
@@ -564,6 +626,18 @@ export default {
       this.filterOrders()
       this.verifyAccontPremium();
       this.verifyUserRateUS(this.userLogged);
+    },
+    computed: {
+      datesDisplay() {
+        console.log(this.dates);
+        if(this.dates[0] && this.dates[1]) {
+          let ini = this.dates[0].split('-');
+          let end = this.dates[1].split('-');
+          return `${ini[2]}/${ini[1]} à ${end[2]}/${end[1]}`; 
+        } 
+        let ini = this.dates[0].split('-');
+        return `${ini[2]}/${ini[1]}/${ini[0]}`;
+      },      
     }
   }
 </script>
