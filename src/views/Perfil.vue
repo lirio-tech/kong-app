@@ -136,10 +136,63 @@
                     </v-row>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel v-if="false">
+            <v-expansion-panel>
                 <v-expansion-panel-header>Alterar Senha</v-expansion-panel-header>
                 <v-expansion-panel-content>
-
+                        <br/><br/>
+                        <v-form 
+                            id="formChangePassword" 
+                            ref="formChangePassword" 
+                            v-model="valid" 
+                            lazy-validation 
+                            v-on:submit.prevent="onSubmitChangePassword"
+                        >        
+                            <v-row>
+                                <v-text-field
+                                    label="Senha Atual"
+                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show ? 'text' : 'password'"
+                                    @click:append.prevent="show = !show"
+                                    prepend-icon="mdi-lock-outline"
+                                    v-model="userChangePassword.passwordCurrent"
+                                    :rules="[val => val && val.length > 3 || 'Senha deve conter no minimo 4 Caracteres']"
+                                    required filled
+                                />
+                                <v-text-field
+                                    label="Nova Senha"
+                                    prepend-icon="mdi-lock-outline"
+                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show ? 'text' : 'password'"
+                                    @click:append.prevent="show = !show"
+                                    v-model="userChangePassword.passwordNew"
+                                    :rules="[val => val && val.length > 3 || 'Nova Senha deve conter 4 Caracteres']"
+                                    required filled
+                                />
+                                <v-text-field
+                                    label="Confirmacao de Nova Senha"
+                                    prepend-icon="mdi-lock-outline"
+                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show ? 'text' : 'password'"
+                                    @click:append.prevent="show = !show"
+                                    v-model="userChangePassword.passwordNewConfirmation"
+                                    :rules="[val => val && val === userChangePassword.passwordNew || 'Confirmacao da Senha nao confere']"
+                                    required filled
+                                />     
+                            </v-row>
+                            <v-row> 
+                                <v-col cols="12" class="text-center">
+                                    <v-btn 
+                                        :loading="isLoading"
+                                        class="ma-2"
+                                        large
+                                        style="width: 75%"
+                                        outlined
+                                        color="green"
+                                        type="submit"
+                                    >Salvar</v-btn>                                            
+                                </v-col>  
+                            </v-row>
+                        </v-form>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
@@ -225,7 +278,8 @@ export default {
         show: false,
         color: 'green',
         text: 'Hi'
-      },          
+      },       
+      userChangePassword: {}   
     }),
     methods: {
         showPlanDialog(show) {
@@ -252,7 +306,20 @@ export default {
             this.message.color = color;
             this.message.text = text;
             this.message.show = true;
-        }                        
+        },
+        onSubmitChangePassword() {
+            this.isLoading = true;
+            gateway.changePassword( 
+                this.userLogged._id,
+                this.userChangePassword,
+                res => {
+                    this.isLoading = false;
+                    alert(res.message);
+                }, () => {
+                    this.isLoading = false;
+                    alert('Erro ao Alterar Senha');
+                });
+        }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

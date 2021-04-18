@@ -211,6 +211,17 @@ export default{
                 errorCb(error)
             })                
     },
+    changePassword(_idUser, userChangePassword, callback, errorCb) {
+        let url = `${USERS_API}/${_idUser}/change-password`;
+        Axios.patch(url, userChangePassword)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })                
+    },    
     getCompanyById(_id, callback, errorCb) {
         let url = `${COMPANIES_API}/${_id}`;
         Axios.get(url)
