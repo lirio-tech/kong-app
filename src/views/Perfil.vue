@@ -323,11 +323,11 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.panel = this.isAdmin() ? [0] : [];      
       if(!this.userLogged.configuration) {
           this.userLogged.configuration = {table: 'mobile'};
       }
       this.company = storage.getCompany();
+      this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      
     }
   }
 </script>

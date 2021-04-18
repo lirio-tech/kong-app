@@ -134,7 +134,7 @@
                 outlined
                 v-if="!dataReturnOK && !loading"
               >
-                Dados nao Encontrados para este periodo
+                Dados não Encontrados para este período
           </v-alert>
           <v-dialog
             v-model="loading"
@@ -411,7 +411,12 @@ export default {
               this.dataReturnOK = true;
               this.chartDataPaymentTypes = [['Pagamento', 'Valor']];
               res.forEach(i => {
-                this.chartDataPaymentTypes.push([i.paymentType, i.total]);
+                this.chartDataPaymentTypes.push(
+                  [
+                    this.getPaymentPtBR(i.paymentType), 
+                    i.total
+                  ]
+                );
               })
               this.loading = false;
             }, () => {
@@ -426,6 +431,14 @@ export default {
         this.dataView = dv;
         this.getDaysOfTheWeek(this.dates);
       },
+      getPaymentPtBR(paymentType) {
+        if(paymentType === 'card') {
+          return 'Cartão'
+        }
+        if(paymentType === 'cash') {
+          return 'Dinheiro'
+        }        
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

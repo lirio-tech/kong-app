@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;">Kong Barber App</span>
-                        <br/><small class="grey--text">Versão: 0.8.4 </small>
+                        <br/><small class="grey--text">Versão: 0.8.5 </small>
                 </v-col>       
             </v-row>   
 
@@ -130,7 +130,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                "https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!"
+                "https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!"
             );
         },        
         goBack() {
