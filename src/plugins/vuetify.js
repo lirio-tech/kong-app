@@ -17,7 +17,7 @@ Vue.use(VueCurrencyFilter,
 
 export default new Vuetify({
     theme: { 
-      dark: process.env.VUE_APP_THEME !== 'LIGHT',
+      dark: true,//process.env.VUE_APP_THEME !== 'LIGHT',
       themes: {
         light: {
           primary: '#FF4081',

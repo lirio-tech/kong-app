@@ -29,6 +29,8 @@ import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
 import RateUsView from '../views/RateUsView' 
 import SimulatorPlan from '../views/SimulatorPlan'
+import PurchasesProductsList from '../views/PurchasesProductsList'
+import PurchasesProductsForm from '../views/PurchasesProductsForm'
 
 Vue.use(VueRouter)
 
@@ -178,6 +180,16 @@ const routes = [
     path: '/analytics',
     name: 'Analytics',
     component: Analytics
+  },
+  {
+    path: '/admin/purchases-products',
+    name: 'PurchasesProductsList',
+    component: PurchasesProductsList
+  },
+  {
+    path: '/admin/purchases-products/:_id',
+    name: 'PurchasesProductsForm',
+    component: PurchasesProductsForm
   }
 ]
 

@@ -72,10 +72,22 @@
                                 System <v-chip color="red" style="margin-left: 15px;" outlined small>SYSTEM</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
-                        </router-link>                                                
+                        </router-link>     
+                        <router-link v-if="userLogger && userLogger.type === 'sys_admin'" to="/admin/purchases-products" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                            Compras de Produtos <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                                                                     
                         <router-link v-if="isAdmin()" :to="'/company/'+company._id+'?panel=0'" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                             Estabelecimento <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                 
+                        <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                            Barbeiros <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
@@ -84,14 +96,7 @@
                             Serviços 
                             </v-col>
                             <v-divider class="my-1"></v-divider>
-                        </router-link>          
-                        <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                            Usuarios <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>          
-
+                        </router-link>   
                         <router-link v-if="!userLogger" to="/login" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Login
