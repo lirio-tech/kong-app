@@ -75,7 +75,7 @@
                         </router-link>     
                         <router-link v-if="userLogger && userLogger.type === 'sys_admin'" to="/admin/purchases-products" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                            Compras de Produtos <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            Compras de Produtos <v-chip color="primary" style="margin-left: 15px;" outlined small>SYS</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>                                                                     

@@ -93,11 +93,10 @@
                     </v-stepper-content>
 
                     <v-stepper-step
-                    step="2"
-                    
+                        step="2"                    
                     >
-                    Usuario 
-                     <small>Dono do Estabelecimento</small>
+                        Usuario 
+                        <small>Dono do Estabelecimento</small>
                     </v-stepper-step>
 
                     <v-stepper-content step="2">
