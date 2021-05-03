@@ -1,6 +1,6 @@
 export default {
     dateToStringPtBR(date) {
-        return date.toLocaleString('pt-BR');
+        return date.toLocaleString('pt-BR').substring(0,10);
     },
     dateToStringEnUS(date) {
         const [day, month, year] = date.toLocaleString('pt-BR').substring(0,10).split('/');
