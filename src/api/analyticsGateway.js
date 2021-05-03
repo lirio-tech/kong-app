@@ -13,5 +13,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })        
-    },      
+    },
+    getPaymentsByMonth(dates, callback, errorCb) {
+        let url = `${ANALYTICS_API}/months-sum/${dates[0]}/${dates[1]}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })      
+    }      
 }
