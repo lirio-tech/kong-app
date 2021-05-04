@@ -39,10 +39,10 @@
                         <v-list-item-title>Dia a Dia</v-list-item-title>
                       </v-list-item>
                       <v-list-item
-                        v-if="false"
+                        v-if="isAdmin(userLogged.type)"
                         @click="() => setDataView(BY_MONTH)"
                       >
-                        <v-list-item-title>Mes a Mes</v-list-item-title>
+                        <v-list-item-subtitle>Mes a Mes</v-list-item-subtitle>
                       </v-list-item>                      
                       <v-list-item
                         @click="() => setDataView(BY_DAYS_OF_THE_WEEK)"
@@ -204,6 +204,36 @@
                 :data="chartDataPaymentTypes"
                 :options="{height: 380,width: '100%',legend:{ position: 'top', maxLines: 3 }}"
               />  
+          </div>   
+          <div v-if="dataView === BY_MONTH && dataReturnOK">
+            <v-row>
+                <v-col cols="12">
+                  <GChart 
+                    :settings="{packages: ['bar']}"    
+                    :data="chartDataMonths"
+                    
+                    :createChart="(el, google) => new google.charts.Bar(el)"
+                    @ready="onChartReady"
+                  />
+                </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" style="font-size: 1.2rem">
+                  <div class="green--text">
+                    <span>Melhor mês do ano: </span> <br/>
+                    <span>{{ bestMonthOfTheYear.month }} </span><br/>
+                    <span>Média de {{ bestMonthOfTheYear.value | currency }} </span> <br/>
+                    <span class="caption">{{ bestMonthOfTheYear.amount }} mês contabilizado(s)</span> 
+                  </div>
+                  <br/>
+                  <div class="red--text">
+                    <span>Pior mês do ano: </span> <br/>
+                    <span>{{ worstMonthOfTheYear.month }} </span><br/>
+                    <span>Média de {{ worstMonthOfTheYear.value | currency }} </span> <br/>
+                    <span class="caption">{{ worstMonthOfTheYear.amount }} mês contabilizado(s)</span> 
+                  </div>                  
+              </v-col>
+            </v-row>
           </div>          
 
         </v-main>
@@ -247,13 +277,24 @@ export default {
         dayOfTheWeek: '',
         value: 0,
         amount: 0
+      },
+      bestMonthOfTheYear: {
+        month: '',
+        value: 0,
+        amount: 0
+      },
+      worstMonthOfTheYear: {
+        month: '',
+        value: 0,
+        amount: 0
       },      
       chartsLibDaysOfTheWeek: null, 
       daysOfTheWeek: {},
       chartDataDaysOfTheWeekResult: null,
       date: new Date().toISOString().substr(0, 10),
       chartDataUsers: [],
-      chartDataPaymentTypes: []
+      chartDataPaymentTypes: [],
+      chartDataMonths: []
     }),
     methods: {
       isAdmin(type) {
@@ -426,6 +467,21 @@ export default {
               alert('Erro ao buscar tipos de pagamento');
           });                                
         }
+        if(this.dataView === this.BY_MONTH) {
+          this.loading = true;
+          analyticsGateway.getPaymentsByMonth(dates,
+            res => {
+              console.log(res);
+              this.dataReturnOK = true;
+              this.chartDataMonths = this.convertMonthSumData(res);
+              this.loading = false;
+            }, () => {
+              this.dataReturnOK = false;
+              this.loading = false;
+              this.total = 0;
+              alert('Tivemos uma falha no processamento ao gerar o relatório :/. Por favor, tente mais tarde.');
+          });                                
+        }
       },
       setDataView(dv) {
         this.dataView = dv;
@@ -438,6 +494,45 @@ export default {
         if(paymentType === 'cash') {
           return 'Dinheiro'
         }        
+      },
+      convertMonthSumData(monthSumAnalytics) {
+        
+        this.bestMonthOfTheYear.month = this.monthOrderToString(monthSumAnalytics.bestMonth);
+        this.bestMonthOfTheYear.value = monthSumAnalytics.bestMonthAverage;
+
+        this.worstMonthOfTheYear.month = this.monthOrderToString(monthSumAnalytics.worstMonth);
+        this.worstMonthOfTheYear.value = monthSumAnalytics.worstMonthAverage;
+        
+        let monthsData = monthSumAnalytics.monthsData;
+        let months = ["Meses do Ano", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        let data = ["R$", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        monthsData.forEach( month => {
+          data[month.monthOrder] = month.total;
+          if (month.monthOrder == monthSumAnalytics.bestMonth) {
+            this.bestMonthOfTheYear.amount = month.amount;
+          }
+          if (month.monthOrder == monthSumAnalytics.worstMonth) {
+            this.worstMonthOfTheYear.amount = month.amount;
+          }
+        });
+
+        return [months, data];
+      },
+      monthOrderToString(order) {
+        switch(order) {
+          case '1': return 'Janeiro';
+          case '2': return 'Fevereiro';
+          case '3': return 'Março';
+          case '4': return 'Abril';
+          case '5': return 'Março';
+          case '6': return 'Junho';
+          case '7': return 'Julho';
+          case '8': return 'Agosto';
+          case '9': return 'Setembro';
+          case '10': return 'Outubro';
+          case '11': return 'Novembro';
+          case '12': return 'Dezembro';
+        }
       }
     },
     beforeMount() {
