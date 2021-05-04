@@ -150,7 +150,7 @@
                 </v-expansion-panel>
                 <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>
-                        Comissão
+                        Comissão por Funcionário
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
                         <v-form 
@@ -159,29 +159,21 @@
                             v-model="valid" 
                             lazy-validation 
                             v-on:submit.prevent="onSubmit"
-                        >                             
+                        >
                             <br/>
-                            <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                            <br/>
-                            <v-col 
-                                cols="12" md="4" 
-                            >
-                                <v-switch
-                                    dense
-                                    v-model="company.viewOnlyCommission"
-                                    label="Funcionarios visualizarao somente valor da comissão"
-                                ></v-switch>    
-                            </v-col>                              
-                            <br/>
-                            <v-slider
-                                style="margin-top: -25px"
-                                v-model="company.percentCommission"
-                                min="1"
-                                prepend-icon="mdi-account"
-                                :label="company.percentCommission + ' % da Comissão'"
-                                max="100"
-                                thumb-label
-                            ></v-slider>  
+                            <v-chip color="primary" style="margin-left: 15px;" outlined small>Somente Usuarios Admin terao acesso a esta parte</v-chip>
+                            <br/><br/>
+                            <v-col cols="12" v-for="user in users" :key="user._id">
+                                <v-slider
+                                    style="margin-top: -25px"
+                                    v-model="user.percentCommission"
+                                    min="1"
+                                    prepend-icon="mdi-account"
+                                    :label="`${user.name} (${user.percentCommission}%)`"
+                                    max="100"
+                                    thumb-label
+                                ></v-slider>  
+                            </v-col>
                             <br/>                            
                             <v-btn
                                 color="green"
@@ -276,7 +268,14 @@ export default {
                     alert('Erro ao Salvar');
                 });
           }
-      }
+      },
+      getUsers() {
+        gateway.getUsers('all', res => {
+          this.users = res;
+        }, err => {
+          console.log(err);
+        })
+      },      
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
@@ -290,6 +289,8 @@ export default {
       if(this.$route.query.panel) {
          this.panel.push(Number(this.$route.query.panel));
       }
+
+      this.getUsers();
     }
   }
 </script>
