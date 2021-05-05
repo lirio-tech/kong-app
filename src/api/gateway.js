@@ -178,6 +178,17 @@ export default{
                 errorCb(error)
             })                
     },    
+    updateCommission(users, callback, errorCb) {
+        let url = `${USERS_API}/update/commission`;
+        Axios.patch(url, users)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })                
+    },       
     becomeUserAdmin(_idUser, callback, errorCb) {
       let url = `${USERS_API}/${_idUser}/become-admin`;
       Axios.patch(url)

@@ -158,7 +158,7 @@
                             ref="formCompany" 
                             v-model="valid" 
                             lazy-validation 
-                            v-on:submit.prevent="onSubmit"
+                            v-on:submit.prevent="updateCommission"
                         >
                             <br/>
                             <v-chip color="primary" style="margin-left: 15px;" outlined small>Somente Usuarios Admin terao acesso a esta parte</v-chip>
@@ -213,6 +213,7 @@ export default {
             price: 0.00,
             priceBR: "0,00",                       
         },
+        users: []
     }),
     methods: {
       showMessage(color, text) {
@@ -269,6 +270,14 @@ export default {
                 });
           }
       },
+      updateCommission() {
+          gateway.updateCommission(this.users,
+                () => {
+                    alert('Atualizado com Sucesso!!!');
+                }, () => {
+                    alert('Erro ao Salvar');
+                });
+      },      
       getUsers() {
         gateway.getUsers('all', res => {
           this.users = res;
