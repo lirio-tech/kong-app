@@ -221,19 +221,23 @@
                                                             </v-list-item-subtitle>
 
                                                             <v-list-item-subtitle 
-                                                                v-text="item.plan.dateStarted"
-                                                            ></v-list-item-subtitle>
+                                                            >
+                                                                Inicio: {{ getDateFormated(item.plan.dateStarted) }}
+                                                            </v-list-item-subtitle>
+                                                            <v-list-item-subtitle 
+                                                            >
+                                                                Vencimento: {{ getDateFormated(item.plan.dateEnd) }}
+                                                            </v-list-item-subtitle>
 
                                                         </v-list-item-content>
 
-                                                        <v-list-item-action>
-                                                            <v-list-item-action-text v-text="item.createdAt"></v-list-item-action-text>
+                                                        <!-- <v-list-item-action>
                                                             <v-icon
                                                                 color="grey lighten-1"
                                                             >
-                                                                mdi-star-outline
+                                                                mdi-check 
                                                             </v-icon>
-                                                        </v-list-item-action>
+                                                        </v-list-item-action> -->
                                                         </template>
                                                     </v-list-item>
 
@@ -359,7 +363,13 @@ export default {
             }, () => {
                 alert('Erro ao Buscar pagamentos');
             });
-      }
+      },
+      getDateFormated(date) {
+        if (!date) return null;
+
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
+      },         
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
