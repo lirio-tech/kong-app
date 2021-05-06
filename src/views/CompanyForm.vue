@@ -161,7 +161,9 @@
                             v-on:submit.prevent="updateCommission"
                         >
                             <br/>
-                            <v-chip color="primary" style="margin-left: 15px;" outlined small>Somente Usuarios Admin terao acesso a esta parte</v-chip>
+                            <v-chip color="primary" style="margin-left: 15px;" outlined small>
+                                Somente Usuarios Admin acessam a Comissão 
+                            </v-chip>
                             <br/><br/>
                             <v-col cols="12" v-for="user in users" :key="user._id">
                                 <v-slider
@@ -183,7 +185,70 @@
                             </v-btn>
                         </v-form>
                     </v-expansion-panel-content>
-                </v-expansion-panel>                
+                </v-expansion-panel>       
+                <v-expansion-panel v-if="isAdmin()">
+                    <v-expansion-panel-header>Historico de Pagamento</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12" >  
+                                <v-col align="center" >
+                                    <v-chip color="primary" outlined small >
+                                        Somente Usuarios Admin acessam aos pagamentos
+                                    </v-chip>        
+                                </v-col>
+                                <v-col cols="12">
+                                        <v-card
+                                            class="mx-auto"
+                                        >
+                                            <v-list two-line>
+                                                <v-list-item-group
+                                                    v-model="selected"
+                                                    active-class="pink--text"
+                                                    multiple
+                                                >
+                                                    <template v-for="(item, index) in items">
+                                                    <v-list-item :key="item.plan.name">
+                                                        <template >
+                                                        <v-list-item-content>
+                                                            
+                                                            <v-list-item-title 
+                                                                v-text="item.plan.name"
+                                                            ></v-list-item-title>
+
+                                                            <v-list-item-subtitle
+                                                                class="text--primary"
+                                                            >
+                                                                {{ item.plan.payment.price | currency }}
+                                                            </v-list-item-subtitle>
+
+                                                            <v-list-item-subtitle 
+                                                                v-text="item.plan.dateStarted"
+                                                            ></v-list-item-subtitle>
+
+                                                        </v-list-item-content>
+
+                                                        <v-list-item-action>
+                                                            <v-list-item-action-text v-text="item.createdAt"></v-list-item-action-text>
+                                                            <v-icon
+                                                                color="grey lighten-1"
+                                                            >
+                                                                mdi-star-outline
+                                                            </v-icon>
+                                                        </v-list-item-action>
+                                                        </template>
+                                                    </v-list-item>
+
+                                                    <v-divider
+                                                        v-if="index < items.length - 1"
+                                                        :key="index"
+                                                    ></v-divider>
+                                                    </template>
+                                                </v-list-item-group>
+                                            </v-list>
+                                        </v-card>
+                                </v-col>
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                         
             </v-expansion-panels>
           </v-row>
 
@@ -213,7 +278,9 @@ export default {
             price: 0.00,
             priceBR: "0,00",                       
         },
-        users: []
+        users: [],
+      selected: [2],
+      items: [],        
     }),
     methods: {
       showMessage(color, text) {
@@ -285,6 +352,14 @@ export default {
           console.log(err);
         })
       },      
+      getPaymentsHist() {
+          gateway.getPaymentsHist(
+            res => {
+                this.items = res;
+            }, () => {
+                alert('Erro ao Buscar pagamentos');
+            });
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
@@ -300,6 +375,7 @@ export default {
       }
 
       this.getUsers();
+      this.getPaymentsHist();
     }
   }
 </script>
