@@ -174,7 +174,7 @@
                             <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <br/>
                             <div class="caption grey--text">
-                                <span class="">Comissão de {{ company.percentCommission }}%</span>
+                                <span class="">Comissão</span>
                             </div>                              
                             <v-row 
                               v-for="cab in consolidado.cabelereiros" 
@@ -192,7 +192,6 @@
                                 </v-col>
                             </v-row>
                             <v-row 
-                              v-if="consolidado.total * (100-company.percentCommission) / 100 > 0"
                               style="margin-top:-5px"
                             >
                                 <v-col cols="2" class="text-center">
@@ -206,7 +205,7 @@
                                   class="grey--text" 
                                   :style="'font-size: 1.1rem;'"
                                 >
-                                    {{ consolidado.total * (100-company.percentCommission) / 100 | currency }}
+                                    {{ consolidado.totalCompany | currency }}
                                 </v-col>
                             </v-row>                            
                             <hr v-if="orders.length" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
@@ -448,7 +447,8 @@ export default {
       consolidado: {
         periodoDescricao: "",
         total: 0,
-        cabelereiros: new Map()
+        cabelereiros: new Map(),
+        totalCompany: 0,
       },
       userLogged: {
         type: 'none'
@@ -561,6 +561,7 @@ export default {
                 let key = this.consolidado.cabelereiros.get(o.user.name) ? this.consolidado.cabelereiros.get(o.user.name) : 0;
                 this.consolidado.cabelereiros.set(o.user.name, key + o.commission );
                 this.consolidado.total += o.total;
+                this.consolidado.totalCompany += o.totalCompany;
                 o.services.forEach(e => {
                   o.servicess.push(e.type);
                 });
