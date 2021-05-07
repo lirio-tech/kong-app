@@ -72,8 +72,8 @@
                                 v-model="signup.company.shortName"
                                 ref="companyShortName"
                             />
-                            <br/><br/>
-                            <v-slider
+                            <!-- <br/><br/> -->
+                            <!-- <v-slider
                                 style="margin-top: -25px"
                                 v-model="signup.company.signupAmountUsers"
                                 min="1"
@@ -81,7 +81,7 @@
                                 label="Profissionais"
                                 max="5"
                                 thumb-label
-                            ></v-slider>                           
+                            ></v-slider>                            -->
                             <br/>
                             <v-btn
                                 color="green darken-2"
