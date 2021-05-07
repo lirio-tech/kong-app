@@ -87,7 +87,9 @@
                         </router-link>     
                         <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                            Barbeiros <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            <span v-if="$vuetify.theme.dark">Barbeiros </span>
+                            <span v-else>Funcionários</span>
+                            <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
@@ -134,6 +136,7 @@
                             <v-col cols="10" class="font-weight-medium">
                                 Ajuda
                             </v-col>
+                            <v-divider class="my-1"></v-divider>
                         </router-link>  
                         <router-link 
                             to="/public/fale-conosco" 
@@ -148,7 +151,6 @@
                             @click="logout"
                             v-if="userLogger"
                         >                           
-                            <v-divider class="my-1"></v-divider>
                             <v-col cols="12" class="font-weight-medium">
                                 Sair
                             </v-col>

@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
         <v-row>
             <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                 <v-btn icon small style="display: inline;"
@@ -30,12 +29,12 @@
                             <br/>
                             <span v-if="company.endereco"><span class="grey--text">Endereco:</span> {{ company.endereco }} </span>     
                         </v-col>
-                        <v-col cols="1" v-if="isAdmin()">
+                        <v-col cols="1">
                             <span style="margin-left: -15px;">
                                 <router-link :to="{path: '/company/'+company._id}" style="color: inherit; text-decoration: none">
                                     <v-btn fab small outlined color="cyan">
                                         <v-icon>
-                                            mdi-pencil
+                                            mdi-home
                                         </v-icon>    
                                     </v-btn>
                                 </router-link>  
@@ -251,16 +250,12 @@
 
 <script>
 import storage from '../storage'
-import DialogPlan from '../components/DialogPlan'
 import gateway from '../api/gateway'
-import CardPlanData from '../components/CardPlanData'  
 import UserTypes from '../utils/UserTypes'
 import SnackBar from '../components/SnackBar'
 export default {
     name: 'Perfil',
     components: {
-        DialogPlan,
-        CardPlanData,
         SnackBar
     },
     data: () => ({
