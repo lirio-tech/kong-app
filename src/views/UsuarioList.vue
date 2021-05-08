@@ -12,13 +12,9 @@
               </v-col>
               <v-col cols="7" align="center">   
                   <span style="font-size: 1.8rem !important;">  
-                    <span v-if="users && users.length > 1">
-                      {{ users.filter(it => it.disabled !== true).length }} usuários <br/>
-                      <!-- <small class="grey--text">{{ users.filter(it => it.disabled === false).length }} ativos</small> -->
-                    </span>
-                    <span v-else>Usuários </span>
+                    Funcionários
                   </span>
-              </v-col>
+              </v-col> 
               <v-col cols="2" align="center">   
                   <v-btn 
                       :to="{ path:'/admin/users/_newUser'}" 
