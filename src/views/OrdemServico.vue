@@ -77,7 +77,7 @@
                                     <td>
                                       <v-icon 
                                         @click="deleteItem(item)" class="error--text"
-                                        v-if="isAdmin() || !order._id">
+                                        v-if="(isAdmin() || userLogged.allowEditOrder === true) || !order._id">
                                         mdi-delete
                                       </v-icon>
                                     </td>

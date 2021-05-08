@@ -145,7 +145,7 @@
                                 <v-switch
                                     dense
                                     v-model="user.allowEditOrder"
-                                    label="Permitir Alterar/Excluir Servicos"
+                                    label="Permitir Alterar Serviços"
                                 ></v-switch>    
                         </v-col>                                                     
                 </v-row>    
@@ -220,14 +220,15 @@ export default {
             type: 'hairdresser'
         },
         enabled: true,
-        message: { },      
+        message: {},      
         passwordRules: [
             v => !!v || 'Senha do Usuario Obrigatório',
             v => (v && v.length > 3) || 'Senha deve ser maior que 3 caracteres',
         ],                          
         passwordConfirmRules: [
             v => (!!v) || 'Confirmacao de Senha deve ser equivalente',
-        ],                                  
+        ],         
+        userLogged: {}                         
     }),
     methods: {
       becomeAdmin() {
