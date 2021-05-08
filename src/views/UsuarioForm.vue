@@ -137,15 +137,17 @@
                                 required filled disabled
                                 />
                         </v-col>   
-                        <v-col cols="12" md="4" v-if="userLogged.type === 'sys_admin'">                      
-                            <v-text-field v-model="user.device"
-                                        label="Device"
-                                        ref="device"
-                                        required 
-                                        prepend-icon="mdi-smarthphone"
-                                        filled>
-                            </v-text-field>
-                        </v-col>                              
+                        <v-col 
+                            cols="12" md="4" 
+                            style="margin-left: 10%" 
+                            v-if="user._id && user.type === 'hairdresser'"
+                        >
+                                <v-switch
+                                    dense
+                                    v-model="user.allowEditOrder"
+                                    label="Permitir Alterar/Excluir Servicos"
+                                ></v-switch>    
+                        </v-col>                                                     
                 </v-row>    
                 <v-row 
                     align="center"

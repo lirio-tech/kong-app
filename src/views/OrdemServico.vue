@@ -23,8 +23,8 @@
                               {{ order.total | currency }}
                         </h1>
                       </v-col>
-                      <v-col cols="12" sm="12" v-if="isAdmin() || !order._id">
-                          <div class="d-flex">
+                      <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true">
+                          <div class="d-flex" style="margin-top: -15px;">
                             <v-col cols="6">
                               <v-combobox 
                                   v-model="service.type"
@@ -57,7 +57,7 @@
                       </v-col>
                       <v-col cols="12"  class="mt-0 pt-0">
 
-                            <v-simple-table dense >
+                            <v-simple-table dense style="margin-top: -30px;">
                               <template v-slot:default>
                                 <thead >
                                   <tr>
@@ -104,7 +104,7 @@
                                   <v-radio-group
                                     v-model="order.paymentType"
                                     row
-                                    style="margin-left: 20%;"
+                                    style="margin-top: -10px;margin-left: 20%;"
                                   >
                                     <v-radio
                                       label="Dinheiro"
@@ -125,7 +125,8 @@
                                                     ref="customerName"
                                                     :rules="customerNameRules"
                                                     prepend-icon="mdi-account"
-                                                    filled>                                
+                                                    filled
+                                                    style="margin-top: -20px;">                                
                                     </v-text-field>  
                                 </v-col>
                               </v-row>               
@@ -136,7 +137,8 @@
                                                     ref="customerPhone"
                                                     v-mask="'(##) #####-####'"
                                                     prepend-icon="mdi-whatsapp"
-                                                    filled>                                
+                                                    filled
+                                                    style="margin-top: -20px;">                                
                                     </v-text-field>  
                                 </v-col>
                               </v-row>                                                              
@@ -152,7 +154,8 @@
                                                     ref="date"
                                                     v-mask="'##/##/####'"
                                                     prepend-icon="mdi-calendar"
-                                                    filled>                                
+                                                    filled
+                                                    style="margin-top: -20px;">                                
                                     </v-text-field>  
 
                                     <!-- <v-menu
@@ -196,7 +199,8 @@
                                         required filled 
                                         item-text='name'
                                         item-value='_id'          
-                                        v-if="isAdmin() || order._id"                              
+                                        v-if="isAdmin() || order._id"     
+                                        style="margin-top: -20px;"                         
                                     ></v-combobox>                                              
                                 </v-col>
                               </v-row>
@@ -206,7 +210,8 @@
                                                       label="Lancado"
                                                       prepend-icon="mdi-calendar"
                                                       disabled
-                                                      filled required>                                
+                                                      filled required
+                                                      style="margin-top: -20px;">                                
                                       </v-text-field>  
                                   </v-col>
                               </v-row>                              
@@ -216,13 +221,15 @@
                                                       label="Alterado"
                                                       prepend-icon="mdi-calendar"
                                                       disabled
-                                                      filled required>                                
+                                                      filled required
+                                                      style="margin-top: -20px;">                                
                                       </v-text-field>  
                                   </v-col>
                               </v-row>                                                            
                               <v-row align="center"
                                      justify="space-around"
-                                     v-if="isAdmin() || !order._id">
+                                     v-if="(isAdmin() || userLogged.allowEditOrder === true) || !order._id"
+                                     >
                                   <v-btn 
                                       type="submit" 
                                       depressed  
