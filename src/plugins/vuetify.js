@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
+import colors from 'vuetify/lib/util/colors'
 
 import VueCurrencyFilter from 'vue-currency-filter'
 
@@ -24,6 +25,7 @@ export default new Vuetify({
           // secondary: '#b0bec5',
           // accent: '#8c9eff',
           // error: '#b71c1c',
+          background: colors.deepPurple.lighten5, 
         },
         dark: {
           primary: '#00B8D4'

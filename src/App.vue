@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">         
+  <v-app id="inspire" :style="{background: $vuetify.theme.themes[theme].background}">         
     <router-view />  
   </v-app>
 </template>
@@ -10,5 +10,10 @@ export default {
   data: () => ({
     //
   }),
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  }  
 };
 </script>
