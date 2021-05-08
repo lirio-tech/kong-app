@@ -555,6 +555,7 @@ export default {
               this.orders = res;
 
               this.consolidado.total = 0;
+              this.consolidado.totalCompany = 0;
               this.consolidado.cabelereiros = new Map();
               this.orders.forEach(o => {
                 o.servicess = [];
