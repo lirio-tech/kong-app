@@ -17,11 +17,14 @@
                   </v-row>    
                   <v-row>
                       <v-col cols="12" sm="12">
-                        <h1 :class="{  'warning--text': (order.total <= 0), 'success--text': (order.total > 0 ) }" 
-                            align="center" 
-                            justify="space-around"> 
+                        <center 
+                          class="display-3" 
+                          :class="{  'warning--text': (order.total <= 0), 'success--text': (order.total > 0 ) }" 
+                          align="center" 
+                          justify="space-around"
+                        > 
                               {{ order.total | currency }}
-                        </h1>
+                        </center>
                       </v-col>
                       <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true">
                           <div class="d-flex" style="margin-top: -15px;">
@@ -55,9 +58,9 @@
                             </v-col>
                           </div>
                       </v-col>
-                      <v-col cols="12"  class="mt-0 pt-0">
+                      <v-col cols="12" sm="12" class="mt-0 pt-0">
 
-                            <v-simple-table dense style="margin-top: -30px;">
+                            <v-simple-table dense style="margin-top: -18px;">
                               <template v-slot:default>
                                 <thead >
                                   <tr>
@@ -104,7 +107,7 @@
                                   <v-radio-group
                                     v-model="order.paymentType"
                                     row
-                                    style="margin-top: -10px;margin-left: 20%;"
+                                    style="margin-top: -10px; margin-left: 20%;"
                                   >
                                     <v-radio
                                       label="Dinheiro"
