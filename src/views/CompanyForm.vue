@@ -205,6 +205,7 @@
                                                     active-class="pink--text"
                                                     multiple
                                                 >
+                                                    <span v-if="!items || items.length < 1">Nao ha pagamentos registrados</span>
                                                     <template v-for="(item, index) in items">
                                                     <v-list-item :key="item.plan.name">
                                                         <template >
