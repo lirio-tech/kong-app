@@ -16,7 +16,7 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on" style="margin-bottom: 20px;">
-                    <v-icon v-if="userLogger" style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
+                    <v-icon v-if="userLogged" style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
                     <v-icon v-else style="font-size: 1.6rem">mdi-menu</v-icon>
                 </v-btn>
                 </template>
@@ -25,7 +25,7 @@
                         <router-link 
                             :to="'/perfil'" 
                             style="color: inherit; text-decoration: none"
-                            v-if="userLogger"
+                            v-if="userLogged"
                         >
                             <v-row class="mr-0 ml-0">
                                 <v-col cols="3">
@@ -41,7 +41,7 @@
                                 <v-col cols="9"> 
                                     <div style="margin-top:10px;">
                                         <span class="font-weight-black" >
-                                            {{ userLogger.name.split(' ')[0] }}
+                                            {{ userLogged.name.split(' ')[0] }}
                                         </span>
                                     </div>
                                     <div>
@@ -67,13 +67,13 @@
                             <v-divider />                                                 
                         </div> -->
 
-                        <router-link v-if="userLogger && userLogger.type === 'sys_admin'" to="/system" style="color: inherit; text-decoration: none">
+                        <router-link v-if="userLogged && userLogged.type === 'sys_admin'" to="/system" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 System <v-chip color="red" style="margin-left: 15px;" outlined small>SYSTEM</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>     
-                        <router-link v-if="userLogger && userLogger.type === 'sys_admin'" to="/admin/purchases-products" style="color: inherit; text-decoration: none">
+                        <router-link v-if="userLogged && userLogged.type === 'sys_admin'" to="/admin/purchases-products" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                             Compras de Produtos <v-chip color="primary" style="margin-left: 15px;" outlined small>SYS</v-chip>
                             </v-col>
@@ -92,13 +92,13 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
-                        <router-link v-if="!userLogger" to="/login" style="color: inherit; text-decoration: none">
+                        <router-link v-if="!userLogged" to="/login" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Login
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>     
-                        <router-link v-if="!userLogger" to="/sign-up" style="color: inherit; text-decoration: none">
+                        <router-link v-if="!userLogged" to="/sign-up" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Cadastre-se
                             </v-col>
@@ -148,7 +148,7 @@
                         <div 
                             style="cursor: pointer;" 
                             @click="logout"
-                            v-if="userLogger"
+                            v-if="userLogged"
                         >                           
                             <v-col cols="12" class="font-weight-medium">
                                 Sair
@@ -174,7 +174,7 @@ export default {
             DialogPlan
         },
         data:() => ({
-            userLogger: null,
+            userLogged: null,
             company: null,
             dialog: false,
             dialogPlan: false,
@@ -197,15 +197,15 @@ export default {
                 this.dialogPlan = show
             },
             isAdmin() {
-                return this.userLogger && UserTypes.isAdmin(this.userLogger.type);
+                return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
             }
         },  
         beforeMount() {
-            this.userLogger = storage.getUserLogged();
+            this.userLogged = storage.getUserLogged();
             this.company = storage.getCompany();
             console.log(this.company);
-            if(!this.company && this.userLogger) {
-                gateway.getCompanyById(this.userLogger.company,
+            if(!this.company && this.userLogged) {
+                gateway.getCompanyById(this.userLogged.company,
                 res => {
                     this.company = res;
                 },
