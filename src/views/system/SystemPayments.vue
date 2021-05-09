@@ -81,10 +81,10 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      gateway.getPaymentsHist(res => {
+      gateway.getAllPaymentsHist(res => {
         this.paymentsHistoric = res;
       }, () => {
-        alert('Erro ao buscar pagamentos');
+        alert('Erro ao buscar pagamentos'); 
       });
     },
     computed: {

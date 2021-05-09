@@ -310,7 +310,7 @@ export default{
               errorCb(error)
           })      
     },      
-    getPaymentsHist(callback, errorCb) {
+    getPaymentsHistByCompany(callback, errorCb) {
       let url = `${PAYMENT_API}`;
       Axios.get(url)
           .then(data => {
@@ -321,6 +321,17 @@ export default{
               errorCb(error)
           })         
     },
+    getAllPaymentsHist(callback, errorCb) {
+        let url = `${PAYMENT_API}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            }) 
+            .catch(error => {
+                console.log(error); 
+                errorCb(error)
+            })         
+    },    
     getDaysOfTheWeek(dates, callback, errorCb) {
       let url = `${ANALYTICS_API}/days-of-the-week`;
       Axios.post(url, dates)
