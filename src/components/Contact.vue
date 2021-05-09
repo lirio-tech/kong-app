@@ -12,7 +12,7 @@
             flex
         >
             <a style="color: inherit; text-decoration: none"
-            href="https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!">
+            href="https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o App!">
                 <v-img 
                     max-height="90"
                     max-width="90"

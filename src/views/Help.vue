@@ -10,8 +10,8 @@
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  
-                        <span style="font-size: 2.0rem !important;">Kong Barber App</span>
-                        <br/><small class="grey--text">Versão: 0.8.7 </small>
+                        <span style="font-size: 2.0rem !important;">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
+                        <br/><small class="grey--text">Versão: 0.8.8 </small>
                 </v-col>       
             </v-row>   
 
@@ -37,7 +37,7 @@
                             align="center"
                         >
                             <vue-qrcode 
-                                value="https://app.kongbarber.com.br" 
+                                :value="urlApp" 
                                 style="margin-left:50px;"
                             />
                         </v-col>
@@ -130,7 +130,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                "https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!"
+                `https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o ${this.appType === 'app' ? 'Kong Barber' : 'Lady' } App!`
             );
         },        
         goBack() {
@@ -150,15 +150,24 @@ export default {
         },
         share() {
             const shareData = {
-            title: 'Kong Barber App',
-            text: '💈Gerencie seus cortes ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱',
-            url: 'https://app.kongbarber.com/#/public/identify-device',
+                title: this.appType === 'app' ? 'Kong Barber App' : 'Lady App',
+                text: `💈Gerencie ${this.appType === 'app' ? 'sua Barbearia' : 'seu Salão/Studio' } ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱`,
+                url: this.urlShare,
             }            
+            alert(JSON.stringify(shareData));
             return navigator.share(shareData)
         }                         
     },
     computed: {
-       
+       appType() {
+           return this.$vuetify.theme.dark ? 'app' : 'ladyapp';
+       }, 
+       urlApp() {
+           return `https://${this.appType}.kongbarber.com`;
+       },
+       urlShare() {
+           return `${this.urlApp}/#/public/identify-device`;
+       }
     }
 }
 </script>
