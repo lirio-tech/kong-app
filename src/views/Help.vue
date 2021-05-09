@@ -154,7 +154,6 @@ export default {
                 text: `💈Gerencie ${this.appType === 'app' ? 'sua Barbearia' : 'seu Salão/Studio' } ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱`,
                 url: this.urlShare,
             }            
-            alert(JSON.stringify(shareData));
             return navigator.share(shareData)
         }                         
     },
