@@ -137,6 +137,15 @@
                                 required filled disabled
                                 />
                         </v-col>   
+                        <v-col cols="12" v-if="$route.params._id === '_newUser'">
+                            <v-subheader>Comissão</v-subheader>
+                            <v-card-text>
+                            <v-slider
+                                v-model="user.percentCommission"
+                                :label="`${user.percentCommission}%`"
+                            ></v-slider>
+                            </v-card-text>
+                        </v-col>
                         <v-col 
                             cols="12" md="4" 
                             style="margin-left: 10%" 
@@ -217,7 +226,8 @@ export default {
         user: { 
             enabled: true,
             passwordConfirm: '',
-            type: 'hairdresser'
+            type: 'hairdresser',
+            percentCommission: 50
         },
         enabled: true,
         message: {},      
