@@ -357,8 +357,8 @@ export default {
           console.log(err);
         })
       },      
-      getPaymentsHist() {
-          gateway.getPaymentsHist(
+      getPaymentsHistByCompany() {
+          gateway.getPaymentsHistByCompany(
             res => {
                 this.items = res;
             }, () => {
@@ -374,19 +374,19 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
-      gateway.getPaymentsHistByCompany(this.$route.params._id,
+      gateway.getCompanyById(this.$route.params._id,
         res => {
             this.company = res;
         }, () => {
             alert('Erro ao buscar informacoes do Estabelecimento');
-        }); 
+        });
         
       if(this.$route.query.panel) {
          this.panel.push(Number(this.$route.query.panel));
       }
 
       this.getUsers();
-      this.getPaymentsHist();
+      this.getPaymentsHistByCompany();
     }
   }
 </script>
