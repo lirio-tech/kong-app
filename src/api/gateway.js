@@ -322,8 +322,8 @@ export default{
           })         
     },
     getAllPaymentsHist(callback, errorCb) {
-        let url = `${PAYMENT_API}`;
-        Axios.get(url)
+        let url = `${PAYMENT_API}/all`;
+        Axios.get(url) 
             .then(data => {
                 callback(data.data)
             }) 
