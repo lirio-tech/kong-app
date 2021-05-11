@@ -124,8 +124,7 @@
                                                 <td>{{ item.price | currency }}</td>
                                                 <td>
                                                 <v-icon 
-                                                    @click="deleteService(item)" class="error--text"
-                                                    v-if="isAdmin()">
+                                                    @click="deleteService(item)" class="error--text">
                                                     mdi-delete
                                                 </v-icon>
                                                 </td>
