@@ -1,11 +1,11 @@
 <template>
-    <v-container >
+    <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">
               <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
               <div v-if="true">
                   <v-row>
                       <v-col cols="2" style="margin-top: 10px;">   
                           <v-btn icon small style="display: inline;"
-                              :to="{ 'path': '/'}"
+                              :to="{ 'path': '/'}" 
                           > 
                               <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
                           </v-btn>
@@ -26,7 +26,7 @@
                               {{ order.total | currency }}
                         </center>
                       </v-col>
-                      <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true">
+                      <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true ||  !order._id">
                           <div class="d-flex" style="margin-top: -15px;">
                             <v-col cols="6">
                               <v-combobox 
