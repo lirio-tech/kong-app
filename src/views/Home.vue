@@ -229,6 +229,7 @@
                         </v-col>  
                     </v-card-actions>
             </v-card>   
+
             <v-card
               class="mx-auto"
               max-width="800"
@@ -257,7 +258,7 @@
                               
                             <v-col cols="7">
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
-                                  <span class="caption grey--text">Valor de {{ company.percentCommission }}%</span><br/>
+                                  <span class="caption grey--text">Valor de {{ userLogged.percentCommission }}%</span><br/>
                                   <div style="font-size: 1.5rem">
                                     <span class="green--text">{{ consolidado.total * company.percentCommission / 100 | currency }} </span>
                                   </div>

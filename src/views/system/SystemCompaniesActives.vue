@@ -17,37 +17,6 @@
               </v-col>
           </v-row>     
           <v-row justify="start">
-
-              <v-expansion-panels class="px-3" hover focusable>
-                <v-expansion-panel>
-                  <v-expansion-panel-header> Metricas </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-
-                    <v-row>
-                        
-                        <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
-                            <h3>Objetivos</h3>
-                            <p>Fev: fechar com 1 Estabelecimento ativo</p>
-                            <p>Mar: fechar com 5 Estabelecimentos ativos</p>
-                            <p>Abr: fechar com 10 Estabelecimentos ativos</p>
-                            <p>Maio: fechar com 20 Estabelecimentos ativos</p>
-                            <p>Jun: fechar com 30 Estabelecimentos ativos</p>
-                        </v-col>
-                        <!-- <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
-                            <h3>Faturamento por qtde de Estabelecimento</h3>
-                            
-                        </v-col> -->
-                                                
-                        <!-- <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
-                            <h3>CAC</h3>
-                        </v-col>                         -->
-                    </v-row>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-expansion-panels>
-          </v-row>
-            <br/><br/>
-            <v-row justify="start">
                 <v-dialog
                   v-model="loading"
                   hide-overlay
@@ -118,10 +87,82 @@
             <v-row> 
               <v-col cols="12">
                 Total: {{ companies.length }} <br /><br />
-                <h3 v-for="o in companies" :key="o._id">{{o.shortName}} - {{o.total | currency}} <br /><br /></h3>
+
+                        <v-simple-table >
+                          <template v-slot:default>
+                            <thead>
+                              <tr>
+                                <th class="text-center caption">
+                                  Company
+                                </th>                                                              
+                                <th class="text-center">
+                                  Total
+                                </th>
+                                <th>
+                                  Plano
+                                </th>                                                                                                  
+                                <th>
+                                  Vencimento
+                                </th>                                  
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="c in companies"
+                                :key="c._id"
+                              >
+                                <td class="text-center caption">{{ c.shortName }}</td>
+                                <td class="text-right caption">{{ c.total | currency }}</td>
+                                <td class="text-center caption">{{ c.planName }}</td>
+                                <td class="text-center caption">{{ c.planDateEnd }}</td>
+                              </tr>
+                            </tbody>
+                          </template>
+                        </v-simple-table>   
               </v-col>
             </v-row>
-                
+            <br/><br/><br/>
+            <v-row justify="start">
+
+              <v-expansion-panels class="px-3" hover focusable>
+                <v-expansion-panel>
+                  <v-expansion-panel-header> Usuario Ativos </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+
+                    <v-row>
+                        
+                        <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                            <h3>Objetivos</h3>
+                            <p>Fev: 1 Estabelecimento ativo</p>
+                            <p>Mar: de 1 para 5 ativos</p>
+                            <p>Abr: de 5 para 10 ativos</p>
+                            <p class="green--text">Maio: de 10 para 20 ativos</p>
+                            <p>Jun: de 20 para 30 ativos</p>
+                            <p>Jul: de 30 para 40 ativos</p>
+                            <p>Ago: de 30 para 50 ativos</p>
+                        </v-col>
+                    </v-row>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                  <v-expansion-panel-header> Seguidores no Instagram </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+
+                    <v-row>
+                        
+                        <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                            <h3>Objetivos</h3>
+                            <p class="green--text">Maio: de 94 para 130</p>
+                            <p>Junho: de 130 para 200</p>
+                            <p>Julho: de 200 para 300</p>
+                            <p>Ago: de 300 para 600</p>
+                            <p>Set: de 500 para 1000</p>
+                        </v-col>
+                    </v-row>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>                
+              </v-expansion-panels>
+          </v-row>                
         </v-main>
     </v-container>
 </template>
