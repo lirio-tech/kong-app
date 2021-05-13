@@ -503,6 +503,7 @@ export default {
         }                
         if(this.selectPeriodo === 'Personalizado') {
           this.consolidado.periodoDescricao = this.datesDisplay;
+          this.modal = true;
         }                        
       },
       formatarPeriodo(dateStart, dateEnd) {

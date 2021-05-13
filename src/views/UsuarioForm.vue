@@ -137,7 +137,7 @@
                                 required filled disabled
                                 />
                         </v-col>   
-                        <v-col cols="12" v-if="$route.params._id === '_newUser'">
+                        <v-col cols="12">
                             <v-subheader>Comissão</v-subheader>
                             <v-card-text>
                             <v-slider
@@ -154,7 +154,7 @@
                                 <v-switch
                                     dense
                                     v-model="user.allowEditOrder"
-                                    label="Permitir Alterar Serviços"
+                                    label="Permitir Alterar os Serviços Lançados"
                                 ></v-switch>    
                         </v-col>                                                     
                 </v-row>    
@@ -242,19 +242,21 @@ export default {
     }),
     methods: {
       becomeAdmin() {
-          gateway.becomeUserAdmin(this.user._id,
-            res => {
-                console.log(res);
-                this.$router.push('/admin/users');                
-            }, err => {
-                if(err.response.status === 412 || 
-                   err.response.status === 422 ||
-                   err.response.status === 403) {
-                    alert(err.response.data.message)
-                } else {                        
-                    alert('Erro ao tornar o usuario um Admin, tente novamente');                
-                }
-            })
+          if (confirm(`${this.user.name} tera acesso de administrador e podera ver a contabilidade completa.\n\nDeseja Relamente Tornar ${this.user.name} Admin?`)) {
+            gateway.becomeUserAdmin(this.user._id,
+                res => {
+                    console.log(res);
+                    this.$router.push('/admin/users');                
+                }, err => {
+                    if(err.response.status === 412 || 
+                    err.response.status === 422 ||
+                    err.response.status === 403) {
+                        alert(err.response.data.message)
+                    } else {                        
+                        alert('Erro ao tornar o usuario um Admin, tente novamente');                
+                    }
+                })
+          }
       },
       becomeCommon() {
           gateway.becomeUserCommon(this.user._id,
