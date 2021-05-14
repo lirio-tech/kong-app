@@ -253,10 +253,12 @@ import storage from '../storage'
 import gateway from '../api/gateway'
 import UserTypes from '../utils/UserTypes'
 import SnackBar from '../components/SnackBar'
+import CardPlanData from '../components/CardPlanData'
 export default {
     name: 'Perfil',
     components: {
-        SnackBar
+        SnackBar,
+        CardPlanData
     },
     data: () => ({
       isLoading: false, 
