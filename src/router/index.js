@@ -31,6 +31,7 @@ import RateUsView from '../views/RateUsView'
 import SimulatorPlan from '../views/SimulatorPlan'
 import PurchasesProductsList from '../views/PurchasesProductsList'
 import PurchasesProductsForm from '../views/PurchasesProductsForm'
+import PaymentsUsers from '../views/PaymentsUsers'
 
 Vue.use(VueRouter)
 
@@ -190,6 +191,11 @@ const routes = [
     path: '/admin/purchases-products/:_id',
     name: 'PurchasesProductsForm',
     component: PurchasesProductsForm
+  },
+  {
+    path: '/payments-users',
+    name: 'PaymentsUsers',
+    component: PaymentsUsers
   }
 ]
 

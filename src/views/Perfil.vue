@@ -316,10 +316,20 @@ export default {
                     this.isLoading = false;
                     alert('Erro ao Alterar Senha');
                 });
-        }
+        },
+      formatDateTime (dateTime) {
+        let date = dateTime.substr(0,10);
+        let time = dateTime.substr(11,5);
+        console.log(time);
+        if (!date) return null;
+
+        const [year, month, day] = date.split('-');
+        return `${day}/${month}/${year} ${time}`
+      },         
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.userLogged.createdAt = this.formatDateTime(this.userLogged.createdAt);
       if(!this.userLogged.configuration) {
           this.userLogged.configuration = {table: 'mobile'};
       }
