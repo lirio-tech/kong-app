@@ -33,15 +33,15 @@
                                     <hr style="border: 1px dotted #424242;border-radius: 5px;" />   
                                     <br/>                    
                                     <v-row 
-                                      v-for="userPay in usersPayments" 
-                                      :key="userPay" 
+                                      v-for="userBalance in usersBalance" 
+                                      :key="userBalance._id" 
                                       style="margin-top:-5px"
                                     >
                                         <v-col cols="7" style="font-size: 1.1rem">
-                                              {{ userPay.name }}
+                                              {{ userBalance.user.name }}
                                         </v-col> 
                                         <v-col cols="5" :style="'font-size: 1.1rem;'">
-                                              {{ userPay.valueReceive | currency }}
+                                              {{ userBalance.balance | currency }}
                                         </v-col>
                                         <v-col cols="12" class="text-center">
                                           <v-btn 
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-//import gateway from '../api/gateway';
+import gateway from '../api/gateway';
 import AppBar from '../components/AppBar'
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
@@ -101,26 +101,23 @@ import UserTypes from '../utils/UserTypes';
         { text: "Funcionario", value: "name" },
         { text: "Username", value: "valueReceive" }
       ],                
-      usersPayments: [{name: 'Guilherme', valueReceive: 150.50},{name: 'Guilherme', valueReceive: 150.50}]
+      usersBalance: [{ user: { name: 'Guilherme' }, balance: 150.50},{name: 'Guilherme', balance: 150.50}]
     }),
     methods: {
       isAdmin(type) {
         return UserTypes.isAdmin(type);
       },
-      // clickRow(row) {
-      //     this.users.map((it) => {
-      //         let selected = it === row;
-      //         if(selected) {
-      //             this.$router.push('/admin/users/'+it._id);
-      //         }
-      //     })        
-      // },
       getTypePtBR(type) {
         return UserTypes.getDescriptionPtBR(type);
       }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      gateway.getUsersBalance(res => {
+        this.usersBalance = res;
+      }, () => {
+        alert('Erro ao Buscar saldo dos usuarios');
+      })
     }
   }
 </script>

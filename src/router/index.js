@@ -31,7 +31,7 @@ import RateUsView from '../views/RateUsView'
 import SimulatorPlan from '../views/SimulatorPlan'
 import PurchasesProductsList from '../views/PurchasesProductsList'
 import PurchasesProductsForm from '../views/PurchasesProductsForm'
-import PaymentsUsers from '../views/PaymentsUsers'
+import UsersBalance from '../views/UsersBalance'
 
 Vue.use(VueRouter)
 
@@ -193,9 +193,9 @@ const routes = [
     component: PurchasesProductsForm
   },
   {
-    path: '/payments-users',
-    name: 'PaymentsUsers',
-    component: PaymentsUsers
+    path: '/users-balance',
+    name: 'UsersBalance',
+    component: UsersBalance
   }
 ]
 

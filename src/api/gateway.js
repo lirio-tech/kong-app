@@ -6,6 +6,7 @@ const ANALYTICS_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/an
 const PAYMENT_API = process.env.VUE_APP_HOST_API + '/.netlify/functions/api/payments-historic';
 const AUTH_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/auth';
 const USERS_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users';
+const USERS_BALANCE_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/users-balance';
 const RATE_US_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/rate-us';
 
 export default{
@@ -222,6 +223,17 @@ export default{
                 errorCb(error)
             })                
     },
+    getUsersBalance(callback, errorCb) {
+        let url = USERS_BALANCE_API;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })                
+    },        
     changePassword(_idUser, userChangePassword, callback, errorCb) {
         let url = `${USERS_API}/${_idUser}/change-password`;
         Axios.patch(url, userChangePassword)
@@ -524,5 +536,5 @@ export default{
             //   "pixCopyAndPast": "00020126580014BR.GOV.BCB.PIX01366c1296f1-b36f-4b65-ac9c-5e7fd16cafb75204000053039865406900.005802BR5925DIEGO LIRIO DAMACENA PERE6009SAO PAULO622605226QEcoMRRZQlpCuF55gqxtO63047BBF"              
             // },                                     
           ];
-    }       
+    },
 }
