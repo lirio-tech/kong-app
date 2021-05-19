@@ -32,6 +32,7 @@ import SimulatorPlan from '../views/SimulatorPlan'
 import PurchasesProductsList from '../views/PurchasesProductsList'
 import PurchasesProductsForm from '../views/PurchasesProductsForm'
 import UsersBalance from '../views/UsersBalance'
+import UserBalanceDetail from '../views/UserBalanceDetail'
 
 Vue.use(VueRouter)
 
@@ -196,6 +197,11 @@ const routes = [
     path: '/users-balance',
     name: 'UsersBalance',
     component: UsersBalance
+  },
+  {
+    path: '/users-balance-detail/:_id',
+    name: 'UserBalanceDetail',
+    component: UserBalanceDetail
   }
 ]
 
