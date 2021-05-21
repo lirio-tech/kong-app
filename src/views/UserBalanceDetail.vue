@@ -16,7 +16,7 @@
                   </span>
               </v-col>           
           </v-row>          
-            <v-row>
+          <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
                       class="mx-auto"
@@ -46,7 +46,7 @@
                                           </v-list-item-title>
                                         </v-col>
                                     </v-row>
-                                    <v-row>
+                                    <v-row v-if="isAdmin(userLogged.type)">
                                         <v-col cols="12" class="text-center">
                                           <v-btn 
                                               style="width: 45%"
@@ -70,7 +70,43 @@
                             </v-list-item>
                     </v-card>   
                 </v-col>
-            </v-row>              
+          </v-row>          
+          <v-row>
+              <v-col cols="12" align="center">   
+                  <span >  
+                    Movimentações
+                  </span>
+              </v-col>              
+              <v-col cols="12" sm="12" class="mt-0 pt-0">
+                  <v-simple-table dense>
+                    <template v-slot:default>
+                      <thead >
+                        <tr>
+                          <th class="text-left">
+                            Tipo
+                          </th>
+                          <th class="text-left">
+                            Data
+                          </th>                                    
+                          <th class="text-left">
+                            Valor
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="det in userBalanceDetail" :key="det._id">
+                          <td>{{ det.type }}</td>
+                          <td>{{ det.date }}</td>
+                          <td>{{ value.price | currency }}</td>
+                        </tr>
+                        <tr v-if="userBalanceDetail.length === 0">
+                            <td align="center" class="error--text" colspan="3"><h3>Não há Movimentações</h3></td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+              </v-col>
+          </v-row>    
         </v-main>
     </v-container>
 </template>
@@ -84,21 +120,34 @@ import UserTypes from '../utils/UserTypes';
     name: 'UserBalanceDetail',
     components: { AppBar },
     data: () => ({
-      userBalance: {user:{}}
+      userBalance: {user:{}},
+      userBalanceDetail: []
     }),
     methods: {
       isAdmin(type) {
         return UserTypes.isAdmin(type);
       },
+      getUserBalanceByUserId(_userId) {
+        gateway.getUserBalanceByUserId(_userId,
+          res => {
+            this.userBalance = res;
+          }, () => {
+            alert('Erro ao Buscar saldo dos usuarios');
+          })
+      },      
+      getUserBalanceDetailExtractByUserId(_userId) {
+        gateway.getUserBalanceDetailExtractByUserId(_userId,
+          res => {
+            this.userBalanceDetail = res;
+          }, () => {
+            alert('Erro ao Buscar movimentacoes usuarios');
+          })
+      },            
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      gateway.getUserBalanceById(this.$route.params._id,
-        res => {
-          this.userBalance = res;
-        }, () => {
-          alert('Erro ao Buscar saldo dos usuarios');
-        })
+      this.getUserBalanceByUserId(this.$route.params.userId);
+      this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);
     }
   }
 </script>

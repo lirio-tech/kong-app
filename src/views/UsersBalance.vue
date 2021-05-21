@@ -44,7 +44,7 @@
                                         </v-col>
                                         <v-col cols="12" class="text-center">
                                           <v-btn 
-                                              :to="{ path:'/users-balance-detail/'+userBalance._id}" 
+                                              :to="{ path:'/users-balance-detail/'+userBalance.user._id}" 
                                               style="width: 90%"
                                               class="ma-2"
                                               

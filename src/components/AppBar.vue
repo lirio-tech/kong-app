@@ -91,13 +91,24 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
-                        <router-link v-if="isAdmin() && userLogged && userLogged.type === 'sys_admin'" to="/users-balance" style="color: inherit; text-decoration: none">
+                        <router-link 
+                            v-if="isAdmin() && userLogged && userLogged.type === 'sys_admin'" 
+                            :to="{ path: ( isAdmin() ? '/users-balance' : '/users-balance-detail/'+userLogged._id ) }"
+                            style="color: inherit; text-decoration: none"
+                        >
                             <v-col cols="10" class="font-weight-medium">
                                 Pagamentos
                                 <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>                            
+                        <router-link v-if="userLogged && userLogged.type === 'hairdresser'" :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Pagamentos
+                                <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                                                    
                         <router-link v-if="!userLogged" to="/login" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Login

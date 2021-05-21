@@ -199,7 +199,7 @@ const routes = [
     component: UsersBalance
   },
   {
-    path: '/users-balance-detail/:_id',
+    path: '/users-balance-detail/:userId',
     name: 'UserBalanceDetail',
     component: UserBalanceDetail
   }
