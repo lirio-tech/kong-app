@@ -82,22 +82,32 @@
                     <template v-slot:default>
                       <thead >
                         <tr>
-                          <th class="text-left">
+                          <th class="text-center">
                             Tipo
                           </th>
-                          <th class="text-left">
+                          <th class="text-center">
                             Data
                           </th>                                    
-                          <th class="text-left">
+                          <th class="text-center">
                             Valor
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr v-for="det in userBalanceDetail" :key="det._id">
-                          <td>{{ det.type }}</td>
-                          <td>{{ det.date }}</td>
-                          <td>{{ value.price | currency }}</td>
+                          <td class="text-center">
+                            <v-icon color="green" v-if="det.type === 'SERVICE_PERFORMED'">
+                              mdi-content-cut
+                            </v-icon>
+                            <v-icon color="red darken-4" v-if="det.type === 'PAYMENT'">
+                              mdi-account-cash
+                            </v-icon>              
+                            <v-icon color="deep-orange" v-if="det.type === 'MONEY_VOUCHER'">
+                              mdi-cash-plus
+                            </v-icon>                                               
+                          </td>
+                          <td class="text-center" :class="'green--text'">{{ det.date }}</td>
+                          <td class="text-right" :class="'green--text'">{{ det.value | currency }}</td>
                         </tr>
                         <tr v-if="userBalanceDetail.length === 0">
                             <td align="center" class="error--text" colspan="3"><h3>Não há Movimentações</h3></td>
