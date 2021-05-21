@@ -20,7 +20,6 @@
     "vue-clipboard2": "^0.3.1",
     "vue-currency-filter": "^5.2.0",
     "vue-google-charts": "^0.3.3",
-    "vue-numkeyboard": "^1.1.2",
     "vue-pull-refresh": "^0.2.7",
     "vue-qrcode": "^0.3.5",
     "vue-router": "^3.5.1",

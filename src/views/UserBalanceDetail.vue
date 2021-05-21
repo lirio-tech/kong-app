@@ -40,7 +40,7 @@
                                         <v-col cols="12">
                                           <v-list-item-title class="headline mb-1">
                                               <span class="caption grey--text">Total</span><br/>
-                                              <div style="font-size: 1.5rem">
+                                              <div style="font-size: 3.0rem">
                                                 <span class="green--text">{{ userBalance.balance | currency }} </span>
                                               </div>
                                           </v-list-item-title>
@@ -166,11 +166,12 @@ import UserTypes from '../utils/UserTypes';
           })
       },            
       showDialog(show) {
-        this.dialog = show
+        this.dialog = show;
       },
       payUser(userBalanceType2) {
         this.userBalanceType = userBalanceType2;
         this.showDialog(true);
+        this.$refs.valuePayment.$el.focus();
       }                
     },
     beforeMount() {

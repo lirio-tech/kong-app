@@ -256,6 +256,17 @@ export default{
                 errorCb(error)
             });            
     },
+    saveUserBalanceAndDetail(userBalanceDetail, callback, errorCb) {
+        let url = `${USERS_BALANCE_API}`;
+        Axios.post(url, userBalanceDetail)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            });            
+    },
     changePassword(_idUser, userChangePassword, callback, errorCb) {
         let url = `${USERS_API}/${_idUser}/change-password`;
         Axios.patch(url, userChangePassword)
