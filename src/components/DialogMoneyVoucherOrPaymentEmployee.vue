@@ -35,6 +35,7 @@
                     prefix="R$"
                     style="font-size: 45px"
                     type="number"
+                    solo
                     v-model="userBalance.balance"
                     ref="valuePayment"
                   ></v-text-field>
