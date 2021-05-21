@@ -51,7 +51,7 @@
                                           <v-btn 
                                               style="width: 45%"
                                               class="ma-2"
-                                              
+                                              @click="payUser('MONEY_VOUCHER')"                
                                               color="primary"
                                           >
                                             Vale
@@ -59,7 +59,7 @@
                                           <v-btn 
                                               style="width: 45%"
                                               class="ma-2"
-                                              
+                                              @click="payUser('PAYMENT')"                
                                               color="green"
                                           >
                                             Pagamento
@@ -117,6 +117,12 @@
                   </v-simple-table>
               </v-col>
           </v-row>    
+          <DialogMoneyVoucherOrPaymentEmployee 
+            :dialog="dialog" 
+            :user="userBalance" 
+            :userBalanceType="userBalanceType" 
+            v-on:show-dialog="showDialog" 
+          />
         </v-main>
     </v-container>
 </template>
@@ -124,14 +130,17 @@
 <script>
 import gateway from '../api/gateway';
 import AppBar from '../components/AppBar'
+import DialogMoneyVoucherOrPaymentEmployee from '../components/DialogMoneyVoucherOrPaymentEmployee'
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
   export default {
     name: 'UserBalanceDetail',
-    components: { AppBar },
+    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee },
     data: () => ({
+      dialog: false,
       userBalance: {user:{}},
-      userBalanceDetail: []
+      userBalanceDetail: [],
+      userBalanceType: 'PAYMENT'
     }),
     methods: {
       isAdmin(type) {
@@ -149,10 +158,20 @@ import UserTypes from '../utils/UserTypes';
         gateway.getUserBalanceDetailExtractByUserId(_userId,
           res => {
             this.userBalanceDetail = res;
+            this.userBalanceDetail.push(...this.userBalanceDetail);
+            this.userBalanceDetail.push(...this.userBalanceDetail);
+            this.userBalanceDetail.push(...this.userBalanceDetail);
           }, () => {
             alert('Erro ao Buscar movimentacoes usuarios');
           })
       },            
+      showDialog(show) {
+        this.dialog = show
+      },
+      payUser(userBalanceType2) {
+        this.userBalanceType = userBalanceType2;
+        this.showDialog(true);
+      }                
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
