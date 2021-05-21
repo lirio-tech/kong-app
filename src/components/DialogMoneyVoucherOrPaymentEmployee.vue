@@ -17,13 +17,23 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>      
             <v-toolbar-title style="margin-left:-17px;">
-                {{ userBalanceType }}
+                {{ userBalanceType === 'MONEY_VOUCHER' ? 'Liberar Vale' : 'Pagamento ' }}
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>    
           <v-card-text>
             <v-container >
-                <h1>{{  }}</h1>
+                <h2>{{ (userBalanceType === 'MONEY_VOUCHER' ? 'Liberar Vale p/ ' : 'Realizar Pagamento de ') + userBalance.user.name }} </h2>
+
+                <br/>
+
+                <numkeyboard 
+                  v-model="userBalanceDetail.value" 
+                  ok-text="OK" 
+                  text-align="left"
+                ></numkeyboard>
+
+
             </v-container>
           </v-card-text>          
           <div style="flex: 1 1 auto;"></div>
@@ -35,8 +45,9 @@
 <script>
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
+
 export default {
-    props:['dialog', 'userBalanceType', 'user'],
+    props:['dialog', 'userBalanceType', 'userBalance'],
     components: {
     },
     data () {
@@ -44,6 +55,7 @@ export default {
         company: {
           plan: { name: 'Free' }
         },
+        userBalanceDetail: { value: 0 }
       }
     },
     beforeMount() {

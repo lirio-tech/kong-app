@@ -119,11 +119,11 @@
           </v-row>    
           <DialogMoneyVoucherOrPaymentEmployee 
             :dialog="dialog" 
-            :user="userBalance" 
+            :userBalance="userBalance" 
             :userBalanceType="userBalanceType" 
             v-on:show-dialog="showDialog" 
           />
-        </v-main>
+        </v-main> 
     </v-container>
 </template>
 

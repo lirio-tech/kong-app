@@ -10,6 +10,11 @@ import store from './store/'
 import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
 import VueGoogleCharts from 'vue-google-charts'
+import numkeyboard from 'vue-numkeyboard';
+import 'vue-numkeyboard/style.css';
+
+Vue.use(numkeyboard);
+
 
 Vue.config.productionTip = false
 Vue.use(VueClipboard)
