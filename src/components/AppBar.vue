@@ -92,7 +92,7 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>          
-                        <router-link v-if="isAdmin() && userLogged && userLogged.type === 'sys_admin'" to="/users-balance" style="color: inherit; text-decoration: none">
+                        <router-link v-if="isAdmin()" to="/users-balance" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Pagamentos
                                 <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
