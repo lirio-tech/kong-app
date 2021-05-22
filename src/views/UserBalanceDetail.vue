@@ -41,7 +41,7 @@
                                           <v-list-item-title class="headline mb-1">
                                               <span class="caption grey--text">Total</span><br/>
                                               <div style="font-size: 3.0rem">
-                                                <span class="green--text">{{ userBalance.balance | currency }} </span>
+                                                <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">{{ userBalance.balance | currency }} </span>
                                               </div>
                                           </v-list-item-title>
                                         </v-col>
@@ -96,18 +96,27 @@
                       <tbody>
                         <tr v-for="det in userBalanceDetail" :key="det._id">
                           <td class="text-center">
-                            <v-icon color="green" v-if="det.type === 'SERVICE_PERFORMED'">
+                            <v-icon v-if="det.type === 'SERVICE_PERFORMED'">
                               mdi-content-cut
                             </v-icon>
-                            <v-icon color="red darken-4" v-if="det.type === 'PAYMENT'">
+                            <v-icon color="green" v-if="det.type === 'PAYMENT'">
                               mdi-account-cash
                             </v-icon>              
-                            <v-icon color="deep-orange" v-if="det.type === 'MONEY_VOUCHER'">
+                            <v-icon color="primary" v-if="det.type === 'MONEY_VOUCHER'">
                               mdi-cash-plus
                             </v-icon>                                               
                           </td>
-                          <td class="text-center" :class="'green--text'">{{ det.date }}</td>
-                          <td class="text-right" :class="'green--text'">{{ det.value | currency }}</td>
+                          <td 
+                            class="text-center" 
+                            :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
+                          >
+                            {{ det.date }}
+                          </td>
+                          <td 
+                            class="text-center" 
+                            :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
+                          >
+                          {{ det.value | currency }}</td>
                         </tr>
                         <tr v-if="userBalanceDetail.length === 0">
                             <td align="center" class="error--text" colspan="3"><h3>Não há Movimentações</h3></td>
@@ -120,6 +129,7 @@
           <DialogMoneyVoucherOrPaymentEmployee 
             :dialog="dialog" 
             :userBalance="userBalance" 
+            :balanceValueTotal="balanceValueTotal"
             :userBalanceType="userBalanceType" 
             v-on:show-dialog="showDialog" 
           />
@@ -138,6 +148,7 @@ import UserTypes from '../utils/UserTypes';
     components: { AppBar, DialogMoneyVoucherOrPaymentEmployee },
     data: () => ({
       dialog: false,
+      balanceValueTotal: 0,
       userBalance: {user:{}},
       userBalanceDetail: [],
       userBalanceType: 'PAYMENT'
@@ -158,18 +169,20 @@ import UserTypes from '../utils/UserTypes';
         gateway.getUserBalanceDetailExtractByUserId(_userId,
           res => {
             this.userBalanceDetail = res;
-            this.userBalanceDetail.push(...this.userBalanceDetail);
-            this.userBalanceDetail.push(...this.userBalanceDetail);
-            this.userBalanceDetail.push(...this.userBalanceDetail);
           }, () => {
             alert('Erro ao Buscar movimentacoes usuarios');
           })
       },            
       showDialog(show) {
         this.dialog = show;
+        if(show === false) {
+          this.getUserBalanceByUserId(this.$route.params.userId);
+          this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);          
+        }
       },
       payUser(userBalanceType2) {
         this.userBalanceType = userBalanceType2;
+        this.balanceValueTotal = Math.trunc(this.userBalance.balance);
         this.showDialog(true);
         this.$refs.valuePayment.$el.focus();
       }                
