@@ -10,6 +10,7 @@ import store from './store/'
 import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
 import VueGoogleCharts from 'vue-google-charts'
+import money from 'v-money'
 
 Vue.config.productionTip = false
 Vue.use(VueClipboard)
@@ -17,6 +18,7 @@ Vue.use(VueMask);
 Vue.use(VueGoogleCharts)
 Vue.directive('mask', VueMaskDirective);
 Vue.filter('VMask', VueMaskFilter);
+Vue.use(money, {precision: 4})
 
 new Vue({
   router,

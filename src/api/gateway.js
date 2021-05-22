@@ -233,7 +233,40 @@ export default{
                 console.log(error);
                 errorCb(error)
             })                
+    },      
+    getUserBalanceByUserId(_userId, callback, errorCb) {
+        let url = `${USERS_BALANCE_API}/user/${_userId}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })                
     },        
+    getUserBalanceDetailExtractByUserId(_userId, callback, errorCb) {
+        let url = `${USERS_BALANCE_API}/user/${_userId}/detail`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            });            
+    },
+    saveUserBalanceAndDetail(userBalanceDetail, callback, errorCb) {
+        let url = `${USERS_BALANCE_API}`;
+        Axios.post(url, userBalanceDetail)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            });            
+    },
     changePassword(_idUser, userChangePassword, callback, errorCb) {
         let url = `${USERS_API}/${_idUser}/change-password`;
         Axios.patch(url, userChangePassword)

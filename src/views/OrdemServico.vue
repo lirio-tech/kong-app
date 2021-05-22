@@ -203,11 +203,12 @@
                                         item-text='name'
                                         item-value='_id'          
                                         v-if="isAdmin() || order._id"     
+                                        :disabled="order._id"
                                         style="margin-top: -20px;"                         
                                     ></v-combobox>                                              
                                 </v-col>
-                              </v-row>
-                              <v-row v-if="order._id">
+                              </v-row> 
+                              <!-- <v-row v-if="order._id">
                                   <v-col cols="12" md="4">                      
                                       <v-text-field v-model="createdAt"
                                                       label="Lancado"
@@ -228,7 +229,7 @@
                                                       style="margin-top: -20px;">                                
                                       </v-text-field>  
                                   </v-col>
-                              </v-row>                                                            
+                              </v-row>                                                             -->
                               <v-row align="center"
                                      justify="space-around"
                                      v-if="(isAdmin() || userLogged.allowEditOrder === true) || !order._id"

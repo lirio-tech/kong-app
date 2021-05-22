@@ -16,8 +16,7 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on" style="margin-bottom: 20px;">
-                    <v-icon v-if="userLogged" style="font-size: 1.6rem">mdi-account-circle-outline</v-icon>
-                    <v-icon v-else style="font-size: 1.6rem">mdi-menu</v-icon>
+                    <v-icon style="font-size: 1.6rem">mdi-menu</v-icon>
                 </v-btn>
                 </template>
                 <v-card >
@@ -99,6 +98,13 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>                            
+                        <router-link v-if="userLogged && userLogged.type === 'hairdresser'" :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Pagamentos
+                                <v-chip color="primary" style="margin-left: 15px;" outlined small>Novo</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                                                    
                         <router-link v-if="!userLogged" to="/login" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Login
