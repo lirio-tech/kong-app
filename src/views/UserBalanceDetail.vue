@@ -182,7 +182,7 @@ import UserTypes from '../utils/UserTypes';
       },
       payUser(userBalanceType2) {
         this.userBalanceType = userBalanceType2;
-        this.balanceValueTotal = Math.trunc(this.userBalance.balance);
+        this.balanceValueTotal = this.userBalance.balance < 0 ? 0 : Math.trunc(this.userBalance.balance);
         this.showDialog(true);
         this.$refs.valuePayment.$el.focus();
       }                

@@ -26,9 +26,20 @@
                             <v-list-item three-line>
                               <v-list-item-content>                                  
                                     <br/>
-                                    <div class="grey--text" align="center">
-                                        <span class="">Comissão a Pagar</span>
-                                    </div>          
+                                    
+                                    <v-list-item-content>  
+                                      <v-row >
+                                          <v-col cols="12" align="center">
+                                            <v-list-item-title class="headline mb-1">
+                                                <span class="caption grey--text">Total</span><br/>
+                                                <div style="font-size: 1.6rem">
+                                                  <span :class="total < 0 ? 'red--text' : 'green--text'">{{ total | currency }} </span>
+                                                </div>
+                                            </v-list-item-title>
+                                          </v-col>
+                                      </v-row>                      
+                                    </v-list-item-content>
+                                    <hr style="border: 1px dotted #424242;border-radius: 5px;" />   
                                     <br/>
                                     <br/>        
                                     <v-row 
@@ -47,8 +58,6 @@
                                               :to="{ path:'/users-balance-detail/'+userBalance.user._id}" 
                                               style="width: 90%"
                                               class="ma-2"
-                                              
-                                              color="primary"
                                           >
                                             <v-icon>
                                               mdi-arrow-right
@@ -84,7 +93,8 @@ import UserTypes from '../utils/UserTypes';
         { text: "Funcionario", value: "name" },
         { text: "Username", value: "valueReceive" }
       ],                
-      usersBalance: []
+      usersBalance: [],
+      total: 0
     }),
     methods: {
       isAdmin(type) {
@@ -95,6 +105,7 @@ import UserTypes from '../utils/UserTypes';
       this.userLogged = storage.getUserLogged();
       gateway.getUsersBalance(res => {
             this.usersBalance = res;
+            this.total = res.reduce((a, r) => a + r.balance, 0);
         }, () => {
             alert('Erro ao Buscar Saldo do Usuario');
         })
