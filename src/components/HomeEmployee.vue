@@ -17,7 +17,7 @@
                             <v-col cols="7">
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
                                   <span class="caption grey--text">Valor de {{ userLogged.percentCommission }}%</span><br/>
-                                  <div style="font-size: 1.5rem">
+                                  <div style="font-size: 1.5rem" >
                                     <span class="green--text">{{ consolidado.total * company.percentCommission / 100 | currency }} </span>
                                   </div>
                               </v-list-item-title>
@@ -129,7 +129,7 @@
 <script>
 export default {
     name: 'HomeEmployee',
-    props: [ 'orders', 'consolidado', 'userLogged', 'sumPaymentType', 'company' ],
+    props: [ 'orders', 'consolidado', 'userLogged', 'sumPaymentType', 'company', 'userBalance' ],
     data() {
       return {
         userBalance: {}

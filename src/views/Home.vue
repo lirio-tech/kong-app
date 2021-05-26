@@ -137,81 +137,8 @@
               :userLogged="userLogged"
               :sumPaymentType="sumPaymentType"
               :company="company"
+              :userBalance="userBalance"
             />
-<!-- 
-            <v-row v-if="orders.length !== 0 && !loading">
-                <v-col cols="12" sm="12">
-                    <v-sheet min-height="70vh" rounded="lg" >
-                        <v-data-table 
-                            v-if="!userLogged.configuration || !userLogged.configuration.table || userLogged.configuration.table === 'mobile'"
-                            :headers="headers" 
-                            :items="orders" 
-                            item-key="code"
-                            class="elevation-1"
-                            :items-per-page="orders.length"
-                            hide-default-footer
-                            loading-text="Carregando... Por favor aguarde"
-                            @click:row="clickRow"
-                        >
-                            <template v-slot:item.date="{ item }">
-                                {{ getDateFormated(item.date) }}                            
-                            </template>           
-                            <template v-slot:item.total="{ item }">
-                                <v-icon color="green" v-if="item.paymentType === 'cash'">
-                                  mdi-cash
-                                </v-icon> 
-                                <v-icon color="purple" v-if="item.paymentType === 'card'">
-                                  mdi-credit-card
-                                </v-icon>                                 
-                                {{ item.total | currency }}
-                            </template>                                                         
-                        </v-data-table>               
-                        <v-simple-table 
-                          v-if="userLogged.configuration && userLogged.configuration.table === 'simple'"
-                        >
-                          <template v-slot:default>
-                            <thead>
-                              <tr>
-                                <th class="text-center caption">
-                                  Data
-                                </th>
-                                <th class="text-left">
-                                  Profissional
-                                </th>              
-                                <th>
-                                  Cliente
-                                </th>                                                                
-                                <th class="text-center">
-                                  Total
-                                </th>                                                                
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr
-                                v-for="ord in orders"
-                                :key="ord._id"
-                                @click="clickRow(ord)"
-                              >
-                                <td class="text-center caption">{{ getDateFormated(ord.date).substring(0,5) }}</td>
-                                <td class="caption">{{ ord.user.name }}</td>
-                                <td class="caption">{{ ord.customer.name }}</td>
-                                <td class="text-right">
-                                  <v-icon color="green" v-if="ord.paymentType === 'cash'">
-                                    mdi-cash
-                                  </v-icon>
-                                  <v-icon color="purple" v-if="ord.paymentType === 'card'">
-                                    mdi-credit-card
-                                  </v-icon>                                                                   
-                                  {{ ord.total | currency }}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </template>
-                        </v-simple-table>                        
-                    </v-sheet>
-                </v-col>
-            </v-row>               
-            -->
         </v-main>
       </VuePullRefresh>
   </v-container>
@@ -280,6 +207,7 @@ export default {
       modal: false,
       date: new Date().toISOString().substr(0, 10),
       dates: [dateUtils.getNewDateAddDay(-6), dateUtils.dateToStringEnUS(new Date())],
+      userBalance: {}
     }),
     methods: {
       onRefresh() {
@@ -452,6 +380,22 @@ export default {
       this.filterOrders()
       this.verifyAccontPremium();
       this.verifyUserRateUS(this.userLogged);
+      if(!this.isAdmin()) {
+        gateway.getUserBalanceByUserId(this.userLogged._id,
+          res => {
+            this.userBalance = res;
+          }, 
+          () => { }
+        )
+      } else {
+        gateway.getUsersBalance(
+          res => {
+            console.log(res);
+            this.balances = res;
+          }, 
+          () => { }
+        )        
+      }
     },
     computed: {
       datesDisplay() {

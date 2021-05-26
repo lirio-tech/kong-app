@@ -5,6 +5,7 @@ import SignUp from '../views/SignUp'
 import Home from '../views/Home'
 import Perfil from '../views/Perfil'
 import OrdemServico from '../views/OrdemServico'
+import OrdersList from '../views/OrdersList'
 import UsuarioList from '../views/UsuarioList'
 import UsuarioForm from '../views/UsuarioForm'
 import CompanyForm from '../views/CompanyForm'
@@ -82,6 +83,11 @@ const routes = [
     name: 'NovaOrdemServico',
     component: OrdemServico
   },      
+  {
+    path: '/orders',
+    name: 'OrdersList',
+    component: OrdersList
+  },
   {
     path: '/ordem-servico/:_id',
     name: 'EditOrdemServico',
