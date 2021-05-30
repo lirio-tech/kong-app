@@ -46,6 +46,7 @@
                         outlined
                         ref="date"
                         v-mask="'##/##/####'"
+                        clearable
                     ></v-text-field>  
                 </v-col>  
                 <v-col cols="12">

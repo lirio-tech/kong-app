@@ -14,8 +14,8 @@
                       <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
                   </v-btn>
               </v-col>
-              <v-col cols="10" align="center">   
-                      <span style="font-size: 1.8rem !important;">Servicos</span>
+              <v-col cols="9" align="center">   
+                      <span style="font-size: 1.8rem !important;">{{ 'Serviços' }} </span>
               </v-col>
           </v-row>    
           
@@ -130,6 +130,9 @@
               Dados não Encontrados para este período
           </v-alert>
 
+          <v-col cols="12" sm="12">
+              Periodo: {{ periodDescription }}
+          </v-col>
           <v-row v-if="orders.length !== 0 && !loading">
               <v-col cols="12" sm="12">
                   <v-sheet min-height="70vh" rounded="lg" >
@@ -222,7 +225,7 @@ export default {
     },
     data: () => ({
       config: {
-        errorLabel: "Erro ao buscar Servicos realizados",
+        errorLabel: "Erro ao buscar Serviços realizados",
         startLabel: "Iniciando Pesquisa...",
         readyLabel: "Atualizar",
         loadingLabel: "Carregando..."
@@ -236,12 +239,12 @@ export default {
       headers: [
           { text: "Data", value: "date" },
           { text: "Profissional", value: "user.name" },
-          { sortable: false, text: "Servicos", value: "servicess" },
           { text: "Valor", value: "total" },
           { text: "Cliente", value: "customer.name" },
       ],                
       orders: [],      
       selectPeriodo: 'Hoje',
+      periodDescription: 'Hoje',
       userLogged: {
         type: 'none'
       },
@@ -262,13 +265,13 @@ export default {
            ontem.setDate(ontem.getDate()-1);
            this.periodo = this.formatarPeriodo(ontem, ontem);
            this.filterOrders();
-           this.consolidado.periodoDescricao = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+           this.periodDescription = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
            this.periodo = this.formatarPeriodo(hoje, hoje);
            this.filterOrders();
-           this.consolidado.periodoDescricao = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+           this.periodDescription = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }
         if(this.selectPeriodo === 'Mes Anterior') {
            let m = new Date();
@@ -279,7 +282,7 @@ export default {
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
+           this.periodDescription = this.getMesPtBr(m.getMonth());
         }
         if(this.selectPeriodo === 'Mes Atual') {
            let m = new Date();
@@ -289,10 +292,10 @@ export default {
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
+           this.periodDescription = this.getMesPtBr(m.getMonth());
         }                
         if(this.selectPeriodo === 'Personalizado') {
-          this.consolidado.periodoDescricao = this.datesDisplay;
+          this.periodDescription = this.datesDisplay;
           this.modal = true;
         }                        
       },
@@ -365,7 +368,7 @@ export default {
             this.periodo.inicio = dates[0];
             this.periodo.fim = dates[0];
           }
-          this.consolidado.periodoDescricao = this.datesDisplay;
+          this.periodDescription = this.datesDisplay;
           this.filterOrders();
         }
       }

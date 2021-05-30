@@ -110,7 +110,7 @@
                             class="text-center" 
                             :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
                           >
-                            {{ det.date }}
+                            {{ getDateFormated(det.date).substring(0,5) }}
                           </td>
                           <td 
                             class="text-center" 
@@ -185,7 +185,13 @@ import UserTypes from '../utils/UserTypes';
         this.balanceValueTotal = this.userBalance.balance < 0 ? 0 : Math.trunc(this.userBalance.balance);
         this.showDialog(true);
         this.$refs.valuePayment.$el.focus();
-      }                
+      },
+      getDateFormated(date) {
+        if (!date) return null;
+
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
+      },          
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

@@ -12,7 +12,7 @@
                     <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                       <div class="overline mb-4 grey--text">
                           Periodo: 
-                          <span class="">{{ consolidado.periodoDescricao }}</span>
+                          <span class="">{{ ordersGroup.periodDescrition }}</span>
                       </div>                           
                     </v-col>
                     <v-col cols="1">
@@ -31,7 +31,7 @@
                       <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
                           <span class="caption grey--text">Total</span><br/>
                           <div style="font-size: 1.5rem">
-                            <span class="green--text">{{ consolidado.total | currency }} </span>
+                            <span class="green--text">{{ ordersGroup.total | currency }} </span>
                           </div>
                       </v-list-item-title>
                     </v-col>
@@ -39,7 +39,7 @@
                       <v-list-item-title class="headline mb-1 text-center" style="margin-top: -40px;">
                           <span class="caption grey--text">Qtde.</span><br/>
                           <div style="font-size: 1.5rem">
-                            <span class="green--text">{{ orders.length }} </span>
+                            <span class="green--text">{{ ordersGroup.amount }} </span>
                             <br/>
                           </div>
                       </v-list-item-title>
@@ -50,7 +50,7 @@
                           mdi-cash
                         </v-icon> 
                         <span class="grey--text" style="font-size: 1.1rem">
-                          {{ sumPaymentType.cash | currency }}
+                          {{ ordersGroup.cash | currency }}
                         </span>
                     </v-col>
                     <v-col cols="6" style="margin-top:5px" class="text-center" small>
@@ -58,7 +58,7 @@
                           mdi-credit-card
                         </v-icon>                                    
                         <span class="grey--text" style="font-size: 1.1rem">
-                          {{ sumPaymentType.card | currency }}
+                          {{ ordersGroup.card | currency }}
                         </span>                                
                     </v-col> 
                     <hr style="border: 1px dotted #424242;border-radius: 5px;" />
@@ -67,18 +67,18 @@
                         <span class="">Comissão</span>
                     </div>                              
                     <v-row 
-                      v-for="cab in consolidado.cabelereiros" 
-                      :key="cab[0]" 
+                      v-for="usr in ordersByUsers" 
+                      :key="usr._id" 
                       style="margin-top:-5px"
                     >
                         <v-col cols="2" class="text-center">
                             <v-icon color="grey">mdi-account</v-icon>
                         </v-col>
                         <v-col cols="5" class="grey--text" style="font-size: 1.1rem">
-                              {{ cab[0] }}
+                              {{ usr._id }}
                         </v-col> 
                         <v-col cols="4" class="grey--text" :style="'font-size: 1.1rem;'">
-                              {{ cab[1] | currency }}
+                              {{ usr.commission | currency }}
                         </v-col>
                     </v-row>
                     <v-row 
@@ -95,10 +95,10 @@
                           class="grey--text" 
                           :style="'font-size: 1.1rem;'"
                         >
-                            {{ consolidado.totalCompany | currency }}
+                            {{ ordersGroup.totalCompany | currency }}
                         </v-col>
                     </v-row>                            
-                    <hr v-if="orders.length" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
+                    <hr v-if="ordersGroup.amount" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
               </v-list-item-content>
             </v-list-item>
             <v-card-actions > 
@@ -154,10 +154,10 @@
                           :to="{ path: '/users-balance' }" 
                           style="color: inherit; text-decoration: none"
                         >
-                            <v-btn large dark>
+                            <v-btn x-large dark>
                                 <v-icon color="green lighten-4">
                                     mdi-account-cash
-                                </v-icon>    
+                                </v-icon> 
                             </v-btn>
                         </router-link>                          
                     </span>     
@@ -180,6 +180,6 @@
 <script>
 export default {
     name: 'HomeAdmin',
-    props: [ 'orders', 'consolidado', 'userLogged', 'sumPaymentType', 'company', 'balanceFull' ]
+    props: [ 'ordersGroup', 'ordersByUsers', 'userLogged', 'company', 'balanceFull' ]
   }
 </script>

@@ -58,6 +58,18 @@ export default{
                 errorCb(error)
             })
     },
+    getOrdersAnalyticsByDataBetween(dataInicio,dataFim,callback,errorCb){       
+        let url = ORDERS_API+'/analytics/'+dataInicio+'/'+dataFim; 
+        console.log(url);
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })
+    },    
     saveOrder(order, callback, errorCb) {
         let url = `${ORDERS_API}/v5`;
         Axios.post(url, order)

@@ -116,26 +116,25 @@
             <v-alert
                 outlined
                 type="error"
-                v-if="orders.length === 0 && !loading"
+                v-if="ordersGroup.amount === 0 && !loading"
               >
                 Dados não Encontrados para este período
             </v-alert>
             
             <HomeAdmin 
               v-if="isAdmin() && !loading"
-              :orders="orders" 
-              :consolidado="consolidado"
+              :ordersGroup="ordersGroup" 
+              :ordersByUsers="ordersByUsers"
               :userLogged="userLogged"
-              :sumPaymentType="sumPaymentType"
               :company="company"
+              :balanceFull="balanceFull"
             />
 
             <HomeEmployee 
               v-if="!isAdmin() && !loading"
-              :orders="orders" 
-              :consolidado="consolidado"
+              :ordersGroup="ordersGroup" 
+              :ordersByUsers="ordersByUsers[0]"              
               :userLogged="userLogged"
-              :sumPaymentType="sumPaymentType"
               :company="company"
               :userBalance="userBalance"
             />
@@ -168,7 +167,7 @@ export default {
     },
     data: () => ({
       config: {
-        errorLabel: "Erro ao buscar Servicos realizados",
+        errorLabel: "Erro ao buscar Serviços realizados",
         startLabel: "Iniciando Pesquisa...",
         readyLabel: "Atualizar",
         loadingLabel: "Carregando..."
@@ -181,25 +180,16 @@ export default {
         inicio: new Date(),
         fim: new Date()
       },
-      headers: [
-          { text: "Data", value: "date" },
-          { text: "Profissional", value: "user.name" },
-          { sortable: false, text: "Servicos", value: "servicess" },
-          { text: "Valor", value: "total" },
-          { text: "Cliente", value: "customer.name" },
-      ],                
-      sumPaymentType: {
-        cash: 0,
-        card: 0
-      },
-      orders: [],      
       selectPeriodo: 'Hoje',
-      consolidado: {
-        periodoDescricao: "",
-        total: 0,
-        cabelereiros: new Map(),
-        totalCompany: 0,
+      ordersGroup: {
+        total: 0.0,
+        totalCompany: 0.0,
+        amount: 0,
+        card: 0.0,
+        cash: 0.0,
+        periodDescrition: 'Hoje'
       },
+      ordersByUsers: [],
       userLogged: {
         type: 'none'
       },
@@ -207,7 +197,8 @@ export default {
       modal: false,
       date: new Date().toISOString().substr(0, 10),
       dates: [dateUtils.getNewDateAddDay(-6), dateUtils.dateToStringEnUS(new Date())],
-      userBalance: {}
+      userBalance: {},
+      balanceFull: 0
     }),
     methods: {
       onRefresh() {
@@ -222,13 +213,13 @@ export default {
            ontem.setDate(ontem.getDate()-1);
            this.periodo = this.formatarPeriodo(ontem, ontem);
            this.filterOrders();
-           this.consolidado.periodoDescricao = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+           this.ordersGroup.periodDescrition = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
            this.periodo = this.formatarPeriodo(hoje, hoje);
            this.filterOrders();
-           this.consolidado.periodoDescricao = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+           this.ordersGroup.periodDescrition = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }
         if(this.selectPeriodo === 'Mes Anterior') {
            let m = new Date();
@@ -239,7 +230,7 @@ export default {
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
+           this.ordersGroup.periodDescrition = this.getMesPtBr(m.getMonth());
         }
         if(this.selectPeriodo === 'Mes Atual') {
            let m = new Date();
@@ -249,10 +240,10 @@ export default {
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           this.consolidado.periodoDescricao = this.getMesPtBr(m.getMonth());
+           this.ordersGroup.periodDescrition = this.getMesPtBr(m.getMonth());
         }                
         if(this.selectPeriodo === 'Personalizado') {
-          this.consolidado.periodoDescricao = this.datesDisplay;
+          this.ordersGroup.periodDescrition = this.datesDisplay;
           this.modal = true;
         }                        
       },
@@ -301,39 +292,34 @@ export default {
         this.config.readyLabel = `Atualizado as ${new Date().toLocaleString('pt-BR')}`;
         this.orders = [];
         this.loading = true;
-        gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim, this.userLogged,
+        
+        this.ordersGroup = {
+                total: 0.0,
+                totalCompany: 0.0,
+                amount: 0,
+                card: 0.0,
+                cash: 0.0,
+                periodDescrition: 'Hoje'
+              };
+
+        gateway.getOrdersAnalyticsByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
-              this.loading = false;
-              this.orders = res;
-
-              this.consolidado.total = 0;
-              this.consolidado.totalCompany = 0;
-              this.consolidado.cabelereiros = new Map();
-              this.orders.forEach(o => {
-                o.servicess = [];
-                let key = this.consolidado.cabelereiros.get(o.user.name) ? this.consolidado.cabelereiros.get(o.user.name) : 0;
-                this.consolidado.cabelereiros.set(o.user.name, key + o.commission );
-                this.consolidado.total += o.total;
-                this.consolidado.totalCompany += o.totalCompany;
-                o.services.forEach(e => {
-                  o.servicess.push(e.type);
-                });
-              });  
-              
-              this.sumPaymentType.cash = 0;
-              this.sumPaymentType.card = 0;
-              this.orders.forEach(o => {
-                if(o.paymentType === 'cash') {
-                  this.sumPaymentType.cash +=  o.total;
-                } else if(o.paymentType === 'card') {
-                  this.sumPaymentType.card +=  o.total;
-                }
-              });                 
-
+            this.loading = false;
+            console.log(res);
+            this.ordersByUsers = res;
+            this.ordersByUsers.forEach(obu => {
+              this.ordersGroup.total = obu.total;
+              this.ordersGroup.totalCompany = obu.totalCompany;
+              this.ordersGroup.amount = obu.amount;
+              this.ordersGroup.card = obu.card;
+              this.ordersGroup.cash = obu.cash;
+            });
           }, err => {
-              console.log(err);
-              this.loading = false;
-          });
+            this.loading = false;
+            console.log(err);
+          }
+
+        )
       },
       showPlanDialog(show) {
         this.dialogPlan = show
@@ -367,7 +353,7 @@ export default {
             this.periodo.inicio = dates[0];
             this.periodo.fim = dates[0];
           }
-          this.consolidado.periodoDescricao = this.datesDisplay;
+          this.ordersGroup.periodDescrition = this.datesDisplay;
           this.filterOrders();
         }
       }
@@ -376,7 +362,7 @@ export default {
       this.userLogged = storage.getUserLogged();
       this.company = storage.getCompany();
       this.periodo = this.formatarPeriodo(new Date(), new Date())
-      this.consolidado.periodoDescricao = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+      this.ordersGroup.periodDescrition = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()
       this.verifyAccontPremium();
       this.verifyUserRateUS(this.userLogged);
@@ -388,10 +374,13 @@ export default {
           () => { }
         )
       } else {
+        this.balanceFull = 0;
         gateway.getUsersBalance(
           res => {
+            res.forEach(b => {
+              this.balanceFull += b.balance;
+            })
             console.log(res);
-            this.balances = res;
           }, 
           () => { }
         )        

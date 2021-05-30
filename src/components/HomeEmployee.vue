@@ -11,14 +11,14 @@
                             <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                               <div class="overline mb-4 grey--text">
                                   Periodo: 
-                                  <span class="">{{ consolidado.periodoDescricao }}</span>
+                                  <span class="">{{ ordersGroup.periodDescrition }}</span>
                               </div>                           
                             </v-col>                              
                             <v-col cols="7">
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
                                   <span class="caption grey--text">Valor de {{ userLogged.percentCommission }}%</span><br/>
                                   <div style="font-size: 1.5rem" >
-                                    <span class="green--text">{{ consolidado.total * company.percentCommission / 100 | currency }} </span>
+                                    <span class="green--text">{{ ordersByUsers ? ordersByUsers.commission : 0 | currency }} </span>
                                   </div>
                               </v-list-item-title>
                             </v-col>
@@ -26,10 +26,10 @@
                               <v-list-item-title class="headline mb-1 text-center" style="margin-top: -35px;">
                                   <span class="caption grey--text">Qtde.</span><br/>
                                   <div style="font-size: 1.5rem">
-                                    <span class="green--text">{{ orders.length }} </span>
+                                    <span class="green--text">{{ ordersGroup.amount }} </span>
                                     <br/>
                                   </div>
-                              </v-list-item-title>
+                              </v-list-item-title> 
                             </v-col>                            
                             <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                             <v-col cols="6" style="margin-top:5px" class="text-center">
@@ -37,7 +37,7 @@
                                   mdi-cash
                                 </v-icon> 
                                 <span class="grey--text" style="font-size: 1.1rem">
-                                  {{ sumPaymentType.cash | currency }}
+                                  {{ ordersGroup.cash | currency }}
                                 </span>
                             </v-col>
                             <v-col cols="6" style="margin-top:5px" class="text-center">
@@ -45,10 +45,10 @@
                                   mdi-credit-card
                                 </v-icon>                                    
                                 <span class="grey--text" style="font-size: 1.1rem">
-                                  {{ sumPaymentType.card | currency }}
+                                  {{ ordersGroup.card | currency }}
                                 </span>                                
                             </v-col> 
-                            <hr v-if="orders.length" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
+                            <hr v-if="ordersGroup.amount" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-actions > 
@@ -125,14 +125,14 @@
             </v-card>              
     </div>            
 </template>
-
+ 
 <script>
 export default {
     name: 'HomeEmployee',
-    props: [ 'orders', 'consolidado', 'userLogged', 'sumPaymentType', 'company', 'userBalance' ],
+    props: [ 'ordersGroup', 'ordersByUsers', 'userLogged', 'company', 'userBalance' ],
     data() {
       return {
-        userBalance: {}
+        
       }
     }
   }

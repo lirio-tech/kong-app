@@ -307,12 +307,12 @@ export default {
               this.company.services = []
           }
           if(!this.service.type) {
-              alert('Descricao do servico Obrigatorio');
+              alert('Descricao do Serviço Obrigatorio');
               return;
           }
           this.service.price = this.numberBrToUS(this.service.priceBR);
           if(this.service.price <= 0) {
-              alert('Valor do Servico deve ser maior que ZERO');
+              alert('Valor do Serviço deve ser maior que ZERO');
               return;
           }          
           this.company.services.push({type: this.service.type, price: this.service.price});

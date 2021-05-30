@@ -158,6 +158,7 @@
                                                     v-mask="'##/##/####'"
                                                     prepend-icon="mdi-calendar"
                                                     filled
+                                                    clearable
                                                     style="margin-top: -20px;">                                
                                     </v-text-field>  
 
