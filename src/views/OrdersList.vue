@@ -1,10 +1,6 @@
 <template>
   <v-container>
     
-      <VuePullRefresh 
-        :on-refresh="onRefresh"
-        :config="config"
-      >
         <v-main class="">
           <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
@@ -131,83 +127,61 @@
           </v-alert>
 
           <v-col cols="12" sm="12">
-              Periodo: {{ periodDescription }}
+              Periodo: {{ periodDescription }}<br/>
+              Quantidade: {{ orders.length }}<br/>
           </v-col>
-          <v-row v-if="orders.length !== 0 && !loading">
-              <v-col cols="12" sm="12">
-                  <v-sheet min-height="70vh" rounded="lg" >
-                      <v-data-table 
-                          v-if="!userLogged.configuration || !userLogged.configuration.table || userLogged.configuration.table === 'mobile'"
-                          :headers="headers" 
-                          :items="orders" 
-                          item-key="code"
-                          class="elevation-1"
-                          :items-per-page="orders.length"
-                          hide-default-footer
-                          loading-text="Carregando... Por favor aguarde"
-                          @click:row="clickRow"
-                      >
-                          <template v-slot:item.date="{ item }">
-                              {{ getDateFormated(item.date) }}                            
-                          </template>           
-                          <template v-slot:item.total="{ item }">
-                              <v-icon color="green" v-if="item.paymentType === 'cash'">
-                                mdi-cash
-                              </v-icon> 
-                              <v-icon color="purple" v-if="item.paymentType === 'card'">
-                                mdi-credit-card
-                              </v-icon>                                 
-                              {{ item.total | currency }}
-                          </template>                                                         
-                      </v-data-table>               
-                      <v-simple-table 
-                        v-if="userLogged.configuration && userLogged.configuration.table === 'simple'"
-                      >
-                        <template v-slot:default>
-                          <thead>
-                            <tr>
-                              <th class="text-center caption">
-                                Data
-                              </th>
-                              <th class="text-left">
-                                Profissional
-                              </th>              
-                              <th>
-                                Cliente
-                              </th>                                                                
-                              <th class="text-center">
-                                Total
-                              </th>                                                                
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr
-                              v-for="ord in orders"
-                              :key="ord._id"
-                              @click="clickRow(ord)"
-                            >
-                              <td class="text-center caption">{{ getDateFormated(ord.date).substring(0,5) }}</td>
-                              <td class="caption">{{ ord.user.name }}</td>
-                              <td class="caption">{{ ord.customer.name }}</td>
-                              <td class="text-right">
-                                <v-icon color="green" v-if="ord.paymentType === 'cash'">
-                                  mdi-cash
-                                </v-icon>
-                                <v-icon color="purple" v-if="ord.paymentType === 'card'">
-                                  mdi-credit-card
-                                </v-icon>                                                                   
-                                {{ ord.total | currency }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>                        
-                  </v-sheet>
-              </v-col>
-          </v-row>               
-          
+          <v-col cols="12">
+            <v-row v-if="orders.length !== 0 && !loading">
+                <v-col cols="12" sm="12">
+                    <v-sheet min-height="70vh" rounded="lg" >           
+                        <v-simple-table >
+                          <template v-slot:default>
+                            <thead>
+                              <tr>
+                                <th class="text-center caption">
+                                  Data
+                                </th>
+                                <th class="text-left">
+                                  Profissional
+                                </th>              
+                                <th>
+                                  Cliente
+                                </th>                                                                
+                                <th class="text-center">
+                                  Total
+                                </th>                                                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="ord in orders"
+                                :key="ord._id"
+                                @click="clickRow(ord)"
+                              >
+                                <td class="text-center caption">{{ getDateFormated(ord.date).substring(0,5) }}</td>
+                                <td class="caption">{{ ord.user.name }}</td>
+                                <td class="caption">{{ ord.customer.name }}</td>
+                                <td class="text-right">
+                                  <v-icon color="green" v-if="ord.paymentType === 'cash'">
+                                    mdi-cash
+                                  </v-icon>
+                                  <v-icon color="purple" v-if="ord.paymentType === 'card'">
+                                    mdi-credit-card
+                                  </v-icon>                                                                   
+                                  {{ ord.total | currency }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </template>
+                        </v-simple-table>                        
+                    </v-sheet>
+                </v-col>                
+            </v-row>              
+            <v-card 
+              v-intersect="infiniteScrolling"
+            ></v-card>     
+          </v-col>         
         </v-main>
-      </VuePullRefresh>
   </v-container>
   
 </template>
@@ -216,20 +190,12 @@
 import gateway from '../api/gateway'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
-import VuePullRefresh from 'vue-pull-refresh'
 import dateUtils from '../utils/date'
 export default {
     name: 'Home',
     components: { 
-      VuePullRefresh,
     },
     data: () => ({
-      config: {
-        errorLabel: "Erro ao buscar Serviços realizados",
-        startLabel: "Iniciando Pesquisa...",
-        readyLabel: "Atualizar",
-        loadingLabel: "Carregando..."
-      },
       loading: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Personalizado'],
       periodo: {
@@ -251,6 +217,10 @@ export default {
       company: {},
       date: new Date().toISOString().substr(0, 10),
       dates: [dateUtils.getNewDateAddDay(-6), dateUtils.dateToStringEnUS(new Date())],
+      finishPagination: false,
+      pageSize: 500,
+      pageNumber: 1,
+      loadingCarregandoMaisDados: false      
     }),
     methods: {
       onRefresh() {
@@ -260,6 +230,7 @@ export default {
         return UserTypes.isAdmin(this.userLogged.type);
       },
       selectedPeriodo() {
+        this.pageNumber = 1;
         if(this.selectPeriodo === 'Ontem') {
            let ontem = new Date();
            ontem.setDate(ontem.getDate()-1);
@@ -341,19 +312,21 @@ export default {
           })
       },
       filterOrders() {
-        this.config.readyLabel = `Atualizado as ${new Date().toLocaleString('pt-BR')}`;
         this.orders = [];
         this.loading = true;
-        gateway.getOrdersByDataBetween(this.periodo.inicio, this.periodo.fim, this.userLogged,
+        this.finishPagination = false;
+        gateway.getOrdersByDataBetween(
+          this.periodo.inicio, 
+          this.periodo.fim, 
+          this.userLogged,
+          this.pageNumber,
+          this.pageSize,
           res => {
               this.loading = false;
               this.orders = res;
-
-              this.orders.forEach(o => {
-                o.services.forEach(e => {
-                  o.servicess.push(e.type);
-                });
-              });  
+              if(res.length < this.pageSize) {
+                this.finishPagination = true;
+              }                               
           }, err => {
               console.log(err);
               this.loading = false;
@@ -371,7 +344,34 @@ export default {
           this.periodDescription = this.datesDisplay;
           this.filterOrders();
         }
-      }
+      },
+      infiniteScrolling(entries, observer, isIntersecting) {
+        console.log('params', entries);
+        console.log('params', observer);
+        console.log('params', isIntersecting);
+        setTimeout(() => {
+          if(this.finishPagination === false) {
+            this.pageNumber++;
+            this.loading = true;
+            gateway.getOrdersByDataBetween(
+              this.periodo.inicio, 
+              this.periodo.fim, 
+              this.userLogged,
+              this.pageNumber,
+              this.pageSize,
+              res => {
+                  if(res.length < this.pageSize) {
+                    this.finishPagination = true;
+                  }                 
+                  this.loading = false;
+                  this.orders.push(...res);
+              }, err => {
+                  console.log(err);
+                  this.loading = false;
+              });            
+          }
+        }, 500);
+      },      
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

@@ -46,8 +46,10 @@ export default{
               errorCb(error);
           })
     },         
-    getOrdersByDataBetween(dataInicio,dataFim,user,callback,errorCb){       
-        let url = ORDERS_API+'/'+dataInicio+'/'+dataFim+'?username='+user.username+'&usertype='+user.type+'&company='+user.company;
+    getOrdersByDataBetween(
+        dataInicio, dataFim, user, pageNumber, numberPerPage, callback,errorCb
+    ){       
+        let url = `${ORDERS_API}/v2/${dataInicio}/${dataFim}?username=${user.username}&usertype=${user.type}&company=${user.company}&pageNumber=${pageNumber}&numberPerPage=${numberPerPage}`;
         console.log(url);
         Axios.get(url)
             .then(data => {
@@ -59,7 +61,7 @@ export default{
             })
     },
     getOrdersAnalyticsByDataBetween(dataInicio,dataFim,callback,errorCb){       
-        let url = ORDERS_API+'/analytics/'+dataInicio+'/'+dataFim; 
+        let url = `${ORDERS_API}/analytics/${dataInicio}/${dataFim}`; 
         console.log(url);
         Axios.get(url)
             .then(data => {

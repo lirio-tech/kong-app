@@ -198,7 +198,7 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       dates: [dateUtils.getNewDateAddDay(-6), dateUtils.dateToStringEnUS(new Date())],
       userBalance: {},
-      balanceFull: 0
+      balanceFull: 0,
     }),
     methods: {
       onRefresh() {
@@ -304,15 +304,15 @@ export default {
 
         gateway.getOrdersAnalyticsByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
-            this.loading = false;
             console.log(res);
+            this.loading = false;
             this.ordersByUsers = res;
             this.ordersByUsers.forEach(obu => {
-              this.ordersGroup.total = obu.total;
-              this.ordersGroup.totalCompany = obu.totalCompany;
-              this.ordersGroup.amount = obu.amount;
-              this.ordersGroup.card = obu.card;
-              this.ordersGroup.cash = obu.cash;
+              this.ordersGroup.total += obu.total;
+              this.ordersGroup.totalCompany += obu.totalCompany;
+              this.ordersGroup.amount += obu.amount;
+              this.ordersGroup.card += obu.card;
+              this.ordersGroup.cash += obu.cash;
             });
           }, err => {
             this.loading = false;
