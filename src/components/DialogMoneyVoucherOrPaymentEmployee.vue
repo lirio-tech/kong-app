@@ -7,7 +7,7 @@
     >
         <v-card>
           <v-toolbar
-            :class="userBalanceType === 'MONEY_VOUCHER' ? 'primary' : 'green'"
+            :class="getColor(userBalanceType)"
           >
             <v-btn
               icon
@@ -17,21 +17,21 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>      
             <v-toolbar-title style="margin-left:-17px;">
-                {{ userBalanceType === 'MONEY_VOUCHER' ? 'Liberar Vale' : 'Pagamento ' }}
+                {{ getDescription(userBalanceType) }}
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>    
           <v-card-text>
             <v-container >
                 <v-col cols="12">
-                  <h2>{{ (userBalanceType === 'MONEY_VOUCHER' ? 'Liberar Vale p/ ' : 'Realizar Pagamento de ') + userBalance.user.name }} </h2>
+                  <h2> {{ getTitle(userBalanceType) }} </h2>
                 </v-col>
                 <br/>
                 <v-col cols="12">
                     <input v-model="balanceValueTotal"
                           v-money="money"
                           class="form-input input-lg"
-                          style="border: 2px solid grey; width: 100%; height: 90px; font-size: 40px; color: #5cb051;" 
+                          style="border: 2px solid #689F38; width: 100%; height: 90px; font-size: 40px; color: #689F38;" 
                           />                    
                 </v-col>
                 <v-col
@@ -49,15 +49,29 @@
                         clearable
                     ></v-text-field>  
                 </v-col>  
+                <v-col
+                    cols="12"
+                    sm="12"
+                    md="12"
+                    style="margin-top: -25px"
+                  >
+                    <v-text-field 
+                        v-model="description"
+                        label="Descricao"
+                        outlined
+                        ref="descr"
+                        clearable
+                    ></v-text-field>  
+                </v-col>                  
                 <v-col cols="12">
                   <v-btn 
                       style="width: 90%"
                       class="ma-2"
                       @click="performPay()"                
-                      :color="userBalanceType === 'MONEY_VOUCHER' ? 'primary' : 'green'"
+                      :color="getColor(userBalanceType)"
                       x-large
                   >
-                    {{ userBalanceType === 'MONEY_VOUCHER' ? 'Liberar Vale' : 'Realizar Pagamento' }}
+                    {{ getButtonTitle(userBalanceType) }}
                   </v-btn>                                                                               
                 </v-col>                                                     
             </v-container>
@@ -111,6 +125,54 @@ export default {
         const [day, month, year] = date.split('/');
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       },      
+      getColor(userBalanceType) {
+        if(userBalanceType === 'MONEY_VOUCHER') {
+          return 'primary';
+        } 
+        if(userBalanceType === 'PAYMENT') {
+          return 'green';
+        }         
+        if(userBalanceType === 'OTHERS') {
+          return 'red';
+        }            
+        return 'green';     
+      },
+      getDescription(userBalanceType) {
+        if(userBalanceType === 'MONEY_VOUCHER') {
+          return 'Vale';
+        } 
+        if(userBalanceType === 'PAYMENT') {
+          return 'Pagamento';
+        }         
+        if(userBalanceType === 'OTHERS') {
+          return 'Refrigerante';
+        }            
+        return 'Pagamento'; 
+      },
+      getTitle(userBalanceType) {
+        if(userBalanceType === 'MONEY_VOUCHER') {
+          return `Liberar Vale p/ ${this.userBalance.user.name}`;
+        } 
+        if(userBalanceType === 'PAYMENT') {
+          return `Realizar Pagamento de ${this.userBalance.user.name}`;
+        }         
+        if(userBalanceType === 'OTHERS') {
+          return `Lancar Algum Debito p/ ${this.userBalance.user.name}`;
+        }            
+        return `Realizar Pagamento de ${this.userBalance.user.name}`;
+      },      
+      getButtonTitle(userBalanceType) {
+        if(userBalanceType === 'MONEY_VOUCHER') {
+          return `Liberar Vale`;
+        } 
+        if(userBalanceType === 'PAYMENT') {
+          return `Realizar Pagamento`;
+        }         
+        if(userBalanceType === 'OTHERS') {
+          return `Lancar Debito`;
+        }            
+        return `Realizar Pagamento`;
+      },       
       performPay() {
         if(this.balanceValueTotal.replace(/\D/g,"") <= 0) {
           alert('Valor deve ser maior que ZERO');
@@ -120,7 +182,8 @@ export default {
           userId: this.userBalance.user._id,
           value: this.balanceValueTotal.replace(/\D/g,""), 
           date: this.date,
-          type: this.userBalanceType
+          type: this.userBalanceType,
+          description: this.description
         };
         gateway.saveUserBalanceAndDetail(userBalanceDetail,
           () => {
@@ -128,6 +191,11 @@ export default {
           }, () => {
             alert('Erro, tente novamente daqui a pouco ')
           });
+      }
+    },
+    computed: {
+      description() {
+        return this.getDescription(this.userBalanceType)
       }
     }
 }
