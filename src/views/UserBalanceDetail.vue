@@ -82,9 +82,8 @@
                     <template v-slot:default>
                       <thead >
                         <tr>
-                          <th class="text-center">
-                            Tipo
-                          </th>
+                          <th class="text-center"></th>
+                          <th class="text-center"></th>
                           <th class="text-center">
                             Data
                           </th>                                    
@@ -104,7 +103,12 @@
                             </v-icon>              
                             <v-icon color="primary" v-if="det.type === 'MONEY_VOUCHER'">
                               mdi-cash-plus
-                            </v-icon>                                               
+                            </v-icon>          
+                          </td>
+                          <td
+                            :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
+                          >
+                            {{ det.description }}
                           </td>
                           <td 
                             class="text-center" 
@@ -116,7 +120,17 @@
                             class="text-center" 
                             :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
                           >
-                          {{ det.value | currency }}</td>
+                            {{ det.value | currency }}
+                          </td>
+                          <td class="text-center" v-if="isAdmin(userLogged.type)">
+                              <v-icon 
+                                color="red" 
+                                v-if="det.type === 'MONEY_VOUCHER' || det.type === 'PAYMENT'"
+                                @click="deleteDebit(det)"
+                              >
+                                mdi-delete
+                              </v-icon>                             
+                          </td>
                         </tr>
                         <tr v-if="userBalanceDetail.length === 0">
                             <td align="center" class="error--text" colspan="3"><h3>Não há Movimentações</h3></td>
@@ -191,7 +205,17 @@ import UserTypes from '../utils/UserTypes';
 
         const [year, month, day] = date.split('-')
         return `${day}/${month}/${year}`
-      },          
+      },        
+      deleteDebit(balanceDetail) {
+        if(confirm(`Deseja realmente delete a movimentacao ${balanceDetail.description}?`))
+        gateway.deleteBalanceDebit(this.userBalance._id, balanceDetail._id,
+          () => {
+            this.getUserBalanceByUserId(this.$route.params.userId);
+            this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);
+          }, () => {
+            alert('Erro ao Deletar Debito ' + balanceDetail.description);
+          }) 
+      }  
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

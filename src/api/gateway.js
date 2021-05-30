@@ -281,6 +281,17 @@ export default{
                 errorCb(error)
             });            
     },
+    deleteBalanceDebit(userBalanceId, userBalanceDetailId, callback, errorCb) {
+        let url = `${USERS_BALANCE_API}/${userBalanceId}/${userBalanceDetailId}`;
+        Axios.delete(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            });      
+    },
     changePassword(_idUser, userChangePassword, callback, errorCb) {
         let url = `${USERS_API}/${_idUser}/change-password`;
         Axios.patch(url, userChangePassword)
