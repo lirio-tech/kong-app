@@ -57,9 +57,7 @@
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
                               x-large
-                              outlined
                               style="width: 70%"
-                              color="primary"
                           >
                             <v-icon style="margin-right: 10px;">
                               mdi-content-cut
