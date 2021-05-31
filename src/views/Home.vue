@@ -138,13 +138,11 @@
               :balanceFull="balanceFull"
             />
             <br/>
-            <v-row>
-              <HomeBalanceAdminToPay
-                :userLogged="userLogged"
-                :balanceFull="balanceFull"
-                v-if="isAdmin() && !loading"
-              />
-            </v-row>            
+            <HomeBalanceAdminToPay
+              :userLogged="userLogged"
+              :balanceFull="balanceFull"
+              v-if="isAdmin() && !loading"
+            />
 
             <HomeEmployee 
               v-if="!isAdmin() && !loading"
@@ -153,6 +151,7 @@
               :userLogged="userLogged"
               :company="company"
             />       
+            
         </v-main>
       </VuePullRefresh>
   </v-container>
