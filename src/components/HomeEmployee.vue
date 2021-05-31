@@ -18,7 +18,7 @@
                               <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
                                   <span class="caption grey--text">Valor de {{ userLogged.percentCommission }}%</span><br/>
                                   <div style="font-size: 1.5rem" >
-                                    <span class="green--text">{{ ordersByUsers ? ordersByUsers.commission : 0 | currency }} </span>
+                                    <span class="">{{ ordersByUsers ? ordersByUsers.commission : 0 | currency }} </span>
                                   </div>
                               </v-list-item-title>
                             </v-col>
@@ -26,7 +26,7 @@
                               <v-list-item-title class="headline mb-1 text-center" style="margin-top: -35px;">
                                   <span class="caption grey--text">Qtde.</span><br/>
                                   <div style="font-size: 1.5rem">
-                                    <span class="green--text">{{ ordersGroup.amount }} </span>
+                                    <span class="">{{ ordersGroup.amount }} </span>
                                     <br/>
                                   </div>
                               </v-list-item-title> 
@@ -56,10 +56,10 @@
                           <v-btn 
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
-                              large
-                              style="width: 70%"
+                              x-large
                               outlined
-                              color="cyan"
+                              style="width: 70%"
+                              color="primary"
                           >
                             <v-icon style="margin-right: 10px;">
                               mdi-content-cut

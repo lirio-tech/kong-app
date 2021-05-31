@@ -16,10 +16,10 @@
                       </div>                           
                     </v-col>
                     <v-col cols="1">
-                      <span style="margin-left: -15px;">
+                      <span style="margin-left: -30px;">
                           <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                              <v-btn fab x-small outlined color="cyan">
-                                  <v-icon>
+                              <v-btn>
+                                  <v-icon color="green lighten-4">
                                       mdi-chart-bar
                                   </v-icon>    
                               </v-btn>
@@ -31,7 +31,7 @@
                       <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
                           <span class="caption grey--text">Total</span><br/>
                           <div style="font-size: 1.5rem">
-                            <span class="green--text">{{ ordersGroup.total | currency }} </span>
+                            <span class="">{{ ordersGroup.total | currency }} </span>
                           </div>
                       </v-list-item-title>
                     </v-col>
@@ -39,7 +39,7 @@
                       <v-list-item-title class="headline mb-1 text-center" style="margin-top: -40px;">
                           <span class="caption grey--text">Qtde.</span><br/>
                           <div style="font-size: 1.5rem">
-                            <span class="green--text">{{ ordersGroup.amount }} </span>
+                            <span class="">{{ ordersGroup.amount }} </span>
                             <br/>
                           </div>
                       </v-list-item-title>
@@ -106,10 +106,8 @@
                   <v-btn 
                       :to="{ path:'/ordem-servico'}" 
                       class="ma-2"
-                      large
+                      x-large
                       style="width: 70%"
-                      outlined
-                      color="cyan"
                   >
                     <v-icon style="margin-right: 10px;">
                       mdi-content-cut
@@ -137,3 +135,8 @@ export default {
     props: [ 'ordersGroup', 'ordersByUsers', 'company']
   }
 </script>
+<style scoped>
+  .green--text--lighten-3 {
+    color: #C5E1A5
+  }
+</style>

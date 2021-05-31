@@ -124,11 +124,11 @@
             <v-alert
                 outlined
                 text
-                type="warning"
+                type="orange lighten-3"
                 dismissible
                 v-if="ordersGroup.amount === 0 && !loading"
               >
-                Dados não Encontrados para {{ ordersGroup.periodDescription }}
+                Para {{ ordersGroup.periodDescription }} não encontramos informacoes
             </v-alert>
             
             <HomeAdmin 
