@@ -22,93 +22,101 @@
                 color="light-blue"
               ></v-progress-linear>
             </v-col>   
-            <br/>  
+            <v-row>
+              <v-col cols="12">
+                <HomeBalanceEmployeeToReceiver
+                    :userLogged="userLogged"
+                    :userBalance="userBalance"
+                    v-if="!isAdmin() && !loading"
+                />     
+              </v-col>
+            </v-row>
             <v-row justify="start">
+              
+                <v-expansion-panels class="px-3" hover focusable>
+                  <v-expansion-panel>
+                    <v-expansion-panel-header> Filtro </v-expansion-panel-header>
+                    <v-expansion-panel-content>
 
-              <v-expansion-panels class="px-3" hover focusable>
-                <v-expansion-panel>
-                  <v-expansion-panel-header> Filtro </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-
-                    <v-row>
-                        
-                        <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                      <v-row>
                           
-                          <v-row>
-                            <v-col
-                              class="d-flex"
-                              cols="12"
-                              sm="6"
-                            >
-                              <v-select
-                                :items="itemsPeriodo"
-                                v-model="selectPeriodo"
-                                label="Periodo"
-                                v-on:change="selectedPeriodo"
-                              ></v-select>
-                            </v-col>                     
-                          </v-row>
-                        </v-col>
-                        <v-col
-                              cols="12"
-                              sm="6"
-                              md="4"
-                              v-if="selectPeriodo === 'Personalizado'"
-                            >
-                              <v-dialog
-                                ref="dialog"
-                                v-model="modal"
-                                :return-value.sync="date" 
-                                persistent
-                                width="290px"
+                          <v-col cols="12" xl="6" lg="6" md="6" sm="12" xs="12">
+                            
+                            <v-row>
+                              <v-col
+                                class="d-flex"
+                                cols="12"
+                                sm="6"
                               >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
-                                    v-model="datesDisplay"
-                                    label="Escolha o Periodo"
-                                    prepend-icon="mdi-calendar"
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="dates"
-                                  range
+                                <v-select
+                                  :items="itemsPeriodo"
+                                  v-model="selectPeriodo"
+                                  label="Periodo"
+                                  v-on:change="selectedPeriodo"
+                                ></v-select>
+                              </v-col>                     
+                            </v-row>
+                          </v-col>
+                          <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                                v-if="selectPeriodo === 'Personalizado'"
+                              >
+                                <v-dialog
+                                  ref="dialog"
+                                  v-model="modal"
+                                  :return-value.sync="date" 
+                                  persistent
+                                  width="290px"
                                 >
-                                  <v-spacer></v-spacer>
-                                  <v-btn
-                                    text
-                                    color="primary"
-                                    @click="modal = false"
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="datesDisplay"
+                                      label="Escolha o Periodo"
+                                      prepend-icon="mdi-calendar"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
+                                    v-model="dates"
+                                    range
                                   >
-                                    Cancel
-                                  </v-btn>
-                                  <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.dialog.save(date); buscarPorPeriodo(dates); modal = false; "
-                                  >
-                                    OK
-                                  </v-btn>
-                                </v-date-picker>
-                              </v-dialog>
-                        </v-col>                           
-                        <v-col cols="12" >
-                          <v-btn 
-                              v-on:click="filterOrders"
-                              class="ma-2" 
-                              large
-                              outlined 
-                              style="width: 50%"
-                              :loading="loading"
-                          >Atualizar</v-btn>    
-                        </v-col>
-                    </v-row>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-expansion-panels>
-
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      text
+                                      color="primary"
+                                      @click="modal = false"
+                                    >
+                                      Cancel
+                                    </v-btn>
+                                    <v-btn
+                                      text
+                                      color="primary"
+                                      @click="$refs.dialog.save(date); buscarPorPeriodo(dates); modal = false; "
+                                    >
+                                      OK
+                                    </v-btn>
+                                  </v-date-picker>
+                                </v-dialog>
+                          </v-col>                           
+                          <v-col cols="12" >
+                            <v-btn 
+                                v-on:click="filterOrders"
+                                class="ma-2" 
+                                large
+                                outlined 
+                                style="width: 50%"
+                                :loading="loading"
+                            >Atualizar</v-btn>    
+                          </v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              
             </v-row>
 
             <br/>
@@ -129,6 +137,14 @@
               :company="company"
               :balanceFull="balanceFull"
             />
+            <br/>
+            <v-row>
+              <HomeBalanceAdminToPay
+                :userLogged="userLogged"
+                :balanceFull="balanceFull"
+                v-if="isAdmin() && !loading"
+              />
+            </v-row>            
 
             <HomeEmployee 
               v-if="!isAdmin() && !loading"
@@ -136,8 +152,7 @@
               :ordersByUsers="ordersByUsers[0]"              
               :userLogged="userLogged"
               :company="company"
-              :userBalance="userBalance"
-            />
+            />       
         </v-main>
       </VuePullRefresh>
   </v-container>
@@ -151,6 +166,8 @@ import DialogPlan from '../components/DialogPlan'
 import DialogRateUs from '../components/DialogRateUs'
 import HomeEmployee from '../components/HomeEmployee'
 import HomeAdmin from '../components/HomeAdmin'
+import HomeBalanceAdminToPay from '../components/HomeBalanceAdminToPay'
+import HomeBalanceEmployeeToReceiver from '../components/HomeBalanceEmployeeToReceiver'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
@@ -163,7 +180,9 @@ export default {
       DialogRateUs,
       VuePullRefresh,
       HomeEmployee,
-      HomeAdmin
+      HomeAdmin,
+      HomeBalanceAdminToPay,
+      HomeBalanceEmployeeToReceiver
     },
     data: () => ({
       config: {
@@ -187,7 +206,7 @@ export default {
         amount: 0,
         card: 0.0,
         cash: 0.0,
-        periodDescrition: 'Hoje'
+        periodDescription: 'Hoje'
       },
       ordersByUsers: [],
       userLogged: {
@@ -213,13 +232,13 @@ export default {
            ontem.setDate(ontem.getDate()-1);
            this.periodo = this.formatarPeriodo(ontem, ontem);
            this.filterOrders();
-           this.ordersGroup.periodDescrition = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+           this.ordersGroup.periodDescription = 'Ontem (' + ontem.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }        
         if(this.selectPeriodo === 'Hoje') {
            let hoje = new Date();
            this.periodo = this.formatarPeriodo(hoje, hoje);
            this.filterOrders();
-           this.ordersGroup.periodDescrition = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+           this.ordersGroup.periodDescription = 'Hoje (' + hoje.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
         }
         if(this.selectPeriodo === 'Mes Anterior') {
            let m = new Date();
@@ -230,7 +249,7 @@ export default {
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           this.ordersGroup.periodDescrition = this.getMesPtBr(m.getMonth());
+           this.ordersGroup.periodDescription = this.getMesPtBr(m.getMonth());
         }
         if(this.selectPeriodo === 'Mes Atual') {
            let m = new Date();
@@ -240,10 +259,9 @@ export default {
            end.setFullYear(m.getFullYear(), m.getMonth()+1, 0);           
            this.periodo = this.formatarPeriodo(ini, end);           
            this.filterOrders();
-           this.ordersGroup.periodDescrition = this.getMesPtBr(m.getMonth());
+           this.ordersGroup.periodDescription = this.getMesPtBr(m.getMonth());
         }                
         if(this.selectPeriodo === 'Personalizado') {
-          this.ordersGroup.periodDescrition = this.datesDisplay;
           this.modal = true;
         }                        
       },
@@ -293,14 +311,11 @@ export default {
         this.orders = [];
         this.loading = true;
         
-        this.ordersGroup = {
-                total: 0.0,
-                totalCompany: 0.0,
-                amount: 0,
-                card: 0.0,
-                cash: 0.0,
-                periodDescrition: 'Hoje'
-              };
+        this.ordersGroup.total = 0.0;
+        this.ordersGroup.totalCompany = 0.0;
+        this.ordersGroup.amount = 0;
+        this.ordersGroup.card = 0.0;
+        this.ordersGroup.cash = 0.0;
 
         gateway.getOrdersAnalyticsByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
@@ -353,7 +368,7 @@ export default {
             this.periodo.inicio = dates[0];
             this.periodo.fim = dates[0];
           }
-          this.ordersGroup.periodDescrition = this.datesDisplay;
+          this.ordersGroup.periodDescription = this.datesDisplay;
           this.filterOrders();
         }
       }
@@ -362,7 +377,7 @@ export default {
       this.userLogged = storage.getUserLogged();
       this.company = storage.getCompany();
       this.periodo = this.formatarPeriodo(new Date(), new Date())
-      this.ordersGroup.periodDescrition = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+      this.ordersGroup.periodDescription = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()
       this.verifyAccontPremium();
       this.verifyUserRateUS(this.userLogged);
@@ -387,7 +402,7 @@ export default {
       }
     },
     computed: {
-      datesDisplay() {
+      datesDisplay() { 
         console.log(this.dates);
         if(this.dates[0] && this.dates[1]) {
           let ini = this.dates[0].split('-');
