@@ -28,7 +28,7 @@
                                   :to="{ path: '/users-balance-detail/'+userLogged._id }" 
                                   style="color: inherit; text-decoration: none"
                                 >
-                                    <v-btn x-large dark>
+                                    <v-btn x-large>
                                         <v-icon color="green lighten-4">
                                             mdi-account-cash
                                         </v-icon>    

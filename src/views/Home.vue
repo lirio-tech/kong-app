@@ -120,7 +120,7 @@
             </v-row>
 
             <br/>
-
+<!-- 
             <v-alert
                 outlined
                 text
@@ -129,7 +129,7 @@
                 v-if="ordersGroup.amount === 0 && !loading"
               >
                 Para {{ ordersGroup.periodDescription }} não encontramos informacoes
-            </v-alert>
+            </v-alert> -->
             
             <HomeAdmin 
               v-if="isAdmin() && !loading"
