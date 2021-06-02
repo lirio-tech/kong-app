@@ -157,6 +157,15 @@
                                     label="Permitir Alterar os Serviços Lançados"
                                 ></v-switch>    
                         </v-col>                                                     
+                        <v-col cols="12" md="4" v-if="userLogged.type === 'sys_admin'">
+                                <v-text-field
+                                label="Device"
+                                v-model="user.device"
+                                ref="device"
+                                prepend-icon="mdi-calendar"
+                                filled readonly
+                                />
+                        </v-col>                                                                          
                 </v-row>    
                 <v-row 
                     align="center"
@@ -170,7 +179,7 @@
                             color="success"
                             :loading="loadingSave"
                             :disabled="loadingSave"
-                            style="width: 48%"
+                            style="width: 40%"
                         >Salvar</v-btn>     
                         &nbsp;&nbsp;   
                         <v-btn 
@@ -181,7 +190,7 @@
                             color="primary"
                             :loading="loadingAdm"
                             :disabled="loadingAdm"
-                            style="width: 48%"
+                            style="width: 40%"
                             @click="becomeAdmin"
                         >Tornar Admin</v-btn>    
                         
@@ -193,7 +202,7 @@
                             color="grey"
                             :loading="loadingAdm"
                             :disabled="loadingAdm"
-                            style="width: 48%"
+                            style="width: 40%"
                             @click="becomeCommon"
                         >Tornar Comum</v-btn>                               
                     </v-col>                                                  
