@@ -22,13 +22,13 @@
                   > 
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn 
-                        icon 
-                        small 
                         style="display: inline;"
                         v-bind="attrs"
                         v-on="on"                        
                       >
-                          <v-icon large color="blue-grey">mdi-menu</v-icon>
+                          <v-icon color="green lighten-4">
+                            mdi-chart-bar
+                          </v-icon>
                       </v-btn>
                     </template>
                     <v-list>
@@ -93,6 +93,7 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
+                      :disabled="BY_MONTH === dataView"
                     ></v-text-field>
                   </template>
                   <v-date-picker
@@ -263,6 +264,7 @@ export default {
       loading: false,
       dataView: null,
       dates: [date.getNewDateAddDay(-6), date.dateToStringEnUS(new Date())],
+      datesAux: [date.getNewDateAddDay(-6), date.dateToStringEnUS(new Date())],
       BY_DAYS: 'DAYS',
       BY_MONTH: 'MONTH',
       BY_DAYS_OF_THE_WEEK: 'DAYS_OF_THE_WEEK',
@@ -484,6 +486,15 @@ export default {
         }
       },
       setDataView(dv) {
+        
+        if(this.BY_MONTH === dv) {
+          this.datesAux = this.dates;
+          this.dates = [date.getNewDateAddDay(-365), date.dateToStringEnUS(new Date())];
+        } 
+        else if(this.dataView !== dv && this.dataView === this.BY_MONTH) {
+          this.dates = this.datesAux;
+        }
+
         this.dataView = dv;
         this.getDaysOfTheWeek(this.dates);
       },
@@ -537,7 +548,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.setDataView(this.BY_DAYS_OF_THE_WEEK); 
+      this.setDataView(this.BY_MONTH); 
     },
     computed: {
       title() {
@@ -555,7 +566,7 @@ export default {
         if(this.dates[0] && this.dates[1]) {
           let ini = this.dates[0].split('-');
           let end = this.dates[1].split('-');
-          return `${ini[2]}/${ini[1]} à ${end[2]}/${end[1]}`; 
+          return `${ini[2]}/${ini[1]}/${ini[0]} à ${end[2]}/${end[1]}/${end[0]}`; 
         } 
         let ini = this.dates[0].split('-');
         return `${ini[2]}/${ini[1]}/${ini[0]}`;
