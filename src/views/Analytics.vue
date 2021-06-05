@@ -483,7 +483,7 @@ export default {
               this.total = 0;
               alert('Tivemos uma falha no processamento ao gerar o relatório :/. Por favor, tente mais tarde.');
           });                                
-        }
+        } 
       },
       setDataView(dv) {
         
