@@ -212,7 +212,7 @@
                   <GChart 
                     :settings="{packages: ['bar']}"    
                     :data="chartDataMonths"
-                    
+                    :options="{ bars: 'horizontal' }"
                     :createChart="(el, google) => new google.charts.Bar(el)"
                     @ready="onChartReady"
                   />
