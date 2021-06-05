@@ -39,7 +39,6 @@
                         <v-list-item-title>Dia a Dia</v-list-item-title>
                       </v-list-item>
                       <v-list-item
-                        v-if="isAdmin(userLogged.type)"
                         @click="() => setDataView(BY_MONTH)"
                       >
                         <v-list-item-subtitle>Mes a Mes</v-list-item-subtitle>
