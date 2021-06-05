@@ -486,7 +486,6 @@ export default {
         } 
       },
       setDataView(dv) {
-        
         if(this.BY_MONTH === dv) {
           this.datesAux = this.dates;
           this.dates = [date.getNewDateAddDay(-365), date.dateToStringEnUS(new Date())];
@@ -494,7 +493,6 @@ export default {
         else if(this.dataView !== dv && this.dataView === this.BY_MONTH) {
           this.dates = this.datesAux;
         }
-
         this.dataView = dv;
         this.getDaysOfTheWeek(this.dates);
       },
@@ -548,7 +546,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.setDataView(this.BY_MONTH); 
+      this.setDataView(this.BY_DAYS_OF_THE_WEEK); 
     },
     computed: {
       title() {
