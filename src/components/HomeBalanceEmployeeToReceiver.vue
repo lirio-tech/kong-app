@@ -23,7 +23,7 @@
                               </span>
                           </v-col>          
                           <v-col cols="2">
-                            <span style="margin-left: -50px;">
+                            <span style="margin-left: -60px;">
                                 <router-link 
                                   :to="{ path: '/users-balance-detail/'+userLogged._id }" 
                                   style="color: inherit; text-decoration: none"

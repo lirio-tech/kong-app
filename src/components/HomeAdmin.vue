@@ -9,24 +9,12 @@
     >
             <v-list-item three-line>
               <v-list-item-content>       
-                    <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
+                    <v-col cols="12" style="margin-top: -20px;margin-left: -10px;">
                       <div class="overline mb-4 grey--text">
                           Periodo: 
                           <span class="">{{ ordersGroup.periodDescription }}</span>
                       </div>                           
-                    </v-col>
-                    <v-col cols="1">
-                      <span style="margin-left: -30px;">
-                          <router-link to="/analytics" style="color: inherit; text-decoration: none">
-                              <v-btn>
-                                  <v-icon color="green lighten-4">
-                                      mdi-chart-bar
-                                  </v-icon>    
-                              </v-btn>
-                          </router-link>                          
-                      </span>     
-                    </v-col>                            
-                      
+                    </v-col>                      
                     <v-col cols="7">
                       <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
                           <span class="caption grey--text">Total</span><br/>
@@ -107,13 +95,22 @@
                       :to="{ path:'/ordem-servico'}" 
                       class="ma-2"
                       x-large
-                      style="width: 70%"
+                      style="width: 60%"
                   >
                     <v-icon style="margin-right: 10px;">
                       mdi-content-cut
                     </v-icon>
                     Novo
-                  </v-btn>                                            
+                  </v-btn>  
+                  <v-btn 
+                      :to="{ path:'/analytics'}" 
+                      class="ma-2"
+                      x-large
+                  >
+                      <v-icon color="green lighten-4">
+                          mdi-chart-bar
+                      </v-icon>    
+                  </v-btn>                                                                        
                 </v-col>
             </v-card-actions>
             <v-col cols="12" class="text-center" style="margin-top: -30px;margin-bottom: -15px;">

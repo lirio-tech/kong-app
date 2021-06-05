@@ -57,13 +57,22 @@
                               :to="{ path:'/ordem-servico'}" 
                               class="ma-2"
                               x-large
-                              style="width: 70%"
+                              style="width: 60%"
                           >
                             <v-icon style="margin-right: 10px;">
                               mdi-content-cut
                             </v-icon>
                             Novo
-                          </v-btn>                                            
+                          </v-btn>  
+                          <v-btn v-if="false"
+                              :to="{ path:'/analytics'}" 
+                              class="ma-2"
+                              x-large
+                          >
+                              <v-icon color="green lighten-4">
+                                  mdi-chart-bar
+                              </v-icon>    
+                          </v-btn>                                                                      
                         </v-col>
                     </v-card-actions>
                     <v-col cols="12" class="text-center" style="margin-top: -30px;margin-bottom: -15px;">
