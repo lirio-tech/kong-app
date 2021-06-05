@@ -147,6 +147,7 @@
             />
 
             <HomeEmployee 
+              style="margin-top: -25px"
               v-if="!isAdmin() && !loading"
               :ordersGroup="ordersGroup" 
               :ordersByUsers="ordersByUsers[0]"              

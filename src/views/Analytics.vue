@@ -128,6 +128,7 @@
             <span class="grey--text caption">Total no periodo</span><br/>  
             <span style="font-size: 1.6rem">{{ total | currency }}</span>
           </v-col>               
+
           <v-alert
                 dense
                 border="bottom"
@@ -137,6 +138,7 @@
               >
                 Dados não Encontrados para este período
           </v-alert>
+
           <v-dialog
             v-model="loading"
             hide-overlay
@@ -198,6 +200,7 @@
                 :options="{height: 380,width: '100%',legend:{ position: 'top', maxLines: 3 }}"
               />  
           </div>
+        
           <div v-if="dataView === BY_PAYMENT_TYPE && dataReturnOK">
               <GChart
                 style="width: 100%"
@@ -206,6 +209,7 @@
                 :options="{height: 380,width: '100%',legend:{ position: 'top', maxLines: 3 }}"
               />  
           </div>   
+   
           <div v-if="dataView === BY_MONTH && dataReturnOK">
             <v-row>
                 <v-col cols="12">
@@ -471,6 +475,7 @@ export default {
         }
         if(this.dataView === this.BY_MONTH) {
           this.loading = true;
+          this.total = 0;
           analyticsGateway.getPaymentsByMonth(dates,
             res => {
               console.log(res);

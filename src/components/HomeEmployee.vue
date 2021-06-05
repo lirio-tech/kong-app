@@ -64,7 +64,7 @@
                             </v-icon>
                             Novo
                           </v-btn>  
-                          <v-btn v-if="false"
+                          <v-btn
                               :to="{ path:'/analytics'}" 
                               class="ma-2"
                               x-large
