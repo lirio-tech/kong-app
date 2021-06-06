@@ -118,6 +118,10 @@
                                       label="Cartão"
                                       value="card"
                                     ></v-radio>
+                                    <v-radio
+                                      label="Pix"
+                                      value="pix"
+                                    ></v-radio>                                    
                                   </v-radio-group>                              
                                 </v-col>
                               </v-row>

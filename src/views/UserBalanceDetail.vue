@@ -32,7 +32,7 @@
                                           style="font-size: 1.3rem !important;"
                                           v-if="userBalance.user.name"
                                         >
-                                          {{userBalance.user.name}} tem a Receber
+                                          {{ isAdmin(userLogged.type) ? userBalance.user.name + ' tem a Receber ' : ' Seu valor a Receber :)'  }} 
                                         </span>
                                     </div>          
                                     <br/>         
