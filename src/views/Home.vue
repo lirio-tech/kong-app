@@ -208,6 +208,7 @@ export default {
         amount: 0,
         card: 0.0,
         cash: 0.0,
+        pix: 0.0,
         periodDescription: 'Hoje'
       },
       ordersByUsers: [],
@@ -318,6 +319,7 @@ export default {
         this.ordersGroup.amount = 0;
         this.ordersGroup.card = 0.0;
         this.ordersGroup.cash = 0.0;
+        this.ordersGroup.pix = 0.0;
 
         gateway.getOrdersAnalyticsByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
@@ -330,6 +332,7 @@ export default {
               this.ordersGroup.amount += obu.amount;
               this.ordersGroup.card += obu.card;
               this.ordersGroup.cash += obu.cash;
+              this.ordersGroup.pix += obu.pix;
             });
           }, err => {
             this.loading = false;

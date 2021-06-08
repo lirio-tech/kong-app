@@ -33,7 +33,7 @@
                       </v-list-item-title>
                     </v-col>                            
                     <hr style="border: 1px dotted #424242;border-radius: 5px;" />
-                    <v-col cols="6" style="margin-top:5px" class="text-center">
+                    <v-col cols="4" style="margin-top:5px" class="text-center">
                         <v-icon color="green" style="margin-top: -4px">
                           mdi-cash
                         </v-icon> 
@@ -41,7 +41,7 @@
                           {{ ordersGroup.cash | currency }}
                         </span>
                     </v-col>
-                    <v-col cols="6" style="margin-top:5px" class="text-center" small>
+                    <v-col cols="4" style="margin-top:5px" class="text-center" small>
                         <v-icon color="purple" style="margin-top: -2px">
                           mdi-credit-card
                         </v-icon>                                    
@@ -49,6 +49,15 @@
                           {{ ordersGroup.card | currency }}
                         </span>                                
                     </v-col> 
+                    <v-col cols="4" style="margin-top:5px" class="text-center" small>
+                        <v-icon color="teal lighten-2" style="margin-top: -2px">
+                          mdi-rhombus-split
+                        </v-icon>                                    
+                        <span class="grey--text" style="font-size: 1.1rem">
+                          {{ ordersGroup.pix | currency }}
+                        </span>                                
+                    </v-col> 
+
                     <hr style="border: 1px dotted #424242;border-radius: 5px;" />
                     <br/>
                     <div class="caption grey--text">

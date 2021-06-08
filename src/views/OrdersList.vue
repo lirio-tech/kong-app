@@ -167,7 +167,10 @@
                                   </v-icon>
                                   <v-icon color="purple" v-if="ord.paymentType === 'card'">
                                     mdi-credit-card
-                                  </v-icon>                                                                   
+                                  </v-icon>
+                                  <v-icon color="teal lighten-2" v-if="ord.paymentType === 'pix'">
+                                    mdi-rhombus-split
+                                  </v-icon>                                                                                                     
                                   {{ ord.total | currency }}
                                 </td>
                               </tr>
