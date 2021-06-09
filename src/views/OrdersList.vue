@@ -161,7 +161,7 @@
                                 <td class="text-center caption">{{ getDateFormated(ord.date).substring(0,5) }}</td>
                                 <td class="caption">{{ ord.user.name }}</td>
                                 <td class="caption">{{ ord.customer.name }}</td>
-                                <td class="text-right">
+                                <td class="text-center">
                                   <v-icon color="green" v-if="ord.paymentType === 'cash'">
                                     mdi-cash
                                   </v-icon>
@@ -170,7 +170,8 @@
                                   </v-icon>
                                   <v-icon color="teal lighten-2" v-if="ord.paymentType === 'pix'">
                                     mdi-rhombus-split
-                                  </v-icon>                                                                                                     
+                                  </v-icon>                      
+                                  <br/>                                                                               
                                   {{ ord.total | currency }}
                                 </td>
                               </tr>
