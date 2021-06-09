@@ -507,6 +507,10 @@ export default {
         if(paymentType === 'cash') {
           return 'Dinheiro'
         }        
+        if(paymentType === 'pix') {
+          return 'Pix'
+        }        
+        return paymentType;        
       },
       convertMonthSumData(monthSumAnalytics) {
         
