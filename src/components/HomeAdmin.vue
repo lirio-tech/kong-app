@@ -37,6 +37,7 @@
                         <v-icon color="green" style="margin-top: -4px">
                           mdi-cash
                         </v-icon> 
+                        <br/>
                         <span class="grey--text" style="font-size: 1.1rem">
                           {{ ordersGroup.cash | currency }}
                         </span>
@@ -45,6 +46,7 @@
                         <v-icon color="purple" style="margin-top: -2px">
                           mdi-credit-card
                         </v-icon>                                    
+                        <br/>
                         <span class="grey--text" style="font-size: 1.1rem">
                           {{ ordersGroup.card | currency }}
                         </span>                                
@@ -53,6 +55,7 @@
                         <v-icon color="teal lighten-2" style="margin-top: -2px">
                           mdi-rhombus-split
                         </v-icon>                                    
+                        <br/>
                         <span class="grey--text" style="font-size: 1.1rem">
                           {{ ordersGroup.pix | currency }}
                         </span>                                
