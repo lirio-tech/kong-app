@@ -26,6 +26,18 @@
           <v-row>
               <v-col cols="12" sm="12" align="center" >
                 <v-btn 
+                  color="purple darken-4"
+                  x-large
+                  style="width:100%"
+                  @click="login"
+                >
+                 Entrar com o Usuario 
+                </v-btn>
+              </v-col>
+          </v-row>      
+          <v-row>
+              <v-col cols="12" sm="12" align="center" >
+                <v-btn 
                   color="green darken-4"
                   x-large
                   style="width:100%"
@@ -94,7 +106,11 @@ export default {
       },
       onError(){
         alert('Erro ao Copiar')
-      }       
+      },
+      login() {
+        storage.setUserLogged(JSON.stringify(this.user));
+        this.$router.push('/');  
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
