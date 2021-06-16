@@ -60,7 +60,7 @@ export default{
                 errorCb(error)
             })
     },
-    getOrdersAnalyticsByDataBetween(dataInicio,dataFim,callback,errorCb){       
+    getOrdersSummaryByDataBetween(dataInicio,dataFim,callback,errorCb){       
         let url = `${ORDERS_API}/summary/${dataInicio}/${dataFim}`; 
         console.log(url);
         Axios.get(url)
