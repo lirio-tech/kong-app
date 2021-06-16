@@ -321,7 +321,7 @@ export default {
         this.ordersGroup.cash = 0.0;
         this.ordersGroup.pix = 0.0;
 
-        gateway.getOrdersAnalyticsByDataBetween(this.periodo.inicio, this.periodo.fim,
+        gateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
             console.log(res);
             this.loading = false;
