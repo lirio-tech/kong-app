@@ -36,12 +36,21 @@
                 <router-link to="/agendamentos" style="color: inherit; text-decoration: none">
                   <v-alert
                       text
-                      type="info"
+                      type="warning"
                     >
-                      Proximo Cliente Agendado <br/>
+                      Agenda: 13:55<br/>
                       Ana Paula <br/>
                       Bronzeamento
                   </v-alert>
+                  <v-alert
+                      text
+                      type="info"
+                    >
+                      Agenda: 15:00 <br/>
+                      Ana Paula <br/>
+                      Unha
+                  </v-alert>
+
                 </router-link>
               </v-col>
             </v-row>

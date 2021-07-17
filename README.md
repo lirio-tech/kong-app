@@ -30,3 +30,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+Calendar:
+
+https://stackoverflow.com/questions/57717902/how-to-change-vuetify-calendar-date-format   
+

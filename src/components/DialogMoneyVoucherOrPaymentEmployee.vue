@@ -130,12 +130,12 @@ export default {
           return 'primary';
         } 
         if(userBalanceType === 'PAYMENT') {
-          return 'green';
+          return 'success';
         }         
         if(userBalanceType === 'OTHERS') {
           return 'red';
         }            
-        return 'green';     
+        return 'success';     
       },
       getDescription(userBalanceType) {
         if(userBalanceType === 'MONEY_VOUCHER') {
