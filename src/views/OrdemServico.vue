@@ -12,13 +12,13 @@
                       </v-col> 
                       <v-col cols="8" align="center" >  
                               <span v-if="order._id" style="font-size: 1.6rem !important;">Corte</span>
-                              <span v-else style="font-size: 1.6rem !important;">Novo Corte</span>
+                              <span v-else style="font-size: 1.4rem !important;">Novo Corte</span>
                       </v-col>       
                   </v-row>    
                   <v-row>
                       <v-col cols="12" sm="12">
                         <center 
-                          class="display-3" 
+                          class="display-2" 
                           :class="{  'warning--text': (order.total <= 0), 'success--text': (order.total > 0 ) }" 
                           align="center" 
                           justify="space-around"
@@ -51,7 +51,7 @@
                                 filled
                               />
                             </v-col>
-                            <v-col cols="2" >
+                            <v-col cols="1" >
                               <v-btn icon outlined class="mt-3" v-on:click="addService">
                                 <v-icon>mdi-plus</v-icon>
                               </v-btn>                            
@@ -59,7 +59,7 @@
                           </div>
                       </v-col>
                       <v-col cols="12" sm="12" class="mt-0 pt-0">
-
+                        <v-container>
                             <v-simple-table dense style="margin-top: -18px;">
                               <template v-slot:default>
                                 <thead >
@@ -91,19 +91,18 @@
                                 </tbody>
                               </template>
                             </v-simple-table>
+                        </v-container>
                       </v-col>
 
-                      <hr/>
-                      <v-col cols="12" sm="12">
+                      <v-col cols="12">
                           <v-form 
                             v-model="valid" 
                             v-on:submit.prevent="save"
                             ref="orderForm"
                             id="orderForm"
                           >
-                            <v-container>
                               <v-row>
-                                <v-col cols="12" md="6" xs="12" >                                  
+                                <v-col cols="12">                                  
                                   <v-radio-group
                                     v-model="order.paymentType"
                                     row
@@ -126,82 +125,46 @@
                                 </v-col>
                               </v-row>
                               <v-row>
-                                <v-col cols="12" md="12" xs="12">                      
+                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">                      
                                     <v-text-field v-model="order.customer.name"
                                                     label="Cliente"
                                                     ref="customerName"
                                                     :rules="customerNameRules"
-                                                    prepend-icon="mdi-account"
+                                                    append-icon="mdi-account"
                                                     filled
                                                     style="margin-top: -20px;">                                
                                     </v-text-field>  
                                 </v-col>
-                              </v-row>               
-                              <v-row>
-                                <v-col cols="12" md="12" xs="12">                      
+                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">                      
                                     <v-text-field v-model="order.customer.phone_number"
                                                     label="Celular"
                                                     ref="customerPhone"
                                                     v-mask="'(##) #####-####'"
-                                                    prepend-icon="mdi-whatsapp"
+                                                    append-icon="mdi-whatsapp"
                                                     filled
                                                     style="margin-top: -20px;">                                
                                     </v-text-field>  
                                 </v-col>
-                              </v-row>                                                              
-                              <v-row>
                                   <v-col
-                                    cols="12"
-                                    sm="12"
-                                    md="12"
+                                   xl="6" lg="6" md="8" sm="12" xs="12" cols="12"
                                   >
                                     <v-text-field v-model="dateFormatted"
                                                     @blur="date = parseDate(dateFormatted)"
                                                     label="Data"
                                                     ref="date"
                                                     v-mask="'##/##/####'"
-                                                    prepend-icon="mdi-calendar"
+                                                    append-icon="mdi-calendar"
                                                     filled
                                                     clearable
                                                     style="margin-top: -20px;">                                
                                     </v-text-field>  
-
-                                    <!-- <v-menu
-                                      v-model="menu2"
-                                      :close-on-content-click="false"
-                                      :nudge-right="40"
-                                      transition="scale-transition"
-                                      offset-y
-                                      min-width="auto"
-                                    >
-                                      <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field
-                                          v-model="dateFormatted"
-                                          @blur="date = parseDate(dateFormatted)"
-                                          label="Data"
-                                          ref="date"
-                                          prepend-icon="mdi-calendar"
-                                          readonly
-                                          filled
-                                          v-bind="attrs"
-                                          v-on="on"
-                                        ></v-text-field>
-                                      </template>
-                                      <v-date-picker
-                                        v-model="date"
-                                        @input="menu2 = false"
-                                        locale="pt-br"
-                                      ></v-date-picker>
-                                    </v-menu> -->
                                   </v-col>                                                       
-                              </v-row>
-                              <v-row>
-                                <v-col cols="12" md="12" xs="12">        
+                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">        
                                     <v-combobox 
                                         v-model="order.user" 
                                         size="1" 
                                         :items="users"
-                                        prepend-icon="mdi-account"
+                                        append-icon="mdi-account"
                                         label="Profissional"
                                         ref="user"
                                         required filled 
@@ -213,28 +176,6 @@
                                     ></v-combobox>                                              
                                 </v-col>
                               </v-row> 
-                              <!-- <v-row v-if="order._id">
-                                  <v-col cols="12" md="4">                      
-                                      <v-text-field v-model="createdAt"
-                                                      label="Lancado"
-                                                      prepend-icon="mdi-calendar"
-                                                      disabled
-                                                      filled required
-                                                      style="margin-top: -20px;">                                
-                                      </v-text-field>  
-                                  </v-col>
-                              </v-row>                              
-                              <v-row v-if="order._id">
-                                  <v-col cols="12" md="4">                      
-                                      <v-text-field v-model="updatedAt"
-                                                      label="Alterado"
-                                                      prepend-icon="mdi-calendar"
-                                                      disabled
-                                                      filled required
-                                                      style="margin-top: -20px;">                                
-                                      </v-text-field>  
-                                  </v-col>
-                              </v-row>                                                             -->
                               <v-row align="center"
                                      justify="space-around"
                                      v-if="(isAdmin() || userLogged.allowEditOrder === true) || !order._id"
@@ -243,7 +184,7 @@
                                       type="submit" 
                                       depressed  
                                       x-large 
-                                      style="width: 50%"
+                                      style="width: 45%"
                                       color="success"
                                       :loading="loadingSave"
                                       :disabled="loadingSave"
@@ -253,19 +194,18 @@
                                     v-if="isAdmin() && order._id"
                                     :loading="loadingDelete"
                                        x-large 
-                                      style="width: 50%"
+                                      style="width: 45%"
                                     :disabled="loadingDelete"
                                     v-on:click="deleteOrder"
                                   >
                                       Deletar
                                   </v-btn>           
                                                            
-                              </v-row>                               
-                              </v-container>
+                              </v-row>           
                           </v-form>                
                       </v-col>
                   </v-row>
-                  <br/><br/>
+                
               </div>           
     </v-container>
 </template>
