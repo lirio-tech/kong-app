@@ -1,7 +1,8 @@
 module.exports = {
-  "transpileDependencies": [
-    "vuetify"
-  ],
+  runtimeCompiler: true,
+//   "transpileDependencies": [
+//     "vuetify"
+//   ],
   pwa: {
     themeColor: '#3399FF',
     name: 'Kong Barber', 
