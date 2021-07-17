@@ -34,6 +34,7 @@ import PurchasesProductsList from '../views/PurchasesProductsList'
 import PurchasesProductsForm from '../views/PurchasesProductsForm'
 import UsersBalance from '../views/UsersBalance'
 import UserBalanceDetail from '../views/UserBalanceDetail'
+import Agendamentos from '../views/Agendamentos'
 
 Vue.use(VueRouter)
 
@@ -208,7 +209,13 @@ const routes = [
     path: '/users-balance-detail/:userId',
     name: 'UserBalanceDetail',
     component: UserBalanceDetail
-  }
+  },
+  {
+    path: '/agendamentos',
+    name: 'Agendamentos',
+    component: Agendamentos
+  },  
+  
 ]
 
 const router = new VueRouter({

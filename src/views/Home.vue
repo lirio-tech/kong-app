@@ -31,6 +31,20 @@
                 />     
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12">
+                <router-link to="/agendamentos" style="color: inherit; text-decoration: none">
+                  <v-alert
+                      text
+                      type="info"
+                    >
+                      Proximo Cliente Agendado <br/>
+                      Ana Paula <br/>
+                      Bronzeamento
+                  </v-alert>
+                </router-link>
+              </v-col>
+            </v-row>
             <v-row justify="start">
               
                 <v-expansion-panels class="px-3" hover focusable>
@@ -120,16 +134,6 @@
             </v-row>
 
             <br/>
-<!-- 
-            <v-alert
-                outlined
-                text
-                type="orange lighten-3"
-                dismissible
-                v-if="ordersGroup.amount === 0 && !loading"
-              >
-                Para {{ ordersGroup.periodDescription }} não encontramos informacoes
-            </v-alert> -->
             
             <HomeAdmin 
               v-if="isAdmin() && !loading"
