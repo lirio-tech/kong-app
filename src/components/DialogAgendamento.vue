@@ -73,7 +73,7 @@
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
                               :value="computedDateFormattedMomentjs"
-                              label="Picker without buttons"
+                              label="Data do Agendamento"
                               prepend-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"
@@ -90,7 +90,7 @@
 
                       <v-col cols="5">
                         <v-text-field
-                          label="Horario"
+                          label="Horário"
                           v-model="agendamento.timeStartAt"
                           type="time"
                         ></v-text-field>
@@ -143,9 +143,6 @@ export default {
         date: new Date().toISOString().substr(0, 10),
         menu2: false,
         modal: false,        
-
-        timeStartAt: '12:30:00',
-        timeEndAt: '13:30:00',
         agendamento: {
           customer: {
             name: '',
@@ -157,8 +154,8 @@ export default {
             username: ''
           },
           dateAt: '',
-          timeStartAt: '',
-          timeEndAt: '',
+          timeStartAt: '12:30:00',
+          timeEndAt: '13:30:00',
           services: [
             {
               type: '',
@@ -191,14 +188,17 @@ export default {
           this.agendamento.dateAt = this.date;
           console.log(this.agendamento);
           agendamentoGateway.registrarAgendamento(this.agendamento,
-            () => this.$emit('show-dialog',false),
+            () => {
+              this.$emit('scheduled-success',new Date(),new Date())
+              this.$emit('show-dialog',false)
+            },
             () => alert('Erro ao registrar agendamento')
           )
         }
       },
     },
     computed: {
-      computedDateFormattedMomentjs () {
+      computedDateFormattedMomentjs() {
         moment.locale('pt-br');
         return this.date ? moment(this.date).format('dddd, DD/MM/YYYY') : ''
       },      
