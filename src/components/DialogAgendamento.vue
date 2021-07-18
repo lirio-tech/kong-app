@@ -91,14 +91,14 @@
                       <v-col cols="5">
                         <v-text-field
                           label="Horario"
-                          v-model="timeStartAt"
+                          v-model="agendamento.timeStartAt"
                           type="time"
                         ></v-text-field>
                       </v-col>            
                       <v-col cols="5">
                         <v-text-field
                           label="Fim"
-                          v-model="timeEndAt"
+                          v-model="agendamento.timeEndAt"
                           type="time"
                         ></v-text-field>
                       </v-col>                  
@@ -156,8 +156,9 @@ export default {
             name: '',
             username: ''
           },
-          dateTimeStartAt: '',
-          dateTimeEndAt: '',
+          dateAt: '',
+          timeStartAt: '',
+          timeEndAt: '',
           services: [
             {
               type: '',
@@ -187,8 +188,7 @@ export default {
       registrarAgendamento() {
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
-          this.agendamento.dateTimeStartAt = `${this.date}T${this.timeStartAt}.000Z`;
-          this.agendamento.dateTimeEndAt = `${this.date}T${this.timeEndAt}.000Z`;
+          this.agendamento.dateAt = this.date;
           console.log(this.agendamento);
           agendamentoGateway.registrarAgendamento(this.agendamento,
             () => this.$emit('show-dialog',false),

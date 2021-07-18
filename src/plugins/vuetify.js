@@ -21,13 +21,16 @@ export default new Vuetify({
       dark: process.env.VUE_APP_THEME !== 'LIGHT',
       themes: {
         light: {
-          primary: '#FF4081',
+          fontTitle: colors.pink.lighten1,
+          primary: colors.pink.lighten2,
           // secondary: '#b0bec5',
           // accent: '#8c9eff',
           // error: '#b71c1c',
-          background: colors.deepPurple.lighten5, 
+          background: colors.deepPurple.base, 
+
         },
         dark: {
+          fontTitle: colors.grey.lighten2,
           primary: '#00B8D4'
         }
       },
