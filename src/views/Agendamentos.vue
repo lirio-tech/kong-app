@@ -115,6 +115,8 @@
 
 <script>
 import storage from '../storage'
+import date from '../utils/date'
+import agendamentoGateway from '../api/agendamentoGateway';
 import DialogAgendamento from '../components/DialogAgendamento'
 export default {
     name: 'Agendamentos',
@@ -132,6 +134,7 @@ export default {
         categories: ['John Smith Joe'],      
 
         value: '',
+        agendamentos: [],
   
         colors: ['#2196F3', '#3F51B5', '#673AB7', '#00BCD4', '#4CAF50', '#FF9800', '#757575'],
         dragEvent: null,
@@ -140,9 +143,20 @@ export default {
         createStart: null,
         extendOriginal: null,                           
     }),
+    beforeMount() {
+        this.userLogged = storage.getUserLogged();
+        this.findAgendamentos();
+    },
     methods: {
-        beforeMount() {
-            this.userLogged = storage.getUserLogged();               
+        findAgendamentos() {
+            let _date = this.value ? this.value : date.dateToStringEnUS(new Date());
+            agendamentoGateway.getAgendamentos(_date, _date,
+                res => {
+                    this.agendamentos = res;
+                    console.log('agendamentos',this.agendamentos);
+                }, () => {
+                    alert('Erro ao Buscar agendamentos');
+                });               
         },
         getEventColor (event) {
             return event.color

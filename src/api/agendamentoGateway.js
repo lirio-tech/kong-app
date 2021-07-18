@@ -15,7 +15,7 @@ export default{
             })        
     },
     getAgendamentos(dtStart, dtEnd, callback, errorCb) {
-        let url = `${ANALYTICS_API}/${dtStart}/${dtEnd}`;
+        let url = `${AGENDAMENTO_API}/${dtStart}/${dtEnd}`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)

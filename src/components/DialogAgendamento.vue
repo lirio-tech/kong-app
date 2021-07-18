@@ -24,7 +24,6 @@
           <v-card-text>
             <v-container >
                 <v-form 
-                  v-model="valid" 
                   v-on:submit.prevent="registrarAgendamento"
                   ref="agendamentoForm"
                   id="agendamentoForm"
@@ -92,14 +91,14 @@
                       <v-col cols="5">
                         <v-text-field
                           label="Horario"
-                          :value="timeStartAt"
+                          v-model="timeStartAt"
                           type="time"
                         ></v-text-field>
                       </v-col>            
                       <v-col cols="5">
                         <v-text-field
                           label="Fim"
-                          :value="timeEndAt"
+                          v-model="timeEndAt"
                           type="time"
                         ></v-text-field>
                       </v-col>                  
@@ -127,6 +126,7 @@
 </template>
 
 <script>
+import agendamentoGateway from '../api/agendamentoGateway';
 import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
@@ -187,9 +187,13 @@ export default {
       registrarAgendamento() {
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
-          this.agendamento.dateTimeStartAt = `${this.date}T${this.timeStartAt}`;
-          this.agendamento.dateTimeEndAt = `${this.date}T${this.timeEndAt}`;
-          alert(JSON.stringify(this.agendamento));
+          this.agendamento.dateTimeStartAt = `${this.date}T${this.timeStartAt}.000Z`;
+          this.agendamento.dateTimeEndAt = `${this.date}T${this.timeEndAt}.000Z`;
+          console.log(this.agendamento);
+          agendamentoGateway.registrarAgendamento(this.agendamento,
+            () => this.$emit('show-dialog',false),
+            () => alert('Erro ao registrar agendamento')
+          )
         }
       },
     },
