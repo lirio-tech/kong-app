@@ -77,15 +77,15 @@
                                     <span>Serviço</span>                                    
                                 </v-col>                   
                                 <v-row >
-                                    <v-col cols="6">
+                                    <v-col cols="12">
                                         <v-text-field
                                             autocomplete="off"
-                                            label="Serviço"
+                                            label="Nome do Serviço"
                                             v-model="service.type"                    
                                             filled
                                         />                        
                                     </v-col>                    
-                                    <v-col cols="4">
+                                    <v-col cols="5">
                                         <v-text-field
                                             autocomplete="off"
                                             label="Valor"
@@ -96,6 +96,15 @@
                                             filled
                                         />
                                     </v-col>
+                                    <v-col cols="5">
+                                      <v-text-field
+                                        label="Tempo"
+                                        filled
+                                        v-model="service.time"
+                                        type="time"
+                                         v-bind="attrs"
+                                      ></v-text-field>                                   
+                                    </v-col>                                    
                                     <v-col cols="1">
                                         <v-btn icon outlined class="mt-3" @click="addService">
                                             <v-icon>mdi-plus</v-icon>
@@ -115,6 +124,9 @@
                                                 <th class="text-left">
                                                 Valor
                                                 </th>
+                                                <th class="text-left">
+                                                Tempo
+                                                </th>                                                
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -122,6 +134,7 @@
                                             <tr v-for="item in company.services" :key="item.type">
                                                 <td>{{ item.type }}</td>
                                                 <td>{{ item.price | currency }}</td>
+                                                <td>{{ item.time }}</td>
                                                 <td>
                                                 <v-icon 
                                                     @click="deleteService(item)" class="error--text">
@@ -138,13 +151,13 @@
                                 </v-col> 
                                 </v-row>
                                 <br/>
-                                <v-btn
+                                <!-- <v-btn
                                     color="green darken-2"
                                     type="button"
                                     @click="onSubmit"
                                 >
                                     Salvar
-                                </v-btn>
+                                </v-btn> -->
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel v-if="isAdmin()">
@@ -280,7 +293,8 @@ export default {
         service: {
             type: '',
             price: 0.00,
-            priceBR: "0,00",                       
+            priceBR: "0,00",
+            time: "01:00"                       
         },
         users: [],
       selected: [2],
@@ -315,10 +329,17 @@ export default {
               alert('Valor do Serviço deve ser maior que ZERO');
               return;
           }          
-          this.company.services.push({type: this.service.type, price: this.service.price});
+          this.company.services.push({type: this.service.type, price: this.service.price, time: this.service.time});
           this.service.type = '';
           this.service.price = 0;
           this.service.priceBR = '0,00';
+          this.service.time = "01:00";
+          gateway.saveCompany(this.company,
+                () => {
+                    storage.setCompany(JSON.stringify(this.company));
+                }, () => {
+                    alert('Erro ao Salvar');
+                });          
       },
       numberBrToUS(v) {
         return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
@@ -326,6 +347,12 @@ export default {
       deleteService(svc) {
           console.log(svc);
           this.company.services.splice(this.company.services.indexOf(svc), 1);
+          gateway.saveCompany(this.company,
+            () => {
+                storage.setCompany(JSON.stringify(this.company));
+            }, () => {
+                alert('Erro ao Salvar');
+            });          
       },
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
