@@ -225,7 +225,7 @@ export default {
           this.agendamento.timeEndAt = String(this.agendamento.dateTimeEndAt).substring(11,16);
           this.servicesSelected = [];
           for(var i in this.agendamento.services) {
-            this.servicesSelected.push(this.agendamento.services[i].type);
+            this.servicesSelected.push(this.agendamento.services[i].type + ' - ' + this.agendamento.services[i].price);
           }
           this.showDialog(true);
         },

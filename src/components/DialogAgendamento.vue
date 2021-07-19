@@ -47,7 +47,7 @@
                         <v-select
                           v-model="servicesSelected"
                           :items="services"
-                          item-text="type"
+                          item-text="display"
                           filled
                           chips
                           label="Serviços"
@@ -189,7 +189,7 @@ export default {
       },      
       registrarAgendamento() {
         if(this.$refs.agendamentoForm.validate()) {
-          this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
+          this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
           this.agendamento.dateAt = this.date;
           console.log(this.agendamento);
 
@@ -223,11 +223,13 @@ export default {
         return this.date ? moment(this.date).format('dddd, DD/MM/YYYY') : ''
       },      
       total: function () {
-        this.services.filter(it => this.servicesSelected.includes(it.type));
+        let svs = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
+        console.log(svs)
         let total = 0;
-        for(var s in this.services) {
-            total += s.price;
+        for(var i in svs) {
+            total += svs[i].price;
         }
+        console.log(total);
         return total;
       }
     },
@@ -235,6 +237,9 @@ export default {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
       this.services = this.myCompany.services;
+      this.services.forEach(element => {
+        element.display = element.type + ' - ' + element.price
+      });
       this.agendamento.companyId = this.myCompany._id;
       this.agendamento.user = this.userLogged;
       
