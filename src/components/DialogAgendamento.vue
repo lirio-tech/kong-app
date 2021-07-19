@@ -55,7 +55,19 @@
                           ref="services"
                           :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
                         ></v-select>
-                      </v-col>             
+                      </v-col>       
+                      <v-col
+                        cols="12"
+                        sm="6"
+                      >
+                          <v-text-field 
+                              v-model="agendamento.total"
+                              label="Total"
+                              filled required
+                              ref="total"
+                              :rules="[v => !!v || 'Total Obrigatório',]"
+                          ></v-text-field>
+                      </v-col>                              
                       <v-col
                         cols="12"
                         sm="6"
@@ -87,21 +99,36 @@
                           ></v-date-picker>
                         </v-menu>
                       </v-col>                         
+                      <v-simple-table dense >
+                          <template v-slot:default>
+                              <tbody >
+                              <tr>
+                                  <th>
+                                    <v-col cols="12">
+                                      <v-text-field
+                                        label="Horário"
+                                        v-model="agendamento.timeStartAt"
+                                        type="time"
+                                      ></v-text-field>
+                                    </v-col>                                  
+                                  </th>
+                                  <th>
+                                      <v-col cols="12">
+                                        <v-text-field
+                                          label="Fim"
+                                          v-model="agendamento.timeEndAt"
+                                          type="time"
+                                        ></v-text-field>          
+                                      </v-col>
+                                  </th>
+                                  <th></th>
+                              </tr>
+                              </tbody>
+                          </template>
+                      </v-simple-table>
 
-                      <v-col cols="5">
-                        <v-text-field
-                          label="Horário"
-                          v-model="agendamento.timeStartAt"
-                          type="time"
-                        ></v-text-field>
-                      </v-col>            
-                      <v-col cols="5">
-                        <v-text-field
-                          label="Fim"
-                          v-model="agendamento.timeEndAt"
-                          type="time"
-                        ></v-text-field>
-                      </v-col>                  
+
+
                       <v-col 
                           cols="12"
                           align="center"
