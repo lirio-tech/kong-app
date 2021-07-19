@@ -131,7 +131,7 @@ import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
 export default {
-    props:['dialog'],
+    props:['dialog', 'agendamento'],
     data () {
       return {
         userLogged: {},
@@ -142,28 +142,7 @@ export default {
 
         date: new Date().toISOString().substr(0, 10),
         menu2: false,
-        modal: false,        
-        agendamento: {
-          customer: {
-            name: '',
-            phoneNumber: ''
-          },
-          user: {
-            _id: '',
-            name: '',
-            username: ''
-          },
-          dateAt: '',
-          timeStartAt: '12:30:00',
-          timeEndAt: '13:30:00',
-          services: [
-            {
-              type: '',
-              price: 0,
-              time: 60,
-            }
-          ],
-        }
+        modal: false
 
       }
     }, 

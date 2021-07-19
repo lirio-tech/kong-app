@@ -102,7 +102,7 @@
                 </v-sheet>
                 <v-sheet height="600">
                   <v-calendar
-                    locale="br"
+                    locale="pt-br"
                     ref="calendar"
                     v-model="focus"
                     color="primary"
@@ -129,29 +129,32 @@
                         :color="selectedEvent.color"
                         dark
                       >
-                        <v-btn icon>
-                          <v-icon>mdi-pencil</v-icon>
-                        </v-btn>
                         <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-btn icon>
-                          <v-icon>mdi-heart</v-icon>
-                        </v-btn>
-                        <v-btn icon>
-                          <v-icon>mdi-dots-vertical</v-icon>
+                        <v-btn icon @click="alterarAgendamentoShowDialog(selectedEvent._id)">
+                          <v-icon>mdi-pencil</v-icon>
                         </v-btn>
                       </v-toolbar>
                       <v-card-text>
+                        {{ selectedEvent._id }} <br/>
+                        {{ selectedEvent.start }} <br/>
+                        {{ selectedEvent.end }} <br/>
+                        {{ selectedEvent.detail }}
                         <span v-html="selectedEvent.details"></span>
                       </v-card-text>
                       <v-card-actions>
                         <v-btn
-                          text
-                          color="secondary"
                           @click="selectedOpen = false"
                         >
-                          Cancel
+                          Cancelar Agenda
                         </v-btn>
+                        <v-btn
+                          
+                          color="success"
+                          @click="selectedOpen = false"
+                        >
+                          Concluir
+                        </v-btn>                        
                       </v-card-actions>
                     </v-card>
                   </v-menu>
@@ -161,7 +164,9 @@
 
             <DialogAgendamento 
                 :dialog="dialog" 
+                :agendamento="agendamento"
                 v-on:show-dialog="showDialog" 
+                v-on:scheduled-success="updateRange" 
             />                
         </v-main>
         
@@ -184,6 +189,27 @@ export default {
         userLogged: {},
         value: '',
         agendamentos: [],
+        agendamento: {
+          customer: {
+            name: '',
+            phoneNumber: ''
+          },
+          user: {
+            _id: '',
+            name: '',
+            username: ''
+          },
+          dateAt: '',
+          timeStartAt: '12:30:00',
+          timeEndAt: '13:30:00',
+          services: [
+            {
+              type: '',
+              price: 0,
+              time: 60,
+            }
+          ],
+        },
         typePeriod: 'day',
 
         focus: '',
@@ -212,6 +238,10 @@ export default {
         // },
         showDialog(show) {
             this.dialog = show;
+        },
+        alterarAgendamentoShowDialog(_id) {
+          this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+          this.showDialog(true);
         },
         setTypePeriod(tp) {
           this.typePeriod = tp;
@@ -249,51 +279,56 @@ export default {
 
           nativeEvent.stopPropagation()
         },
+        done(_id) {
+
+        },
         updateRange ({ start, end }) {
-        console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
-        let _date = this.value ? this.value : date.dateToStringEnUS(new Date());
-        agendamentoGateway.getAgendamentos(_date, _date,
-            res => {
-                this.agendamentos = res;
-                console.log(this.agendamentos)
-                const events = []
-                for(var i in this.agendamentos) {
-                  const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
-                  const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
-                  events.push({
-                      name: this.agendamentos[i].customer.name,
-                      start: _start,
-                      end: _end,
-                      color: 'indigo',
-                      timed: true,
-                  });        
-                }
-                this.events = events   
-            }, () => {
-                alert('Erro ao Buscar agendamentos');
-            });        
+          console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
+          let _date = this.value ? this.value : date.dateToStringEnUS(new Date());
+          agendamentoGateway.getAgendamentos(_date, _date,
+              res => {
+                  this.agendamentos = res;
+                  console.log(this.agendamentos)
+                  const events = []
+                  for(var i in this.agendamentos) {
+                    const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
+                    const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
+                    events.push({
+                        _id: this.agendamentos[i]._id,
+                        name: this.agendamentos[i].customer.name,
+                        detail: this.agendamentos[i].services[0].type,
+                        start: _start,
+                        end: _end,
+                        color: 'indigo',
+                        timed: true,
+                    });        
+                  }
+                  this.events = events   
+              }, () => {
+                  alert('Erro ao Buscar agendamentos');
+              });        
 
-          //const events = []
-          //const min = new Date(`${start.date}T00:00:00`)
-          //const max = new Date(`${end.date}T23:59:59`)
-          //const days = (max.getTime() - min.getTime()) / 86400000
+            //const events = []
+            //const min = new Date(`${start.date}T00:00:00`)
+            //const max = new Date(`${end.date}T23:59:59`)
+            //const days = (max.getTime() - min.getTime()) / 86400000
 
-          //const eventCount = this.rnd(days, days + 20)
-          // for (let i = 0; i < eventCount; i++) {
-          //   const allDay = this.rnd(0, 3) === 0
-          //   const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-          //   const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-          //   const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-          //   const second = new Date(first.getTime() + secondTimestamp)
+            //const eventCount = this.rnd(days, days + 20)
+            // for (let i = 0; i < eventCount; i++) {
+            //   const allDay = this.rnd(0, 3) === 0
+            //   const firstTimestamp = this.rnd(min.getTime(), max.getTime())
+            //   const first = new Date(firstTimestamp - (firstTimestamp % 900000))
+            //   const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
+            //   const second = new Date(first.getTime() + secondTimestamp)
 
-          //   events.push({
-          //     name: this.names[this.rnd(0, this.names.length - 1)],
-          //     start: first,
-          //     end: second,
-          //     color: this.colors[this.rnd(0, this.colors.length - 1)],
-          //     timed: !allDay,
-          //   })
-          // }
+            //   events.push({
+            //     name: this.names[this.rnd(0, this.names.length - 1)],
+            //     start: first,
+            //     end: second,
+            //     color: this.colors[this.rnd(0, this.colors.length - 1)],
+            //     timed: !allDay,
+            //   })
+            // }
         },
         rnd (a, b) {
           return Math.floor((b - a + 1) * Math.random()) + a
