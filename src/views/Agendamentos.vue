@@ -131,8 +131,8 @@
                       >
                         <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-btn icon @click="alterarAgendamentoShowDialog(selectedEvent._id)">
-                          <v-icon>mdi-pencil</v-icon>
+                        <v-btn icon @click="alterarAgendamentoShowDialog(selectedEvent._id)" v-if="selectedEvent.status === 'PENDING'">
+                          <v-icon>mdi-pencil</v-icon> Alterar
                         </v-btn>
                       </v-toolbar>
                       <v-card-text>
@@ -142,18 +142,18 @@
                         {{ selectedEvent.detail }}
                         <span v-html="selectedEvent.details"></span>
                       </v-card-text>
-                      <v-card-actions>
+                      <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn
-                          @click="selectedOpen = false"
+                          @click="cancel(selectedEvent._id)"
                         >
-                          Cancelar Agenda
+                          Cancelar Agendamento
                         </v-btn>
                         <v-btn
                           
                           color="success"
-                          @click="selectedOpen = false"
+                          @click="done(selectedEvent._id)"
                         >
-                          Concluir
+                          Concluir Agendamento
                         </v-btn>                        
                       </v-card-actions>
                     </v-card>
@@ -225,7 +225,6 @@ export default {
           for(var i in this.agendamento.services) {
             this.servicesSelected.push(this.agendamento.services[i].type);
           }
-          alert(JSON.stringify(this.servicesSelected));
           this.showDialog(true);
         },
         done(_id) {
@@ -244,9 +243,8 @@ export default {
           if(confirm("Deseja Realmente Cancelar?")) {
               this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
               agendamentoGateway.agendamentoCancelar(_id, 
-                res => {
-                    const order = res;
-                    this.$route.push("/order/"+order._id); 
+                () => {
+                    this.updateRange(new Date(), new Date())
                 }, () => {
                   alert('Erro ao Concluir :(');
                 })              
@@ -259,7 +257,7 @@ export default {
             case 'DONE':
                   return 'blue-grey darken-4'
             default:
-              'indigo'
+              return 'indigo'
            }
         },        
         setTypePeriod(tp) {
@@ -313,6 +311,7 @@ export default {
                         _id: this.agendamentos[i]._id,
                         name: this.agendamentos[i].customer.name,
                         detail: this.agendamentos[i].services[0].type,
+                        status: this.agendamentos[i].status,
                         start: _start,
                         end: _end,
                         color: this.getColorByStatus(this.agendamentos[0].status),
