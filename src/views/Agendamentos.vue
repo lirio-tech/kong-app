@@ -71,7 +71,7 @@
                       color="grey darken-2"
                       @click="setToday"
                     >
-                      Hoje {{ focus }}
+                      Hoje
                     </v-btn>
                     <v-btn
                       fab
@@ -165,6 +165,7 @@
             <DialogAgendamento 
                 :dialog="dialog" 
                 :agendamento="agendamento"
+                :servicesSelected="servicesSelected"
                 v-on:show-dialog="showDialog" 
                 v-on:scheduled-success="updateRange" 
             />                
@@ -190,6 +191,7 @@ export default {
         value: '',
         agendamentos: [],
         agendamento: {},
+        servicesSelected: [],
         typePeriod: 'day',
 
         focus: '',
@@ -219,8 +221,11 @@ export default {
           this.agendamento.dateAt = String(this.agendamento.dateTimeStartAt).substring(0,10);
           this.agendamento.timeStartAt = String(this.agendamento.dateTimeStartAt).substring(11,16);
           this.agendamento.timeEndAt = String(this.agendamento.dateTimeEndAt).substring(11,16);
-          alert(JSON.stringify(this.agendamento));
-          // TODO separa horario
+          this.servicesSelected = [];
+          for(var i in this.agendamento.services) {
+            this.servicesSelected.push(this.agendamento.services[i].type);
+          }
+          alert(JSON.stringify(this.servicesSelected));
           this.showDialog(true);
         },
         done(_id) {
@@ -358,13 +363,7 @@ export default {
               dateAt: '',
               timeStartAt: '12:30:00',
               timeEndAt: '13:30:00',
-              services: [
-                {
-                  type: '',
-                  price: 0,
-                  time: 60,
-                }
-              ],
+              services: [],
             };
         }
     },        

@@ -131,13 +131,12 @@ import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
 export default {
-    props:['dialog', 'agendamento'],
+    props:['dialog', 'agendamento', 'servicesSelected'],
     data () {
       return {
         userLogged: {},
         myCompany: {},
         services: [],
-        servicesSelected: [],
         value: [],        
 
         date: new Date().toISOString().substr(0, 10),
@@ -167,9 +166,9 @@ export default {
           this.agendamento.dateAt = this.date;
           console.log(this.agendamento);
 
-          if(_id) {
+          if(this.agendamento._id) {
 
-              agendamentoGateway.alterarAgendamento(this.agendamento,
+              agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
                       () => {
                         this.$emit('scheduled-success',new Date(),new Date())
                         this.$emit('show-dialog',false)
@@ -203,6 +202,7 @@ export default {
       this.services = this.myCompany.services;
       this.agendamento.companyId = this.myCompany._id;
       this.agendamento.user = this.userLogged;
+      
     }
 }
 </script>
