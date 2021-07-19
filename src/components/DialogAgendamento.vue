@@ -61,7 +61,7 @@
                         sm="6"
                       >
                           <v-text-field 
-                              v-model="agendamento.total"
+                              v-model="total"
                               label="Total"
                               filled required
                               ref="total"
@@ -222,6 +222,14 @@ export default {
         moment.locale('pt-br');
         return this.date ? moment(this.date).format('dddd, DD/MM/YYYY') : ''
       },      
+      total: function () {
+        this.services.filter(it => this.servicesSelected.includes(it.type));
+        let total = 0;
+        for(var s in this.services) {
+            total += s.price;
+        }
+        return total;
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

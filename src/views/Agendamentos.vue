@@ -144,11 +144,12 @@
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn
+                          color="white" 
                           @click="cancel(selectedEvent._id)"
                         >
                           Cancelar
                         </v-btn>
-                        <br/> <br/>
+                        &nbsp;
                         <v-btn
                           
                           color="success"
