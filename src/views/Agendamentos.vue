@@ -282,6 +282,16 @@ export default {
         done(_id) {
 
         },
+        getColorByStatus(status) {
+           switch(status) {
+            case 'PENDING':
+                  return 'indigo'
+            case 'DONE':
+                  return 'blue-grey darken-4'
+            default:
+              'indigo'
+           }
+        },
         updateRange ({ start, end }) {
           console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
           let _date = this.value ? this.value : date.dateToStringEnUS(new Date());
@@ -299,7 +309,7 @@ export default {
                         detail: this.agendamentos[i].services[0].type,
                         start: _start,
                         end: _end,
-                        color: 'indigo',
+                        color: this.getColorByStatus(this.agendamentos[0].status),
                         timed: true,
                     });        
                   }
