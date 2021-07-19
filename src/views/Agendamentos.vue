@@ -129,11 +129,11 @@
                         :color="selectedEvent.color"
                         dark
                       >
+                        <v-btn icon @click="alterarAgendamentoShowDialog(selectedEvent._id)" v-if="selectedEvent.status === 'PENDING'">
+                          <v-icon>mdi-pencil</v-icon>
+                        </v-btn>
                         <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-btn icon @click="alterarAgendamentoShowDialog(selectedEvent._id)" v-if="selectedEvent.status === 'PENDING'">
-                          <v-icon>mdi-pencil</v-icon> Alterar
-                        </v-btn>
                       </v-toolbar>
                       <v-card-text>
                         {{ selectedEvent._id }} <br/>
@@ -146,14 +146,15 @@
                         <v-btn
                           @click="cancel(selectedEvent._id)"
                         >
-                          Cancelar Agendamento
+                          Cancelar
                         </v-btn>
+                        <br/> <br/>
                         <v-btn
                           
                           color="success"
                           @click="done(selectedEvent._id)"
                         >
-                          Concluir Agendamento
+                          Concluir
                         </v-btn>                        
                       </v-card-actions>
                     </v-card>
@@ -251,14 +252,11 @@ export default {
           }
         },
         getColorByStatus(status) {
-           switch(status) {
-            case 'PENDING':
-                  return 'indigo'
-            case 'DONE':
-                  return 'blue-grey darken-4'
-            default:
-              return 'indigo'
-           }
+            if(status === 'PENDING')
+              return 'blue'
+            if(status === 'DONE')
+              return 'blue-grey darken-1'
+            return 'indigo'
         },        
         setTypePeriod(tp) {
           this.typePeriod = tp;
@@ -314,7 +312,7 @@ export default {
                         status: this.agendamentos[i].status,
                         start: _start,
                         end: _end,
-                        color: this.getColorByStatus(this.agendamentos[0].status),
+                        color: this.getColorByStatus(this.agendamentos[i].status),
                         timed: true,
                     });        
                   }
