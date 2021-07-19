@@ -189,27 +189,7 @@ export default {
         userLogged: {},
         value: '',
         agendamentos: [],
-        agendamento: {
-          customer: {
-            name: '',
-            phoneNumber: ''
-          },
-          user: {
-            _id: '',
-            name: '',
-            username: ''
-          },
-          dateAt: '',
-          timeStartAt: '12:30:00',
-          timeEndAt: '13:30:00',
-          services: [
-            {
-              type: '',
-              price: 0,
-              time: 60,
-            }
-          ],
-        },
+        agendamento: {},
         typePeriod: 'day',
 
         focus: '',
@@ -222,27 +202,61 @@ export default {
     }), 
     beforeMount() {
         this.userLogged = storage.getUserLogged();
+        this.agendamento = this.initAgendamento();
     },
     mounted () {
       this.$refs.calendar.checkChange();
     },
     methods: {
-        // findAgendamentos() {
-        //     let _date = this.value ? this.value : date.dateToStringEnUS(new Date());
-        //     agendamentoGateway.getAgendamentos(_date, _date,
-        //         res => {
-        //             this.agendamentos = res;
-        //         }, () => {
-        //             alert('Erro ao Buscar agendamentos');
-        //         });               
-        // },
         showDialog(show) {
             this.dialog = show;
+            if(show === false) {
+                this.agendamento = this.initAgendamento();              
+            }
         },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+          this.agendamento.dateAt = String(this.agendamento.dateTimeStartAt).substring(0,10);
+          this.agendamento.timeStartAt = String(this.agendamento.dateTimeStartAt).substring(11,16);
+          this.agendamento.timeEndAt = String(this.agendamento.dateTimeEndAt).substring(11,16);
+          alert(JSON.stringify(this.agendamento));
+          // TODO separa horario
           this.showDialog(true);
         },
+        done(_id) {
+            if(confirm("Deseja Realmente Concluir?")) {
+                this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+                agendamentoGateway.agendamentoDone(_id, 
+                  res => {
+                     const order = res;
+                     this.$route.push("/order/"+order._id); 
+                  }, () => {
+                    alert('Erro ao Concluir :(');
+                  })
+            }
+        },
+        cancel(_id) {
+          if(confirm("Deseja Realmente Cancelar?")) {
+              this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+              agendamentoGateway.agendamentoCancelar(_id, 
+                res => {
+                    const order = res;
+                    this.$route.push("/order/"+order._id); 
+                }, () => {
+                  alert('Erro ao Concluir :(');
+                })              
+          }
+        },
+        getColorByStatus(status) {
+           switch(status) {
+            case 'PENDING':
+                  return 'indigo'
+            case 'DONE':
+                  return 'blue-grey darken-4'
+            default:
+              'indigo'
+           }
+        },        
         setTypePeriod(tp) {
           this.typePeriod = tp;
         },
@@ -278,19 +292,6 @@ export default {
           }
 
           nativeEvent.stopPropagation()
-        },
-        done(_id) {
-
-        },
-        getColorByStatus(status) {
-           switch(status) {
-            case 'PENDING':
-                  return 'indigo'
-            case 'DONE':
-                  return 'blue-grey darken-4'
-            default:
-              'indigo'
-           }
         },
         updateRange ({ start, end }) {
           console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
@@ -343,6 +344,29 @@ export default {
         rnd (a, b) {
           return Math.floor((b - a + 1) * Math.random()) + a
         },
+        initAgendamento() {
+          return { 
+              customer: {
+                name: '',
+                phoneNumber: ''
+              },
+              user: {
+                _id: '',
+                name: '',
+                username: ''
+              },
+              dateAt: '',
+              timeStartAt: '12:30:00',
+              timeEndAt: '13:30:00',
+              services: [
+                {
+                  type: '',
+                  price: 0,
+                  time: 60,
+                }
+              ],
+            };
+        }
     },        
 
   }

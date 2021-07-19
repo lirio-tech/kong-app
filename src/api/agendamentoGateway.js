@@ -14,6 +14,17 @@ export default{
                 errorCb(error)
             })        
     },
+    alterarAgendamento(_id, agendamento, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/${_id}`;
+        Axios.put(url, agendamento)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },    
     getAgendamentos(dtStart, dtEnd, callback, errorCb) {
         let url = `${AGENDAMENTO_API}/${dtStart}/${dtEnd}`;
         Axios.get(url)
@@ -24,5 +35,29 @@ export default{
                 console.log(error);
                 errorCb(error)
             })      
-    }      
+    },
+    agendamentoDone(_id, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/${_id}`;
+        Axios.post(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })      
+       
+    },
+    agendamentoCancelar(_id, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/${_id}`;
+        Axios.delete(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })      
+       
+    }    
 }

@@ -166,13 +166,28 @@ export default {
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
           this.agendamento.dateAt = this.date;
           console.log(this.agendamento);
-          agendamentoGateway.registrarAgendamento(this.agendamento,
-            () => {
-              this.$emit('scheduled-success',new Date(),new Date())
-              this.$emit('show-dialog',false)
-            },
-            () => alert('Erro ao registrar agendamento')
-          )
+
+          if(_id) {
+
+              agendamentoGateway.alterarAgendamento(this.agendamento,
+                      () => {
+                        this.$emit('scheduled-success',new Date(),new Date())
+                        this.$emit('show-dialog',false)
+                      },
+                      () => alert('Erro ao registrar agendamento')
+                    )
+          
+
+          } else {
+
+                agendamentoGateway.registrarAgendamento(this.agendamento,
+                  () => {
+                    this.$emit('scheduled-success',new Date(),new Date())
+                    this.$emit('show-dialog',false)
+                  },
+                  () => alert('Erro ao registrar agendamento')
+                )
+          }
         }
       },
     },
