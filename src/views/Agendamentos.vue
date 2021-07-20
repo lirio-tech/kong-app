@@ -278,7 +278,7 @@ export default {
             if(status === 'PENDING')
               return 'blue'
             if(status === 'DONE')
-              return 'blue-grey darken-1'
+              return 'blue-grey darken-2'
             return 'indigo'
         },        
         setTypePeriod(tp) {
