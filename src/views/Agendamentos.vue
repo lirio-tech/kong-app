@@ -5,14 +5,14 @@
             <v-row>
                 <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                     <v-btn icon small style="display: inline;"
-                        :to="{ 'path': '/admin/users'}"
+                        :to="{ 'path': '/'}"
                     >
                         <v-icon large color="white darken-2">mdi-arrow-left</v-icon>
                     </v-btn>
                 </v-col>
                 <v-col cols="9" align="center">   
-                    <span style="font-size: 1.8rem !important;" class="white--text">
-                      Agenda do Dia
+                    <span style="font-size: 1.6rem !important;" class="white--text">
+                      Agendamentos
                     </span>
                 </v-col>
                 <v-col cols="1" align="center" style="margin-left:-40px;">   
@@ -131,27 +131,36 @@
                         :color="selectedEvent.color"
                         dark
                       >
-                        <v-btn icon @click="alterarAgendamentoShowDialog(selectedEvent._id)" v-if="selectedEvent.status === 'PENDING'">
-                          <v-icon>mdi-pencil</v-icon>
+                        <v-btn icon @click="selectedOpen = false">
+                          <v-icon>mdi-close</v-icon>
                         </v-btn>
                         <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                        <v-spacer></v-spacer>
+                        
                       </v-toolbar>
-                      <v-card-text>
-                        {{ selectedEvent._id }} <br/>
-                        {{ selectedEvent.start }} <br/>
-                        {{ selectedEvent.end }} <br/>
-                        {{ selectedEvent.detail }}
-                        <span v-html="selectedEvent.details"></span>
+                      <v-card-text class="indigo--text">
+                        {{ selectedEvent.detail }}<br/>
+                        Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
+                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} as 
+                        {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
+                        Total: {{ selectedEvent.total | currency }}
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn
                           color="white" 
+                          @click="alterarAgendamentoShowDialog(selectedEvent._id)" 
+                          v-if="selectedEvent.status === 'PENDING'"
+                          class="indigo--text"
+                        >
+                          Alterar
+                        </v-btn>                        
+                        <v-btn
+                          color="red" 
                           @click="cancel(selectedEvent._id)"
+                          class="white--text"
                         >
                           Cancelar
                         </v-btn>
-                        &nbsp;
+                        
                         <v-btn
                           
                           color="success"
@@ -180,7 +189,7 @@
 
 <script>
 import storage from '../storage'
-import date from '../utils/date'
+import dateUtil from '../utils/date'
 import agendamentoGateway from '../api/agendamentoGateway';
 import DialogAgendamento from '../components/DialogAgendamento'
 export default {
@@ -225,6 +234,7 @@ export default {
           this.agendamento.dateAt = String(this.agendamento.dateTimeStartAt).substring(0,10);
           this.agendamento.timeStartAt = String(this.agendamento.dateTimeStartAt).substring(11,16);
           this.agendamento.timeEndAt = String(this.agendamento.dateTimeEndAt).substring(11,16);
+          this.agendamento.date = new Date(this.agendamento.dateTimeStartAt).toISOString().substr(0, 10),
           this.servicesSelected = [];
           for(var i in this.agendamento.services) {
             this.servicesSelected.push(this.agendamento.services[i].type + ' - ' + this.agendamento.services[i].price);
@@ -299,7 +309,7 @@ export default {
         },
         updateRange ({ start, end }) {
           console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
-          let _date = this.value ? this.value : date.dateToStringEnUS(new Date());
+          let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
           agendamentoGateway.getAgendamentos(_date, _date,
               res => {
                   this.agendamentos = res;
@@ -311,10 +321,11 @@ export default {
                     events.push({
                         _id: this.agendamentos[i]._id,
                         name: this.agendamentos[i].customer.name,
-                        detail: this.agendamentos[i].services[0].type,
+                        detail: this.getDescriptionServices(this.agendamentos[i].services),
                         status: this.agendamentos[i].status,
                         start: _start,
                         end: _end,
+                        total: this.agendamentos[i].total,
                         color: this.getColorByStatus(this.agendamentos[i].status),
                         timed: true,
                     });        
@@ -325,10 +336,18 @@ export default {
               });        
 
         },
+        getDescriptionServices(services) {
+            let description = ''
+            for(var i in services) {
+              description += `${services[i].type}, `
+            }
+            return description;
+        },
         newSchedule(ev) {
            this.agendamento = this.initAgendamento();
            this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
            this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
+           this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
            if(this.agendamento.timeEndAt.length < 5) {
              this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
            }  
@@ -347,6 +366,7 @@ export default {
                 username: ''
               },
               dateAt: '',
+              date: new Date().toISOString().substr(0, 10),
               timeStartAt: '12:30:00',
               timeEndAt: '13:30:00',
               services: [],

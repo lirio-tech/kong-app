@@ -65,13 +65,13 @@
                               label="Total"
                               filled required
                               ref="total"
+                              @keyup="total = maskCurrency(total)"
                               :rules="[v => !!v || 'Total Obrigatório',]"
                           ></v-text-field>
                       </v-col>                              
                       <v-col
                         cols="12"
                         sm="6"
-                        md="4"
                       >
                         <v-menu
                           v-model="menu2"
@@ -93,44 +93,46 @@
                             ></v-text-field>
                           </template>
                           <v-date-picker
-                            v-model="date"
+                            v-model="agendamento.date"
                             @input="menu2 = false"
                             locale="pt-br"
                           ></v-date-picker>
                         </v-menu>
-                      </v-col>                         
-                      <v-simple-table dense >
-                          <template v-slot:default>
-                              <tbody >
-                              <tr>
-                                  <th>
-                                    <v-col cols="12">
-                                      <v-text-field
-                                        label="Horário"
-                                        v-model="agendamento.timeStartAt"
-                                        type="time"
-                                      ></v-text-field>
-                                    </v-col>                                  
-                                  </th>
-                                  <th>
-                                      <v-col cols="12">
-                                        <v-text-field
-                                          label="Fim"
-                                          v-model="agendamento.timeEndAt"
-                                          type="time"
-                                        ></v-text-field>          
-                                      </v-col>
-                                  </th>
-                                  <th></th>
-                              </tr>
-                              </tbody>
-                          </template>
-                      </v-simple-table>
-
+                      </v-col>              
+                      <v-col cols="12" sm="6">           
+                          <v-simple-table dense >
+                              <template v-slot:default>
+                                  <tbody >
+                                  <tr>
+                                      <th>
+                                        <v-col >
+                                          <v-text-field
+                                            label="Horário"
+                                            v-model="agendamento.timeStartAt"
+                                            type="time"
+                                          ></v-text-field>
+                                        </v-col>                                  
+                                      </th>
+                                      <th>
+                                          <v-col>
+                                            <v-text-field
+                                              label="Fim"
+                                              v-model="agendamento.timeEndAt"
+                                              type="time"
+                                            ></v-text-field>          
+                                          </v-col>
+                                      </th>
+                                      <th></th>
+                                  </tr>
+                                  </tbody>
+                              </template>
+                          </v-simple-table>
+                      </v-col>
 
 
                       <v-col 
                           cols="12"
+                          sm="6"
                           align="center"
                           justify="space-around"
                       >
@@ -166,7 +168,7 @@ export default {
         services: [],
         value: [],        
 
-        date: new Date().toISOString().substr(0, 10),
+        //date: new Date().toISOString().substr(0, 10),
         menu2: false,
         modal: false
 
@@ -187,10 +189,23 @@ export default {
         const [day, month, year] = date.split('/');
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       },      
+      numberBrToUS(v) {
+        return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
+      },           
+      maskCurrency(v) {
+          v=String(v);
+          v=v.replace(/\D/g,"");//Remove tudo o que não é numero
+          v=String(Number(v));
+          v=v.replace(/(\d)(\d{8})$/,"$1.$2");//coloca o ponto dos milhões
+          v=v.replace(/(\d)(\d{5})$/,"$1.$2");//coloca o ponto dos milhares
+          v=v.replace(/(\d)(\d{2})$/,"$1,$2");//coloca a virgula antes dos 2 últimos dígitos
+          return v;
+      },      
       registrarAgendamento() {
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
-          this.agendamento.dateAt = this.date;
+          this.agendamento.dateAt = this.agendamento.date;
+          this.agendamento.total = this.numberBrToUS(this.total);
           console.log(this.agendamento);
 
           if(this.agendamento._id) {
@@ -220,7 +235,7 @@ export default {
     computed: {
       computedDateFormattedMomentjs() {
         moment.locale('pt-br');
-        return this.date ? moment(this.date).format('dddd, DD/MM/YYYY') : ''
+        return this.agendamento.date ? moment(this.agendamento.date).format('dddd, DD/MM/YYYY') : ''
       },      
       total: function () {
         let svs = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
@@ -230,7 +245,7 @@ export default {
             total += svs[i].price;
         }
         console.log(total);
-        return total;
+        return this.maskCurrency(total);
       },      
     },
     beforeMount() {
