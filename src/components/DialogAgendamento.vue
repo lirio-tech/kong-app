@@ -63,6 +63,7 @@
                           <v-text-field 
                               v-model="total"
                               label="Total"
+                              readonly
                               filled required
                               ref="total"
                               @keyup="total = maskCurrency(total)"
@@ -204,6 +205,7 @@ export default {
           return v;
       },      
       registrarAgendamento() {
+        console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
           this.agendamento.dateAt = this.agendamento.date;

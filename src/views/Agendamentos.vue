@@ -230,7 +230,8 @@ export default {
         showDialog(show) {
             this.dialog = show;
             if(show === false) {
-                this.agendamento = this.initAgendamento();              
+                this.agendamento = this.initAgendamento();       
+                this.servicesSelected = [];       
             }
         },
         alterarAgendamentoShowDialog(_id) {
@@ -361,7 +362,7 @@ export default {
            if(this.agendamento.timeEndAt.length < 5) {
              this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
            }  
-           console.log(this.agendamento.timeEndAt)
+           this.servicesSelected = [];
            this.showDialog(true);
         },
         initAgendamento() {
