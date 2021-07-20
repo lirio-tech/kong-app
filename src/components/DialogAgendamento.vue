@@ -141,6 +141,7 @@
                             color="success"
                             x-large
                             type="submit"
+                            :loading="loagindAgendar"
                         >
                           Agendar
                         </v-btn>                                                                               
@@ -163,6 +164,7 @@ export default {
     props:['dialog', 'agendamento', 'servicesSelected'],
     data () {
       return {
+        loagindAgendar: false,
         userLogged: {},
         myCompany: {},
         services: [],
@@ -209,13 +211,17 @@ export default {
           console.log(this.agendamento);
 
           if(this.agendamento._id) {
-
+              this.loagindAgendar = true;
               agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
                       () => {
-                        this.$emit('scheduled-success',new Date(),new Date())
+                        this.loagindAgendar = false;
+                        this.$emit('scheduled-success', new Date(),new Date())
                         this.$emit('show-dialog',false)
                       },
-                      () => alert('Erro ao registrar agendamento')
+                      () => {
+                        this.loagindAgendar = false;
+                        alert('Erro ao registrar agendamento')
+                      }
                     )
           
 

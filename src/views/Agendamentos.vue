@@ -157,14 +157,15 @@
                           color="red" 
                           @click="cancel(selectedEvent._id)"
                           class="white--text"
+                          :loading="loadingCancel"
                         >
                           Cancelar
                         </v-btn>
                         
                         <v-btn
-                          
                           color="success"
                           @click="done(selectedEvent._id)"
+                          :loading="loadingConcluir"
                         >
                           Concluir
                         </v-btn>                        
@@ -199,7 +200,9 @@ export default {
     },
     data: () => ({
         dialog: false,
-        loading: false,
+        loadingCancel: false,
+        loadingConcluir: false,
+
         userLogged: {},
         value: '',
         agendamentos: [],
@@ -244,11 +247,14 @@ export default {
         done(_id) {
             if(confirm("Deseja Realmente Concluir?")) {
                 this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+                this.loadingConcluir = true;
                 agendamentoGateway.agendamentoDone(_id, 
                   res => {
+                     this.loadingConcluir = false;
                      const order = res;
-                     this.$route.push("/order/"+order._id); 
+                     this.$router.push("/order/"+order._id); 
                   }, () => {
+                    this.loadingConcluir = false;
                     alert('Erro ao Concluir :(');
                   })
             }
@@ -256,10 +262,14 @@ export default {
         cancel(_id) {
           if(confirm("Deseja Realmente Cancelar?")) {
               this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+              this.loadingCancel = true;
               agendamentoGateway.agendamentoCancelar(_id, 
                 () => {
-                    this.updateRange(new Date(), new Date())
+                    this.loadingCancel = false;
+                    this.selectedOpen = false;
+                    this.updateRange(new Date(), new Date());
                 }, () => {
+                  this.loadingCancel = false;
                   alert('Erro ao Concluir :(');
                 })              
           }
@@ -274,7 +284,6 @@ export default {
         setTypePeriod(tp) {
           this.typePeriod = tp;
         },
-        // .. 
         viewDay ({ date }) {
           this.focus = date
           this.typePeriod = 'day'
