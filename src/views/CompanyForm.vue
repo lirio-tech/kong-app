@@ -265,7 +265,14 @@
                                 </v-col>
                         </v-col>
                     </v-expansion-panel-content>
-                </v-expansion-panel>                         
+                </v-expansion-panel>        
+                <v-expansion-panel v-if="isAdmin()">
+                    <v-expansion-panel-header>Habilitar Produtos</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12" >  
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                                   
             </v-expansion-panels>
           </v-row>
 
