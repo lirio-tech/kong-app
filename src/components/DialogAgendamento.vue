@@ -231,7 +231,7 @@ export default {
         }
         console.log(total);
         return total;
-      }
+      },      
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
