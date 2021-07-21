@@ -142,7 +142,7 @@
                         Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
                         Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} as 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
-                        Total: {{ selectedEvent.total | currency }}
+                        <!-- Total: {{ selectedEvent.total | currency }} -->
                         <h3 class="success--text" v-if="selectedEvent.status === 'DONE'">Concluído</h3>
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
@@ -165,7 +165,7 @@
                         
                         <v-btn
                           color="success"
-                          @click="done(selectedEvent._id)"
+                          @click="showDialogConcluir(true, selectedEvent._id)"
                           :loading="loadingConcluir"
                         >
                           Concluir
@@ -183,7 +183,15 @@
                 :servicesSelected="servicesSelected"
                 v-on:show-dialog="showDialog" 
                 v-on:scheduled-success="updateRange" 
-            />                
+            />      
+
+            <DialogAgendamentoConcluir 
+              :dialog="dialogAgendamentoConcluir" 
+              :agendamentoId="agendamentoConcluirId"
+              v-on:show-dialog="showDialogConcluir" 
+              v-on:done="done"
+              
+            />          
         </v-main>
         
     </v-container>
@@ -194,15 +202,20 @@ import storage from '../storage'
 import dateUtil from '../utils/date'
 import agendamentoGateway from '../api/agendamentoGateway';
 import DialogAgendamento from '../components/DialogAgendamento'
+import DialogAgendamentoConcluir from '../components/DialogAgendamentoConcluir'
 export default {
     name: 'Agendamentos',
     components: { 
-        DialogAgendamento
+        DialogAgendamento,
+        DialogAgendamentoConcluir
     },
     data: () => ({
         dialog: false,
+        dialogAgendamentoConcluir: false,
         loadingCancel: false,
         loadingConcluir: false,
+
+        agendamentoConcluirId: '',
 
         userLogged: {},
         value: '',
@@ -233,6 +246,10 @@ export default {
                 this.agendamento = this.initAgendamento();       
                 this.servicesSelected = [];       
             }
+        },
+        showDialogConcluir(show, agendamentoId) {
+          this.dialogAgendamentoConcluir = show;
+          this.agendamentoConcluirId = agendamentoId;
         },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];

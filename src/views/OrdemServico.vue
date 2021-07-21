@@ -106,7 +106,7 @@
                                   <v-radio-group
                                     v-model="order.paymentType"
                                     row
-                                    style="margin-top: -10px; margin-left: 20%;"
+                                    style="margin-top: -10px; margin-left: 10%;"
                                   >
                                     <v-radio
                                       label="Dinheiro"
