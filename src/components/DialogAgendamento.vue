@@ -128,7 +128,18 @@
                               </template>
                           </v-simple-table>
                       </v-col>
-
+                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
+                          <v-select 
+                              v-model="agendamento.user" 
+                              size="1" 
+                              :items="users"
+                              label="Funcionário"
+                              ref="user"
+                              required filled 
+                              item-text='name'
+                              item-value='_id'            
+                          ></v-select>                                              
+                      </v-col>  
 
                       <v-col 
                           cols="12"
@@ -161,7 +172,7 @@ import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
 export default {
-    props:['dialog', 'agendamento', 'servicesSelected'],
+    props:['dialog', 'agendamento', 'servicesSelected', 'users'],
     data () {
       return {
         loagindAgendar: false,

@@ -165,7 +165,7 @@
                                         size="1" 
                                         :items="users"
                                         append-icon="mdi-account"
-                                        label="Profissional"
+                                        label="Funcionário"
                                         ref="user"
                                         required filled 
                                         item-text='name'

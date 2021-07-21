@@ -58,6 +58,21 @@
                         >Mês</v-btn>                               
                     </v-col>                                                  
             </v-row>           
+            <v-row 
+                    align="center"
+                    justify="space-around"
+                >
+                    <v-col cols="12" md="12" align="center">
+                        <v-btn 
+                            type="button" 
+                            depressed  
+                            large 
+                            style="width: 100%"
+                            @click="showDialogEmployees(true)"
+                            :color="typePeriod === 'category' ? 'primary' : ''"
+                        >Funcionários</v-btn>                               
+                    </v-col>                                                  
+            </v-row>                 
 
             <v-row class="fill-height">
               <v-col>
@@ -107,6 +122,8 @@
                     v-model="focus"
                     color="primary"
                     :events="events"
+                    :categories="users"
+                    category-show-all
                     :event-color="getEventColor"
                     :type="typePeriod"
                     @click:event="showEvent"
@@ -142,13 +159,14 @@
                         Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
                         Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} as 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
+                        Funcionario: {{ selectedEvent.userName }} <br/>
                         <!-- Total: {{ selectedEvent.total | currency }} -->
                         <h3 class="success--text" v-if="selectedEvent.status === 'DONE'">Concluído</h3>
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn
                           color="white" 
-                          @click="alterarAgendamentoShowDialog(selectedEvent._id)" 
+                          @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
                           v-if="selectedEvent.status === 'PENDING'"
                           class="indigo--text"
                         >
@@ -181,6 +199,7 @@
                 :dialog="dialog" 
                 :agendamento="agendamento"
                 :servicesSelected="servicesSelected"
+                :users="usersAll"
                 v-on:show-dialog="showDialog" 
                 v-on:scheduled-success="updateRange" 
             />      
@@ -191,7 +210,13 @@
               v-on:show-dialog="showDialogConcluir" 
               v-on:done="done"
               
-            />          
+            />   
+
+            <DialogAgendamentoEmployees 
+                :dialog="dialogEmployees"
+                :users="usersAll"
+                v-on:show-dialog="showDialogEmployees"
+            />       
         </v-main>
         
     </v-container>
@@ -201,17 +226,21 @@
 import storage from '../storage'
 import dateUtil from '../utils/date'
 import agendamentoGateway from '../api/agendamentoGateway';
+import gateway from '../api/gateway';
 import DialogAgendamento from '../components/DialogAgendamento'
 import DialogAgendamentoConcluir from '../components/DialogAgendamentoConcluir'
+import DialogAgendamentoEmployees from '../components/DialogAgendamentoEmployees'
 export default {
     name: 'Agendamentos',
     components: { 
         DialogAgendamento,
-        DialogAgendamentoConcluir
+        DialogAgendamentoConcluir,
+        DialogAgendamentoEmployees
     },
     data: () => ({
         dialog: false,
         dialogAgendamentoConcluir: false,
+        dialogEmployees: false,
         loadingCancel: false,
         loadingConcluir: false,
 
@@ -222,19 +251,27 @@ export default {
         agendamentos: [],
         agendamento: {},
         servicesSelected: [],
-        typePeriod: 'day',
+        typePeriod: 'category',
 
         focus: '',
         selectedEvent: {},
         selectedElement: null,
         selectedOpen: false,
         events: [],
-        names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+        users: [],
+        usersAll: [],
 
     }), 
     beforeMount() {
         this.userLogged = storage.getUserLogged();
         this.agendamento = this.initAgendamento();
+        gateway.getUsers('enabled', res => {
+          this.usersAll = res.map(it => it.name);  
+          this.users = res.filter(it => it._id === this.userLogged._id).map(it => it.name);  
+          console.log(this.users)
+        }, err => {
+          console.log(err);
+        });        
     },
     mounted () {
       this.$refs.calendar.checkChange(); // 60f1bca6b0529e00088c8750 -> feeh :: 60f1c34cb0529e00088c8752 -> grazi
@@ -250,6 +287,15 @@ export default {
         showDialogConcluir(show, agendamentoId) {
           this.dialogAgendamentoConcluir = show;
           if(agendamentoId) this.agendamentoConcluir = this.agendamentos.filter(it => it._id === agendamentoId)[0];
+        },
+        showDialogEmployees(show, users) {
+            if(show === false && users) {
+              this.users = users;
+              this.setTypePeriod('category')
+            } else {
+              this.setTypePeriod('day')
+            }
+            this.dialogEmployees = show;
         },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
@@ -348,6 +394,8 @@ export default {
                     events.push({
                         _id: this.agendamentos[i]._id,
                         name: this.agendamentos[i].customer.name,
+                        user: this.agendamentos[i].user.username,
+                        userName: this.agendamentos[i].user.name,
                         detail: this.getDescriptionServices(this.agendamentos[i].services),
                         status: this.agendamentos[i].status,
                         start: _start,
@@ -355,6 +403,7 @@ export default {
                         total: this.agendamentos[i].total,
                         color: this.getColorByStatus(this.agendamentos[i].status),
                         timed: true,
+                        category: this.users.filter(it => it === this.agendamentos[i].user.name)[0],
                     });        
                   }
                   this.events = events   
@@ -375,6 +424,7 @@ export default {
            this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
            this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
            this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
+           this.agendamento.user = this.typePeriod === 'category' ? this.usersAll.filter(it => it.username === ev.user)[0] : this.userLogged;
            if(this.agendamento.timeEndAt.length < 5) {
              this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
            }  
