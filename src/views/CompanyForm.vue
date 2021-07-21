@@ -267,9 +267,17 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>        
                 <v-expansion-panel v-if="isAdmin()">
-                    <v-expansion-panel-header>Habilitar Produtos</v-expansion-panel-header>
+                    <v-expansion-panel-header>Produtos</v-expansion-panel-header>
                     <v-expansion-panel-content>              
                         <v-col cols="12" >  
+                            <v-sheet class="pa-5">
+                                <v-switch
+                                v-model="company.product.schedule"
+                                inset
+                                :label="`Agendamento`"
+                                @change="updateProducts"
+                                ></v-switch>
+                            </v-sheet>                            
                         </v-col>
                     </v-expansion-panel-content>
                 </v-expansion-panel>                                   
@@ -295,7 +303,8 @@ export default {
         panel: [],
         loading: false,
         valid: true,
-        company: {},
+        companyWithoutUpdate: {},
+        company: { product: { schedule: false } },
         message: {},   
         service: {
             type: '',
@@ -383,6 +392,16 @@ export default {
                     alert('Erro ao Salvar');
                 });
       },      
+      updateProducts() {
+          this.companyWithoutUpdate.product = this.company.product;
+          gateway.saveCompany(this.companyWithoutUpdate,
+                () => {
+                    this.company = this.companyWithoutUpdate;
+                    storage.setCompany(JSON.stringify(this.company));
+                }, () => {
+                    alert('Erro ao Salvar');
+                });                
+      },
       getUsers() {
         gateway.getUsers('all', res => {
           this.users = res;
@@ -409,7 +428,11 @@ export default {
       this.userLogged = storage.getUserLogged();   
       gateway.getCompanyById(this.$route.params._id,
         res => {
+            if(!res.product) {
+                res.product = { schedule: false };
+            }
             this.company = res;
+            this.companyWithoutUpdate = this.company;
         }, () => {
             alert('Erro ao buscar informacoes do Estabelecimento');
         });

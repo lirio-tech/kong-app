@@ -31,29 +31,6 @@
                 />     
               </v-col>
             </v-row>
-            <v-row>
-              <v-col cols="12">
-                <router-link to="/agendamentos" style="color: inherit; text-decoration: none">
-                  <v-alert
-                      text
-                      type="warning"
-                    >
-                      Agenda: 13:55<br/>
-                      Ana Paula <br/>
-                      Bronzeamento
-                  </v-alert>
-                  <v-alert
-                      text
-                      type="info"
-                    >
-                      Agenda: 15:00 <br/>
-                      Ana Paula <br/>
-                      Unha
-                  </v-alert>
-
-                </router-link>
-              </v-col>
-            </v-row>
             <v-row justify="start">
               
                 <v-expansion-panels class="px-3" hover focusable>
@@ -167,6 +144,11 @@
               :userLogged="userLogged"
               :company="company"
             />       
+            <br/>
+            <HomeAgendamentos
+              :userLogged="userLogged"
+              v-if="!loading && (company.product && company.product.schedule)"
+            />
             
         </v-main>
       </VuePullRefresh>
@@ -183,6 +165,7 @@ import HomeEmployee from '../components/HomeEmployee'
 import HomeAdmin from '../components/HomeAdmin'
 import HomeBalanceAdminToPay from '../components/HomeBalanceAdminToPay'
 import HomeBalanceEmployeeToReceiver from '../components/HomeBalanceEmployeeToReceiver'
+import HomeAgendamentos from '../components/HomeAgendamentos'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
@@ -197,7 +180,8 @@ export default {
       HomeEmployee,
       HomeAdmin,
       HomeBalanceAdminToPay,
-      HomeBalanceEmployeeToReceiver
+      HomeBalanceEmployeeToReceiver,
+      HomeAgendamentos
     },
     data: () => ({
       config: {
