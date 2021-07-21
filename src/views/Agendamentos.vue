@@ -224,7 +224,7 @@ export default {
         this.agendamento = this.initAgendamento();
     },
     mounted () {
-      this.$refs.calendar.checkChange();
+      this.$refs.calendar.checkChange(); // 60f1bca6b0529e00088c8750 -> feeh :: 60f1c34cb0529e00088c8752 -> grazi
     },
     methods: {
         showDialog(show) {
@@ -254,7 +254,7 @@ export default {
                   res => {
                      this.loadingConcluir = false;
                      const order = res;
-                     this.$router.push("/order/"+order._id); 
+                     this.$router.push("/ordem-servico/"+order._id); 
                   }, () => {
                     this.loadingConcluir = false;
                     alert('Erro ao Concluir :(');
