@@ -7,7 +7,7 @@
     >
         <v-card>
           <v-toolbar
-            class="primary"
+            class="primary white--text"
           >
             <v-btn
               icon
@@ -28,6 +28,7 @@
                   ref="agendamentoForm"
                   id="agendamentoForm"
                 >              
+                    <br/>
                       <v-col
                           cols="12"
                           sm="6"
@@ -59,6 +60,7 @@
                       <v-col
                         cols="12"
                         sm="6"
+                        v-if="agendamento._id"
                       >
                           <v-text-field 
                               v-model="total"
@@ -87,8 +89,8 @@
                             <v-text-field
                               :value="computedDateFormattedMomentjs"
                               label="Data do Agendamento"
-                              prepend-icon="mdi-calendar"
                               readonly
+                              filled
                               v-bind="attrs"
                               v-on="on"
                             ></v-text-field>
@@ -106,22 +108,20 @@
                                   <tbody >
                                   <tr>
                                       <th>
-                                        <v-col >
                                           <v-text-field
                                             label="Horário"
                                             v-model="agendamento.timeStartAt"
                                             type="time"
-                                          ></v-text-field>
-                                        </v-col>                                  
+                                            filled
+                                          ></v-text-field>                     
                                       </th>
                                       <th>
-                                          <v-col>
                                             <v-text-field
                                               label="Fim"
                                               v-model="agendamento.timeEndAt"
                                               type="time"
-                                            ></v-text-field>          
-                                          </v-col>
+                                              filled
+                                            ></v-text-field>  
                                       </th>
                                       <th></th>
                                   </tr>
@@ -207,7 +207,7 @@ export default {
       registrarAgendamento() {
         console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
-          this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
+          this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
           this.agendamento.dateAt = this.agendamento.date;
           this.agendamento.total = this.numberBrToUS(this.total);
           console.log(this.agendamento);
@@ -246,7 +246,7 @@ export default {
         return this.agendamento.date ? moment(this.agendamento.date).format('dddd, DD/MM/YYYY') : ''
       },      
       total: function () {
-        let svs = this.services.filter(it => this.servicesSelected.includes(it.type + ' - ' + it.price));
+        let svs = this.services.filter(it => this.servicesSelected.includes(it.type));
         console.log(svs)
         let total = 0;
         for(var i in svs) {
@@ -261,7 +261,7 @@ export default {
       this.myCompany = storage.getCompany();
       this.services = this.myCompany.services;
       this.services.forEach(element => {
-        element.display = element.type + ' - ' + element.price
+        element.display = element.type
       });
       this.agendamento.companyId = this.myCompany._id;
       this.agendamento.user = this.userLogged;

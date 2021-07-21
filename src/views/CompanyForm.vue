@@ -272,7 +272,7 @@
                         <v-col cols="12" >  
                             <v-sheet class="pa-5">
                                 <v-switch
-                                v-model="company.product.schedule"
+                                v-model="company.products.schedule"
                                 inset
                                 :label="`Agendamento`"
                                 @change="updateProducts"
@@ -428,9 +428,11 @@ export default {
       this.userLogged = storage.getUserLogged();   
       gateway.getCompanyById(this.$route.params._id,
         res => {
-            if(!res.product) {
-                res.product = { schedule: false };
+            console.log(res)
+            if(!res.products) {
+                res.products = { schedule: false };
             }
+            
             this.company = res;
             this.companyWithoutUpdate = this.company;
         }, () => {

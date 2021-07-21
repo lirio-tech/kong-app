@@ -242,7 +242,7 @@ export default {
           this.agendamento.date = new Date(this.agendamento.dateTimeStartAt).toISOString().substr(0, 10),
           this.servicesSelected = [];
           for(var i in this.agendamento.services) {
-            this.servicesSelected.push(this.agendamento.services[i].type + ' - ' + this.agendamento.services[i].price);
+            this.servicesSelected.push(this.agendamento.services[i].type);
           }
           this.showDialog(true);
         },
