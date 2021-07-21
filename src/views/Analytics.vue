@@ -26,7 +26,7 @@
                         v-bind="attrs"
                         v-on="on"                        
                       >
-                          <v-icon color="green lighten-4">
+                          <v-icon color="green lighten-2">
                             mdi-chart-bar
                           </v-icon>
                       </v-btn>

@@ -29,7 +29,7 @@
                           style="color: inherit; text-decoration: none"
                         >
                             <v-btn x-large>
-                                <v-icon color="green lighten-4">
+                                <v-icon color="green lighten-2">
                                     mdi-account-cash
                                 </v-icon> 
                             </v-btn>

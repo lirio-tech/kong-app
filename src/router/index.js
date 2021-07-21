@@ -35,6 +35,7 @@ import PurchasesProductsForm from '../views/PurchasesProductsForm'
 import UsersBalance from '../views/UsersBalance'
 import UserBalanceDetail from '../views/UserBalanceDetail'
 import Agendamentos from '../views/Agendamentos'
+import AgendamentosAdmin from '../views/AgendamentosAdmin'
 
 Vue.use(VueRouter)
 
@@ -215,7 +216,11 @@ const routes = [
     name: 'Agendamentos',
     component: Agendamentos
   },  
-  
+  {
+    path: '/admin/agendamentos',
+    name: 'AgendamentosAdmin',
+    component: AgendamentosAdmin
+  },   
 ]
 
 const router = new VueRouter({

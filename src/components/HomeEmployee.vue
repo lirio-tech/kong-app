@@ -81,7 +81,7 @@
                               class="ma-2"
                               x-large
                           >
-                              <v-icon color="green lighten-4">
+                              <v-icon color="green 2">
                                   mdi-chart-bar
                               </v-icon>    
                           </v-btn>                                                                      
