@@ -147,7 +147,7 @@
             <br/>
             <HomeAgendamentos
               :userLogged="userLogged"
-              v-if="!loading && (company.product && company.product.schedule)"
+              v-if="!loading && (company.products && company.products.schedule)"
             />
             
         </v-main>
