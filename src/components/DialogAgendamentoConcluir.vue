@@ -159,4 +159,10 @@ export default {
 }
 </script>
 <style scoped>
+  .v-money {
+      margin-left: -20px;
+      color: green;
+      width: 100px;
+      font-size: 18px;
+  }
 </style>
