@@ -187,7 +187,7 @@
 
             <DialogAgendamentoConcluir 
               :dialog="dialogAgendamentoConcluir" 
-              :agendamentoId="agendamentoConcluirId"
+              :agendamento="agendamentoConcluir"
               v-on:show-dialog="showDialogConcluir" 
               v-on:done="done"
               
@@ -215,7 +215,7 @@ export default {
         loadingCancel: false,
         loadingConcluir: false,
 
-        agendamentoConcluirId: '',
+        agendamentoConcluir: {},
 
         userLogged: {},
         value: '',
@@ -249,7 +249,7 @@ export default {
         },
         showDialogConcluir(show, agendamentoId) {
           this.dialogAgendamentoConcluir = show;
-          this.agendamentoConcluirId = agendamentoId;
+          if(agendamentoId) this.agendamentoConcluir = this.agendamentos.filter(it => it._id === agendamentoId)[0];
         },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
@@ -263,11 +263,10 @@ export default {
           }
           this.showDialog(true);
         },
-        done(_id) {
+        done(agendamento, paymentType) {
             if(confirm("Deseja Realmente Concluir?")) {
-                this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
                 this.loadingConcluir = true;
-                agendamentoGateway.agendamentoDone(_id, 
+                agendamentoGateway.agendamentoDone(agendamento._id, agendamento, paymentType,
                   res => {
                      this.loadingConcluir = false;
                      const order = res;

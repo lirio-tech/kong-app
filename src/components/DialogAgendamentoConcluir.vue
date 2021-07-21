@@ -51,18 +51,31 @@
                           value="pix"
                         ></v-radio>                                    
                       </v-radio-group>                              
-                    </v-col>                    
-                      <v-col
-                          cols="12"
-                          sm="6"
-                        >
-                          <v-text-field 
-                              label="Cliente"
-                              filled required
-                              ref="customerName"
-                              :rules="[v => !!v || 'Nome do Cliente Obrigatório',]"
-                          ></v-text-field>  
-                      </v-col>              
+                    </v-col>                            
+                      <v-col cols="12" sm="12">           
+                          <v-simple-table dense >
+                          
+                                  <tbody >
+                                  <tr v-for="s in agendamento.services" :key="s._id">
+                                      <th style="width: 50px">
+                                          <v-select
+                                              v-model="s.type"
+                                              :items="services"
+                                              item-text="type"
+                                              label="Serviços"
+                                              ref="services"
+                                              readonly
+                                              :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
+                                          ></v-select>
+                                      </th>
+                                      <th>
+                                          <money v-model="s.price" v-bind="money"></money>
+                                      </th>
+                                  </tr>
+                                  </tbody>
+                        
+                          </v-simple-table>
+                      </v-col>                                              
 
                       <v-col 
                           cols="12"
@@ -93,10 +106,11 @@
 import UserTypes from '../utils/UserTypes'
 import storage from '../storage'
 export default {
-    props:['dialog', 'agendamentoId'],
+    props:['dialog', 'agendamento'],
     data () {
       return {
         loagind: false,
+        paymentType: 'card',
         userLogged: {},
         myCompany: {},
         services: [],
@@ -104,7 +118,14 @@ export default {
 
         //date: new Date().toISOString().substr(0, 10),
         menu2: false,
-        modal: false
+        modal: false,
+        money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'R$ ',
+          precision: 2,
+          masked: false
+        }        
 
       }
     }, 
@@ -125,7 +146,7 @@ export default {
           return v;
       },      
       done() {
-        this.$emit('done', this.agendamentoId); 
+        this.$emit('done', this.agendamento, this.paymentType); 
       }
     },
     computed: {

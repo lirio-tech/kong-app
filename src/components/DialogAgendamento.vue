@@ -123,7 +123,6 @@
                                               filled
                                             ></v-text-field>  
                                       </th>
-                                      <th></th>
                                   </tr>
                                   </tbody>
                               </template>

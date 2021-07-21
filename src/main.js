@@ -18,7 +18,7 @@ Vue.use(VueMask);
 Vue.use(VueGoogleCharts)
 Vue.directive('mask', VueMaskDirective);
 Vue.filter('VMask', VueMaskFilter);
-Vue.use(money, {precision: 4})
+Vue.use(money, {precision: 2})
 
 new Vue({
   router,
