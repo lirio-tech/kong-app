@@ -6,11 +6,11 @@
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/'}"
                   >
-                      <v-icon large color="blue-grey">mdi-arrow-left</v-icon>
+                      <v-icon large color="white darken-2">mdi-arrow-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="8" align="center">   
-                  <span style="font-size: 1.2rem !important;">  
+                  <span style="font-size: 1.2rem !important;" >  
                     {{ title }}
                   </span>
               </v-col>
