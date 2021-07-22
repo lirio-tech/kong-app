@@ -186,14 +186,15 @@
                 :to="{ path: '/login' }" 
                 style="color: inherit; text-decoration: none;"
             >
-                <span class="text-no-wrap cyan--text" style="font-size: 1.2rem;">
-                    <v-icon color="cyan">
+                <span class="text-no-wrap primary--text" style="font-size: 1.2rem;">
+                    <v-icon color="primary">
                         mdi-arrow-left
                     </v-icon>
                     Ja sou cadastrado
                 </span>
             </router-link>    
         </v-row>
+        <get-it-on-google-play />
     </v-main>
   </v-container>
 </template>
@@ -201,13 +202,15 @@
 <script>
 import gateway from '../api/gateway'
 import AppBar from '../components/AppBar'
+import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import storage from '../storage';
 import InputsUtils from '../utils/inputs'
 const STEP_COMPANY = 1;
 const STEP_USER = 2;
 export default {
     components: {
-        AppBar
+        AppBar,
+        GetItOnGooglePlay
     },
     data: () => ({
         valid: true,
