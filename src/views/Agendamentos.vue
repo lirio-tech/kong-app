@@ -273,8 +273,21 @@ export default {
                      const order = res;
                      this.$router.push("/ordem-servico/"+order._id); 
                   }, () => {
-                    this.loadingConcluir = false;
-                    alert('Erro ao Concluir :(');
+                      this.loadingConcluir = false;
+                      if(err.response.status === 401) {
+                        this.$router.push('/login');
+                        return;
+                      }
+                      if(err.response.status === 412) {
+                        alert(err.response.data.message)
+                        this.dialogPlan = true;                
+                        return;
+                      }
+                      if(err.response.status === 422) {
+                        alert(err.response.data.message)            
+                        return;
+                      }                        
+                      alert('Erro ao Concluir :(');
                   })
             }
         },
