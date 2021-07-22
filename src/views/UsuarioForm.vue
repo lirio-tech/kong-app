@@ -1,17 +1,17 @@
 <template>
-    <v-container>
+    <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">
         <AppBar />             
-        <v-main class="">
+        <v-main >
           <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/admin/users'}"
                   >
-                      <v-icon large color="white darken-2">mdi-arrow-left</v-icon>
+                      <v-icon large color="purple darken-2">mdi-arrow-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="10" align="center">   
-                      <span style="font-size: 1.8rem !important;" class="white--text">Cadastro de Usuário </span>
+                      <span style="font-size: 1.6rem !important;" class="purple--text">Cadastro de Usuário </span>
               </v-col>
           </v-row>          
         
