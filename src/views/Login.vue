@@ -79,7 +79,7 @@
                   <br />
                 </v-col>
               </v-row>
-              <v-row v-if="isAndroid() || !isIphone()">
+              <v-row v-if="!$vuetify.theme.dark && (isAndroid() || !isIphone())">
                   <v-col cols="12">
                     <center>
                       <a href="https://play.google.com/store/apps/details?id=com.konglify.app.ladyapp">
