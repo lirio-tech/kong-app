@@ -194,55 +194,6 @@
                         </v-form>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel>
-                <v-expansion-panel-header>Configurações</v-expansion-panel-header>
-                <v-expansion-panel-content>
-                    <v-row>
-                        <v-col cols="12" sm="12">
-                          <v-form 
-                            id="configForm"
-                            ref="configForm">
-                                <v-container>
-                                    <v-row>
-                                        <v-col 
-                                            cols="12" md="4" 
-                                        >
-                                            Visualização da Tabela: 
-                                            <v-radio-group
-                                                v-model="userLogged.configuration.table"
-                                                row
-                                            >
-                                                <v-radio
-                                                    label="Tabela Simples"
-                                                    value="simple"
-                                                ></v-radio>
-                                                <v-radio
-                                                    label="Tabela Mobile"
-                                                    value="mobile"
-                                                ></v-radio>
-                                            </v-radio-group>  
-                                        </v-col>      
-                                    </v-row>
-                                    <v-row>
-                                        <v-col cols="12" class="text-center">
-                                            <v-btn 
-                                                :loading="isLoading"
-                                                @click="updateConfiguration"
-                                                class="ma-2"
-                                                large
-                                                style="width: 75%"
-                                                outlined
-                                                color="green"
-                                            >Salvar</v-btn>                                            
-                                        </v-col>  
-                                    </v-row>
-                                    
-                                </v-container>
-                            </v-form>                
-                        </v-col>
-                    </v-row>                    
-                </v-expansion-panel-content>
-            </v-expansion-panel>
         </v-expansion-panels>
         <SnackBar :color="message.color" :text="message.text" :show="message.show" />
     </v-container>
