@@ -74,7 +74,7 @@
           <v-row>
               <v-col cols="12" align="center">   
                   <span >  
-                    Movimentações
+                    Extrato de {{ userBalance.user.name }}
                   </span>
               </v-col>              
               <v-col cols="12" sm="12" class="mt-0 pt-0">
