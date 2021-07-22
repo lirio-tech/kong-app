@@ -31,11 +31,22 @@
                             :headers="headers" 
                             :items="users" 
                             item-key="code"
+                            :items-per-page="50"
+                            :search="search"
+                            :custom-filter="filterUsers"
                             class="elevation-1"
+                            hide-actions
                             hide-default-footer
                             loading-text="Carregando... Por favor aguarde"
                             @click:row="clickRow"
                         >                        
+                            <template v-slot:top>
+                              <v-text-field
+                                v-model="search"
+                                label="Pesquise o Funcionário"
+                                class="mx-4"
+                              ></v-text-field>
+                            </template>                        
                             <template v-slot:item.disabled="{ item }">
                                 <v-chip :color="!item.disabled ? 'green' : 'red'">
                                   <v-icon 
@@ -99,6 +110,7 @@ import UserTypes from '../utils/UserTypes';
     name: 'UsuarioList',
     components: { AppBar },
     data: () => ({
+      search: '',
       headers: [
         { text: "Nome", value: "name" },
         { text: "Username", value: "username" },
@@ -117,6 +129,7 @@ import UserTypes from '../utils/UserTypes';
       getUsers() {
         gateway.getUsers('all', res => {
           this.users = res;
+          console.log(this.users);
         }, err => {
           console.log(err);
         })
@@ -131,6 +144,13 @@ import UserTypes from '../utils/UserTypes';
       },
       getTypePtBR(type) {
         return UserTypes.getDescriptionPtBR(type);
+      },
+      filterUsers(value, search, item) {
+        console.log(value, search, item)
+        return value != null &&
+          search != null &&
+          typeof value === 'string' &&
+          value.toString().toLocaleUpperCase().indexOf(search.toString().toLocaleUpperCase()) !== -1
       }
     },
     beforeMount() {
