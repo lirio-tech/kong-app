@@ -28,8 +28,8 @@
 
                 <v-form 
                   v-on:submit.prevent="ok"
-                  ref="agendamentoForm"
-                  id="agendamentoForm"
+                  ref="empForm"
+                  id="empForm"
                 >              
                     <br/>
                     <v-col
@@ -43,6 +43,7 @@
                         label="Funcionários"
                         multiple
                         outlined
+                        :rules="[v => v.length > 0 || 'Funcionário Obrigatório',]"         
                       ></v-select>
                     </v-col>                                          
 
@@ -80,7 +81,9 @@ export default {
     }, 
     methods: {
       ok() {
-        this.$emit('show-dialog', false, this.usersSelected);
+          if(this.$refs.empForm.validate()) {
+              this.$emit('show-dialog', false, this.usersSelected);
+          }
       }
     },
 }
