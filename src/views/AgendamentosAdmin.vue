@@ -217,7 +217,7 @@
 
             <DialogAgendamentoEmployees 
                 :dialog="dialogEmployees"
-                :usersCategories="usersCategories"
+                :usersCategories="usersCategoriesReset"
                 v-on:show-dialog="showDialogEmployees"
             />       
         </v-main>
@@ -263,6 +263,7 @@ export default {
         events: [],
         users: [],
         usersCategories: [],
+        usersCategoriesReset: [],
         usersAll: []
 
     }), 
@@ -272,6 +273,7 @@ export default {
         gateway.getUsers('enabled', res => {
           this.usersAll = res;
           this.usersCategories = res.map(it => it.name);  
+          this.usersCategoriesReset = res.map(it => it.name);
           this.users = res.filter(it => it._id === this.userLogged._id).map(it => it.name);  
           console.log(this.users)
         }, err => {
