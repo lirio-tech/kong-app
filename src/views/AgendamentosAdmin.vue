@@ -408,7 +408,7 @@ export default {
                         total: this.agendamentos[i].total,
                         color: this.getColorByStatus(this.agendamentos[i].status),
                         timed: true,
-                        category: this.users.filter(it => it === this.agendamentos[i].user.name)[0],
+                        category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
                     });        
                   }
                   this.events = events   
