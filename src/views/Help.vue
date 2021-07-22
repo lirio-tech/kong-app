@@ -162,7 +162,7 @@ export default {
            return this.$vuetify.theme.dark ? 'app' : 'ladyapp';
        }, 
        urlApp() {
-           return `https://${this.appType}.kongbarber.com`;
+           return this.appType === 'app' ? 'https://app.kongbarber.com' : 'https://ladyapp.com.br';
        },
        urlShare() {
            return `${this.urlApp}/#/public/identify-device`;
