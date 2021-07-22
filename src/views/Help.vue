@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
-                        <br/><small class="grey--text">Versão: 0.9.8 </small>
+                        <br/><small class="grey--text">Versão: 0.9.9 </small>
                 </v-col>       
             </v-row>   
 
