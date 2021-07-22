@@ -2,7 +2,7 @@
   <v-container fluid>
     <AppBar />
     <v-main>
-        <v-row >
+        <v-row justify="center">
            
             <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6" style="padding: 0">
      

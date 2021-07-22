@@ -272,7 +272,7 @@ export default {
                      this.loadingConcluir = false;
                      const order = res;
                      this.$router.push("/ordem-servico/"+order._id); 
-                  }, () => {
+                  }, (err) => {
                       this.loadingConcluir = false;
                       if(err.response.status === 401) {
                         this.$router.push('/login');

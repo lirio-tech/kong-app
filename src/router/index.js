@@ -236,7 +236,7 @@ router.beforeEach((to, from, next) => {
     if (token || to.name === 'Login') {
       next()
     } else {
-      next({name: 'Login'})
+      next({name: 'SignUp'})
     } 
   } else {
     next()
