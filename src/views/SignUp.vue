@@ -194,7 +194,9 @@
                 </span>
             </router-link>    
         </v-row>
-        <get-it-on-google-play />
+        <v-row >
+            <get-it-on-google-play />
+        </v-row>
     </v-main>
   </v-container>
 </template>

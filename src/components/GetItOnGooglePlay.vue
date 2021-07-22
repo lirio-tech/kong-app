@@ -1,6 +1,5 @@
 <template>
-    <v-row v-if="!$vuetify.theme.dark && (isAndroid() || !isIphone())">
-        <v-col cols="12">
+    <v-col cols="12" v-if="!$vuetify.theme.dark && (isAndroid() || !isIphone())">
         <center>
             <a href="https://play.google.com/store/apps/details?id=com.konglify.app.ladyapp">
                 <v-img 
@@ -9,8 +8,7 @@
                 /> 
             </a>
         </center>
-        </v-col>
-    </v-row>
+    </v-col>
 </template>
 <script>
 import device from '../utils/device'

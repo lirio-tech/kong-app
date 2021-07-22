@@ -79,7 +79,9 @@
                   <br />
                 </v-col>
               </v-row>
-              <get-it-on-google-play />
+              <v-row >
+                  <get-it-on-google-play />
+              </v-row>
             </v-card>
           </v-form>
         </v-slide-y-transition>

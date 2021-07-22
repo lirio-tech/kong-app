@@ -6,11 +6,11 @@
                     <v-btn icon small style="display: inline;"
                         @click="goBack"
                     > 
-                        <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                        <v-icon large color="white-grey darken-2">mdi-arrow-left</v-icon>
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  
-                        <span style="font-size: 2.0rem !important;">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
+                        <span style="font-size: 2.0rem !important;" class="white--text">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
                         <br/><small class="grey--text">Versão: 0.9.8 </small>
                 </v-col>       
             </v-row>   
@@ -96,21 +96,14 @@
                     flex 
                 >
                     <v-col cols="6" align="center">
-                        <router-link to="/public/android">
-                            <v-img 
-                                src="../assets/android.webp"
-                                height="125"
-                                width="125"
-                                style="margin-left:50px;"
-                            ></v-img>
-                        </router-link>
+                        <get-it-on-google-play />
                     </v-col>
                     <v-col cols="6">
                         <router-link to="/public/iphone">
                             <v-img 
                                 src="../assets/apple.png"
-                                height="155"
-                                width="145"              
+                                height="95"
+                                width="85"              
                                 style="margin-top:-15px;"              
                             ></v-img>
                         </router-link>
@@ -121,11 +114,13 @@
     </v-container>
 </template>
 <script>
-import VueQrcode from 'vue-qrcode'
+import VueQrcode from 'vue-qrcode';
+import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import device from '../utils/device'
 export default {
     components: {
-        VueQrcode
+        VueQrcode,
+        GetItOnGooglePlay,
     },
     methods: {
         sendMessageWhatsapp() {
