@@ -38,9 +38,9 @@
                     >
                       <v-select
                         v-model="usersSelected"
-                        :items="users"
+                        :items="usersCategories"
                         chips
-                        label="Chips"
+                        label="Funcionários"
                         multiple
                         outlined
                       ></v-select>
@@ -72,7 +72,7 @@
 
 <script>
 export default {
-    props:['dialog', 'users'],
+    props:['dialog', 'usersCategories'],
     data () {
       return {
         usersSelected: []

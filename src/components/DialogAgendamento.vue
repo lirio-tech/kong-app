@@ -128,12 +128,14 @@
                               </template>
                           </v-simple-table>
                       </v-col>
+                      {{ agendamento.user }}
                       <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
                           <v-select 
-                              v-model="agendamento.user" 
+                              v-model="agendamento.user._id" 
                               size="1" 
                               :items="users"
                               label="Funcionário"
+                              :rules="[v => !!v || 'Funcionário Obrigatório',]"
                               ref="user"
                               required filled 
                               item-text='name'
@@ -217,6 +219,7 @@ export default {
       registrarAgendamento() {
         console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
+
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
           this.agendamento.dateAt = this.agendamento.date;
           this.agendamento.total = this.numberBrToUS(this.total);
@@ -273,8 +276,6 @@ export default {
       this.services.forEach(element => {
         element.display = element.type
       });
-      this.agendamento.companyId = this.myCompany._id;
-      this.agendamento.user = this.userLogged;
       
     }
 }

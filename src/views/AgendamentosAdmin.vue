@@ -20,7 +20,9 @@
                         @click="showDialog(true)"  
                         class="ma-2"
                         small
-                    >+</v-btn>                        
+                    >
+                      <v-icon >mdi-plus</v-icon>
+                    </v-btn>                        
                 </v-col>                     
             </v-row>    
             <v-row 
@@ -122,7 +124,7 @@
                     v-model="focus"
                     color="primary"
                     :events="events"
-                    :categories="users"
+                    :categories="usersCategories"
                     category-show-all
                     :event-color="getEventColor"
                     :type="typePeriod"
@@ -130,6 +132,7 @@
                     @click:more="viewDay"
                     @click:date="viewDay"
                     @click:time="newSchedule"
+                    @click:time-category="newSchedule"
                     @change="updateRange"
                   >
                   </v-calendar>
@@ -197,9 +200,9 @@
 
             <DialogAgendamento 
                 :dialog="dialog" 
+                :users="usersAll"
                 :agendamento="agendamento"
                 :servicesSelected="servicesSelected"
-                :users="usersAll"
                 v-on:show-dialog="showDialog" 
                 v-on:scheduled-success="updateRange" 
             />      
@@ -214,7 +217,7 @@
 
             <DialogAgendamentoEmployees 
                 :dialog="dialogEmployees"
-                :users="usersAll"
+                :usersCategories="usersCategories"
                 v-on:show-dialog="showDialogEmployees"
             />       
         </v-main>
@@ -259,14 +262,16 @@ export default {
         selectedOpen: false,
         events: [],
         users: [],
-        usersAll: [],
+        usersCategories: [],
+        usersAll: []
 
     }), 
     beforeMount() {
         this.userLogged = storage.getUserLogged();
         this.agendamento = this.initAgendamento();
         gateway.getUsers('enabled', res => {
-          this.usersAll = res.map(it => it.name);  
+          this.usersAll = res;
+          this.usersCategories = res.map(it => it.name);  
           this.users = res.filter(it => it._id === this.userLogged._id).map(it => it.name);  
           console.log(this.users)
         }, err => {
@@ -288,9 +293,9 @@ export default {
           this.dialogAgendamentoConcluir = show;
           if(agendamentoId) this.agendamentoConcluir = this.agendamentos.filter(it => it._id === agendamentoId)[0];
         },
-        showDialogEmployees(show, users) {
-            if(show === false && users) {
-              this.users = users;
+        showDialogEmployees(show, usersSelected) {
+            if(show === false && usersSelected) {
+              this.usersCategories = usersSelected;
               this.setTypePeriod('category')
             } else {
               this.setTypePeriod('day')
@@ -420,16 +425,19 @@ export default {
             return description;
         },
         newSchedule(ev) {
-           this.agendamento = this.initAgendamento();
-           this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
-           this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
-           this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
-           this.agendamento.user = this.typePeriod === 'category' ? this.usersAll.filter(it => it.username === ev.user)[0] : this.userLogged;
-           if(this.agendamento.timeEndAt.length < 5) {
-             this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
-           }  
-           this.servicesSelected = [];
-           this.showDialog(true);
+           if(ev.category) { 
+                this.agendamento = this.initAgendamento();
+                this.agendamento.user = this.usersAll.filter(it => it.name === ev.category.categoryName)[0];  
+                console.log(this.agendamento.user)
+                this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
+                this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
+                this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
+                if(this.agendamento.timeEndAt.length < 5) {
+                  this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
+                }  
+                this.servicesSelected = [];
+                this.showDialog(true);
+           }
         },
         initAgendamento() {
           return { 

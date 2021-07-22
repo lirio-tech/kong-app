@@ -20,7 +20,7 @@
                         @click="showDialog(true)"  
                         class="ma-2"
                         small
-                    >+</v-btn>                        
+                    ><v-icon >mdi-plus</v-icon></v-btn>                        
                 </v-col>                     
             </v-row>    
             <v-row 
