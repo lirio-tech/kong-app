@@ -79,6 +79,18 @@
                   <br />
                 </v-col>
               </v-row>
+              <v-row v-if="isAndroid() || !isIphone()">
+                  <v-col cols="12">
+                    <center>
+                      <a href="https://play.google.com/store/apps/details?id=com.konglify.app.ladyapp">
+                          <v-img 
+                            width="250"
+                            src="../assets/google-play.png" 
+                          /> 
+                      </a>
+                    </center>
+                  </v-col>
+              </v-row>
             </v-card>
           </v-form>
         </v-slide-y-transition>
@@ -93,6 +105,7 @@ import gateway from '../api/gateway'
 import SnackBar from '../components/SnackBar'
 import storage from '../storage'
 import AppBar from '../components/AppBar'
+import device from '../utils/device'
 export default {
         components: {
           SnackBar,
@@ -157,7 +170,13 @@ export default {
                 this.message.color = color;
                 this.message.text = text;
                 this.message.show = true;
-            }                
+            },
+            isAndroid() {
+              return device.isAndroid();
+            },
+            isIphone() {
+              return device.isIphone();
+            }                               
         },
         beforeMount() {
         
