@@ -140,7 +140,7 @@
                       <v-card-text class="indigo--text">
                         {{ selectedEvent.detail }}<br/>
                         Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
-                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} as 
+                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
                         <!-- Total: {{ selectedEvent.total | currency }} -->
                         <h3 class="success--text" v-if="selectedEvent.status === 'DONE'">Concluído</h3>
