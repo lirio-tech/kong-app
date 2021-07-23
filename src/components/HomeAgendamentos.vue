@@ -1,41 +1,44 @@
 <template>
   <div>
     <div >
-        <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
             <v-card
               class="mx-auto"
               max-width="800"
               outlined
             >
-                  <v-list-item style="margin-bottom: -35px">
-                    <v-list-item-content>                                  
-                        <v-col cols="12" style="margin-top: -20px;margin-left: -10px;">
-                          <div class="overline mb-4 grey--text">
-                              Agendamentos
-                          </div>                           
-                        </v-col>  
-                    </v-list-item-content>
-                  </v-list-item>            
+                  <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
+                      <v-list-item style="margin-bottom: -35px" >
+                        <v-list-item-content>                                  
+                            <v-col cols="12" style="margin-top: -20px;margin-left: -10px;">
+                              <div class="overline mb-4 grey--text">
+                                  Agendamentos
+                              </div>                           
+                            </v-col>  
+                        </v-list-item-content>
+                      </v-list-item>            
+                  </router-link>     
                   <div v-for="ag in agendamentos" :key="ag._id" style="margin-top: -15px">
                       <home-agendamento-card :agendamento="ag" :userLogged="userLogged" />
                       <br/>
                   </div>
                   <div v-if="agendamentos.length == 0" style="margin-top: -15px">
-                      <v-col cols="12">
-                          <span class="grey--text">
-                            Não você não possui nenhum cliente agendado :)
-                          </span>
-                          <br/>
-                          <br/>
-                        <v-btn>
-                          <v-icon color="primary">mdi-clock</v-icon> &nbsp; Agendar
-                        </v-btn>                             
-                      </v-col>
+                      <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
+                          <v-col cols="12">
+                              <span class="grey--text">
+                                Não você não possui nenhum cliente agendado :)
+                              </span>
+                              <br/>
+                              <br/>
+                            <v-btn>
+                              <v-icon color="primary">mdi-clock</v-icon> &nbsp; Agendar
+                            </v-btn>                             
+                          </v-col>
+                      </router-link>
                   </div>
                   
             </v-card>      
             
-        </router-link>        
+           
     </div>   
   </div>      
 </template>
@@ -57,6 +60,9 @@ export default {
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
       },      
+      goAgendamentos(){
+
+      },
     },
     beforeMount() {
         agendamentoGateway.getPriorAndNext(res => {
