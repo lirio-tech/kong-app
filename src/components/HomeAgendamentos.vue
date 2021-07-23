@@ -43,7 +43,7 @@
             </v-card>      
         </router-link>        
     </div>         
-    <div >
+    <div v-if="isAdmin()">
         <router-link to="/admin/agendamentos/" style="color: inherit; text-decoration: none">
             <v-card
               class="mx-auto"
