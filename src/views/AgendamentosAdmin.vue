@@ -167,7 +167,7 @@
                       <v-card-text class="indigo--text">
                         {{ selectedEvent.detail }}<br/>
                         Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
-                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} as 
+                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
                         Funcionario: {{ selectedEvent.userName }} <br/>
                         <!-- Total: {{ selectedEvent.total | currency }} -->
@@ -211,7 +211,7 @@
                 :agendamento="agendamento"
                 :servicesSelected="servicesSelected"
                 v-on:show-dialog="showDialog" 
-                v-on:scheduled-success="updateRange" 
+                v-on:scheduled-success="findAgendamento" 
             />      
 
             <DialogAgendamentoConcluir 
@@ -277,6 +277,7 @@ export default {
     beforeMount() {
         this.userLogged = storage.getUserLogged();
         this.agendamento = this.initAgendamento();
+        this.findAgendamento();
         gateway.getUsers('enabled', res => {
           this.usersAll = res;
           this.usersCategories = res.filter(it => res.indexOf(it) <= 3 ).map(it => it.name);  
@@ -309,6 +310,17 @@ export default {
               this.setTypePeriod('day')
             }
             this.dialogEmployees = show;
+        },
+        findAgendamento() {
+          let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
+          agendamentoGateway.getAgendamentos(_date, _date,
+              res => {
+                  this.agendamentos = res;
+                  console.log('before');
+                  this.updateCalendar(_date, _date);
+              }, () => {
+                alert('Erro ao Buscar agendamentos');
+              })
         },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
@@ -357,7 +369,7 @@ export default {
                 () => {
                     this.loadingCancel = false;
                     this.selectedOpen = false;
-                    this.updateRange(new Date(), new Date());
+                    this.findAgendamento();
                 }, () => {
                   this.loadingCancel = false;
                   alert('Erro ao Concluir :(');
@@ -408,36 +420,33 @@ export default {
 
           nativeEvent.stopPropagation()
         },
+        updateCalendar(start, end) {
+          console.log(start, end);
+          const events = []
+          for(var i in this.agendamentos) {
+            const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
+            const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
+            events.push({
+                _id: this.agendamentos[i]._id,
+                name: this.agendamentos[i].customer.name,
+                user: this.agendamentos[i].user.username,
+                userName: this.agendamentos[i].user.name,
+                detail: this.getDescriptionServices(this.agendamentos[i].services),
+                status: this.agendamentos[i].status,
+                start: _start,
+                end: _end,
+                total: this.agendamentos[i].total,
+                color: this.getColorByStatus(this.agendamentos[i]),
+                timed: true,
+                category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
+            });        
+          }
+          this.events = events;
+        },
         updateRange ({ start, end }) {
           console.log(start, end);
-          let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
-          agendamentoGateway.getAgendamentos(_date, _date,
-              res => {
-                  this.agendamentos = res;
-                  const events = []
-                  for(var i in this.agendamentos) {
-                    const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
-                    const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
-                    events.push({
-                        _id: this.agendamentos[i]._id,
-                        name: this.agendamentos[i].customer.name,
-                        user: this.agendamentos[i].user.username,
-                        userName: this.agendamentos[i].user.name,
-                        detail: this.getDescriptionServices(this.agendamentos[i].services),
-                        status: this.agendamentos[i].status,
-                        start: _start,
-                        end: _end,
-                        total: this.agendamentos[i].total,
-                        color: this.getColorByStatus(this.agendamentos[i]),
-                        timed: true,
-                        category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
-                    });        
-                  }
-                  this.events = events   
-              }, () => {
-                  alert('Erro ao Buscar agendamentos');
-              });        
-
+          console.log('updateRange');
+          this.updateCalendar(start, end);
         },
         getDescriptionServices(services) {
             let description = ''
