@@ -64,16 +64,23 @@
                     align="center"
                     justify="space-around"
                 >
-                    <v-col cols="12" md="12" align="center">
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 100%"
-                            @click="showDialogEmployees(true)"
+                            style="width: 69%"
+                            @click="typePeriod = 'category'"
                             :color="typePeriod === 'category' ? 'primary' : ''"
                         >Funcionários</v-btn>                               
-                    </v-col>                                                  
+                        <v-btn 
+                            type="button" 
+                            depressed  
+                            large 
+                            @click="showDialogEmployees(true)"
+                            :color="typePeriod === 'category' ? 'primary' : ''"
+                        >
+                          <v-icon>mdi-account-multiple-plus</v-icon>
+                        </v-btn>                                                                                              
             </v-row>                 
 
             <v-row class="fill-height">
@@ -272,10 +279,9 @@ export default {
         this.agendamento = this.initAgendamento();
         gateway.getUsers('enabled', res => {
           this.usersAll = res;
-          this.usersCategories = res.map(it => it.name);  
+          this.usersCategories = res.filter(it => res.indexOf(it) <= 3 ).map(it => it.name);  
           this.usersCategoriesReset = res.map(it => it.name);
           this.users = res.filter(it => it._id === this.userLogged._id).map(it => it.name);  
-          console.log(this.users)
         }, err => {
           console.log(err);
         });        
@@ -401,12 +407,11 @@ export default {
           nativeEvent.stopPropagation()
         },
         updateRange ({ start, end }) {
-          console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
+          console.log(start, end);
           let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
           agendamentoGateway.getAgendamentos(_date, _date,
               res => {
                   this.agendamentos = res;
-                  console.log(this.agendamentos)
                   const events = []
                   for(var i in this.agendamentos) {
                     const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
@@ -443,7 +448,6 @@ export default {
            if(ev.category) { 
                 this.agendamento = this.initAgendamento();
                 this.agendamento.user = this.usersAll.filter(it => it.name === ev.category.categoryName)[0];  
-                console.log(this.agendamento.user)
                 this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
                 this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
                 this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
