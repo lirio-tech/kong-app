@@ -128,7 +128,7 @@
                   <v-calendar
                     locale="pt-br"
                     ref="calendar"
-                    v-model="focus"
+                    v-model="value"
                     color="primary"
                     :events="events"
                     :categories="usersCategories"
@@ -256,13 +256,12 @@ export default {
         agendamentoConcluir: {},
 
         userLogged: {},
-        value: '',
         agendamentos: [],
         agendamento: {},
         servicesSelected: [],
         typePeriod: 'category',
 
-        focus: '',
+        value: '',
         selectedEvent: {},
         selectedElement: null,
         selectedOpen: false,
@@ -276,6 +275,9 @@ export default {
     beforeMount() {
         this.userLogged = storage.getUserLogged();
         this.agendamento = this.initAgendamento();
+        if(this.$route.query.date) {
+          this.value = this.$route.query.date.substring(0,10);
+        }        
         this.findAgendamento();
         gateway.getUsers('enabled', res => {
           this.usersAll = res;
@@ -317,6 +319,10 @@ export default {
                   this.agendamentos = res;
                   console.log('before');
                   this.updateCalendar(_date, _date);
+                   if(this.$route.query._id) {
+                      this.alterarAgendamentoShowDialog(this.$route.query._id);
+                      this.$route.query._id = null;
+                   }                  
               }, () => {
                 alert('Erro ao Buscar agendamentos');
               })
@@ -364,14 +370,14 @@ export default {
           this.typePeriod = tp;
         },
         viewDay ({ date }) {
-          this.focus = date
+          this.value = date
           this.typePeriod = 'day'
         },
         getEventColor (event) {
           return event.color
         },
         setToday () {
-          this.focus = ''
+          this.value = ''
         },
         prev () {
           this.$refs.calendar.prev()
