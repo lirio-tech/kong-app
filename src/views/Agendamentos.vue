@@ -368,20 +368,17 @@ export default {
            for(var i in this.agendamentos) {
              const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
              const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
-             events.push({
-                 _id: this.agendamentos[i]._id,
-                 name: this.agendamentos[i].customer.name,
-                 user: this.agendamentos[i].user.username,
-                 userName: this.agendamentos[i].user.name,
-                 detail: this.getDescriptionServices(this.agendamentos[i].services),
-                 status: this.agendamentos[i].status,
-                 start: _start,
-                 end: _end,
-                 total: this.agendamentos[i].total,
-                 color: this.getColorByStatus(this.agendamentos[i]),
-                 timed: true,
-                 category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
-             });        
+              events.push({
+                  _id: this.agendamentos[i]._id,
+                  name: this.agendamentos[i].customer.name,
+                  detail: this.getDescriptionServices(this.agendamentos[i].services),
+                  status: this.agendamentos[i].status,
+                  start: _start,
+                  end: _end,
+                  total: this.agendamentos[i].total,
+                  color: this.getColorByStatus(this.agendamentos[i].status),
+                  timed: true,
+              });      
            }
            this.events = events;
          },
