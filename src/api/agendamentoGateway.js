@@ -59,5 +59,16 @@ export default{
                 errorCb(error)
             })      
        
-    }    
+    },
+    getPriorAndNext(callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/prior-next`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })            
+    }            
 }

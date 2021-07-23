@@ -24,5 +24,5 @@ export default{
                 console.log(error);
                 errorCb(error)
             })      
-    }      
+    }  
 }

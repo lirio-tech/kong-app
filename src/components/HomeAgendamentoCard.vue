@@ -18,17 +18,13 @@
                     <v-card-actions>
                         <v-btn
                           color="white" 
-                          
-                          
                           class="indigo--text"
                         >
                           Alterar
                         </v-btn>                        
                         <v-btn
                           color="red" 
-                          
                           class="white--text"
-                          
                         >
                           Cancelar
                         </v-btn>
