@@ -189,8 +189,6 @@
               :dialog="dialogAgendamentoConcluir" 
               :agendamento="agendamentoConcluir"
               v-on:show-dialog="showDialogConcluir" 
-              v-on:done="done"
-              
             />          
         </v-main>
         <br/><br/><br/><br/><br/>
@@ -276,33 +274,6 @@ export default {
           }
           this.showDialog(true);
         },
-        done(agendamento, paymentType) {
-            if(confirm("Deseja Realmente Concluir?")) {
-                this.loadingConcluir = true;
-                agendamentoGateway.agendamentoDone(agendamento._id, agendamento, paymentType,
-                  res => {
-                     this.loadingConcluir = false;
-                     const order = res;
-                     this.$router.push("/ordem-servico/"+order._id); 
-                  }, (err) => {
-                      this.loadingConcluir = false;
-                      if(err.response.status === 401) {
-                        this.$router.push('/login');
-                        return;
-                      }
-                      if(err.response.status === 412) {
-                        alert(err.response.data.message)
-                        this.dialogPlan = true;                
-                        return;
-                      }
-                      if(err.response.status === 422) {
-                        alert(err.response.data.message)            
-                        return;
-                      }                        
-                      alert('Erro ao Concluir :(');
-                  })
-            }
-        },
         cancel(_id) {
           if(confirm("Deseja Realmente Cancelar?")) {
               this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
@@ -318,8 +289,11 @@ export default {
                 })              
           }
         },
+        isPendingPast(agendamento) {
+            return agendamento.status === 'PENDING' && new Date(agendamento.dateTimeStartAt) < new Date();
+        },
         getColorByStatus(agendamento) {
-            if(agendamento.status === 'PENDING' && new Date(agendamento.dateTimeStartAt) > new Date())
+            if(this.isPendingPast(agendamento))
               return 'red'          
             if(agendamento.status === 'PENDING')
               return 'blue'
@@ -376,7 +350,7 @@ export default {
                   start: _start,
                   end: _end,
                   total: this.agendamentos[i].total,
-                  color: this.getColorByStatus(this.agendamentos[i].status),
+                  color: this.getColorByStatus(this.agendamentos[i]),
                   timed: true,
               });      
            }

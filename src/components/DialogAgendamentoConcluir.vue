@@ -88,7 +88,7 @@
                             color="success"
                             x-large
                             type="submit"
-                            :loading="loagind"
+                            :loading="loadingConcluir"
                         >
                           Concluir Agendamento
                         </v-btn>                                                                               
@@ -105,11 +105,12 @@
 <script>
 import UserTypes from '../utils/UserTypes'
 import storage from '../storage'
+import agendamentoGateway from '../api/agendamentoGateway';
 export default {
     props:['dialog', 'agendamento'],
     data () {
       return {
-        loagind: false,
+        loadingConcluir: false,
         paymentType: 'card',
         userLogged: {},
         myCompany: {},
@@ -146,7 +147,32 @@ export default {
           return v;
       },      
       done() {
-        this.$emit('done', this.agendamento, this.paymentType); 
+        //this.$emit('done', this.agendamento, this.paymentType); 
+        if(confirm("Deseja Realmente Concluir?")) {
+            this.loadingConcluir = true;
+            agendamentoGateway.agendamentoDone(this.agendamento._id, this.agendamento, this.paymentType,
+              res => {
+                  this.loadingConcluir = false;
+                  const order = res;
+                  this.$router.push("/ordem-servico/"+order._id); 
+              }, (err) => {
+                  this.loadingConcluir = false;
+                  if(err.response.status === 401) {
+                    this.$router.push('/login');
+                    return;
+                  }
+                  if(err.response.status === 412) {
+                    alert(err.response.data.message)
+                    this.dialogPlan = true;                
+                    return;
+                  }
+                  if(err.response.status === 422) {
+                    alert(err.response.data.message)            
+                    return;
+                  }                        
+                  alert('Erro ao Concluir :(');
+              })
+        }   
       }
     },
     computed: {

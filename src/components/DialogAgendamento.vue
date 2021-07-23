@@ -250,13 +250,17 @@ export default {
           
 
           } else {
-
+                this.loagindAgendar = true;
                 agendamentoGateway.registrarAgendamento(this.agendamento,
                   () => {
+                    this.loagindAgendar = false;
                     this.$emit('scheduled-success',new Date(),new Date())
                     this.$emit('show-dialog',false)
                   },
-                  () => alert('Erro ao registrar agendamento')
+                  () => { 
+                    this.loagindAgendar = false; 
+                    alert('Erro ao registrar agendamento')
+                  }
                 )
           }
         }
