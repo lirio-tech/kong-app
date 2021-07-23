@@ -112,6 +112,7 @@
                                             label="Horário"
                                             v-model="agendamento.timeStartAt"
                                             type="time"
+                                            @blur="changeTimeStart"
                                             filled
                                           ></v-text-field>                     
                                       </th>
@@ -215,9 +216,18 @@ export default {
           v=v.replace(/(\d)(\d{2})$/,"$1,$2");//coloca a virgula antes dos 2 últimos dígitos
           return v;
       },      
+      changeTimeStart() {
+          let hour = Number(this.agendamento.timeStartAt.substring(0,2))+1;
+          this.agendamento.timeEndAt = `${hour > 10 ? hour : '0'+hour}:${this.agendamento.timeStartAt.substring(3,5)}`
+      },
       registrarAgendamento() {
         console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
+
+          if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
+            alert('Horario de Inicio deve ser menor que o horario final do agendamento');
+            return;
+          }
 
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
           this.agendamento.dateAt = this.agendamento.date;

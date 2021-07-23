@@ -306,10 +306,12 @@ export default {
                 })              
           }
         },
-        getColorByStatus(status) {
-            if(status === 'PENDING')
+        getColorByStatus(agendamento) {
+            if(agendamento.status === 'PENDING' && new Date(agendamento.dateTimeStartAt) > new Date())
+              return 'red'          
+            if(agendamento.status === 'PENDING')
               return 'blue'
-            if(status === 'DONE')
+            if(agendamento.status === 'DONE')
               return 'blue-grey darken-2'
             return 'indigo'
         },        
@@ -354,7 +356,6 @@ export default {
           agendamentoGateway.getAgendamentos(_date, _date,
               res => {
                   this.agendamentos = res;
-                  console.log(this.agendamentos)
                   const events = []
                   for(var i in this.agendamentos) {
                     const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
@@ -367,7 +368,7 @@ export default {
                         start: _start,
                         end: _end,
                         total: this.agendamentos[i].total,
-                        color: this.getColorByStatus(this.agendamentos[i].status),
+                        color: this.getColorByStatus(this.agendamentos[i]),
                         timed: true,
                     });        
                   }

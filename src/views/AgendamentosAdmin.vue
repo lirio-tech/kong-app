@@ -364,13 +364,15 @@ export default {
                 })              
           }
         },
-        getColorByStatus(status) {
-            if(status === 'PENDING')
+        getColorByStatus(agendamento) {
+            if(agendamento.status === 'PENDING' && new Date(agendamento.dateTimeStartAt) < new Date())
+              return 'red'          
+            if(agendamento.status === 'PENDING')
               return 'blue'
-            if(status === 'DONE')
+            if(agendamento.status === 'DONE')
               return 'blue-grey darken-2'
             return 'indigo'
-        },        
+        },            
         setTypePeriod(tp) {
           this.typePeriod = tp;
         },
@@ -426,7 +428,7 @@ export default {
                         start: _start,
                         end: _end,
                         total: this.agendamentos[i].total,
-                        color: this.getColorByStatus(this.agendamentos[i].status),
+                        color: this.getColorByStatus(this.agendamentos[i]),
                         timed: true,
                         category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
                     });        
