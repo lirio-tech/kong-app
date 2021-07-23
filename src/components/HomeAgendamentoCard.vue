@@ -12,7 +12,7 @@
                               {{ agendamento.customer.name }}
                             </p>
                             <v-icon>mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
-                            <v-icon>mdi-clock</v-icon> &nbsp; <b>{{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,10) }} às {{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(11,16) }}</b> <br/>
+                            <v-icon>mdi-clock</v-icon> &nbsp; <b>{{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,10) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
                               
                           </v-card-text>
@@ -87,7 +87,7 @@ export default {
           for(var i in services) {
             description += `${services[i].type}, `
           }
-          return description;
+          return description.substring(0, description.length-2);
       },      
       goAgendamentoUpdate(agendamento) {
         if(this.isAdmin()) {
@@ -103,7 +103,7 @@ export default {
               () => {
                   this.loadingCancel = false;
                   this.selectedOpen = false;
-                  this.$router.go(0);
+                  window.location.reload();
               }, () => {
                 this.loadingCancel = false;
                 alert('Erro ao Concluir :(');

@@ -232,10 +232,8 @@ export default {
     beforeMount() {
         this.userLogged = storage.getUserLogged();
         this.agendamento = this.initAgendamento();
-        console.log('query', this.$route.query.date)
         if(this.$route.query.date) {
           this.value = this.$route.query.date.substring(0,10);
-          console.log('value', this.value)
         }
         this.findAgendamento();
     },
