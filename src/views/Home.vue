@@ -342,26 +342,6 @@ export default {
       showPlanDialog(show) {
         this.dialogPlan = show
       },
-      verifyAccontPremium() {
-        let cpny = storage.getCompany();
-        let i = Number(localStorage.getItem('dialogPlan') ? localStorage.getItem('dialogPlan') : '0')+1;
-        localStorage.setItem('dialogPlan', i)
-        if(i % 10 === 0
-            && cpny 
-            && cpny.plan.name === 'Free' 
-            && this.isAdmin()) {
-          this.dialogPlan = true
-        }
-      },
-      verifyUserRateUS(userLogged) {
-        if(userLogged.ratedUs !== true) {
-          let i = Number(localStorage.getItem('dialogRateUs') ? localStorage.getItem('dialogRateUs') : '0')+1;
-          localStorage.setItem('dialogRateUs', i);
-          if(i % 13 === 0) {
-              this.dialogRateUs = true;
-          }
-        }
-      },
       buscarPorPeriodo(dates) {
         if(dates && dates.length > 0) {
           if(dates.length > 1) {
@@ -382,8 +362,6 @@ export default {
       this.periodo = this.formatarPeriodo(new Date(), new Date())
       this.ordersGroup.periodDescription = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()
-      this.verifyAccontPremium();
-      this.verifyUserRateUS(this.userLogged);
       if(!this.isAdmin()) {
         gateway.getUserBalanceByUserId(this.userLogged._id,
           res => {
