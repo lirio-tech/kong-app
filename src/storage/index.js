@@ -20,11 +20,11 @@ export default {
         }
         return null;
     },
-    setThemeLadyModoON(isLadyModoON) {
-        localStorage.setItem('THEME_LADY', isLadyModoON);
+    setThemeKong(isKong) {
+        localStorage.setItem('THEME_KONG', isKong);
     },
-    getThemeLadyModoON() {
-        return localStorage.getItem('THEME_LADY');
+    getThemeKong() {
+        return localStorage.getItem('THEME_KONG');
     },
     logout() {
         //localStorage.clear();

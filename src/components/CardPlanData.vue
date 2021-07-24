@@ -8,27 +8,11 @@
         >
             <br />
             Seu Plano Atual é o {{ company.plan.name === 'Custom' ? 'Personalizado' : company.plan.name  }}
-        </div>
-        <div 
-            class="overline green--text" 
-            align="center"
-            dark
-            v-if="showBtnPlanDialog"
-        >                            
-            <v-btn  
-                small 
-                color="primary"
-                @click="$emit('show-plan-dialog',true)"
-            >
-                Veja o plano ideal para VC ;-)
-            </v-btn>
-            <br/>
-        </div>            
+        </div>        
         <v-container>
                 <span 
                     v-if="company.plan && company.plan.payment && isAdmin(userView.type)"
                 >
-                    <br/>
                     <span class="grey--text">Pagamento: </span> 
                     {{ company.plan.payment.price | currency }} 
                 </span>     
@@ -75,7 +59,7 @@
 <script>
 import UserTypes from '../utils/UserTypes'
 export default {
-    props: ['company', 'showBtnPlanDialog', 'userView'],
+    props: ['company', 'userView'],
     methods: {
         isAdmin(type) {
             return UserTypes.isAdmin(type)
