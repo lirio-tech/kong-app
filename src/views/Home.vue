@@ -323,7 +323,7 @@ export default {
           res => {
             console.log(res);
             this.loading = false;
-            this.ordersByUsers = res;
+            this.ordersByUsers = res.orders;
             this.ordersByUsers.forEach(obu => {
               this.ordersGroup.total += obu.total;
               this.ordersGroup.totalCompany += obu.totalCompany;
@@ -332,6 +332,8 @@ export default {
               this.ordersGroup.cash += obu.cash;
               this.ordersGroup.pix += obu.pix;
             });
+            storage.setUserLogged(JSON.stringify(res.user));
+            storage.setCompany(JSON.stringify(res.company));
           }, err => {
             this.loading = false;
             console.log(err);
