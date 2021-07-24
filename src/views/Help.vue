@@ -11,7 +11,7 @@
                 </v-col> 
                 <v-col cols="8" align="center" >  
                         <span style="font-size: 2.0rem !important;" class="white--text">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
-                        <br/><small class="grey--text">Versão: 0.9.10 </small>
+                        <br/><small class="grey--text">Versão: {{ version() }} </small>
                 </v-col>       
             </v-row>   
 
@@ -117,6 +117,7 @@
 import VueQrcode from 'vue-qrcode';
 import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import device from '../utils/device'
+import appConfig from '../utils/appConfig'
 export default {
     components: {
         VueQrcode,
@@ -150,6 +151,9 @@ export default {
                 url: this.urlShare,
             }            
             return navigator.share(shareData)
+        },
+        version() {
+            return appConfig.version();
         }                         
     },
     computed: {

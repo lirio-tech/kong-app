@@ -32,7 +32,7 @@
                           </div>
                       </v-list-item-title>
                     </v-col>                            
-                    <hr style="border: 1px dotted #424242;border-radius: 5px;" />
+                    <hr-line />
                     <v-col cols="4" style="margin-top:5px" class="text-center">
                         <v-icon color="green" style="margin-top: -4px">
                           mdi-cash
@@ -61,7 +61,7 @@
                         </span>                                
                     </v-col> 
 
-                    <hr style="border: 1px dotted #424242;border-radius: 5px;" />
+                    <hr-line />
                     <br/>
                     <div class="caption grey--text">
                         <span class="">Comissão</span>
@@ -98,7 +98,7 @@
                             {{ ordersGroup.totalCompany | currency }}
                         </v-col>
                     </v-row>                            
-                    <hr v-if="ordersGroup.amount" style="margin-top: 15px; border: 1px dotted #424242;border-radius: 5px;" />
+                    <hr-line v-if="ordersGroup.amount" style="margin-top: 15px;"/>
               </v-list-item-content>
             </v-list-item>
             <v-card-actions > 
@@ -139,7 +139,9 @@
 </template>
 
 <script>
+import HrLine from './HrLine.vue'
 export default {
+  components: { HrLine },
     name: 'HomeAdmin',
     props: [ 'ordersGroup', 'ordersByUsers', 'company']
   }

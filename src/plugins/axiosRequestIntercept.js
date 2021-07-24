@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 import storage from '../storage'
+import appConfig from '../utils/appConfig'
 
 const axiosRequestIntercept = () => {
     axios.interceptors.request.use(
@@ -12,6 +13,7 @@ const axiosRequestIntercept = () => {
             }
             if(storage.getCompany()) {
               request.headers.Company = storage.getCompany()._id;
+              request.headers.version = appConfig.version();
             }
             return request;
         },
