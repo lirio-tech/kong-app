@@ -8,22 +8,20 @@
           :color="getColorSituation(agendamento.status)"
         >
                     <router-link :to="isAdmin() ? `/admin/agendamentos/?date=${agendamento.dateTimeStartAt}` : `/agendamentos/?date=${agendamento.dateTimeStartAt}`" style="color: inherit; text-decoration: none">
-                          <v-card-text>
-                            <div>{{ getTitle(agendamento.status) }}</div>
-                            <p class="text-h6 text--primary">
-                              {{ agendamento.customer.name }}
+                          <v-card-text class="black--text">
+                            <div>{{ getTitle(agendamento.status) }} <span style="margin-left: 70px; font-size: 30px; font-family: fuggles, Liu Jian Mao Cao;" class="indigo--text">Post it</span></div> 
+                            <p class="text-h6 black--text">
+                              {{ agendamento.customer.name }} 
                             </p>
-                            <v-icon>mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
-                            <v-icon>mdi-clock</v-icon> &nbsp; <b>{{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,10) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
+                            <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
+                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; <b>{{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,10) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
                               
                           </v-card-text>
                     </router-link>
                     <v-card-actions>
                         <v-btn
-                          color="white" 
-                          class="indigo--text"
-                          @click="goAgendamentoUpdate(agendamento)"
+                         @click="goAgendamentoUpdate(agendamento)"
                         >
                           Alterar
                         </v-btn>                        
@@ -118,3 +116,6 @@ export default {
     }
   }
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fuggles&display=swap');
+</style>
