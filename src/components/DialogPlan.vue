@@ -28,7 +28,6 @@
         <v-container style="margin-top: -12px;">
           <CardPlanData 
               :company="company" 
-              :showBtnPlanDialog="false"
               :userView="userLogged"
           />   
 

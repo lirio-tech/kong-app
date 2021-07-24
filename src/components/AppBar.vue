@@ -80,7 +80,7 @@
                         </router-link>                                                                     
                         <router-link v-if="userLogged" :to="'/company/'+company._id" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                            Meu Estabelecimento
+                            Configurações
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>     
@@ -100,8 +100,7 @@
                         </router-link>                            
                         <router-link v-if="userLogged && userLogged.type === 'hairdresser'" :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                                Pagamentos
-                                <v-chip color="primary" style="margin-left: 15px;" outlined small>Novo</v-chip>
+                                Meu Extrato
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>                                                    
@@ -125,12 +124,13 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </div>                        
-
                         <router-link 
-                            to="/public/simulator-plan" 
+                            v-if="false"
+                            :to="isAdmin() ? '/admin/agendamentos' : '/agendamentos'" 
                             style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
-                                Simulador de Plano
+                                Agendamentos 
+                                <v-chip color="primary" style="margin-left: 15px;" outlined small>Novo</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>        
