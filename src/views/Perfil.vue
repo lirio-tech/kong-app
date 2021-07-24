@@ -285,7 +285,17 @@
                             </v-sheet>                            
                         </v-col>
                     </v-expansion-panel-content>
-                </v-expansion-panel>                                                                
+                </v-expansion-panel>             
+                <v-expansion-panel>
+                    <v-expansion-panel-header>App</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                      
+                        <v-col cols="12" >  
+                             <span class="primary--text">Modo {{ themeKong ? 'Kong' : 'Lady' }}</span>
+                            <v-switch v-model="themeKong" />      
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                                                                       
                 <v-expansion-panel>
                     <v-expansion-panel-header>Meu Perfil</v-expansion-panel-header>
                     <v-expansion-panel-content>
@@ -468,6 +478,7 @@ export default {
             priceBR: "0,00",
             time: "01:00"                       
       },      
+      themeKong: true,
     }),
     methods: {
         showPlanDialog(show) {
@@ -615,9 +626,15 @@ export default {
 
             const [year, month, day] = date.split('-')
             return `${day}/${month}/${year}`
-        },                  
+        },            
+        setThemeKong(isKong) {
+            storage.setThemeKong(isKong);
+            this.themeKong = isKong;
+            this.$vuetify.theme.dark = !this.isKong;
+        },                
     },
     beforeMount() {
+      this.themeKong = this.$vuetify.theme.dark;
       this.userLogged = storage.getUserLogged();
       this.userLogged.createdAt = this.formatDateTime(this.userLogged.createdAt);
       if(!this.userLogged.configuration) {
@@ -628,6 +645,13 @@ export default {
       this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      
       this.getUsers();
       this.getPaymentsHistByCompany();      
+      this.themeKong = Boolean(storage.getThemeKong());
+    },
+    watch: {
+        themeKong() {
+            this.$vuetify.theme.dark = this.themeKong ;
+            storage.setThemeKong(this.themeKong);
+        }
     }
   }
 </script>
