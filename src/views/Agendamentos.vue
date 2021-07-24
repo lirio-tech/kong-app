@@ -295,7 +295,9 @@ export default {
           }
         },
         isPendingPast(agendamento) {
-            return agendamento.status === 'PENDING' && new Date(agendamento.dateTimeStartAt) < new Date();
+            let start = new Date(`${agendamento.dateTimeStartAt}`);
+            start.setHours(start.getHours()+3);
+            return agendamento.status === 'PENDING' && start < new Date();
         },
         getColorByStatus(agendamento) {
             if(this.isPendingPast(agendamento))

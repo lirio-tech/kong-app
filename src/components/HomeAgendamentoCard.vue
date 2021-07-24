@@ -2,7 +2,9 @@
   <div>
         <v-card
           class="mx-auto"
-          max-width="344"
+          max-width="365"
+          elevation="10"
+          shaped
           :color="getColorSituation(agendamento.status)"
         >
                     <router-link :to="isAdmin() ? `/admin/agendamentos/?date=${agendamento.dateTimeStartAt}` : `/agendamentos/?date=${agendamento.dateTimeStartAt}`" style="color: inherit; text-decoration: none">
