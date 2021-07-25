@@ -71,7 +71,7 @@
                       color="grey darken-2"
                       @click="setToday"
                     >
-                      Hoje {{ value }}
+                      Hoje 
                     </v-btn>
                     <v-btn
                       fab
