@@ -96,7 +96,15 @@
                     flex 
                 >
                     <v-col cols="6" align="center">
-                        <get-it-on-google-play />
+                        <!-- <get-it-on-google-play /> -->
+                        <router-link to="/public/android">
+                            <v-img 
+                                src="../assets/android.webp"
+                                height="125"
+                                width="125"
+                                style="margin-left:50px;"
+                            ></v-img>
+                        </router-link>                        
                     </v-col>
                     <v-col cols="6">
                         <router-link to="/public/iphone">
