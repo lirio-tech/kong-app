@@ -42,8 +42,8 @@ export default {
       this.interval = setInterval(() => {
         if (this.value === 100) {
             if(this.myDevice === 'ANDROID') {
-                //this.$router.push('/public/android');
-                window.location.href = 'https://play.google.com/store/apps/details?id=com.konglify.app.ladyapp'
+                this.$router.push('/public/android');
+                //window.location.href = 'https://play.google.com/store/apps/details?id=com.konglify.app.ladyapp'
                 return;
             }
             if(this.myDevice === 'IPHONE') {

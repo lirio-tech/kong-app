@@ -96,7 +96,15 @@
                     flex 
                 >
                     <v-col cols="6" align="center">
-                        <get-it-on-google-play />
+                        <!-- <get-it-on-google-play /> -->
+                        <router-link to="/public/android">
+                            <v-img 
+                                src="../assets/android.webp"
+                                height="125"
+                                width="125"
+                                style="margin-left:50px;"
+                            ></v-img>
+                        </router-link>                        
                     </v-col>
                     <v-col cols="6">
                         <router-link to="/public/iphone">
@@ -115,13 +123,13 @@
 </template>
 <script>
 import VueQrcode from 'vue-qrcode';
-import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
+// import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import device from '../utils/device'
 import appConfig from '../utils/appConfig'
 export default {
     components: {
         VueQrcode,
-        GetItOnGooglePlay,
+        // GetItOnGooglePlay,
     },
     methods: {
         sendMessageWhatsapp() {
