@@ -123,13 +123,13 @@
 </template>
 <script>
 import VueQrcode from 'vue-qrcode';
-import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
+// import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import device from '../utils/device'
 import appConfig from '../utils/appConfig'
 export default {
     components: {
         VueQrcode,
-        GetItOnGooglePlay,
+        // GetItOnGooglePlay,
     },
     methods: {
         sendMessageWhatsapp() {
