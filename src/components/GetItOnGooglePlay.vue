@@ -1,13 +1,13 @@
 <template>
     <v-col cols="12" v-if="!$vuetify.theme.dark && (isAndroid() || !isIphone())">
-        <center>
+        <!-- <center>
             <a href="https://play.google.com/store/apps/details?id=com.konglify.app.ladyapp">
                 <v-img 
                 width="250"
                 src="../assets/google-play.png" 
                 /> 
             </a>
-        </center>
+        </center> -->
     </v-col>
 </template>
 <script>
