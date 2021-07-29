@@ -14,7 +14,7 @@
                               {{ agendamento.customer.name }} 
                             </p>
                             <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
-                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; <b>{{ getDayOfWeek(new Date(agendamento.dateTimeStartAt).getDay()) }}, {{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
+                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; <b>{{ getDayOfWeek(new Date(agendamento.dateTimeStartAt)) }}, {{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
                               
                           </v-card-text>
@@ -113,9 +113,23 @@ export default {
       showDialogConcluir(show) {
         this.dialogAgendamentoConcluir = show;
       },      
-      getDayOfWeek(dayOfWeekNumber) {
-        console.log('dayOfWeekNumber', dayOfWeekNumber)
-        switch(dayOfWeekNumber) {
+      getDayOfWeek(date) {
+        let today = new Date().setHours(0,0,0,0);
+        let date2 = date.setHours(0,0,0,0);
+        if(date2 == today) {
+          return 'Hoje'
+        }
+        let tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate()+1);
+        if(date2 == tomorrow.setHours(0,0,0,0)) {
+          return 'Amanhã'
+        }        
+        let yesterday = new Date();
+        yesterday.setDate(yesterday.getDate()-1);
+        if(date2 == yesterday.setHours(0,0,0,0)) {
+          return 'Ontem'
+        }            
+        switch(date.getDay()) {
           case 0: return 'Domingo';
           case 1: return 'Segunda-feira';
           case 2: return 'Terça-feira';
