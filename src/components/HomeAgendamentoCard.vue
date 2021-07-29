@@ -14,7 +14,7 @@
                               {{ agendamento.customer.name }} 
                             </p>
                             <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
-                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; <b>{{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,10) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
+                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; <b>{{ getDayOfWeek(new Date(agendamento.dateTimeStartAt).getDay()) }}, {{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
                               
                           </v-card-text>
@@ -112,7 +112,20 @@ export default {
       },  
       showDialogConcluir(show) {
         this.dialogAgendamentoConcluir = show;
-      },          
+      },      
+      getDayOfWeek(dayOfWeekNumber) {
+        console.log('dayOfWeekNumber', dayOfWeekNumber)
+        switch(dayOfWeekNumber) {
+          case 0: return 'Domingo';
+          case 1: return 'Segunda-feira';
+          case 2: return 'Terça-feira';
+          case 3: return 'Quarta-feira';
+          case 4: return 'Quinta-feira';
+          case 5: return 'Sexta-feira';
+          case 6: return 'Sábado';
+          default: return ''
+        }
+      }    
     }
   }
 </script>
