@@ -265,27 +265,7 @@
                                 </v-col>
                         </v-col>
                     </v-expansion-panel-content>
-                </v-expansion-panel>      
-                <v-expansion-panel v-if="isAdmin()">
-                    <v-expansion-panel-header>Produtos</v-expansion-panel-header>
-                    <v-expansion-panel-content>              
-                        <v-col align="center" >
-                            <v-chip color="primary" outlined small >
-                                Somente Usuarios Admin conseguem alterar
-                            </v-chip>        
-                        </v-col>                        
-                        <v-col cols="12" >  
-                            <v-sheet class="pa-5">
-                                <v-switch
-                                v-model="company.products.schedule"
-                                inset
-                                :label="`Agendamento`"
-                                @change="updateProducts"
-                                ></v-switch>
-                            </v-sheet>                            
-                        </v-col>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>             
+                </v-expansion-panel>                
                 <v-expansion-panel>
                     <v-expansion-panel-header>App</v-expansion-panel-header>
                     <v-expansion-panel-content>              

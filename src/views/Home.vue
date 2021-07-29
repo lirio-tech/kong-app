@@ -147,7 +147,7 @@
             <br/>
             <HomeAgendamentos
               :userLogged="userLogged"
-              v-if="!loading && (company.products && company.products.schedule)"
+              v-if="!loading"
             />
             
         </v-main>
@@ -222,7 +222,8 @@ export default {
     }),
     methods: {
       onRefresh() {
-        this.filterOrders();
+        this.filterOrders()
+        this.findBalance();        
       },
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
@@ -307,6 +308,27 @@ export default {
               }
           })
       },
+      findBalance() {
+        if(!this.isAdmin()) {
+          gateway.getUserBalanceByUserId(this.userLogged._id,
+            res => {
+              this.userBalance = res;
+            }, 
+            () => { }
+          )
+        } else {
+          this.balanceFull = 0;
+          gateway.getUsersBalance(
+            res => {
+              res.forEach(b => {
+                this.balanceFull += b.balance;
+              })
+              console.log(res);
+            }, 
+            () => { }
+          )        
+        }
+      },
       filterOrders() {
         this.config.readyLabel = `Atualizado as ${new Date().toLocaleString('pt-BR')}`;
         this.orders = [];
@@ -364,25 +386,7 @@ export default {
       this.periodo = this.formatarPeriodo(new Date(), new Date())
       this.ordersGroup.periodDescription = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.filterOrders()
-      if(!this.isAdmin()) {
-        gateway.getUserBalanceByUserId(this.userLogged._id,
-          res => {
-            this.userBalance = res;
-          }, 
-          () => { }
-        )
-      } else {
-        this.balanceFull = 0;
-        gateway.getUsersBalance(
-          res => {
-            res.forEach(b => {
-              this.balanceFull += b.balance;
-            })
-            console.log(res);
-          }, 
-          () => { }
-        )        
-      }
+      this.findBalance();
     },
     computed: {
       datesDisplay() { 
