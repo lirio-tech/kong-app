@@ -209,6 +209,7 @@
                 :dialog="dialog" 
                 :users="usersAll"
                 :agendamento="agendamento"
+                :date="agendamento.date"
                 :servicesSelected="servicesSelected"
                 v-on:show-dialog="showDialog" 
                 v-on:scheduled-success="findAgendamento" 

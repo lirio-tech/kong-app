@@ -96,7 +96,7 @@
                             ></v-text-field>
                           </template>
                           <v-date-picker
-                            v-model="agendamento.date"
+                            v-model="date"
                             @input="menu2 = false"
                             locale="pt-br"
                           ></v-date-picker>
@@ -174,7 +174,7 @@ import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
 export default {
-    props:['dialog', 'agendamento', 'servicesSelected', 'users'],
+    props:['dialog', 'agendamento', 'date','servicesSelected', 'users'],
     data () {
       return {
         loagindAgendar: false,
@@ -183,7 +183,6 @@ export default {
         services: [],
         value: [],        
 
-        //date: new Date().toISOString().substr(0, 10),
         menu2: false,
         modal: false
 
@@ -223,7 +222,7 @@ export default {
       registrarAgendamento() {
         console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
-
+          this.agendamento.date = this.date;
           if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
             alert('Horario de Inicio deve ser menor que o horario final do agendamento');
             return;
@@ -269,7 +268,7 @@ export default {
     computed: {
       computedDateFormattedMomentjs() {
         moment.locale('pt-br');
-        return this.agendamento.date ? moment(this.agendamento.date).format('dddd, DD/MM/YYYY') : ''
+        return this.date ? moment(this.date).format('dddd, DD/MM') : ''
       },      
       total: function () {
         let svs = this.services.filter(it => this.servicesSelected.includes(it.type));
