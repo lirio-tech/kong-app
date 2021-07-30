@@ -9,11 +9,14 @@
                   <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
                       <v-list-item style="margin-bottom: -35px" >
                         <v-list-item-content>                                  
-                            <v-col cols="12" style="margin-top: -20px;margin-left: -10px;">
+                            <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                               <div class="overline mb-4 grey--text">
                                   Agendamentos
                               </div>                           
                             </v-col>  
+                            <v-col cols="1">
+                                <v-icon style="margin-top: -40px; margin-left: -5px">mdi-chevron-right</v-icon>
+                            </v-col>                                
                         </v-list-item-content>
                       </v-list-item>            
                   </router-link>     
