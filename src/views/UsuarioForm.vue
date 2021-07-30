@@ -7,7 +7,7 @@
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/admin/users'}"
                   >
-                      <v-icon large color="purple darken-2">mdi-arrow-left</v-icon>
+                      <v-icon large color="purple darken-2">mdi-chevron-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="10" align="center">   

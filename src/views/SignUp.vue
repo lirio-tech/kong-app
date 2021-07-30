@@ -188,7 +188,7 @@
             >
                 <span class="text-no-wrap primary--text" style="font-size: 1.2rem;">
                     <v-icon color="primary">
-                        mdi-arrow-left
+                        mdi-chevron-left
                     </v-icon>
                     Ja sou cadastrado
                 </span>

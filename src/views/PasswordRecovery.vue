@@ -4,7 +4,7 @@
         <v-main class="" v-if="!user">            
                 <v-col cols="12" align="center" v-if="!loading">   
                     <h2>
-                        <v-icon large color="">mdi-arrow-left</v-icon>
+                        <v-icon large color="">mdi-chevron-left</v-icon>
                         Voltar
                     </h2>
                 </v-col>

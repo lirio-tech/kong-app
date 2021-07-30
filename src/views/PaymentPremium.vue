@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                 <v-btn icon small style="display: inline;" @click="$router.go(-1)">
-                    <v-icon large>mdi-arrow-left</v-icon>
+                    <v-icon large>mdi-chevron-left</v-icon>
                 </v-btn>
             </v-col>
             <v-col cols="10" align="center">   

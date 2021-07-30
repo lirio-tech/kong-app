@@ -6,7 +6,7 @@
                   <v-btn icon small style="display: inline;"
                       @click="$router.go(-1)"
                   >
-                      <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                      <v-icon large color="blue-grey darken-2">mdi-chevron-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="10" align="center">   

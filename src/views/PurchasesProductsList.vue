@@ -5,7 +5,7 @@
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/'}"
                   >
-                      <v-icon large color="blue-grey darken-2">mdi-arrow-left</v-icon>
+                      <v-icon large color="blue-grey darken-2">mdi-chevron-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="5" align="center">   
