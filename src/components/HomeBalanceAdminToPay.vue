@@ -6,26 +6,28 @@
       max-width="800"
       outlined
     >
-          <v-list-item three-line>
-            <router-link :to="{ path: '/users-balance' }"  style="color: inherit; text-decoration: none">
-                <v-list-item-content>                                  
+    <router-link :to="{ path: '/users-balance' }"  style="color: inherit; text-decoration: none">
+            <v-list-item three-line>
+            
+                <v-list-item-content>           
                       <v-col cols="11">
                           <span 
                             style="font-size: 1.0rem !important;"
                           >
                             Olá {{ userLogged.name }}
                           </span>                            
-                          <br/><br/>
-                          <span 
+                      </v-col>     
+                      <v-col cols="1">
+                          <v-icon style="margin-top: -20px; margin-left: -5px">mdi-chevron-right</v-icon>
+                      </v-col>                                
+                      <v-col cols="12">
+                        <span 
                             style="font-size: 1.0rem !important;"
                             class="caption grey--text"
                           >
                             Comissão a Pagar
                           </span>
-                      </v-col>     
-                      <v-col cols="1">
-                          <v-icon style="margin-top: -40px; margin-left: -5px">mdi-chevron-right</v-icon>
-                      </v-col>                                
+                      </v-col>
                       <v-col cols="12">
                         <v-list-item-title class="mb-1" style="margin-top: -25px;">
                             <div style="font-size: 2.0rem">
@@ -34,8 +36,9 @@
                         </v-list-item-title>
                       </v-col>                     
                 </v-list-item-content>
-            </router-link>
+            
           </v-list-item>
+    </router-link>
     </v-card>            
 
   </div>                

@@ -6,8 +6,8 @@
               max-width="800"
               outlined
             >
+                  <router-link :to="{ path:'/analytics'}" style="color: inherit; text-decoration: none">
                     <v-list-item three-line>
-                      <router-link :to="{ path:'/analytics'}" style="color: inherit; text-decoration: none">
                           <v-list-item-content>       
                                 <v-col cols="11" style="margin-top: -20px;margin-left: -10px;">
                                   <div class="overline mb-4 grey--text">
@@ -65,8 +65,9 @@
                                 </v-col> 
                                 <hr-line v-if="ordersGroup.amount" style="margin-top: 15px;"/>
                           </v-list-item-content>
-                      </router-link>
-                    </v-list-item>
+                      
+                      </v-list-item>
+                    </router-link>
                     <v-card-actions > 
                         <v-col cols="12" class="text-center" style="margin-top: -15px;">
                           <v-btn 

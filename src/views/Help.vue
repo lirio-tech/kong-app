@@ -6,7 +6,7 @@
                     <v-btn icon small style="display: inline;"
                         @click="goBack"
                     > 
-                        <v-icon large color="white-grey darken-2">mdi-arrow-left</v-icon>
+                        <v-icon large color="white-grey darken-2">mdi-chevron-left</v-icon>
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  

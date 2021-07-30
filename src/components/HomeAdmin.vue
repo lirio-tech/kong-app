@@ -16,8 +16,8 @@
                               <span class="">{{ ordersGroup.periodDescription }}</span>
                           </div>                           
                         </v-col>       
-                        <v-col cols="1">
-                            <v-icon style="margin-top: -40px; margin-left: -5px">mdi-chevron-right</v-icon>
+                        <v-col cols="1">  
+                            <v-icon style="margin-top: -40px;">mdi-chevron-right</v-icon>
                         </v-col>               
                         <v-col cols="7">
                           <v-list-item-title class="headline mb-1" style="margin-top: -40px;">

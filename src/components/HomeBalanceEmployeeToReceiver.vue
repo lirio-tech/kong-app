@@ -6,11 +6,11 @@
               max-width="800"
               outlined
             >
+              <router-link 
+                :to="{ path: '/users-balance-detail/'+userLogged._id }"   
+                style="color: inherit; text-decoration: none"
+              >
                   <v-list-item three-line>
-                    <router-link 
-                      :to="{ path: '/users-balance-detail/'+userLogged._id }"   
-                      style="color: inherit; text-decoration: none"
-                    >
                         <v-list-item-content>                                  
                               <v-col cols="11">
                                   <span 
@@ -37,8 +37,8 @@
                                 </v-list-item-title>
                               </v-col>                     
                         </v-list-item-content>
-                    </router-link>
                   </v-list-item>
+              </router-link>
             </v-card>              
     </div>            
 </template>
