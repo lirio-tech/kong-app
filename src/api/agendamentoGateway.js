@@ -61,7 +61,7 @@ export default{
        
     },
     getPriorAndNext(callback, errorCb) {
-        let url = `${AGENDAMENTO_API}/prior-next`;
+        let url = `${AGENDAMENTO_API}/v2-prior-next`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)
