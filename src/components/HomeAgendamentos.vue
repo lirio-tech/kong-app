@@ -15,7 +15,7 @@
                               </div>                           
                             </v-col>  
                             <v-col cols="1">
-                                <v-icon style="margin-top: -40px; margin-left: -5px">mdi-chevron-right</v-icon>
+                                <v-icon style="margin-top: -40px;">mdi-chevron-right</v-icon>
                             </v-col>                                
                         </v-list-item-content>
                       </v-list-item>            
