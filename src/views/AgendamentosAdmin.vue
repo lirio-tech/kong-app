@@ -356,11 +356,20 @@ export default {
           }
         },
         isPendingPast(agendamento) {
-            return agendamento.status === 'PENDING' && new Date(agendamento.dateTimeStartAt) < new Date();
+          let start = new Date(agendamento.dateTimeStartAt);
+          start.setHours(start.getHours()+3)
+          return agendamento.status === 'PENDING' && start < new Date();
         },
+        isPending1Hour(agendamento) {
+          let start = new Date(agendamento.dateTimeStartAt);
+          start.setHours(start.getHours()+2);
+          return agendamento.status === 'PENDING' && start < new Date();
+        },        
         getColorByStatus(agendamento) {
             if(this.isPendingPast(agendamento))
               return 'red'          
+            if(this.isPending1Hour(agendamento))
+              return 'orange'
             if(agendamento.status === 'PENDING')
               return 'blue'
             if(agendamento.status === 'DONE')
