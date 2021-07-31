@@ -79,18 +79,7 @@
                                     required
                                     filled
                             />                                                    
-                        </v-col>       
-                        <v-col 
-                            cols="12" md="4" 
-                            style="margin-left: 40%" 
-                            v-if="user._id !== userLogged._id"
-                        >
-                                <v-switch
-                                    dense
-                                    v-model="user.enabled"
-                                    :label="user.enabled ? 'Ativo' : 'DESATIVADO'"
-                                ></v-switch>    
-                        </v-col>      
+                        </v-col>         
                         <v-col cols="12" md="4">                      
                             <v-text-field v-model="user.email"
                                         label="Email"
@@ -109,7 +98,7 @@
                                         prepend-icon="mdi-whatsapp"
                                         filled>
                             </v-text-field>
-                        </v-col>         
+                        </v-col>                                  
                         <v-col cols="12" md="4" v-if="$route.params._id !== '_newUser' && user.disabledAt">
                                 <v-text-field
                                 label="Desativado em"
@@ -137,7 +126,18 @@
                                 required filled disabled
                                 />
                         </v-col>   
-                        <v-col cols="12">
+                        <v-col 
+                            cols="12" md="3" 
+                            style="margin-left: 40%" 
+                            v-if="user._id !== userLogged._id"
+                        >
+                                <v-switch
+                                    dense
+                                    v-model="user.enabled"
+                                    :label="user.enabled ? 'Ativo' : 'DESATIVADO'"
+                                ></v-switch>    
+                        </v-col>                           
+                        <v-col cols="12" >
                             <v-subheader>Comissão</v-subheader>
                             <v-card-text>
                             <v-slider
@@ -157,16 +157,93 @@
                                     label="Permitir Alterar os Serviços Lançados"
                                 ></v-switch>    
                         </v-col>                                                     
-                        <v-col cols="12" md="4" v-if="userLogged.type === 'sys_admin'">
+                        <v-col cols="12" md="12" v-if="userLogged.type === 'sys_admin'">
                                 <v-text-field
                                 label="Device"
                                 v-model="user.device"
                                 ref="device"
                                 prepend-icon="mdi-calendar"
-                                filled readonly
+                                filled disabled
                                 />
                         </v-col>                                                                          
                 </v-row>    
+                <v-row>
+                    <v-col cols="12"  class="mt-0 pt-0">
+                        <span class="primary--text">
+                            Serviços do Funcionário <br/><br/>
+                        </span>
+                        <v-simple-table dense >
+                            <template v-slot:default>
+                                <thead >
+                                <tr>
+                                    <th class="text-left">
+                                    Serviço
+                                    </th>
+                                    <th class="text-left">
+                                    Valor
+                                    </th>
+                                    <th class="text-left">
+                                    Commissão
+                                    </th>                                                
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in user.services" :key="item.type">
+                                    <td>{{ item.type }}</td>
+                                    <td>{{ item.price | currency }}</td>
+                                    <td>{{ item.percentCommission }}%</td>
+                                    <td>
+                                    <v-icon 
+                                        @click="deleteService(item)" class="error--text">
+                                        mdi-delete
+                                    </v-icon>
+                                    </td>
+                                </tr>
+                                <tr v-if="!company.services || company.services.length === 0">
+                                    <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
+                                </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </v-col> 
+                </v-row>       
+                <br/><br/>
+                <v-row>
+                    <v-col cols="12"  class="mt-0 pt-0">
+                        Serviços que o Funcionário não possui <br/><br/>
+                        <v-simple-table dense >
+                            <template v-slot:default>
+                                <thead >
+                                <tr>
+                                    <th class="text-left">
+                                    Serviço
+                                    </th>
+                                    <th class="text-left">
+                                    Valor
+                                    </th>                                             
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in services" :key="item.type">
+                                    <td>{{ item.type }}</td>
+                                    <td>{{ item.price | currency }}</td>
+                                    <td>
+                                    <v-icon 
+                                        @click="addService(item)" class="success--text">
+                                        mdi-arrow-up
+                                    </v-icon>
+                                    </td>
+                                </tr>
+                                <tr v-if="!company.services || company.services.length === 0">
+                                    <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
+                                </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </v-col> 
+                </v-row>                          
                 <v-row 
                     align="center"
                     justify="space-around"
@@ -236,8 +313,10 @@ export default {
             enabled: true,
             passwordConfirm: '',
             type: 'hairdresser',
-            percentCommission: 50
+            percentCommission: 50,
+            services: []
         },
+        services: [],
         enabled: true,
         message: {},      
         passwordRules: [
@@ -249,6 +328,39 @@ export default {
         ],         
         userLogged: {}                         
     }),
+    beforeMount() {
+      this.userLogged = storage.getUserLogged();   
+      this.company = storage.getCompany();   
+      if(this.$route.params._id !== '_newUser') {
+        this.loading = true;
+        gateway.getUserById(
+                this.$route.params._id,
+                res => {
+                    if(!res.services) res.services = [];
+                    this.user = res;
+                    this.user.disabledAtPtBr = new Date(this.user.disabledAt).toLocaleDateString('pt-BR');
+                    this.user.createdAtPtBr = new Date(this.user.createdAt).toLocaleDateString('pt-BR');
+                    this.user.updatedAtPtBr = new Date(this.user.updatedAt).toLocaleDateString('pt-BR');
+                    this.user.enabled = !this.user.disabled;
+                    this.enabled = this.user.enabled;
+                    this.loading = false;
+                    
+                    this.company.services.forEach(s => {
+                        if(!this.user.services || !this.user.services.includes(s)) {
+                            this.services.push(s);
+                        }
+                    })
+                },
+                err => { 
+                    this.loading = false;
+                    console.log(err)
+                }
+        );  
+      } else {
+          this.user.services = this.company.services;
+          this.user.services.forEach(s => s.percentCommission = 50);
+      }
+    },    
     methods: {
       becomeAdmin() {
           if (confirm(`${this.user.name} tera acesso de administrador e podera ver a contabilidade completa.\n\nDeseja Relamente Tornar ${this.user.name} Admin?`)) {
@@ -337,35 +449,22 @@ export default {
         }    
       },
       removeSpecialChar(v) {
-        return InputsUtils.usernameInputs(v);
+            return InputsUtils.usernameInputs(v);
       },       
       showMessage(color, text) {
             this.message.color = color;
             this.message.text = text;
             this.message.show = true;
-      }        
+      },
+      deleteService(service) {
+            this.user.services.splice(this.user.services.indexOf(service), 1);
+            this.services.push(service);
+      },
+      addService(service) {
+            service.percentCommission = 50
+            this.user.services.push(service);
+            this.services.splice(this.services.indexOf(service), 1);
+      }      
     },
-    beforeMount() {
-      this.userLogged = storage.getUserLogged();   
-      if(this.$route.params._id !== '_newUser') {
-        this.loading = true;
-        gateway.getUserById(
-                this.$route.params._id,
-                res => {
-                    this.user = res;
-                    this.user.disabledAtPtBr = new Date(this.user.disabledAt).toLocaleDateString('pt-BR');
-                    this.user.createdAtPtBr = new Date(this.user.createdAt).toLocaleDateString('pt-BR');
-                    this.user.updatedAtPtBr = new Date(this.user.updatedAt).toLocaleDateString('pt-BR');
-                    this.user.enabled = !this.user.disabled;
-                    this.enabled = this.user.enabled;
-                    this.loading = false;
-                },
-                err => { 
-                    this.loading = false;
-                    console.log(err)
-                }
-        );  
-      }
-    }
   }
 </script>

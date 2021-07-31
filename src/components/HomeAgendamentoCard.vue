@@ -73,11 +73,6 @@ export default {
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
       },      
-      getTitle(status){
-        if(status === 'PRIOR') return 'Conclua esse agendamento :)';
-        if(status === 'PENDING') return 'Próximo Agendamento';
-        return ''        
-      },
       getDescriptionServices(services) {
           let description = ''
           for(var i in services) {
