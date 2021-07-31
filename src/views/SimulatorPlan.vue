@@ -22,7 +22,7 @@
                     min="1"
                     label="Admin"
                     prepend-icon="mdi-account"
-                    max="8"
+                    max="10"
                     thumb-label
                 ></v-slider>                
               </v-col>
@@ -33,7 +33,7 @@
                     min="0"
                     prepend-icon="mdi-account"
                     label="Comum"
-                    max="12"
+                    max="15"
                     thumb-label
                 ></v-slider>                
               </v-col>         
@@ -44,7 +44,7 @@
                     min="2"
                     prepend-icon="mdi-content-cut"
                     label="1K Mes"
-                    max="40"
+                    max="60"
                     thumb-label
                 ></v-slider>                
               </v-col>       
@@ -149,6 +149,7 @@ export default {
         amountMouth: 1,
         cashMouth: 2,
         userLogged: {},
+        company: {}
     }),
     methods: {
         goPayment(plan) {
@@ -166,8 +167,15 @@ export default {
     },
     beforeMount() {
         this.userLogged = storage.getUserLogged();
-        if(storage.getPlanCustom()) {
-            this.plan = storage.getPlanCustom();
+        this.company = storage.getCompany();
+        if(this.company.plan.name !== 'Free') {
+            this.amountUsersAdmin = this.company.plan.amountUsersAdmin;
+            this.amountUsersCommon = this.company.plan.amountUsersCommon;            
+            this.cashMouth = (this.company.plan.maxCash/1000);
+
+            let diffMillis = Math.abs(new Date(this.company.plan.dateEnd)  - new Date(this.company.plan.dateStarted));
+            let diffMonth = diffMillis / 1000 / 60 / 60/ 24 / 30; 
+            this.amountMouth = diffMonth;
         }
     },
     computed: {

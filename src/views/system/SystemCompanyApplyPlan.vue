@@ -361,7 +361,7 @@ export default {
         view: 'CHOOSE',
         applyPlan: {
             name: '',
-            payment: {}
+            payment: {price: 0}
         }
     }),
     methods: {
@@ -391,6 +391,9 @@ export default {
               amountUsersCommon: 0,  
               maxCash: 500,
           };
+          if(this.applyPlan.name !== 'Custom') {
+            this.applyPlan = this.company.plan;
+          }
           switch(planName) {
               case 'Basico':
                   result.payment.price = 10;
