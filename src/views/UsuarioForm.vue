@@ -170,7 +170,7 @@
                 <v-row>
                     <v-col cols="12"  class="mt-0 pt-0">
                         <span class="primary--text">
-                            Serviços do Funcionário <br/><br/>
+                            Serviços que {{ user.name }} possui <br/><br/>
                         </span>
                         <v-simple-table dense >
                             <template v-slot:default>
@@ -194,16 +194,25 @@
                                     <td>{{ item.price | currency }}</td>
                                     <td>{{ item.percentCommission }}%</td>
                                     <td>
-                                    <v-icon 
-                                        @click="deleteService(item)" class="error--text">
-                                        mdi-delete
-                                    </v-icon>
+                                        <v-icon 
+                                            small
+                                            @click="deleteService(item)" class="primary--text">
+                                            mdi-pencil
+                                        </v-icon>      
+                                        &nbsp;&nbsp;&nbsp;                                      
+                                        <v-icon 
+                                            small
+                                            @click="deleteService(item)" class="error--text">
+                                            mdi-arrow-down
+                                        </v-icon>                                    
                                     </td>
                                 </tr>
-                                <tr v-if="!company.services || company.services.length === 0">
-                                    <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
-                                </tr>
                                 </tbody>
+                                <tfoot v-if="!user.services || user.services.length === 0">
+                                    <tr>
+                                        <td align="" class="error--text" colspan="3"><b>Não há serviços adicionados</b></td>
+                                    </tr>
+                                </tfoot>                                
                             </template>
                         </v-simple-table>
                     </v-col> 
@@ -211,7 +220,7 @@
                 <br/><br/>
                 <v-row>
                     <v-col cols="12"  class="mt-0 pt-0">
-                        Serviços que o Funcionário não possui <br/><br/>
+                        Serviços que {{ user.name }} não possui <br/><br/>
                         <v-simple-table dense >
                             <template v-slot:default>
                                 <thead >
@@ -236,10 +245,12 @@
                                     </v-icon>
                                     </td>
                                 </tr>
-                                <tr v-if="!company.services || company.services.length === 0">
-                                    <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
-                                </tr>
                                 </tbody>
+                                <tfoot v-if="!services || services.length === 0">
+                                    <tr>
+                                        <td align="" class="grey--text" colspan="3"><b>Todos os serviços foram adicionados</b></td>
+                                    </tr>
+                                </tfoot>   
                             </template>
                         </v-simple-table>
                     </v-col> 
