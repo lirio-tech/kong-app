@@ -20,7 +20,7 @@
                                 </v-col>                          
                                 <v-col cols="7">
                                   <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
-                                      <span class="caption grey--text">Valor de {{ userLogged.percentCommission }}%</span><br/>
+                                      <span class="caption grey--text">Seu Valor</span><br/>
                                       <div style="font-size: 1.5rem" >
                                         <span class="">{{ ordersByUsers ? ordersByUsers.commission : 0 | currency }} </span>
                                       </div>
