@@ -11,8 +11,8 @@
                           </v-btn>
                       </v-col> 
                       <v-col cols="8" align="center" >  
-                              <span v-if="order._id" style="font-size: 1.6rem !important;">Corte</span>
-                              <span v-else style="font-size: 1.4rem !important;">Novo Corte</span>
+                              <span v-if="order._id" style="font-size: 1.2rem !important;">Ordem de Serviço</span>
+                              <span v-else style="font-size: 1.2rem !important;">Nova Ordem Serviço</span>
                       </v-col>       
                   </v-row>    
                   <v-row>
@@ -25,6 +25,16 @@
                         > 
                               {{ order.total | currency }}
                         </center>
+                        <br/>
+                        <center 
+                          class="primary--text" 
+                          align="center" 
+                          justify="space-around"
+                          style="margin-top: -20px;"
+                        > 
+                              Comissão de {{ order.commission | currency }}
+                        </center>
+
                       </v-col>
                       <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true ||  !order._id">
                           <div class="d-flex" style="margin-top: -15px;">
@@ -71,11 +81,13 @@
                                       Valor
                                     </th>
                                     <th></th>
+                                    <th></th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="item in order.services" :key="item.type">
-                                    <td>{{ item.type }}</td>
+                                    <td>{{ item.type }} </td>
+                                    <td>{{ item.percentCommission }}%</td>
                                     <td>{{ item.price | currency }}</td>
                                     <td>
                                       <v-icon 
@@ -251,7 +263,9 @@ import UserTypes from '../utils/UserTypes'
           user: {},
           customer: {},
           company: '',
-          paymentType: 'cash'
+          paymentType: 'cash',
+          commission: 0,
+          totalCompany: 0,
         },
         service: {
           type: "",
@@ -329,12 +343,27 @@ import UserTypes from '../utils/UserTypes'
           return;
         }        
         
-        this.order.services.push({type: this.service.type, price: this.service.price});
+        const percentCommission = this.userLogged.services.filter(it => it.type === this.service.type)[0].percentCommission;
+        const priceCommission = this.service.price * percentCommission / 100;
+        
+        this.order.services.push({
+            type: this.service.type, 
+            price: this.service.price,
+            priceCommission: priceCommission,
+            percentCommission: percentCommission,
+            priceCompany: this.service.price - priceCommission,
+        });
+
         this.order.total += Number(this.service.price);
+        this.order.commission += priceCommission; 
+        this.order.totalCompany += this.service.price - priceCommission; 
+
         this.service = {type: "", priceBR: "0,00"};
       },
-      deleteItem(service) {
+      deleteItem(service) { 
           this.order.total -= service.price;
+          this.order.commission -= service.priceCommission;
+          this.order.totalCompany -= service.totalCompany;
           this.order.services.splice(this.order.services.indexOf(service), 1);
       },
       formatDate (date) {
