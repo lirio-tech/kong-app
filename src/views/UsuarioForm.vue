@@ -22,7 +22,7 @@
                 id="userForm"
                 v-if="!loading"
             >         
-                <v-row>
+                <v-row>      
                         <v-col cols="12" md="4">                      
                             <v-text-field 
                                 v-model="user.username"
@@ -197,7 +197,7 @@
                                     <td>
                                         <v-icon 
                                             small
-                                            @click="deleteService(item)" class="primary--text">
+                                            @click="editService(item)" class="primary--text">
                                             mdi-pencil
                                         </v-icon>      
                                     </td>
@@ -300,6 +300,82 @@
             </v-form>                                                
             <br/><br/>
         </v-main>
+
+        <v-dialog
+        :value="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        >
+            <v-card>
+            <v-toolbar
+                class="primary"
+            >
+                <v-btn
+                icon
+                small
+                @click="dialog = false"
+                >
+                <v-icon>mdi-close</v-icon>
+                </v-btn>      
+                <v-toolbar-title style="margin-left:-17px;">
+                    {{ service.type }}
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-toolbar>    
+            <v-card-text>
+                <v-container >
+                    <br/>
+                    <b>Altere o Percentual da Comissão </b>
+                    
+                    <v-form 
+                        v-on:submit.prevent="submitChangePercentCommission"
+                        ref="commissionForm"
+                        id="commissionForm"
+                    >  
+                        <v-col cols="12">
+                            <v-text-field
+                                autocomplete="off"
+                                label="Valor"
+                                v-model="service.priceBR"
+                                @focus="$event.target.select()"
+                                ref="servicePrice"
+                                @keyup="service.priceBR = maskCurrency(service.priceBR)"
+                                filled
+                            />
+                        </v-col>                                              
+                        <v-col cols="12" >
+                            <v-subheader>Comissão</v-subheader>
+                            <v-card-text>
+                                <v-slider
+                                    v-model="service.percentCommission"
+                                    :label="`${service.percentCommission}%`"
+                                ></v-slider>
+                            </v-card-text>
+                        </v-col>                        
+                        <v-col 
+                            cols="12"
+                            sm="6"
+                            align="center"
+                            justify="space-around"
+                        >                      
+                            <v-btn 
+                                style="width: 90%"
+                                color="success"
+                                x-large
+                                type="submit"
+                            >
+                             OK
+                            </v-btn>                                                                               
+                        </v-col>           
+                    </v-form>                                          
+                </v-container>
+            </v-card-text>          
+            <div style="flex: 1 1 auto;"></div>
+            </v-card>
+
+        </v-dialog>    
+
         <SnackBar :show="message.show" :text="message.text" :color="message.color" />
     </v-container>
 </template>
@@ -317,6 +393,7 @@ export default {
         SnackBar
     },
     data: () => ({
+        dialog: false,
         loading: false,
         loadingSave: false,
         loadingAdm: false,
@@ -330,6 +407,7 @@ export default {
             services: []
         },
         services: [],
+        service: {},
         enabled: true,
         message: {},      
         passwordRules: [
@@ -359,7 +437,9 @@ export default {
                     this.loading = false;
                     
                     this.company.services.forEach(s => {
-                        if(!this.user.services || !this.user.services.includes(s)) {
+
+                        let svcCount = this.user.services.filter(it => it.type === s.type)
+                        if(!this.user.services || svcCount.length == 0) {
                             this.services.push(s);
                         }
                     })
@@ -477,7 +557,28 @@ export default {
             service.percentCommission = 50
             this.user.services.push(service);
             this.services.splice(this.services.indexOf(service), 1);
-      }      
+      },
+      editService(service) {
+          this.service = service;
+          this.service.priceBR = this.maskCurrency(this.service.price);
+          this.dialog = true;
+      },
+      numberBrToUS(v) {
+          return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
+      }, 
+      maskCurrency(v) {
+        v=String(v);
+        v=v.replace(/\D/g,"");//Remove tudo o que não é numero
+        v=String(Number(v));
+        v=v.replace(/(\d)(\d{8})$/,"$1.$2");//coloca o ponto dos milhões
+        v=v.replace(/(\d)(\d{5})$/,"$1.$2");//coloca o ponto dos milhares
+        v=v.replace(/(\d)(\d{2})$/,"$1,$2");//coloca a virgula antes dos 2 últimos dígitos
+        return v;
+      },                   
+      submitChangePercentCommission() {
+          this.service.price = this.numberBrToUS(this.service.priceBR);
+          this.dialog = false;
+      }
     },
   }
 </script>
