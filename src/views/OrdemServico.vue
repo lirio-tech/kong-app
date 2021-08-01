@@ -77,10 +77,10 @@
                                     <th class="text-left">
                                       Serviço
                                     </th>
+                                    <th></th>
                                     <th class="text-left">
                                       Valor
                                     </th>
-                                    <th></th>
                                     <th></th>
                                   </tr>
                                 </thead>
