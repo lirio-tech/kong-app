@@ -186,6 +186,7 @@
                                     Commissão
                                     </th>                                                
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -199,7 +200,8 @@
                                             @click="deleteService(item)" class="primary--text">
                                             mdi-pencil
                                         </v-icon>      
-                                        &nbsp;&nbsp;&nbsp;                                      
+                                    </td>
+                                    <td>
                                         <v-icon 
                                             small
                                             @click="deleteService(item)" class="error--text">
@@ -210,7 +212,7 @@
                                 </tbody>
                                 <tfoot v-if="!user.services || user.services.length === 0">
                                     <tr>
-                                        <td align="" class="error--text" colspan="3"><b>Não há serviços adicionados</b></td>
+                                        <td align="" class="error--text" colspan="4"><b>Não há serviços adicionados</b></td>
                                     </tr>
                                 </tfoot>                                
                             </template>
@@ -416,7 +418,7 @@ export default {
             return;
         }
         this.loadingSave = true;
-        this.user.company = this.userLogged.company;
+        this.user.company = this.company;
         if(this.$route.params._id && this.$route.params._id !== '_newUser') {
             let desabilitando = this.enabled === true && this.user.enabled === false;
             if(desabilitando && !confirm('Apos desativar o usuario voce podera ativa-lo novamente apos 3 dias, deseja realmente desativar usuario?')) {
