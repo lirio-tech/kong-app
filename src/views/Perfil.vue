@@ -82,8 +82,8 @@
                         </v-col>
                     </v-expansion-panel-content>
                 </v-expansion-panel>  
-                <v-expansion-panel>
-                    <v-expansion-panel-header>Serviços</v-expansion-panel-header>
+                <v-expansion-panel v-if="isAdmin()">
+                    <v-expansion-panel-header>Serviços de {{ company.shortName }}</v-expansion-panel-header>
                     <v-expansion-panel-content>                
                                 <v-row >
                                     <v-col cols="12" style="margin-top: 5px; margin-bottom: -40px">
@@ -168,7 +168,54 @@
                                 </v-btn> -->
                     </v-expansion-panel-content>
                 </v-expansion-panel>           
-                <v-expansion-panel v-if="isAdmin()">
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Meus Serviços</v-expansion-panel-header>
+                    <v-expansion-panel-content>   
+                        <br/>                         
+                        <v-row>
+                            <v-col cols="12"  class="mt-0 pt-0">
+
+                                    <v-simple-table dense >
+                                        <template v-slot:default>
+                                            <thead >
+                                            <tr>
+                                                <th class="text-left">
+                                                    Serviço
+                                                </th>
+                                                <th class="text-left">
+                                                    Valor
+                                                </th>
+                                                <th class="text-left">
+                                                    Comissão        
+                                                </th>    
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="item in userLogged.services" :key="item.type">
+                                                <td>{{ item.type }}</td>
+                                                <td>{{ item.price | currency }}</td>
+                                                <td>{{ item.percentCommission }}%</td>
+                                                
+                                            </tr>
+                                            <tr v-if="!userLogged.services || userLogged.services.length === 0">
+                                                <td align="center" class="error--text" colspan="3"><h3>Não há serviços adicionados</h3></td>
+                                            </tr>
+                                            </tbody>
+                                        </template>
+                                    </v-simple-table>
+                                </v-col> 
+                                </v-row>
+                                <br/>
+                                <!-- <v-btn
+                                    color="green darken-2"
+                                    type="button"
+                                    @click="onSubmit"
+                                >
+                                    Salvar
+                                </v-btn> -->
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                      
+                <!-- <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>
                         Comissão por Funcionário
                     </v-expansion-panel-header>
@@ -205,7 +252,7 @@
                             </v-btn>
                         </v-form>
                     </v-expansion-panel-content>
-                </v-expansion-panel>       
+                </v-expansion-panel>        -->
                 <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>Historico de Pagamento</v-expansion-panel-header>
                     <v-expansion-panel-content>              

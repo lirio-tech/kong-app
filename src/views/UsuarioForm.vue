@@ -1,6 +1,5 @@
 <template>
-    <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">
-        <AppBar />             
+    <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">           
         <v-main >
           <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
@@ -326,7 +325,6 @@
             <v-card-text>
                 <v-container >
                     <br/>
-                    <b>Altere o Percentual da Comissão </b>
                     
                     <v-form 
                         v-on:submit.prevent="submitChangePercentCommission"
@@ -334,15 +332,7 @@
                         id="commissionForm"
                     >  
                         <v-col cols="12">
-                            <v-text-field
-                                autocomplete="off"
-                                label="Valor"
-                                v-model="service.priceBR"
-                                @focus="$event.target.select()"
-                                ref="servicePrice"
-                                @keyup="service.priceBR = maskCurrency(service.priceBR)"
-                                filled
-                            />
+                            <money v-model="service.price" v-bind="money"></money>
                         </v-col>                                              
                         <v-col cols="12" >
                             <v-subheader>Comissão</v-subheader>
@@ -352,7 +342,10 @@
                                     :label="`${service.percentCommission}%`"
                                 ></v-slider>
                             </v-card-text>
-                        </v-col>                        
+                        </v-col>               
+                        <v-col cols="12">
+                            <b>{{ user.name }} recebera {{ service.price * service.percentCommission / 100 | currency }} por Servico </b>
+                        </v-col>                                   
                         <v-col 
                             cols="12"
                             sm="6"
@@ -367,7 +360,8 @@
                             >
                              OK
                             </v-btn>                                                                               
-                        </v-col>           
+                        </v-col>       
+  
                     </v-form>                                          
                 </v-container>
             </v-card-text>          
@@ -382,15 +376,13 @@
 
 <script>
 import gateway from '../api/gateway'
-import AppBar from '../components/AppBar'
 import SnackBar from '../components/SnackBar'
 import storage from '../storage'
 import InputsUtils from '../utils/inputs'
 export default {
     name: 'UsuarioForm',
     components: { 
-        AppBar, 
-        SnackBar
+        SnackBar,
     },
     data: () => ({
         dialog: false,
@@ -417,7 +409,14 @@ export default {
         passwordConfirmRules: [
             v => (!!v) || 'Confirmacao de Senha deve ser equivalente',
         ],         
-        userLogged: {}                         
+        userLogged: {},
+        money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'R$ ',
+          precision: 2,
+          masked: false
+        }                                    
     }),
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
@@ -556,29 +555,31 @@ export default {
       addService(service) {
             service.percentCommission = 50
             this.user.services.push(service);
+            this.editService(service);
             this.services.splice(this.services.indexOf(service), 1);
       },
       editService(service) {
-          this.service = service;
-          this.service.priceBR = this.maskCurrency(this.service.price);
-          this.dialog = true;
-      },
-      numberBrToUS(v) {
-          return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
-      }, 
-      maskCurrency(v) {
-        v=String(v);
-        v=v.replace(/\D/g,"");//Remove tudo o que não é numero
-        v=String(Number(v));
-        v=v.replace(/(\d)(\d{8})$/,"$1.$2");//coloca o ponto dos milhões
-        v=v.replace(/(\d)(\d{5})$/,"$1.$2");//coloca o ponto dos milhares
-        v=v.replace(/(\d)(\d{2})$/,"$1,$2");//coloca a virgula antes dos 2 últimos dígitos
-        return v;
-      },                   
+          this.service = { 
+              index: this.user.services.indexOf(service),
+              type: service.type, 
+              price: service.price, 
+              percentCommission: service.percentCommission
+            };
+          this.dialog = true; 
+      },              
       submitChangePercentCommission() {
-          this.service.price = this.numberBrToUS(this.service.priceBR);
+          this.user.services[this.service.index].price = this.service.price;
+          this.user.services[this.service.index].percentCommission = this.service.percentCommission;
           this.dialog = false;
       }
     },
   }
 </script>
+<style scoped>
+  .v-money {
+      margin-left: -20px;
+      color: green;
+      width: 250px;
+      font-size: 30px;
+  }
+</style>

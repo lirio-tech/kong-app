@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <AppBar />             
+        <app-bar />             
         <v-main class="">
           <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
@@ -23,7 +23,7 @@
                       color="cyan"
                   >Novo</v-btn>                        
               </v-col>              
-          </v-row>          
+          </v-row>           
             <v-row>
                 <v-col cols="12" sm="12">
                     <v-sheet min-height="70vh" rounded="lg">
@@ -102,13 +102,13 @@
 </template>
 
 <script>
-import gateway from '../api/gateway';
-import AppBar from '../components/AppBar'
+import gateway from '../api/gateway'; 
+import AppBar from '../components/AppBar.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
   export default {
+  components: { AppBar },
     name: 'UsuarioList',
-    components: { AppBar },
     data: () => ({
       search: '',
       headers: [

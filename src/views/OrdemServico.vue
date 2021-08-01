@@ -305,7 +305,7 @@ import UserTypes from '../utils/UserTypes'
         }
       },
       setFocusServicePrice() {
-        this.service.priceBR = this.maskCurrency(this.myCompany.services.filter(it => it.type === this.service.type)[0].price);
+        this.service.priceBR = this.maskCurrency(this.userLogged.services.filter(it => it.type === this.service.type)[0].price);
         this.$refs.servicePrice.focus(); 
       },
       orderHasServices() {
@@ -392,9 +392,8 @@ import UserTypes from '../utils/UserTypes'
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-
       this.myCompany = storage.getCompany();
-      this.myCompany.services.forEach(s => this.typeServices.push(s.type) );
+      this.userLogged.services.forEach(s => this.typeServices.push(s.type) );
       
       console.log(this.$route.params._id);
       if(this.$route.params._id) {
