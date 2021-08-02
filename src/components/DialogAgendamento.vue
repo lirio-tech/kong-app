@@ -30,18 +30,18 @@
                 >              
                     <br/>
                       <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
-                          <v-combobox 
-                              v-model="agendamento.user" 
+                          <v-select 
+                              v-model="agendamento.user._id" 
                               size="1" 
                               :items="users"
-                              append-icon="mdi-account"
                               label="Funcionário"
+                              :rules="[v => !!v || 'Funcionário Obrigatório',]"
                               ref="user"
                               required filled 
                               item-text='name'
-                              item-value='_id'          
-                              @change="setServices"
-                          ></v-combobox>           
+                              item-value='_id'      
+                               @change="setServices"      
+                          ></v-select>                                              
                       </v-col>  
                       <v-col
                           cols="12"
