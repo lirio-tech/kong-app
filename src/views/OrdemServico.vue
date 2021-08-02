@@ -343,8 +343,8 @@ import UserTypes from '../utils/UserTypes'
           this.$refs.servicePrice.focus();
           return;
         }        
-        
-        const percentCommission = this.userLogged.services.filter(it => it.type === this.service.type)[0].percentCommission;
+         
+        const percentCommission = this.order.user.services.filter(it => it.type === this.service.type)[0].percentCommission;
         const priceCommission = this.service.price * percentCommission / 100;
         
         this.order.services.push({
