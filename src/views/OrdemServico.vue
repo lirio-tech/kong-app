@@ -39,7 +39,7 @@
                       <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true ||  !order._id">
                           <div class="d-flex" style="margin-top: -15px;">
                             <v-col cols="6">
-                              <v-combobox 
+                              <v-select
                                   v-model="service.type"
                                   size="1" 
                                   :items="typeServices"
@@ -47,7 +47,7 @@
                                   ref="serviceType"
                                   required filled 
                                   @change="setFocusServicePrice"                             
-                              ></v-combobox>                                    
+                              ></v-select>                                    
                             </v-col>
                             
                             <v-col cols="4">
@@ -183,7 +183,8 @@
                                         item-text='name'
                                         item-value='_id'          
                                         v-if="isAdmin() || order._id"     
-                                        :disabled="order._id"
+                                        :disabled="order._id || order.total > 0"
+                                        @change="setServices"
                                         style="margin-top: -20px;"                         
                                     ></v-combobox>                                              
                                 </v-col>
@@ -319,7 +320,7 @@ import UserTypes from '../utils/UserTypes'
         }
       },
       setFocusServicePrice() {
-        this.service.priceBR = this.maskCurrency(this.userLogged.services.filter(it => it.type === this.service.type)[0].price);
+        this.service.priceBR = this.maskCurrency(this.order.user.services.filter(it => it.type === this.service.type)[0].price);
         this.$refs.servicePrice.focus(); 
       },
       orderHasServices() {
@@ -417,6 +418,11 @@ import UserTypes from '../utils/UserTypes'
       },
       showPlanDialog(show) {
         this.dialogPlan = show;
+      },
+      setServices() {
+          this.typeServices = [];
+          this.order.user.services.forEach(s => this.typeServices.push(s.type) );        
+          console.log(this.typeServices);
       }
     },
     beforeMount() {

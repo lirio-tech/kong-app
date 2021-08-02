@@ -37,7 +37,7 @@ export default{
             })      
     },
     agendamentoDone(_id, agendamento, paymentType, callback, errorCb) {
-        let url = `${AGENDAMENTO_API}/${_id}/${paymentType}`;
+        let url = `${AGENDAMENTO_API}/v2/${_id}/${paymentType}`;
         Axios.post(url, agendamento)
             .then(data => {
                 callback(data.data)

@@ -284,7 +284,7 @@ export default {
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
-      this.services = this.myCompany.services;
+      this.services = this.isAdmin(this.userLogged.type) ? this.myCompany.services : this.userLogged.services;
       this.services.forEach(element => {
         element.display = element.type
       });

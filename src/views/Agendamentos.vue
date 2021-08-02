@@ -142,8 +142,15 @@
                         Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
                         Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
-                        <!-- Total: {{ selectedEvent.total | currency }} -->
-                        <h3 class="success--text" v-if="selectedEvent.status === 'DONE'">Concluído</h3>
+                        
+                        <span v-if="selectedEvent.status === 'DONE'">{{ selectedEvent.total | currency }}</span> <br/>
+                        <h3 v-if="selectedEvent.status === 'DONE'" class="success--text">Concluído</h3>
+                        <router-link
+                          v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
+                          :to="{ path: `/ordem-servico/${selectedEvent.orderId}` }"
+                        >
+                          Ordem de Serviço
+                        </router-link>
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn
@@ -169,7 +176,7 @@
                           :loading="loadingConcluir"
                         >
                           Concluir
-                        </v-btn>                        
+                        </v-btn>                                        
                       </v-card-actions>
                     </v-card>
                   </v-menu>
@@ -359,6 +366,7 @@ export default {
                   end: _end,
                   total: this.agendamentos[i].total,
                   color: this.getColorByStatus(this.agendamentos[i]),
+                  orderId: this.agendamentos[i].orderId,
                   timed: true,
               });      
            }
