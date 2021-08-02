@@ -1,0 +1,86 @@
+import Axios from "axios";
+
+const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies';
+
+export default{
+    getCompanyById(_id, callback, errorCb) {
+        let url = `${COMPANIES_API}/${_id}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },      
+    getCompanies(callback, errorCb) {
+      let url = `${COMPANIES_API}`;
+      Axios.get(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })        
+    },   
+    saveCompany(company, callback, errorCb)     {
+      let url = `${COMPANIES_API}`;
+      Axios.post(url, company)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })   
+    },
+    setPlanFreeCompany(companyId, callback, errorCb) {
+      let url = `${COMPANIES_API}/${companyId}/downgrade-plan-free`;
+      Axios.patch(url)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })         
+    },
+    applyPlan(companyId, plan, callback, errorCb) {
+      let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
+      Axios.put(url, plan)
+          .then(data => {
+              callback(data.data)
+          })
+          .catch(error => {
+              console.log(error);
+              errorCb(error)
+          })      
+    },
+    savePlanCustom(planJsonString, callback, errorCb) {
+        let url = `${COMPANIES_API}/plan-custom`;
+        let plan = { plan: planJsonString };
+        console.log('plan => ', plan);
+        Axios.post(url, plan)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+    },
+    saveCompanyService(companyId, service, callback, errorCb)     {
+        let url = `${COMPANIES_API}/${companyId}/services`;
+        Axios.patch(url, service)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+      },
+  
+}

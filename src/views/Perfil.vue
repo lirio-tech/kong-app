@@ -139,7 +139,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr v-for="item in company.services" :key="item.type">
+                                            <tr v-for="item in services" :key="item.type">
                                                 <td>{{ item.type }}</td>
                                                 <td>{{ item.price | currency }}</td>
                                                 <td>{{ item.time }}</td>
@@ -467,6 +467,7 @@
 <script>
 import storage from '../storage'
 import gateway from '../api/gateway'
+import companyGateway from '../api/companyGateway'
 import UserTypes from '../utils/UserTypes'
 import DialogPlan from '../components/DialogPlan.vue'
 import SnackBar from '../components/SnackBar.vue'
@@ -489,6 +490,7 @@ export default {
       }, 
       userNew: {},
       company: {},
+      services: [],
       companyWithoutUpdate: {},
       users: [],
       selected: [2],
@@ -533,9 +535,9 @@ export default {
         },
         addService() {
             
-            if(!this.company.services) {
-                this.company.services = []
-            }
+            // if(!this.company.services) {
+            //     this.company.services = []
+            // }
             if(!this.service.type) {
                 alert('Descricao do Serviço Obrigatorio');
                 return;
@@ -545,14 +547,15 @@ export default {
                 alert('Valor do Serviço deve ser maior que ZERO');
                 return;
             }          
-            this.company.services.push({type: this.service.type, price: this.service.price, time: this.service.time});
-            this.service.type = '';
-            this.service.price = 0;
-            this.service.priceBR = '0,00';
-            this.service.time = "01:00";
-            gateway.saveCompany(this.company,
+            // this.company.services.push({type: this.service.type, price: this.service.price, time: this.service.time});
+
+            companyGateway.saveCompanyService(this.company._id, this.service,
                     () => {
-                        storage.setCompany(JSON.stringify(this.company));
+                        this.services.push(this.service);
+                        this.service.type = '';
+                        this.service.price = 0;
+                        this.service.priceBR = '0,00';
+                        this.service.time = "01:00";                        
                     }, () => {
                         alert('Erro ao Salvar');
                     });          
@@ -669,6 +672,7 @@ export default {
       }
       this.company = storage.getCompany();
       this.companyWithoutUpdate = storage.getCompany();
+      this.services = this.companyWithoutUpdate.services;
       this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      
       this.getUsers();
       this.getPaymentsHistByCompany();      
