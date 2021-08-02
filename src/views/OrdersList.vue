@@ -10,10 +10,18 @@
                       <v-icon large color="white-grey darken-2">mdi-chevron-left</v-icon>
                   </v-btn>
               </v-col>
-              <v-col cols="9" align="center">   
+              <v-col cols="8" align="center">   
                       <span style="font-size: 1.8rem !important;" class="white--text">{{ 'Serviços' }} </span>
               </v-col>
+              <v-col cols="2" align="center">   
+                  <v-btn 
+                      :to="{ path:'/ordem-servico'}" 
+                      class="ma-2"
+                      color="primary"
+                  >Novo</v-btn>                        
+              </v-col>                  
           </v-row>    
+
           
           <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
             <v-progress-linear

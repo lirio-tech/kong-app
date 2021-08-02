@@ -416,31 +416,50 @@ import UserTypes from '../utils/UserTypes'
             });
         }
       },
+      findAllUsers() {
+        gateway.getUsers('enabled', res => {
+          this.users = res;
+          console.log(this.users);
+          this.loadingDelete = false;
+          this.loadingSave = false;    
+          setTimeout(
+            () => {
+              if(this.order.user._id) {    
+                this.order.user = this.users.filter(it => it._id === this.order.user._id)[0];
+                this.setServices();
+              }
+            }, 2000
+          )
+        }, err => {
+          console.log(err);
+          this.loadingDelete = false;
+          this.loadingSave = false;        
+        });
+      },
       showPlanDialog(show) {
         this.dialogPlan = show;
       },
       setServices() {
           this.typeServices = [];
           this.order.user.services.forEach(s => this.typeServices.push(s.type) );        
-          console.log(this.typeServices);
       }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
       this.userLogged.services.forEach(s => this.typeServices.push(s.type) );
-      
+
       console.log(this.$route.params._id);
       if(this.$route.params._id) {
         gateway.getOrderById(this.$route.params._id,
           res => {
             this.order = res;
-            this.dateFormatted = this.formatDate(this.order.date);
+            this.dateFormatted = this.formatDate(this.order.date); 
             this.createdAt = this.formatDateTime(this.order.createdAt);
             this.updatedAt = this.formatDateTime(this.order.updatedAt);
             this.order.priceBR = this.numberUsToBr(this.order.price);
             this.loadingDelete = false;
-            this.loadingSave = false;            
+            this.loadingSave = false;           
           }, err => {
             console.log(err);
             this.loadingDelete = false;
@@ -448,16 +467,7 @@ import UserTypes from '../utils/UserTypes'
           });
       }
       if(this.isAdmin()) {
-        gateway.getUsers('enabled', res => {
-          this.users = res;
-          console.log(this.users);
-          this.loadingDelete = false;
-          this.loadingSave = false;        
-        }, err => {
-          console.log(err);
-        this.loadingDelete = false;
-        this.loadingSave = false;        
-        });
+          this.findAllUsers();
       } else {
         this.users.push(this.userLogged);
         this.loadingDelete = false;
