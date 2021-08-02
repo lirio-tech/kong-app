@@ -137,6 +137,23 @@
                                 </v-col>
                               </v-row>
                               <v-row>
+                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">        
+                                    <v-combobox 
+                                        v-model="order.user" 
+                                        size="1" 
+                                        :items="users"
+                                        append-icon="mdi-account"
+                                        label="Funcionário"
+                                        ref="user"
+                                        required filled 
+                                        item-text='name'
+                                        item-value='_id'          
+                                        v-if="isAdmin() || order._id"     
+                                        :disabled="order._id || order.total > 0"
+                                        @change="setServices"
+                                        style="margin-top: -20px;"                         
+                                    ></v-combobox>                                              
+                                </v-col>                                
                                 <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">                      
                                     <v-text-field v-model="order.customer.name"
                                                     label="Cliente"
@@ -171,23 +188,6 @@
                                                     style="margin-top: -20px;">                                
                                     </v-text-field>  
                                   </v-col>                                                       
-                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">        
-                                    <v-combobox 
-                                        v-model="order.user" 
-                                        size="1" 
-                                        :items="users"
-                                        append-icon="mdi-account"
-                                        label="Funcionário"
-                                        ref="user"
-                                        required filled 
-                                        item-text='name'
-                                        item-value='_id'          
-                                        v-if="isAdmin() || order._id"     
-                                        :disabled="order._id || order.total > 0"
-                                        @change="setServices"
-                                        style="margin-top: -20px;"                         
-                                    ></v-combobox>                                              
-                                </v-col>
                               </v-row> 
                               <v-row align="center"
                                      justify="space-around"
