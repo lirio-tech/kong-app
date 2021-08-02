@@ -17,7 +17,7 @@
                 </v-col>
                 <v-col cols="1" align="center" style="margin-left:-40px;">   
                     <v-btn 
-                        @click="showDialog(true)"  
+                        @click="agendamento.user = userLogged; showDialog(true)"  
                         class="ma-2"
                         small
                     >
@@ -294,11 +294,12 @@ export default {
     },
     methods: {
         showDialog(show) {
-            this.dialog = show;
             if(show === false) {
                 this.agendamento = this.initAgendamento();       
+                this.agendamento.user = this.userLogged;
                 this.servicesSelected = [];       
             }
+            this.dialog = show;
         },
         showDialogConcluir(show, agendamentoId) {
           this.dialogAgendamentoConcluir = show;

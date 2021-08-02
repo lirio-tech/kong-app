@@ -29,6 +29,20 @@
                   id="agendamentoForm"
                 >              
                     <br/>
+                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
+                          <v-combobox 
+                              v-model="agendamento.user" 
+                              size="1" 
+                              :items="users"
+                              append-icon="mdi-account"
+                              label="Funcionário"
+                              ref="user"
+                              required filled 
+                              item-text='name'
+                              item-value='_id'          
+                              @change="setServices"
+                          ></v-combobox>           
+                      </v-col>  
                       <v-col
                           cols="12"
                           sm="6"
@@ -129,20 +143,6 @@
                               </template>
                           </v-simple-table>
                       </v-col>
-                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
-                          <v-select 
-                              v-model="agendamento.user._id" 
-                              size="1" 
-                              :items="users"
-                              label="Funcionário"
-                              :rules="[v => !!v || 'Funcionário Obrigatório',]"
-                              ref="user"
-                              required filled 
-                              item-text='name'
-                              item-value='_id'            
-                          ></v-select>                                              
-                      </v-col>  
-
                       <v-col 
                           cols="12"
                           sm="6"
@@ -219,6 +219,17 @@ export default {
           let hour = Number(this.agendamento.timeStartAt.substring(0,2))+1;
           this.agendamento.timeEndAt = `${hour > 10 ? hour : '0'+hour}:${this.agendamento.timeStartAt.substring(3,5)}`
       },
+      setServices() {
+        if(this.agendamento.user._id) { 
+          this.services = this.users.filter(it => it._id === this.agendamento.user._id)[0].services
+          //this.services = this.isAdmin(this.userLogged.type) ? this.myCompany.services : this.userLogged.services;
+        } else {
+          this.services = this.userLogged.services;
+        }
+        this.services.forEach(element => {
+          element.display = element.type
+        });
+      },      
       registrarAgendamento() {
         console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
@@ -279,16 +290,12 @@ export default {
         }
         console.log(total);
         return this.maskCurrency(total);
-      },      
+      },
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
-      this.services = this.isAdmin(this.userLogged.type) ? this.myCompany.services : this.userLogged.services;
-      this.services.forEach(element => {
-        element.display = element.type
-      });
-      
+      this.setServices();
     }
 }
 </script>
