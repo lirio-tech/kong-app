@@ -136,7 +136,7 @@
                                     :label="user.enabled ? 'Ativo' : 'DESATIVADO'"
                                 ></v-switch>    
                         </v-col>                           
-                        <v-col cols="12" >
+                        <!-- <v-col cols="12" >
                             <v-subheader>Comissão</v-subheader>
                             <v-card-text>
                             <v-slider
@@ -144,7 +144,7 @@
                                 :label="`${user.percentCommission}%`"
                             ></v-slider>
                             </v-card-text>
-                        </v-col>
+                        </v-col> -->
                         <v-col 
                             cols="12" md="4" 
                             style="margin-left: 10%" 
