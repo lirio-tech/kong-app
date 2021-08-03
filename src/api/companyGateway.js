@@ -73,7 +73,7 @@ export default{
     },
     saveCompanyService(companyId, service, callback, errorCb)     {
         let url = `${COMPANIES_API}/${companyId}/services`;
-        Axios.patch(url, service)
+        Axios.post(url, service)
             .then(data => {
                 callback(data.data)
             })
