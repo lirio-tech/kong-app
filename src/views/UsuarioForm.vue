@@ -221,7 +221,7 @@
                                     <td>{{ item.percentCommission }}%</td>
                                     <td>
                                         <v-icon 
-                                            small
+                                            small color="info"
                                             @click="editService(item)" class="primary--text">
                                             mdi-pencil
                                         </v-icon>      

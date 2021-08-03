@@ -141,6 +141,7 @@
                                                 Tempo
                                                 </th>                                                
                                                 <th></th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -148,6 +149,14 @@
                                                 <td>{{ item.type }}</td>
                                                 <td>{{ item.price | currency }}</td>
                                                 <td>{{ item.time }}</td>
+                                                <td>
+                                                    <v-icon 
+                                                        small color="info"
+                                                        @click="editService(item)" class="error--text">
+                                                       >
+                                                        mdi-pencil
+                                                    </v-icon>      
+                                                </td>                                                   
                                                 <td>
                                                     <v-icon 
                                                         v-if="deleteServiceIndex !== services.indexOf(item)"
@@ -476,8 +485,101 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>
         </v-expansion-panels>
+        
+        <v-dialog
+            :value="dialogServiceUpdate"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+        >
+            <v-card>
+            <v-toolbar
+                class="primary"
+            >
+                <v-btn
+                icon
+                small
+                @click="dialogServiceUpdate = false"
+                >
+                <v-icon>mdi-close</v-icon>
+                </v-btn>      
+                <v-toolbar-title style="margin-left:-17px;">
+                    {{ serviceUpdate.type }}
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-toolbar>    
+            <v-card-text>
+                <v-container >
+                    <br/>
+                    <small>
+                        <v-icon small>mdi-information-outline</v-icon>
+                        Ao Alterar o nome do Serviço será alterado para Todos os Funcionários que possui o mesmo.
+                    </small>                    
+                    <br/><br/>
+                    <v-form 
+                        v-on:submit.prevent="submitChangeService"
+                        ref="submitChangeService"
+                        id="submitChangeService"
+                    >  
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            >
+                            <v-text-field 
+                                v-model="serviceUpdate.type"
+                                label="Serviço"
+                                filled required
+                                ref="Serviço"
+                                :rules="[v => !!v || 'Serviço Obrigatório',]"
+                            ></v-text-field>  
+                        </v-col>              
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            >
+                                <money v-model="serviceUpdate.price" v-bind="money"></money>
+                        </v-col>                                                                             
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            >
+                            <v-text-field
+                            label="Tempo"
+                            filled
+                            v-model="serviceUpdate.time"
+                            :rules="[v => !!v || 'Tempo Obrigatório',]"
+                            type="time"
+                            ></v-text-field>                                   
+                        </v-col>                                           
+                        <v-col 
+                            cols="12"
+                            sm="6"
+                            align="center"
+                            justify="space-around"
+                        >                      
+                            <v-btn 
+                                style="width: 90%"
+                                color="success"
+                                x-large
+                                type="submit"
+                            >
+                             OK
+                            </v-btn>                                                                               
+                        </v-col>       
+  
+                    </v-form>                                          
+                </v-container>
+            </v-card-text>          
+            <div style="flex: 1 1 auto;"></div>
+            </v-card>
+
+        </v-dialog>            
+        
         <snack-bar :color="message.color" :text="message.text" :show="message.show" />
         <dialog-plan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+
+
+
     </v-container>
 </template>
 
@@ -497,6 +599,7 @@ export default {
         SnackBar,
     },
     data: () => ({
+      dialogServiceUpdate: false,
       isLoading: false, 
       deleteServiceIndex: -1,
       loadingAddService: false,
@@ -526,7 +629,20 @@ export default {
             priceBR: "0,00",
             time: "01:00"                       
       },      
+      serviceBeforeUpdateType: '',
+      serviceUpdate: {
+            type: '',
+            price: 0.00,
+            time: "01:00"                       
+      },        
       themeKong: true,
+      money: {
+            decimal: ',',
+            thousands: '.',
+            prefix: 'R$ ',
+            precision: 2,
+            masked: false
+      }           
     }),
     methods: {
         showPlanDialog(show) {
@@ -580,6 +696,22 @@ export default {
                         alert('Erro ao Salvar');
                     });          
         },        
+        submitChangeService() {
+            if(this.$refs.agendamentoForm.validate()) {
+                    companyGateway.updateCompanyService(this.company._id, this.serviceBeforeUpdateType, this.serviceUpdate,
+                            (res) => {
+                                this.services = res;
+                                this.serviceUpdate.type = '';
+                                this.serviceUpdate.price = 0;
+                                this.serviceUpdate.time = "01:00";      
+                                this.company.services = res;                  
+                                storage.setCompany(JSON.stringify(this.company));         
+                                this.showMessage('green', 'Serviço foi alterado para todos os Funcionários');
+                            }, () => {        
+                                alert('Erro ao Alterar');
+                            });                
+            }
+        },
         showMessage(color, text) {
             this.message.color = color;
             this.message.text = text;
@@ -665,6 +797,11 @@ export default {
                     });          
             }
         },   
+        editService(svc) {
+            this.serviceBeforeUpdateType = svc.type;
+            this.serviceUpdate = svc;
+            this.dialogServiceUpdate = true;
+        },
         maskCurrency(v) {
             v=String(v);
             v=v.replace(/\D/g,"");//Remove tudo o que não é numero
@@ -677,6 +814,9 @@ export default {
         numberBrToUS(v) {
             return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
         },     
+        numberUsToBR(v) {
+            return Number(v.replace(',', '').replace('.', ','));
+        },            
         getDateFormated(date) {
             if (!date) return null;
 
@@ -712,3 +852,10 @@ export default {
     }
   }
 </script>
+<style scoped>
+  .v-money {
+      margin-left: -20px;
+      width: 250px;
+      font-size: 30px;
+  }
+</style>

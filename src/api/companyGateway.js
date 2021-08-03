@@ -82,6 +82,17 @@ export default{
                 errorCb(error)
             })   
       },
+      updateCompanyService(companyId, serviceBeforeType, service, callback, errorCb)     {
+        let url = `${COMPANIES_API}/${companyId}/services/${serviceBeforeType}`;
+        Axios.patch(url, service)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+      },      
       deleteCompanyService(companyId, serviceType, callback, errorCb)     {
         let url = `${COMPANIES_API}/${companyId}/services/${serviceType}`;
         Axios.delete(url)
