@@ -158,6 +158,17 @@
                                             </tbody>
                                         </template>
                                     </v-simple-table>
+                                    <br/>
+                                    <router-link 
+                                        align="right" 
+                                        to="/admin/users" 
+                                        class="primary--text d-flex flex-row-reverse"
+                                        style="color: inherit; text-decoration: none"
+                                        
+                                    >
+                                        <v-icon color="primary">mdi-chevron-right</v-icon>
+                                        Funcionários
+                                    </router-link>
                                 </v-col> 
                                 </v-row>
                                 <br/>
@@ -558,6 +569,7 @@ export default {
                         this.company.services = res;                  
                         storage.setCompany(JSON.stringify(this.company));
                         this.loadingAddService = false;            
+                        this.showMessage('green', 'Serviço foi adicionado para todos os Funcionários com 50% de comissão');
                     }, () => {
                         this.loadingAddService = false;            
                         alert('Erro ao Salvar');
