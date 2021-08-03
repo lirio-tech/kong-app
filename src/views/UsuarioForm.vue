@@ -325,7 +325,11 @@
             <v-card-text>
                 <v-container >
                     <br/>
-                    
+                    <small>
+                        <v-icon small>mdi-information-outline</v-icon>
+                        Para alterar nome do Serviço vá em > Configurações > Serviços de {{ company.shortName }}
+                    </small>                    
+                    <br/><br/>
                     <v-form 
                         v-on:submit.prevent="submitChangePercentCommission"
                         ref="commissionForm"

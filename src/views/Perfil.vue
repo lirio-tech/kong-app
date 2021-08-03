@@ -84,7 +84,12 @@
                 </v-expansion-panel>  
                 <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>Serviços de {{ company.shortName }}</v-expansion-panel-header>
-                    <v-expansion-panel-content>                
+                    <v-expansion-panel-content>            
+                                <v-col align="center" >
+                                    <v-chip color="primary" outlined small >
+                                        Somente para Administradores 
+                                    </v-chip>             
+                                </v-col>                   
                                 <v-row >
                                     <v-col cols="12" style="margin-top: 5px; margin-bottom: -40px">
                                         <v-text-field
@@ -272,7 +277,7 @@
                         <v-col cols="12" >  
                                 <v-col align="center" >
                                     <v-chip color="primary" outlined small >
-                                        Somente Usuarios Admin acessam aos pagamentos
+                                        Somente para Administradores 
                                     </v-chip>        
                                 </v-col>
                                 <v-col cols="12">
