@@ -13,7 +13,7 @@
               <v-col cols="8" align="center">   
                       <span style="font-size: 1.8rem !important;" class="white--text">{{ 'Serviços' }} </span>
               </v-col>
-              <v-col cols="2" >   
+              <v-col cols="2" style="margin-left: -30px;">   
                   <v-btn 
                       :to="{ path:'/ordem-servico'}" 
                       class="ma-2"

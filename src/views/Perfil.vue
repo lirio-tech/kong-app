@@ -145,11 +145,11 @@
                                                 <td>{{ item.time }}</td>
                                                 <td>
                                                     <v-icon 
-                                                        v-if="!loadingDeleteService"
+                                                        v-if="deleteServiceIndex !== services.indexOf(item)"
                                                         @click="deleteService(item)" class="error--text">
                                                         mdi-delete
                                                     </v-icon>
-                                                    <v-icon v-else>mdi mdi-loading mdi-spin</v-icon>
+                                                    <v-icon v-if="deleteServiceIndex === services.indexOf(item)">mdi mdi-loading mdi-spin</v-icon>
                                                 </td>
                                             </tr>
                                             <tr v-if="!company.services || company.services.length === 0">
@@ -483,7 +483,7 @@ export default {
     },
     data: () => ({
       isLoading: false, 
-      loadingDeleteService: false,
+      deleteServiceIndex: -1,
       loadingAddService: false,
       show: false,
       valid: true,
@@ -636,15 +636,15 @@ export default {
         },      
         deleteService(svc) {
             if(confirm('Atenção :: Ao Excluir Serviço será excluído de todos os Funcionários, desejá continuar?')) {
-                this.loadingDeleteService = true;
+                this.deleteServiceIndex = this.services.indexOf(svc);
                 companyGateway.deleteCompanyService(this.company._id, svc.type,
                     (res) => {
                         this.company.services = res;
                         this.services = res;
                         storage.setCompany(JSON.stringify(this.company));
-                        this.loadingDeleteService = false;
+                        this.deleteServiceIndex = -1;
                     }, () => {
-                        this.loadingDeleteService = false;
+                        this.deleteServiceIndex = -1;
                         alert('Erro ao Excluir');
                     });          
             }
