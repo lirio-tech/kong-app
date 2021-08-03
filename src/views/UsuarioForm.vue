@@ -126,7 +126,7 @@
                                 />
                         </v-col>   
                         <v-col 
-                            cols="12" md="3" 
+                            cols="12" md="4" 
                             style="margin-left: 40%" 
                             v-if="user._id !== userLogged._id"
                         >
@@ -135,6 +135,7 @@
                                     v-model="user.enabled"
                                     :label="user.enabled ? 'Ativo' : 'DESATIVADO'"
                                 ></v-switch>    
+                                
                         </v-col>                           
                         <!-- <v-col cols="12" >
                             <v-subheader>Comissão</v-subheader>
@@ -146,26 +147,51 @@
                             </v-card-text>
                         </v-col> -->
                         <v-col 
-                            cols="12" md="4" 
+                            cols="9" md="4" 
                             style="margin-left: 10%" 
                             v-if="user._id && user.type === 'hairdresser'"
                         >
+                                <v-tooltip
+                                v-model="showInfoAllowUpdateEmployee"
+                                top
+                                >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                    icon
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    >
+                                    <v-icon color="grey lighten-1" v-if="false">
+                                        mdi-information-outline
+                                    </v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>
+                                    Os funcionários não tem poder para alterar as ordens de serviços 
+                                    já cadastradas, mesmo lançadas por ele mesmo, ao habilitar esse 
+                                    campo o funcionário poderá alterar suas ordens de serviço, 
+                                    como Valores, Serviços e Cliente.
+                                </span>
+                                </v-tooltip>                           
                                 <v-switch
                                     dense
                                     v-model="user.allowEditOrder"
-                                    label="Permitir Alterar os Serviços Lançados"
+                                    label="Alterar Ordens de Serviços"
+                                    append-icon="mdi-information-outline"
+                                    @click:append.prevent="showInfoAllowUpdateEmployee = !showInfoAllowUpdateEmployee"                                    
                                 ></v-switch>    
-                        </v-col>                                                     
+                             
+                        </v-col>      
                         <v-col cols="12" md="12" v-if="userLogged.type === 'sys_admin'">
                                 <v-text-field
                                 label="Device"
-                                v-model="user.device"
+                                v-model="user.device" 
                                 ref="device"
                                 prepend-icon="mdi-calendar"
                                 filled disabled
                                 />
                         </v-col>                                                                          
-                </v-row>    
+                </v-row>                 
                 <v-row>
                     <v-col cols="12"  class="mt-0 pt-0">
                         <span class="primary--text">
@@ -389,6 +415,7 @@ export default {
         SnackBar,
     },
     data: () => ({
+        showInfoAllowUpdateEmployee: false,
         dialog: false,
         loading: false,
         loadingSave: false,
