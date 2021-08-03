@@ -57,16 +57,11 @@
                           
                                   <tbody >
                                   <tr v-for="s in agendamento.services" :key="s._id">
-                                      <th style="width: 50px">
-                                          <v-select
+                                      <th style="width: 200px">
+                                          <v-text-field 
                                               v-model="s.type"
-                                              :items="services"
-                                              item-text="type"
-                                              label="Serviços"
-                                              ref="services"
                                               readonly
-                                              :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
-                                          ></v-select>
+                                          ></v-text-field>  
                                       </th>
                                       <th>
                                           <money v-model="s.price" v-bind="money"></money>

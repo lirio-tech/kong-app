@@ -114,7 +114,7 @@
                                       ></v-text-field>                                   
                                     </v-col>                                    
                                     <v-col cols="1">
-                                        <v-btn icon outlined class="mt-3" @click="addService">
+                                        <v-btn icon outlined class="mt-3" @click="addService" :loading="loadingAddService">
                                             <v-icon>mdi-plus</v-icon>
                                         </v-btn>                            
                                     </v-col>
@@ -144,10 +144,12 @@
                                                 <td>{{ item.price | currency }}</td>
                                                 <td>{{ item.time }}</td>
                                                 <td>
-                                                <v-icon 
-                                                    @click="deleteService(item)" class="error--text">
-                                                    mdi-delete
-                                                </v-icon>
+                                                    <v-icon 
+                                                        v-if="!loadingDeleteService"
+                                                        @click="deleteService(item)" class="error--text">
+                                                        mdi-delete
+                                                    </v-icon>
+                                                    <v-icon v-else>mdi mdi-loading mdi-spin</v-icon>
                                                 </td>
                                             </tr>
                                             <tr v-if="!company.services || company.services.length === 0">
@@ -481,6 +483,8 @@ export default {
     },
     data: () => ({
       isLoading: false, 
+      loadingDeleteService: false,
+      loadingAddService: false,
       show: false,
       valid: true,
       dialogPlan: false,
@@ -535,9 +539,6 @@ export default {
         },
         addService() {
             
-            // if(!this.company.services) {
-            //     this.company.services = []
-            // }
             if(!this.service.type) {
                 alert('Descricao do Serviço Obrigatorio');
                 return;
@@ -547,16 +548,19 @@ export default {
                 alert('Valor do Serviço deve ser maior que ZERO');
                 return;
             }          
-            // this.company.services.push({type: this.service.type, price: this.service.price, time: this.service.time});
-
+            this.loadingAddService = true;            
             companyGateway.saveCompanyService(this.company._id, this.service,
-                    () => {
-                        this.services.push(this.service);
+                    (res) => {
+                        this.services = res;
                         this.service.type = '';
                         this.service.price = 0;
                         this.service.priceBR = '0,00';
-                        this.service.time = "01:00";                        
+                        this.service.time = "01:00";      
+                        this.company.services = res;                  
+                        storage.setCompany(JSON.stringify(this.company));
+                        this.loadingAddService = false;            
                     }, () => {
+                        this.loadingAddService = false;            
                         alert('Erro ao Salvar');
                     });          
         },        
@@ -631,12 +635,16 @@ export default {
             }
         },      
         deleteService(svc) {
-            this.company.services.splice(this.company.services.indexOf(svc), 1);
-            gateway.saveCompany(this.company,
-                () => {
+            this.loadingDeleteService = true;
+            companyGateway.deleteCompanyService(this.company._id, svc.type,
+                (res) => {
+                    this.company.services = res;
+                    this.services = res;
                     storage.setCompany(JSON.stringify(this.company));
+                    this.loadingDeleteService = false;
                 }, () => {
-                    alert('Erro ao Salvar');
+                    this.loadingDeleteService = false;
+                    alert('Erro ao Excluir');
                 });          
         },   
         maskCurrency(v) {

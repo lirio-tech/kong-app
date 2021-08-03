@@ -82,5 +82,16 @@ export default{
                 errorCb(error)
             })   
       },
+      deleteCompanyService(companyId, serviceType, callback, errorCb)     {
+        let url = `${COMPANIES_API}/${companyId}/services/${serviceType}`;
+        Axios.delete(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+      },
   
 }
