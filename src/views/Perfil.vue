@@ -635,17 +635,19 @@ export default {
             }
         },      
         deleteService(svc) {
-            this.loadingDeleteService = true;
-            companyGateway.deleteCompanyService(this.company._id, svc.type,
-                (res) => {
-                    this.company.services = res;
-                    this.services = res;
-                    storage.setCompany(JSON.stringify(this.company));
-                    this.loadingDeleteService = false;
-                }, () => {
-                    this.loadingDeleteService = false;
-                    alert('Erro ao Excluir');
-                });          
+            if(confirm('Atenção :: Ao Excluir Serviço será excluído de todos os Funcionários, desejá continuar?')) {
+                this.loadingDeleteService = true;
+                companyGateway.deleteCompanyService(this.company._id, svc.type,
+                    (res) => {
+                        this.company.services = res;
+                        this.services = res;
+                        storage.setCompany(JSON.stringify(this.company));
+                        this.loadingDeleteService = false;
+                    }, () => {
+                        this.loadingDeleteService = false;
+                        alert('Erro ao Excluir');
+                    });          
+            }
         },   
         maskCurrency(v) {
             v=String(v);
