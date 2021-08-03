@@ -158,6 +158,7 @@
                           @click="alterarAgendamentoShowDialog(selectedEvent._id)" 
                           v-if="selectedEvent.status === 'PENDING'"
                           class="indigo--text"
+                          small
                         >
                           Alterar
                         </v-btn>                        
@@ -166,6 +167,7 @@
                           @click="cancel(selectedEvent._id)"
                           class="white--text"
                           :loading="loadingCancel"
+                          small
                         >
                           Cancelar
                         </v-btn>
@@ -174,6 +176,7 @@
                           color="success"
                           @click="showDialogConcluir(true, selectedEvent._id)"
                           :loading="loadingConcluir"
+                          small
                         >
                           Concluir
                         </v-btn>                                        

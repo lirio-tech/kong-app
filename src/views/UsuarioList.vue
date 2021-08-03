@@ -18,9 +18,7 @@
               <v-col cols="2" align="center">   
                   <v-btn 
                       :to="{ path:'/admin/users/_newUser'}" 
-                      class="ma-2"
-                      outlined
-                      color="cyan"
+                      class="ma-2 primary--text"
                   >Novo</v-btn>                        
               </v-col>              
           </v-row>           

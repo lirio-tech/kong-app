@@ -72,7 +72,7 @@
                                 </v-col>
                                 <br/>
                                 <v-btn
-                                    color="green darken-2"
+                                    color="success"
                                     type="submit"
                                     :disabled="!isAdmin()"
                                 >
@@ -451,8 +451,7 @@
                                             class="ma-2"
                                             large
                                             style="width: 75%"
-                                            outlined
-                                            color="green"
+                                            color="success"
                                             type="submit"
                                         >Salvar</v-btn>                                            
                                     </v-col>  

@@ -110,7 +110,7 @@
                 <v-col cols="12" class="text-center" style="margin-top: -15px;">
                   <v-btn 
                       :to="{ path:'/ordem-servico'}" 
-                      class="ma-2"
+                      class="ma-2 primary--text"
                       x-large
                       style="width: 80%"
                   >

@@ -22,6 +22,7 @@
                     <v-card-actions>
                         <v-btn
                          @click="goAgendamentoUpdate(agendamento)"
+                         small
                         >
                           Alterar
                         </v-btn>                        
@@ -30,6 +31,7 @@
                           class="white--text"
                           :loading="loadingCancel"
                           @click="cancel(agendamento._id)"
+                          small
                         >
                           Cancelar
                         </v-btn>
@@ -38,6 +40,7 @@
                           color="success"
                           @click="showDialogConcluir(true, agendamento._id)"
                           :loading="loadingConcluir"                          
+                          small
                         >
                           Concluir
                         </v-btn>   

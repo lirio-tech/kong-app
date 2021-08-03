@@ -16,8 +16,7 @@
               <v-col cols="2" style="margin-left: -30px;">   
                   <v-btn 
                       :to="{ path:'/ordem-servico'}" 
-                      class="ma-2"
-                      color="primary"
+                      class="ma-2 primary--text"
                   >Novo</v-btn>                         
               </v-col>                  
           </v-row>    
