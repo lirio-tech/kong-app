@@ -650,6 +650,11 @@ export default {
             )
         },
         addService() {
+
+            if(this.company.services.filter(it => it.type === this.service.type).length > 0) {
+                alert('Serviço já Adicionado');
+                return;                
+            }
             
             if(!this.service.type) {
                 alert('Descricao do Serviço Obrigatorio');
