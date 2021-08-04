@@ -583,12 +583,18 @@ export default {
       deleteService(service) {
             this.user.services.splice(this.user.services.indexOf(service), 1);
             this.services.push(service);
+            if(this.$route.params._id && this.$route.params._id !== '_newUser') {
+                this.save();
+            }            
       },
       addService(service) {
             service.percentCommission = 50
             this.user.services.push(service);
             this.editService(service);
             this.services.splice(this.services.indexOf(service), 1);
+            if(this.$route.params._id && this.$route.params._id !== '_newUser') {
+                this.save();
+            }
       },
       editService(service) {
           this.service = { 
@@ -603,6 +609,9 @@ export default {
           this.user.services[this.service.index].price = this.service.price;
           this.user.services[this.service.index].percentCommission = this.service.percentCommission;
           this.dialog = false;
+          if(this.$route.params._id && this.$route.params._id !== '_newUser') {
+            this.save();
+          }            
       }
     },
   }
