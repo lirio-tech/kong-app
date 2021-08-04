@@ -572,6 +572,21 @@ export default {
             );            
         }    
       },
+      updateUserServices() {
+        this.user.company = this.company;
+        if(this.$route.params._id && this.$route.params._id !== '_newUser') {
+            gateway.updateUser(
+                this.$route.params._id,
+                this.user,
+                () => {},
+                err => {
+                    if(err.response.status === 412 || err.response.status === 422) {
+                        alert(err.response.data.message)
+                    }                        
+                }
+            );
+        }
+      },      
       removeSpecialChar(v) {
             return InputsUtils.usernameInputs(v);
       },       
@@ -584,7 +599,7 @@ export default {
             this.user.services.splice(this.user.services.indexOf(service), 1);
             this.services.push(service);
             if(this.$route.params._id && this.$route.params._id !== '_newUser') {
-                this.save();
+                this.updateUserServices();
             }            
       },
       addService(service) {
@@ -593,7 +608,7 @@ export default {
             this.editService(service);
             this.services.splice(this.services.indexOf(service), 1);
             if(this.$route.params._id && this.$route.params._id !== '_newUser') {
-                this.save();
+                this.updateUserServices();
             }
       },
       editService(service) {
@@ -610,7 +625,7 @@ export default {
           this.user.services[this.service.index].percentCommission = this.service.percentCommission;
           this.dialog = false;
           if(this.$route.params._id && this.$route.params._id !== '_newUser') {
-            this.save();
+            this.updateUserServices();
           }            
       }
     },
