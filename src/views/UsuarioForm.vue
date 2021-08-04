@@ -1,16 +1,17 @@
 <template>
     <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">           
-        <v-main >
+        <SnackBar :show="message.show" :text="message.text" :color="message.color" />
+        <div >
           <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/admin/users'}"
                   >
-                      <v-icon large color="purple darken-2">mdi-chevron-left</v-icon>
+                      <v-icon large color="primary darken-2">mdi-chevron-left</v-icon>
                   </v-btn>
               </v-col>
               <v-col cols="10" align="center">   
-                      <span style="font-size: 1.6rem !important;" class="purple--text">Cadastro de Usuário </span>
+                      <span style="font-size: 1.6rem !important;" class="primary--text">Cadastro de Usuário </span>
               </v-col>
           </v-row>          
         
@@ -322,85 +323,85 @@
                         >Tornar Comum</v-btn>                               
                     </v-col>                                                  
                 </v-row>                    
-            </v-form>                                                
+            </v-form>          
+
             <br/><br/>
-        </v-main>
 
-        <v-dialog
-        :value="dialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-            <v-card>
-            <v-toolbar
-                class="primary"
+            <v-dialog
+                :value="dialog"
+                fullscreen
+                hide-overlay
+                transition="dialog-bottom-transition"
             >
-                <v-btn
-                icon
-                small
-                @click="dialog = false"
+                <v-card>
+                <v-toolbar
+                    class="primary"
                 >
-                <v-icon>mdi-close</v-icon>
-                </v-btn>      
-                <v-toolbar-title style="margin-left:-17px;">
-                    {{ service.type }}
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-            </v-toolbar>    
-            <v-card-text>
-                <v-container >
-                    <br/>
-                    <small>
-                        <v-icon small>mdi-information-outline</v-icon>
-                        Para alterar nome do Serviço vá em > Configurações > Serviços de {{ company.shortName }}
-                    </small>                    
-                    <br/><br/>
-                    <v-form 
-                        v-on:submit.prevent="submitChangePercentCommission"
-                        ref="commissionForm"
-                        id="commissionForm"
-                    >  
-                        <v-col cols="12">
-                            <money v-model="service.price" v-bind="money"></money>
-                        </v-col>                                              
-                        <v-col cols="12" >
-                            <v-subheader>Comissão</v-subheader>
-                            <v-card-text>
-                                <v-slider
-                                    v-model="service.percentCommission"
-                                    :label="`${service.percentCommission}%`"
-                                ></v-slider>
-                            </v-card-text>
-                        </v-col>               
-                        <v-col cols="12">
-                            <b>{{ user.name }} recebera {{ service.price * service.percentCommission / 100 | currency }} por Servico </b>
-                        </v-col>                                   
-                        <v-col 
-                            cols="12"
-                            sm="6"
-                            align="center"
-                            justify="space-around"
-                        >                      
-                            <v-btn 
-                                style="width: 90%"
-                                color="success"
-                                x-large
-                                type="submit"
-                            >
-                             OK
-                            </v-btn>                                                                               
-                        </v-col>       
-  
-                    </v-form>                                          
-                </v-container>
-            </v-card-text>          
-            <div style="flex: 1 1 auto;"></div>
-            </v-card>
+                    <v-btn
+                    icon
+                    small
+                    @click="dialog = false"
+                    >
+                    <v-icon>mdi-close</v-icon>
+                    </v-btn>      
+                    <v-toolbar-title style="margin-left:-17px;">
+                        {{ service.type }}
+                    </v-toolbar-title>
+                    <v-spacer></v-spacer>
+                </v-toolbar>    
+                <v-card-text>
+                    <v-container >
+                        <br/>
+                        <small>
+                            <v-icon small>mdi-information-outline</v-icon>
+                            Para alterar nome do Serviço vá em > Configurações > Serviços de {{ company.shortName }}
+                        </small>                    
+                        <br/><br/>
+                        <v-form 
+                            v-on:submit.prevent="submitChangePercentCommission"
+                            ref="commissionForm"
+                            id="commissionForm"
+                        >  
+                            <v-col cols="12">
+                                <money v-model="service.price" v-bind="money"></money>
+                            </v-col>                                              
+                            <v-col cols="12" >
+                                <v-subheader>Comissão</v-subheader>
+                                <v-card-text>
+                                    <v-slider
+                                        v-model="service.percentCommission"
+                                        :label="`${service.percentCommission}%`"
+                                    ></v-slider>
+                                </v-card-text>
+                            </v-col>               
+                            <v-col cols="12">
+                                <b>{{ user.name }} recebera {{ service.price * service.percentCommission / 100 | currency }} por Servico </b>
+                            </v-col>                                   
+                            <v-col 
+                                cols="12"
+                                sm="6"
+                                align="center"
+                                justify="space-around"
+                            >                      
+                                <v-btn 
+                                    style="width: 90%"
+                                    color="success"
+                                    x-large
+                                    type="submit"
+                                >
+                                OK
+                                </v-btn>                                                                               
+                            </v-col>       
+    
+                        </v-form>                                          
+                    </v-container>
+                </v-card-text>          
+                <div style="flex: 1 1 auto;"></div>
+                </v-card>
 
-        </v-dialog>    
-
-        <SnackBar :show="message.show" :text="message.text" :color="message.color" />
+            </v-dialog>                
+        </div>
+        
     </v-container>
 </template>
 

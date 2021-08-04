@@ -1,6 +1,6 @@
 <template>
     <vuetify-money
-        v-model="value"
+        :value="value"
         v-bind:label="label"
         v-bind:placeholder="placeholder"
         v-bind:readonly="readonly"

@@ -569,13 +569,13 @@ import UserTypes from '../utils/UserTypes'
 import DialogPlan from '../components/DialogPlan.vue'
 import SnackBar from '../components/SnackBar.vue'
 import CardPlanData from '../components/CardPlanData.vue'
-import MyMoney from '../components/MyMoney.vue'
+import MyMoney from '../components/inputs/MyMoney.vue'
 export default {
     name: 'Perfil',
     components: {
         CardPlanData,
         DialogPlan,
-        SnackBar,
+        SnackBar, 
         MyMoney,
     },
     data: () => ({
