@@ -521,29 +521,12 @@
                                 :rules="[v => !!v || 'Serviço Obrigatório',]"
                             ></v-text-field>  
                         </v-col>              
-                        <v-col cols="12">
-                            <div class="v-input__control">
-                                <div class="v-input__slot">
-                                    <div class="v-text-field__slot">
-                                        <label for="input-94" class="v-label v-label--active theme--dark" style="left: 0px; right: auto; position: absolute;">
-                                            Serviço
-                                        </label>
-                                        <input required="required" id="input-94" type="text">
-                                    </div>
-                                </div>
-                                <div class="v-text-field__details">
-                                    <div class="v-messages theme--dark">
-                                        <div class="v-messages__wrapper"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </v-col>
-                        <v-col
+                        <v-col 
                             cols="12"
                             sm="6"
-                            >
-                                <money v-model="serviceUpdate.price" v-bind="money"></money>
-                        </v-col>                                           
+                        >
+                            <my-money v-model="serviceUpdate.price" label="Valor" />
+                        </v-col>
                         <v-col 
                             cols="12"
                             sm="6"
@@ -555,6 +538,8 @@
                                 color="success"
                                 x-large
                                 type="submit"
+                                :loading="loadingUpdateService"
+                                :disabled="loadingUpdateService"
                             >
                              OK
                             </v-btn>                                                                               
@@ -584,15 +569,18 @@ import UserTypes from '../utils/UserTypes'
 import DialogPlan from '../components/DialogPlan.vue'
 import SnackBar from '../components/SnackBar.vue'
 import CardPlanData from '../components/CardPlanData.vue'
+import MyMoney from '../components/MyMoney.vue'
 export default {
     name: 'Perfil',
     components: {
         CardPlanData,
         DialogPlan,
         SnackBar,
+        MyMoney,
     },
     data: () => ({
       dialogServiceUpdate: false,
+      loadingUpdateService: false,
       isLoading: false, 
       deleteServiceIndex: -1,
       loadingAddService: false,
@@ -635,7 +623,7 @@ export default {
             prefix: 'R$ ',
             precision: 2,
             masked: false
-      }           
+      },
     }),
     methods: {
         showPlanDialog(show) {
@@ -691,6 +679,7 @@ export default {
         },        
         submitChangeService() {
             if(this.$refs.submitChangeService.validate()) {
+                    this.loadingUpdateService = true;
                     companyGateway.updateCompanyService(this.company._id, this.serviceBeforeUpdateType, this.serviceUpdate,
                             (res) => {
                                 this.services = res;
@@ -701,7 +690,9 @@ export default {
                                 storage.setCompany(JSON.stringify(this.company));         
                                 this.showMessage('green', 'Serviço foi alterado para todos os Funcionários');
                                 this.dialogServiceUpdate = false;
+                                this.loadingUpdateService = false;
                             }, () => {        
+                                this.loadingUpdateService = false;
                                 alert('Erro ao Alterar');
                             });                
             }

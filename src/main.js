@@ -11,6 +11,7 @@ import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
 import VueGoogleCharts from 'vue-google-charts'
 import money from 'v-money'
+import "./plugins/vuetify-money.js";
 
 Vue.config.productionTip = false
 Vue.use(VueClipboard)
