@@ -1,7 +1,7 @@
 <template>
     <v-snackbar
       v-model="show"
-      timeout="3500"
+      :timeout="timeout"
       :color="color"
       outlined
     >
@@ -11,6 +11,6 @@
 <script>
 export default {
     name: 'SnackBar',
-    props: ['show', 'text', 'color']
+    props: ['show', 'text', 'color','timeout']
 }
 </script>

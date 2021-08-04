@@ -651,7 +651,7 @@ export default {
         },
         addService() {
 
-            if(this.company.services.filter(it => it.type === this.service.type).length > 0) {
+            if(this.company.services.filter(it => it.type.toLowerCase() === this.service.type.toLowerCase()).length > 0) {
                 alert('Serviço já Adicionado');
                 return;                
             }
