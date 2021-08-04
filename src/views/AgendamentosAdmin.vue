@@ -172,6 +172,12 @@
                         Funcionario: {{ selectedEvent.userName }} <br/>
                         <!-- Total: {{ selectedEvent.total | currency }} -->
                         <h3 class="success--text" v-if="selectedEvent.status === 'DONE'">Concluído</h3>
+                        <router-link
+                          v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
+                          :to="{ path: `/ordem-servico/${selectedEvent.orderId}` }"
+                        >
+                          Ordem de Serviço
+                        </router-link>                        
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn

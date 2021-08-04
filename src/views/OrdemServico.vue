@@ -166,7 +166,7 @@
                                 </v-col>
                                 <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">                      
                                     <v-text-field v-model="order.customer.phone_number"
-                                                    label="Celular"
+                                                    label="Celular do Cliente"
                                                     ref="customerPhone"
                                                     v-mask="'(##) #####-####'"
                                                     append-icon="mdi-whatsapp"
