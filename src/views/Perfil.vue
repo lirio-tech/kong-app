@@ -91,15 +91,15 @@
                                     </v-chip>             
                                 </v-col>                   
                                 <v-row >
-                                    <v-col cols="12" style="margin-top: 5px; margin-bottom: -40px">
+                                    <v-col cols="6" >
                                         <v-text-field
                                             autocomplete="off"
-                                            label="Nome do Serviço"
+                                            label="Serviço"
                                             v-model="service.type"                    
                                             filled
                                         />                        
                                     </v-col>                    
-                                    <v-col cols="5">
+                                    <v-col cols="4">
                                         <v-text-field
                                             autocomplete="off"
                                             label="Valor"
@@ -109,15 +109,7 @@
                                             @keyup="service.priceBR = maskCurrency(service.priceBR)"
                                             filled
                                         />
-                                    </v-col>
-                                    <v-col cols="5">
-                                      <v-text-field
-                                        label="Tempo"
-                                        filled
-                                        v-model="service.time"
-                                        type="time"
-                                      ></v-text-field>                                   
-                                    </v-col>                                    
+                                    </v-col>                   
                                     <v-col cols="1">
                                         <v-btn icon outlined class="mt-3" @click="addService" :loading="loadingAddService">
                                             <v-icon>mdi-plus</v-icon>
@@ -131,15 +123,12 @@
                                         <template v-slot:default>
                                             <thead >
                                             <tr>
-                                                <th class="text-left">
-                                                Serviço
+                                                <th class="text-left" style="width: 20px;">
+                                                    Serviço
                                                 </th>
                                                 <th class="text-left">
-                                                Valor
+                                                    Valor
                                                 </th>
-                                                <th class="text-left">
-                                                Tempo
-                                                </th>                                                
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -148,11 +137,10 @@
                                             <tr v-for="item in services" :key="item.type">
                                                 <td>{{ item.type }}</td>
                                                 <td>{{ item.price | currency }}</td>
-                                                <td>{{ item.time }}</td>
                                                 <td>
                                                     <v-icon 
                                                         small color="info"
-                                                        @click="editService(item)" class="error--text">
+                                                        @click="editService(item)">
                                                        >
                                                         mdi-pencil
                                                     </v-icon>      
@@ -533,23 +521,28 @@
                                 :rules="[v => !!v || 'Serviço Obrigatório',]"
                             ></v-text-field>  
                         </v-col>              
+                        <v-col cols="12">
+                            <div class="v-input__control">
+                                <div class="v-input__slot">
+                                    <div class="v-text-field__slot">
+                                        <label for="input-94" class="v-label v-label--active theme--dark" style="left: 0px; right: auto; position: absolute;">
+                                            Serviço
+                                        </label>
+                                        <input required="required" id="input-94" type="text">
+                                    </div>
+                                </div>
+                                <div class="v-text-field__details">
+                                    <div class="v-messages theme--dark">
+                                        <div class="v-messages__wrapper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </v-col>
                         <v-col
                             cols="12"
                             sm="6"
                             >
                                 <money v-model="serviceUpdate.price" v-bind="money"></money>
-                        </v-col>                                                                             
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            >
-                            <v-text-field
-                            label="Tempo"
-                            filled
-                            v-model="serviceUpdate.time"
-                            :rules="[v => !!v || 'Tempo Obrigatório',]"
-                            type="time"
-                            ></v-text-field>                                   
                         </v-col>                                           
                         <v-col 
                             cols="12"
@@ -697,7 +690,7 @@ export default {
                     });          
         },        
         submitChangeService() {
-            if(this.$refs.agendamentoForm.validate()) {
+            if(this.$refs.submitChangeService.validate()) {
                     companyGateway.updateCompanyService(this.company._id, this.serviceBeforeUpdateType, this.serviceUpdate,
                             (res) => {
                                 this.services = res;
@@ -707,6 +700,7 @@ export default {
                                 this.company.services = res;                  
                                 storage.setCompany(JSON.stringify(this.company));         
                                 this.showMessage('green', 'Serviço foi alterado para todos os Funcionários');
+                                this.dialogServiceUpdate = false;
                             }, () => {        
                                 alert('Erro ao Alterar');
                             });                
@@ -799,7 +793,7 @@ export default {
         },   
         editService(svc) {
             this.serviceBeforeUpdateType = svc.type;
-            this.serviceUpdate = svc;
+            this.serviceUpdate = { type: svc.type, price: svc.price };
             this.dialogServiceUpdate = true;
         },
         maskCurrency(v) {
