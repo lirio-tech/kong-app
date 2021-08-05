@@ -19,45 +19,26 @@
           </v-row>       
           <v-row>
               <v-col cols="12" sm="12" align="center">
-                  <router-link :to="{path: `/system/companies/${company._id}`}"
-                    style="color: inherit; text-decoration: none">
                     <v-btn 
                         type="button" 
                         depressed  
                         x-large 
                         color="primary"
                         style="width: 96%"
+                        :to="{path: `/system/companies/${company._id}`}"
                     >Aplicar Planos</v-btn>                    
-                  </router-link>
               </v-col>
-          </v-row>                            
+          </v-row>                                         
           <v-row>
-              <v-col cols="12" sm="12" align="center">
-                  <!-- <router-link :to="{path: '/system/payments/'+company._id}" -->
-                  <router-link 
-                   style="color: inherit; text-decoration: none">
-                    <v-btn 
-                        type="button" 
-                        depressed  
-                        x-large 
-                        color="green darken-3"
-                        style="width: 96%"
-                    >Pagamentos</v-btn>                    
-                  </router-link>
-              </v-col>
-          </v-row>               
-          <v-row>
-              <v-col cols="12" sm="12" align="center">
-                  <router-link to="/system/users"
-                   style="color: inherit; text-decoration: none">
-                    <v-btn 
-                        type="button" 
-                        depressed  
-                        x-large 
-                        color="red"
-                        style="width: 96%"
-                    >Usuarios</v-btn>                    
-                  </router-link>
+              <v-col cols="12" sm="12" align="center"> 
+                  <v-btn 
+                      type="button" 
+                      depressed  
+                      x-large 
+                      color="red"
+                      style="width: 96%"
+                      to="/system/users"
+                  >Usuarios</v-btn>                    
               </v-col>
           </v-row>                                 
         </v-main>
@@ -65,7 +46,7 @@
 </template>
 
 <script>
-  import gateway from '../../api/gateway';
+  import companyGateway from '../../api/companyGateway';
   import AppBar from '../../components/AppBar'
   import DialogPlan from '../../components/DialogPlan'
   import storage from '../../storage';
@@ -86,7 +67,7 @@
     methods: {
       findCompany() {
         this.loading = true;
-        gateway.getCompanyById(this.$route.params._id,
+        companyGateway.getCompanyById(this.$route.params._id,
           res => {
               this.loading = false;
               this.company = res;

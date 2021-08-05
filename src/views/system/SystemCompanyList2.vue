@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import gateway from '../../api/gateway';
+  import companyGateway from '../../api/companyGateway';
   import AppBar from '../../components/AppBar'
   import DialogPlan from '../../components/DialogPlan'
   import storage from '../../storage';
@@ -94,12 +94,12 @@
       findCompanies() {
         this.companies = [];
         this.loading = true;
-        gateway.getCompanies(
+        companyGateway.getCompanies(
           res => {
               this.loading = false;
               this.companies = res;
-          }, err => {
-              console.log(err);
+          }, () => {
+              alert('Erro ao Listar Estabelecimentos')
               this.loading = false;
           });
       },

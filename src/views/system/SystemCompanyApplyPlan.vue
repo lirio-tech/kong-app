@@ -344,7 +344,7 @@
 </template>
 
 <script>
-import gateway from '../../api/gateway'
+import companyGateway from '../../api/companyGateway'
 import storage from '../../storage'
  
 export default {
@@ -485,7 +485,7 @@ export default {
             return;
         }
 
-        gateway.applyPlan(this.company._id, this.applyPlan,
+        companyGateway.applyPlan(this.company._id, this.applyPlan,
             res => {
                 this.company = res;
                 alert('Plano Alterado com Sucesso');
@@ -498,7 +498,7 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();   
-      gateway.getCompanyById(
+      companyGateway.getCompanyById(
                 this.$route.params._id,
                 res => { 
                     this.company = res;

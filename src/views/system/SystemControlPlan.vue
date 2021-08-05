@@ -74,12 +74,11 @@
 </template>
 
 <script>
-  import gateway from '../../api/gateway';
   import AppBar from '../../components/AppBar'
   import DialogPlan from '../../components/DialogPlan'
   import storage from '../../storage';
   export default {
-    name: 'Home',
+    name: 'SystemControlPlan',
     components: { 
       AppBar,
       DialogPlan
@@ -93,24 +92,12 @@
       }
     }),
     methods: {
-      findCompany() {
-        this.loading = true;
-        gateway.getCompanyById(this.$route.params._id,
-          res => {
-              this.loading = false;
-              this.company = res;
-          }, err => {
-              console.log(err);
-              this.loading = false;
-          });
-      },
       showPlanDialog(show) {
         this.dialogPlan = show
       },
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.findCompany();
     }
   }
 </script>
