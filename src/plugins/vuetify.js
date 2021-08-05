@@ -7,7 +7,7 @@ import VueCurrencyFilter from 'vue-currency-filter'
 Vue.use(Vuetify);
 Vue.use(VueCurrencyFilter,
     {
-      symbol : 'R$',
+      symbol : '',
       thousandsSeparator: '.',
       fractionCount: 2,
       fractionSeparator: ',',
