@@ -14,7 +14,11 @@
                               {{ agendamento.customer.name }} 
                             </p>
                             <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
-                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; <b>{{ getDayOfWeek(new Date(agendamento.dateTimeStartAt)) }}, {{ new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
+                            <v-icon class="black--text">mdi-clock</v-icon> &nbsp; 
+                              <b>
+                                  {{ getDayOfWeek(new Date(agendamento.dateTimeStartAt)) }} 
+                                  {{  ['Ontem','Hoje','Amanhã'].includes(getDayOfWeek(new Date(agendamento.dateTimeStartAt))) ? '' : ', '+new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} 
+                                  às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
                               
                           </v-card-text>
