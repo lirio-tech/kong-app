@@ -3,7 +3,6 @@
       v-model="show"
       :timeout="timeout"
       :color="color"
-      outlined
     >
       {{ text }}
     </v-snackbar>      
