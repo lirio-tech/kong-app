@@ -37,7 +37,7 @@
                             align="center"
                         >
                             <vue-qrcode 
-                                :value="urlApp" 
+                                :value="urlShare" 
                                 style="margin-left:50px;"
                             />
                         </v-col>

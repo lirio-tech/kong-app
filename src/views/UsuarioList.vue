@@ -87,10 +87,7 @@
                                <v-chip :color="isAdmin(item.type) ? 'primary' : ''">
                                 {{ getTypePtBR(item.type) }}                            
                                </v-chip>
-                            </template> 
-                            <template v-slot:item.percentCommission="{ item }">
-                                {{ item.percentCommission }}%
-                            </template>                             
+                            </template>                          
                         </v-data-table>               
                     </v-sheet>
                 </v-col>
@@ -116,7 +113,6 @@ import UserTypes from '../utils/UserTypes';
         { text: "Criado", value: "createdAt" },
         { text: "Alterado", value: "updatedAt" },
         { text: "Ativo", value: "disabled" },
-        { text: "Comissao", value: "percentCommission" },
       ],                
       users: []
     }),
