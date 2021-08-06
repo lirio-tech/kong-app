@@ -237,6 +237,7 @@
                 v-on:show-dialog="showDialogEmployees"
             />       
         </v-main>
+        <snack-bar :color="message.color" :text="message.text" :show="message.show" />
         <br/><br/>
     </v-container>
 </template>
@@ -249,12 +250,14 @@ import gateway from '../api/gateway';
 import DialogAgendamento from '../components/DialogAgendamento'
 import DialogAgendamentoConcluir from '../components/DialogAgendamentoConcluir'
 import DialogAgendamentoEmployees from '../components/DialogAgendamentoEmployees'
+import SnackBar from '../components/SnackBar.vue';
 export default {
     name: 'Agendamentos',
     components: { 
         DialogAgendamento,
         DialogAgendamentoConcluir,
-        DialogAgendamentoEmployees
+        DialogAgendamentoEmployees,
+        SnackBar, 
     },
     data: () => ({
         dialog: false,
@@ -279,8 +282,12 @@ export default {
         users: [],
         usersCategories: [],
         usersCategoriesReset: [],
-        usersAll: []
-
+        usersAll: [],
+        message: {
+            show: false,
+            color: 'primary',
+            text: ''
+        },   
     }), 
     beforeMount() {
         this.userLogged = storage.getUserLogged();
@@ -469,7 +476,14 @@ export default {
                 }  
                 this.servicesSelected = [];
                 this.showDialog(true);
+           } else {
+              this.showMessage('Para Adicionar uma Agenda Click em Funcionarios');     
            }
+        },
+        showMessage(text) {
+          this.message.show = true;
+          this.message.color = 'primary';
+          this.message.text = text;
         },
         initAgendamento() {
           return { 
