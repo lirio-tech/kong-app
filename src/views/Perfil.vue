@@ -693,7 +693,7 @@ export default {
                                 this.serviceUpdate.time = "01:00";      
                                 this.company.services = res;                  
                                 storage.setCompany(JSON.stringify(this.company));         
-                                this.showMessage('green', 'Serviço foi alterado para todos os Funcionários');
+                                this.showMessage('primary', 'Serviço foi alterado para todos os Funcionários');
                                 this.dialogServiceUpdate = false;
                                 this.loadingUpdateService = false;
                             }, () => {        
@@ -706,6 +706,7 @@ export default {
             this.message.color = color;
             this.message.text = text;
             this.message.show = true;
+            setTimeout(() => this.message.show = false, 4000);
         },
         onSubmitChangePassword() {
             this.isLoading = true;
@@ -781,6 +782,7 @@ export default {
                         this.services = res;
                         storage.setCompany(JSON.stringify(this.company));
                         this.deleteServiceIndex = -1;
+                        this.showMessage('primary', 'Serviço foi excluído para todos os Funcionários');
                     }, () => {
                         this.deleteServiceIndex = -1;
                         alert('Erro ao Excluir');

@@ -81,6 +81,7 @@ export default {
             this.message.color = color;
             this.message.text = text;
             this.message.show = true;
+            setTimeout(() => this.message.show = false, 4000);
         }, 
         clickRow(row) {
             this.purchases.map((it) => {
