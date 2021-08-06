@@ -477,13 +477,14 @@ export default {
                 this.servicesSelected = [];
                 this.showDialog(true);
            } else {
-              this.showMessage('Para Adicionar uma Agenda Click em Funcionarios');     
+              this.showMessage('Para Adicionar uma Agenda clique no botão Funcionários');     
            }
         },
         showMessage(text) {
           this.message.show = true;
           this.message.color = 'primary';
           this.message.text = text;
+          setTimeout(() => this.message.show = false, 4000);
         },
         initAgendamento() {
           return { 
