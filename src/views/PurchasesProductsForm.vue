@@ -166,7 +166,7 @@
                                                     </v-chip>
                                                 </template>        
                                                 <template v-slot:item.priceUnitPurchase="{ item }">
-                                                    {{ item.priceUnitPurchase | currency }}                            
+                                                    R$ {{ item.priceUnitPurchase | currency }}                            
                                                 </template>                                                                                                 
                                             </v-data-table>               
                                         </v-sheet>
@@ -211,7 +211,7 @@
                               <div class="overline mb-4 grey--text" style="margin-bottom: -25px;" >
                                   Total da Compra 
                               </div>                        
-                              <span style="margin-top: -25px; font-size: 2.0rem">{{ this.purchase.total | currency }}</span>
+                              <span style="margin-top: -25px; font-size: 2.0rem">R$ {{ this.purchase.total | currency }}</span>
                             </v-col>   
                             <v-col cols="12">
                               <span class="grey--text">
@@ -247,7 +247,7 @@
                                             </v-chip>
                                         </template>        
                                         <template v-slot:item.priceUnitPurchase="{ item }">
-                                            {{ item.priceUnitPurchase | currency }}                            
+                                            R$ {{ item.priceUnitPurchase | currency }}                            
                                         </template>                                                                                                 
                                     </v-data-table>               
                                 </v-sheet>

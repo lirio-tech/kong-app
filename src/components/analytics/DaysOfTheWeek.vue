@@ -18,14 +18,14 @@
                   <div class="green--text">
                     <span>Melhor dia da Semana: </span> <br/>
                     <span>{{ statistics.betterDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>Média de {{ statistics.betterDayOfTheWeek.value | currency }} </span> <br/>
+                    <span>Média de R$ {{ statistics.betterDayOfTheWeek.value | currency }} </span> <br/>
                     <small>{{ statistics.betterDayOfTheWeek.amount }} </small> 
                   </div>
                   <br/>
                   <div class="red--text">
                     <span>Pior dia da Semana: </span> <br/>
                     <span>{{ statistics.worstDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>Média de {{ statistics.worstDayOfTheWeek.value | currency }} </span> <br/>
+                    <span>Média de R$ {{ statistics.worstDayOfTheWeek.value | currency }} </span> <br/>
                     <small>{{ statistics.worstDayOfTheWeek.amount }} </small> 
                   </div>                  
               </v-col>

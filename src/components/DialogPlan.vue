@@ -72,7 +72,7 @@
                     cols="12"
                   >
                     <span class="display-3">
-                        {{ plan.price | currency }}
+                        R$ {{ plan.price | currency }}
                     </span>
                     <span v-if="plan.type === 'Mensal' || plan.type === 'Anual'">
                       por {{ plan.type === 'Mensal' ? 'Mês' : 'Ano' }}

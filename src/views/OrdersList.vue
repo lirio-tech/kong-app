@@ -179,7 +179,7 @@
                                     mdi-rhombus-split
                                   </v-icon>                      
                                   <br/>                                                                               
-                                  {{ ord.total | currency }}
+                                  R$ {{ ord.total | currency }}
                                 </td>
                               </tr>
                             </tbody>

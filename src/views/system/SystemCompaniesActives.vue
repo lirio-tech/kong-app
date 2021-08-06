@@ -112,7 +112,7 @@
                                 :key="c._id"
                               >
                                 <td class="text-center caption">{{ c.shortName }}</td>
-                                <td class="text-right caption">{{ c.total | currency }}</td>
+                                <td class="text-right caption">R$ {{ c.total | currency }}</td>
                                 <td class="text-center caption">{{ c.planName }}</td>
                                 <td class="text-center caption">{{ c.planDateEnd }}</td>
                               </tr>

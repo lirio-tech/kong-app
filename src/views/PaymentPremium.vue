@@ -16,7 +16,7 @@
             <v-col cols="12" align="center">
               <h2>Pix</h2>
               <h3 :style="'color:'+plan.color">Plano {{ plan.name }}</h3>
-              <span class="display-2">{{ plan.price | currency }}</span>
+              <span class="display-2">R$ {{ plan.price | currency }}</span>
             </v-col>
           </v-row>
           <v-row>

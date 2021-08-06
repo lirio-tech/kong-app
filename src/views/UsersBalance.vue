@@ -33,7 +33,7 @@
                                             <v-list-item-title class="headline mb-1">
                                                 <span class="caption grey--text">Total</span><br/>
                                                 <div style="font-size: 1.6rem">
-                                                  <span :class="total < 0 ? 'red--text' : 'green--text'">{{ total | currency }} </span>
+                                                  <span :class="total < 0 ? 'red--text' : 'green--text'">R$ {{ total | currency }} </span>
                                                 </div>
                                             </v-list-item-title>
                                           </v-col>
@@ -51,7 +51,7 @@
                                               {{ userBalance.user.name }}
                                         </v-col> 
                                         <v-col cols="5" :style="'font-size: 1.4rem;'" align="">
-                                              {{ userBalance.balance | currency }}
+                                              R$ {{ userBalance.balance | currency }}
                                         </v-col>
                                         <v-col cols="12" class="text-center">
                                           <v-btn 

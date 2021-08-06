@@ -170,7 +170,7 @@
                         Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
                         Funcionario: {{ selectedEvent.userName }} <br/>
-                        <!-- Total: {{ selectedEvent.total | currency }} -->
+                        <!-- Total: R$ {{ selectedEvent.total | currency }} -->
                         <h3 class="success--text" v-if="selectedEvent.status === 'DONE'">Concluído</h3>
                         <router-link
                           v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"

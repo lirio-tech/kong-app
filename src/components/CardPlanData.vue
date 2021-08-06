@@ -14,7 +14,7 @@
                     v-if="company.plan && company.plan.payment && isAdmin(userView.type)"
                 >
                     <span class="grey--text">Pagamento: </span> 
-                    {{ company.plan.payment.price | currency }} 
+                    R$ {{ company.plan.payment.price | currency }} 
                 </span>     
                 <span 
                     v-if="company.plan && company.plan.name !== 'Free' && company.plan.name !== 'Infinity'"
@@ -28,7 +28,7 @@
                 >
                     <br/>
                     <span class="grey--text">Valor/Mes: </span> 
-                    {{ company.plan.name === 'Free' ? 500 : company.plan.maxCash | currency }} 
+                    R$ {{ company.plan.name === 'Free' ? 500 : company.plan.maxCash | currency }} 
                 </span>     
                 <span 
                     v-if="company.plan"

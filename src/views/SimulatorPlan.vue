@@ -91,7 +91,7 @@
                                     class="text-decoration-line-through subtitle-1 grey--text" 
                                     v-if="plan.priceWithoutDiscount > plan.price"
                                 >
-                                    {{ plan.priceWithoutDiscount | currency }}
+                                    R$ {{ plan.priceWithoutDiscount | currency }}
                                 </span> 
                                 <span 
                                     style="margin-left: 10px;"
@@ -102,7 +102,7 @@
                                 </span>                                 
                                 <br/>
                                 <span class="display-3">
-                                    {{ plan.price | currency }}
+                                    R$ {{ plan.price | currency }}
                                 </span>
                             </v-col>
                             </v-row>

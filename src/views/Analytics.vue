@@ -125,7 +125,7 @@
             v-if="dataReturnOK && total"
           >
             <span class="grey--text caption">Total no periodo</span><br/>  
-            <span style="font-size: 1.6rem">{{ total | currency }}</span>
+            <span style="font-size: 1.6rem">R$ {{ total | currency }}</span>
           </v-col>               
 
           <v-alert
@@ -176,14 +176,14 @@
                   <div class="green--text">
                     <span>Melhor dia da Semana: </span> <br/>
                     <span>{{ betterDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>Média de {{ betterDayOfTheWeek.value | currency }} </span> <br/>
+                    <span>Média de R$ {{ betterDayOfTheWeek.value | currency }} </span> <br/>
                     <span class="caption">{{ betterDayOfTheWeek.amount }} </span> 
                   </div>
                   <br/>
                   <div class="red--text">
                     <span>Pior dia da Semana: </span> <br/>
                     <span>{{ worstDayOfTheWeek.dayOfTheWeek }} </span><br/>
-                    <span>Média de {{ worstDayOfTheWeek.value | currency }} </span> <br/>
+                    <span>Média de R$ {{ worstDayOfTheWeek.value | currency }} </span> <br/>
                     <span class="caption">{{ worstDayOfTheWeek.amount }} </span> 
                   </div>                  
               </v-col>
@@ -226,14 +226,14 @@
                   <div class="green--text">
                     <span>Melhor mês do ano: </span> <br/>
                     <span>{{ bestMonthOfTheYear.month }} </span><br/>
-                    <span>Média de {{ bestMonthOfTheYear.value | currency }} </span> <br/>
+                    <span>Média de R$ {{ bestMonthOfTheYear.value | currency }} </span> <br/>
                     <span class="caption">{{ bestMonthOfTheYear.amount }} mês contabilizado(s)</span> 
                   </div>
                   <br/>
                   <div class="red--text">
                     <span>Pior mês do ano: </span> <br/>
                     <span>{{ worstMonthOfTheYear.month }} </span><br/>
-                    <span>Média de {{ worstMonthOfTheYear.value | currency }} </span> <br/>
+                    <span>Média de R$ {{ worstMonthOfTheYear.value | currency }} </span> <br/>
                     <span class="caption">{{ worstMonthOfTheYear.amount }} mês contabilizado(s)</span> 
                   </div>                  
               </v-col>

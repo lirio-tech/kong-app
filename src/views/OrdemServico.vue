@@ -23,7 +23,7 @@
                           align="center" 
                           justify="space-around"
                         > 
-                              {{ order.total | currency }}
+                              R$ {{ order.total | currency }}
                         </center>
                         <br/>
                         <center 
@@ -32,7 +32,7 @@
                           justify="space-around"
                           style="margin-top: -20px;"
                         > 
-                              Comissão de {{ order.commission | currency }}
+                              Comissão de R$ {{ order.commission | currency }}
                         </center>
 
                       </v-col>
@@ -88,7 +88,7 @@
                                   <tr v-for="item in order.services" :key="item.type">
                                     <td>{{ item.type }} </td>
                                     <td>{{ item.percentCommission }}%</td>
-                                    <td>{{ item.price | currency }}</td>
+                                    <td>R$ {{ item.price | currency }}</td>
                                     <td>
                                       <v-icon 
                                         @click="deleteItem(item)" class="error--text"

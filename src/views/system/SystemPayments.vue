@@ -32,7 +32,7 @@
                             </v-col>
                               
                             <div class="display-1" style="margin-top: -30px">
-                              <span>{{ total | currency }} </span>
+                              <span>R$ {{ total | currency }} </span>
                               <br/>
                             </div>
                         

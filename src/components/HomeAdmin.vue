@@ -23,7 +23,7 @@
                           <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
                               <span class="caption grey--text">Total</span><br/>
                               <div style="font-size: 1.5rem">
-                                <span class="">{{ ordersGroup.total | currency }} </span>
+                                <span class="">R$ {{ ordersGroup.total | currency }} </span>
                               </div>
                           </v-list-item-title>
                         </v-col>
@@ -43,7 +43,7 @@
                             </v-icon> 
                             <br/>
                             <span class="grey--text" style="font-size: 1.1rem">
-                              {{ ordersGroup.cash | currency }}
+                              R$ {{ ordersGroup.cash | currency }}
                             </span>
                         </v-col>
                         <v-col cols="4" style="margin-top:5px" class="text-center" small>
@@ -52,7 +52,7 @@
                             </v-icon>                                    
                             <br/>
                             <span class="grey--text" style="font-size: 1.1rem">
-                              {{ ordersGroup.card | currency }}
+                              R$ {{ ordersGroup.card | currency }}
                             </span>                                
                         </v-col> 
                         <v-col cols="4" style="margin-top:5px" class="text-center" small>
@@ -61,7 +61,7 @@
                             </v-icon>                                    
                             <br/>
                             <span class="grey--text" style="font-size: 1.1rem">
-                              {{ ordersGroup.pix | currency }}
+                              R$ {{ ordersGroup.pix | currency }}
                             </span>                                
                         </v-col> 
 
@@ -82,7 +82,7 @@
                                   {{ usr._id }}
                             </v-col> 
                             <v-col cols="4" class="grey--text" :style="'font-size: 1.1rem;'">
-                                  {{ usr.commission | currency }}
+                                  R$ {{ usr.commission | currency }}
                             </v-col>
                         </v-row>
                         <v-row 
@@ -99,7 +99,7 @@
                               class="grey--text" 
                               :style="'font-size: 1.1rem;'"
                             >
-                                {{ ordersGroup.totalCompany | currency }}
+                                R$ {{ ordersGroup.totalCompany | currency }}
                             </v-col>
                         </v-row>                            
                         <hr-line v-if="ordersGroup.amount" style="margin-top: 15px;"/>

@@ -136,7 +136,7 @@
                                             <tbody>
                                             <tr v-for="item in services" :key="item.type">
                                                 <td>{{ item.type }}</td>
-                                                <td>{{ item.price | currency }}</td>
+                                                <td>R$ {{ item.price | currency }}</td>
                                                 <td>
                                                     <v-icon 
                                                         small color="info"
@@ -208,7 +208,7 @@
                                             <tbody>
                                             <tr v-for="item in userLogged.services" :key="item.type">
                                                 <td>{{ item.type }}</td>
-                                                <td>{{ item.price | currency }}</td>
+                                                <td>R$ {{ item.price | currency }}</td>
                                                 <td>{{ item.percentCommission }}%</td>
                                                 
                                             </tr>
@@ -300,7 +300,7 @@
                                                             <v-list-item-subtitle
                                                                 class="text--primary"
                                                             >
-                                                                {{ item.plan.payment.price | currency }}
+                                                                R$ {{ item.plan.payment.price | currency }}
                                                             </v-list-item-subtitle>
 
                                                             <v-list-item-subtitle 

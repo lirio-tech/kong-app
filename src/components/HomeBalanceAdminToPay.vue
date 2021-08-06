@@ -31,7 +31,7 @@
                       <v-col cols="12">
                         <v-list-item-title class="mb-1" style="margin-top: -25px;">
                             <div style="font-size: 2.0rem">
-                              <span :class="balanceFull < 0 ? 'red--text' : 'green--text'">{{ balanceFull | currency }} </span>
+                              <span :class="balanceFull < 0 ? 'red--text' : 'green--text'">R$ {{ balanceFull | currency }} </span>
                             </div>
                         </v-list-item-title>
                       </v-col>                     

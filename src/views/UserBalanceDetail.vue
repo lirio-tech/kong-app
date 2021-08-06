@@ -41,7 +41,7 @@
                                           <v-list-item-title class="headline mb-1">
                                               <span class="caption grey--text">Total</span><br/>
                                               <div style="font-size: 3.0rem">
-                                                <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">{{ userBalance.balance | currency }} </span>
+                                                <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
                                               </div>
                                           </v-list-item-title>
                                         </v-col>
@@ -120,7 +120,7 @@
                             class="text-center" 
                             :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
                           >
-                            {{ det.value | currency }}
+                            R$ {{ det.value | currency }}
                           </td>
                           <td class="text-center" v-if="isAdmin(userLogged.type)">
                               <v-icon 
