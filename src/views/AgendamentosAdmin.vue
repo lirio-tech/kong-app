@@ -476,8 +476,8 @@ export default {
                 }  
                 this.servicesSelected = [];
                 this.showDialog(true);
-           } else {
-              this.showMessage('Para Adicionar uma Agenda clique no botão Funcionários');     
+           } else if(this.typePeriod !== 'category') {
+                this.showMessage('Para Adicionar uma Agenda clique no botão Funcionários');     
            }
         },
         showMessage(text) {
