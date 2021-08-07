@@ -85,6 +85,9 @@
                                   R$ {{ usr.commission | currency }}
                             </v-col>
                         </v-row>
+                        <div class="caption grey--text" v-if="ordersByUsers && ordersByUsers.length > 0">
+                            <span class="">Total de Lucro</span>
+                        </div>                          
                         <v-row 
                           style="margin-top:-5px"
                         >
