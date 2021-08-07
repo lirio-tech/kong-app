@@ -366,13 +366,31 @@
                                 <money v-model="service.price" v-bind="money"></money>
                             </v-col>                                              
                             <v-col cols="12" >
-                                <v-subheader>Comissão</v-subheader>
-                                <v-card-text>
-                                    <v-slider
-                                        v-model="service.percentCommission"
-                                        :label="`${service.percentCommission}%`"
-                                    ></v-slider>
-                                </v-card-text>
+                                <v-subheader class="text-h5">{{ service.percentCommission }}% de Comissão</v-subheader>
+                                <v-slider
+                                    v-model="service.percentCommission"
+                                    min="5"
+                                    max="100"
+                                    thumb-label
+                                >
+                                    <template v-slot:prepend>
+                                    <v-icon
+                                        color="secondary"
+                                        @click="service.percentCommission-=5"
+                                    >
+                                        mdi-minus
+                                    </v-icon>
+                                    </template>
+
+                                    <template v-slot:append>
+                                    <v-icon
+                                        color="secondary"
+                                        @click="service.percentCommission+=5"
+                                    >
+                                        mdi-plus
+                                    </v-icon>
+                                    </template>
+                                </v-slider>                                
                             </v-col>               
                             <v-col cols="12">
                                 <b>{{ user.name }} recebera {{ service.price * service.percentCommission / 100 | currency }} por Servico </b>
