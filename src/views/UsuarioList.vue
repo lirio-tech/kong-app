@@ -2,7 +2,8 @@
     <v-container>
         <app-bar />             
         <v-main class="">
-          <v-row>
+            <header-back-title title="Funcionários" btnPath="/admin/users/_newUser" btnName="Novo"/>
+            <!-- <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/'}"
@@ -21,7 +22,7 @@
                       class="ma-2 primary--text"
                   >Novo</v-btn>                        
               </v-col>              
-          </v-row>           
+          </v-row>            -->
             <v-row>
                 <v-col cols="12" sm="12">
                     <v-sheet min-height="70vh" rounded="lg">
@@ -99,10 +100,11 @@
 <script>
 import gateway from '../api/gateway'; 
 import AppBar from '../components/AppBar.vue';
+import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
   export default {
-  components: { AppBar },
+  components: { AppBar, HeaderBackTitle },
     name: 'UsuarioList',
     data: () => ({
       search: '',

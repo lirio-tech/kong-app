@@ -2,20 +2,7 @@
     <v-container>
         <AppBar />             
         <v-main class="">
-          <v-row>
-              <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
-                  <v-btn icon small style="display: inline;"
-                      @click="$router.go(-1)"
-                  >  
-                      <v-icon large color="white darken-2">mdi-chevron-left</v-icon>
-                  </v-btn> 
-              </v-col>  
-              <v-col cols="10" align="center">   
-                  <span style="font-size: 1.6rem !important;" class="white--text">  
-                    Vales e Pagamentos
-                  </span>
-              </v-col>           
-          </v-row>          
+          <header-back-title title="Vales e Pagamentos" />        
           <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
@@ -155,11 +142,12 @@
 import gateway from '../api/gateway';
 import AppBar from '../components/AppBar'
 import DialogMoneyVoucherOrPaymentEmployee from '../components/DialogMoneyVoucherOrPaymentEmployee'
+import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
   export default {
     name: 'UserBalanceDetail',
-    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee },
+    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, },
     data: () => ({
       dialog: false,
       balanceValueTotal: 0,

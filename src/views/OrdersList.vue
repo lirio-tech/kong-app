@@ -2,26 +2,7 @@
   <v-container>
     
         <v-main class="">
-          <v-row>
-              <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
-                  <v-btn icon small style="display: inline;"
-                      :to="{ 'path': '/'}"
-                  >
-                      <v-icon large color="white-grey darken-2">mdi-chevron-left</v-icon>
-                  </v-btn>
-              </v-col>
-              <v-col cols="8" align="center">   
-                      <span style="font-size: 1.8rem !important;" class="white--text">{{ 'Serviços' }} </span>
-              </v-col>
-              <v-col cols="2" style="margin-left: -30px;">   
-                  <v-btn 
-                      :to="{ path:'/ordem-servico'}" 
-                      class="ma-2 primary--text"
-                  >Novo</v-btn>                         
-              </v-col>                  
-          </v-row>    
-
-          
+          <header-back-title title="Ordens de Serviços" btnPath="/ordem-servico" />          
           <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
             <v-progress-linear
               indeterminate
@@ -127,7 +108,7 @@
 
           <v-alert
               outlined
-              type="error"
+              type="warning"
               v-if="orders.length === 0 && !loading"
             >
               Dados não Encontrados para este período
@@ -202,9 +183,11 @@ import gateway from '../api/gateway'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import dateUtils from '../utils/date'
+import HeaderBackTitle from '../components/HeaderBackTitle.vue'
 export default {
     name: 'Home',
-    components: { 
+    components: {
+        HeaderBackTitle 
     },
     data: () => ({
       loading: false,

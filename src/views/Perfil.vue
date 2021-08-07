@@ -1,6 +1,7 @@
 <template>
     <v-container>
-        <v-row>
+        <header-back-title title="Configurações" />
+        <!-- <v-row>
             <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                 <v-btn icon small style="display: inline;"
                     :to="{ 'path': '/'}"
@@ -11,7 +12,7 @@
             <v-col cols="8" align="center">   
                     <span style="font-size: 1.8rem !important;" class="white--text">Configurações</span>
             </v-col>
-        </v-row>
+        </v-row> -->
         <br/>
         <v-expansion-panels
             v-model="panel"
@@ -127,7 +128,7 @@
                                                     Serviço
                                                 </th>
                                                 <th class="text-left">
-                                                    Valor
+                                                    Valor R$
                                                 </th>
                                                 <th></th>
                                                 <th></th>
@@ -136,7 +137,7 @@
                                             <tbody>
                                             <tr v-for="item in services" :key="item.type">
                                                 <td>{{ item.type }}</td>
-                                                <td>R$ {{ item.price | currency }}</td>
+                                                <td>{{ item.price | currency }}</td>
                                                 <td>
                                                     <v-icon 
                                                         small color="info"
@@ -570,6 +571,7 @@ import DialogPlan from '../components/DialogPlan.vue'
 import SnackBar from '../components/SnackBar.vue'
 import CardPlanData from '../components/CardPlanData.vue'
 import MyMoney from '../components/inputs/MyMoney.vue'
+import HeaderBackTitle from '../components/HeaderBackTitle.vue'
 export default {
     name: 'Perfil',
     components: {
@@ -577,6 +579,7 @@ export default {
         DialogPlan,
         SnackBar, 
         MyMoney,
+        HeaderBackTitle,
     },
     data: () => ({
       dialogServiceUpdate: false,

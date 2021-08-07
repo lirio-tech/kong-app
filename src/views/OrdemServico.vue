@@ -2,19 +2,7 @@
     <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">
               <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
               <div v-if="true">
-                  <v-row>
-                      <v-col cols="2" style="margin-top: 10px;">   
-                          <v-btn icon small style="display: inline;"
-                              :to="{ 'path': '/'}" 
-                          > 
-                              <v-icon large color="blue-grey darken-2">mdi-chevron-left</v-icon>
-                          </v-btn>
-                      </v-col> 
-                      <v-col cols="8" align="center" >  
-                              <span v-if="order._id" style="font-size: 1.2rem !important;">Ordem de Serviço</span>
-                              <span v-else style="font-size: 1.2rem !important;">Nova Ordem Serviço</span>
-                      </v-col>       
-                  </v-row>    
+                  <header-back-title :title="order._id ? 'Ordem de Serviço' : 'Nova Ordem Serviço'" titleColor="second"/>
                   <v-row>
                       <v-col cols="12" sm="12">
                         <center 
@@ -229,10 +217,12 @@ import { mapGetters } from 'vuex'
 import DialogPlan from '../components/DialogPlan'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
+import HeaderBackTitle from '../components/HeaderBackTitle.vue'
   export default {
     name: 'OrdemServico',
     components: {
-      DialogPlan
+      DialogPlan,
+        HeaderBackTitle
     },
     data: vm => ({
         loadingSave: false,

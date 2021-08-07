@@ -1,8 +1,8 @@
 <template>
     <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">           
-        <SnackBar :show="message.show" :text="message.text" :color="message.color" />
-        <div >
-          <v-row>
+        <v-main class="">
+          <header-back-title title="Cadastro de Funcionários" titleColor="primary" />
+          <!-- <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                   <v-btn icon small style="display: inline;"
                       :to="{ 'path': '/admin/users'}"
@@ -11,9 +11,9 @@
                   </v-btn>
               </v-col>
               <v-col cols="10" align="center">   
-                      <span style="font-size: 1.6rem !important;" class="primary--text">Cadastro de Usuário </span>
+                      <span style="font-size: 1.6rem !important;" class="primary--text"> </span>
               </v-col>
-          </v-row>          
+          </v-row>           -->
         
             <v-form 
                 v-model="valid" 
@@ -400,13 +400,14 @@
                 </v-card>
 
             </v-dialog>                
-        </div>
-        
+        </v-main>
+        <SnackBar :show="message.show" :text="message.text" :color="message.color" />
     </v-container>
 </template>
 
 <script>
 import gateway from '../api/gateway'
+import HeaderBackTitle from '../components/HeaderBackTitle.vue'
 import SnackBar from '../components/SnackBar'
 import storage from '../storage'
 import InputsUtils from '../utils/inputs'
@@ -414,6 +415,7 @@ export default {
     name: 'UsuarioForm',
     components: { 
         SnackBar,
+        HeaderBackTitle,
     },
     data: () => ({
         showInfoAllowUpdateEmployee: false,

@@ -10,7 +10,7 @@
                         <v-icon large color="white darken-2">mdi-chevron-left</v-icon>
                     </v-btn>
                 </v-col>
-                <v-col cols="9" align="center">   
+                <v-col cols="9" >   
                     <span style="font-size: 1.6rem !important;" class="white--text">
                       Agendamentos
                     </span>
