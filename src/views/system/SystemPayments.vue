@@ -48,6 +48,7 @@
                   <v-data-table 
                       :headers="headers" 
                       :items="paymentsHistoric" 
+                      :items-per-page="5000"
                       item-key="code"
                       class="elevation-1"
                       hide-default-footer
