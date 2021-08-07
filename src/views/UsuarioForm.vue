@@ -540,6 +540,7 @@ export default {
       save() {
         this.user.disabled = !this.user.enabled;
         if(!this.$refs.userForm.validate()) {
+            window.scrollTo(0,0);
             return;
         }
 

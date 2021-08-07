@@ -224,43 +224,6 @@
                                 <br/>
                     </v-expansion-panel-content>
                 </v-expansion-panel>                      
-                    <v-expansion-panel-header>
-                        Comissão por Funcionário
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content> 
-                        <v-form 
-                            id="formCompany" 
-                            ref="formCompany" 
-                            v-model="valid" 
-                            lazy-validation 
-                            v-on:submit.prevent="updateCommission"
-                        >
-                            <br/>
-                            <v-chip color="primary" style="margin-left: 15px;" outlined small>
-                                Somente Usuarios Admin acessam a Comissão 
-                            </v-chip>
-                            <br/><br/>
-                            <v-col cols="12" v-for="user in users" :key="user._id">
-                                <v-slider
-                                    style="margin-top: -25px"
-                                    v-model="user.percentCommission"
-                                    min="1"
-                                    prepend-icon="mdi-account"
-                                    :label="`${user.name} (${user.percentCommission}%)`"
-                                    max="100"
-                                    thumb-label
-                                ></v-slider>  
-                            </v-col>
-                            <br/>                            
-                            <v-btn
-                                color="green"
-                                type="submit"
-                            >
-                                Salvar
-                            </v-btn>
-                        </v-form>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>        -->
                 <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>Historico de Pagamento</v-expansion-panel-header>
                     <v-expansion-panel-content>              
