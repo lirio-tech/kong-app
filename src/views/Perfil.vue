@@ -222,16 +222,8 @@
                                 </v-col> 
                                 </v-row>
                                 <br/>
-                                <!-- <v-btn
-                                    color="green darken-2"
-                                    type="button"
-                                    @click="onSubmit"
-                                >
-                                    Salvar
-                                </v-btn> -->
                     </v-expansion-panel-content>
                 </v-expansion-panel>                      
-                <!-- <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>
                         Comissão por Funcionário
                     </v-expansion-panel-header>
