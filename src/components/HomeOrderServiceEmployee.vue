@@ -99,7 +99,7 @@
 import HrLine from './HrLine.vue'
 export default {
   components: { HrLine },
-    name: 'HomeEmployee',
+    name: 'HomeOrderServiceEmployee',
     props: [ 'ordersGroup', 'ordersByUsers', 'userLogged', 'company' ],
     data() {
       return {

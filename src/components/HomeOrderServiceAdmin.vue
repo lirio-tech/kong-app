@@ -67,24 +67,6 @@
 
                         <hr-line />
                         <br/>
-                        <div class="caption grey--text">
-                            <span class="">Comissão</span>
-                        </div>                              
-                        <v-row 
-                          v-for="usr in ordersByUsers" 
-                          :key="usr._id" 
-                          style="margin-top:-5px"
-                        >
-                            <v-col cols="2" class="text-center">
-                                <v-icon color="grey">mdi-account</v-icon>
-                            </v-col>
-                            <v-col cols="5" class="grey--text" style="font-size: 1.1rem">
-                                  {{ usr._id }}
-                            </v-col> 
-                            <v-col cols="4" class="grey--text" :style="'font-size: 1.1rem;'">
-                                  R$ {{ usr.commission | currency }}
-                            </v-col>
-                        </v-row>
                         <div class="caption grey--text" v-if="ordersByUsers && ordersByUsers.length > 0">
                             <span class="">Total de Lucro</span>
                         </div>                          
@@ -104,7 +86,25 @@
                             >
                                 R$ {{ ordersGroup.totalCompany | currency }}
                             </v-col>
-                        </v-row>                            
+                        </v-row>                           
+                        <div class="caption grey--text" v-if="ordersByUsers && ordersByUsers.length > 0">
+                            <span class="">Comissão</span>
+                        </div>                              
+                        <v-row 
+                          v-for="usr in ordersByUsers" 
+                          :key="usr._id" 
+                          style="margin-top:-5px"
+                        >
+                            <v-col cols="2" class="text-center">
+                                <v-icon color="grey">mdi-account</v-icon>
+                            </v-col>
+                            <v-col cols="5" class="grey--text" style="font-size: 1.1rem">
+                                  {{ usr._id }}
+                            </v-col> 
+                            <v-col cols="4" class="grey--text" :style="'font-size: 1.1rem;'">
+                                  R$ {{ usr.commission | currency }}
+                            </v-col>
+                        </v-row>                         
                         <hr-line v-if="ordersGroup.amount" style="margin-top: 15px;"/>
                   </v-list-item-content>
               </router-link>
@@ -141,6 +141,7 @@
 <script>
 import HrLine from './HrLine.vue'
 export default {
+  name: 'HomeOrderServiceAdmin',
   components: { HrLine },
     name: 'HomeAdmin',
     props: [ 'ordersGroup', 'ordersByUsers', 'company']

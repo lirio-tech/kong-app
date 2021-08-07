@@ -20,17 +20,17 @@
                       <v-col cols="1">
                           <v-icon style="margin-top: -20px; margin-left: -5px">mdi-chevron-right</v-icon>
                       </v-col>                                
-                      <v-col cols="12">
+                      <v-col cols="12" style="margin-top: -10px">
                         <span 
-                            style="font-size: 1.0rem !important;"
-                            class="caption grey--text"
+                            style="font-size: 0.8rem !important;"
+                            class="grey--text"
                           >
                             Comissão a Pagar
                           </span>
                       </v-col>
-                      <v-col cols="12">
+                      <v-col cols="12" style="margin-bottom: -15px">
                         <v-list-item-title class="mb-1" style="margin-top: -25px;">
-                            <div style="font-size: 2.0rem">
+                            <div style="font-size: 1.8rem">
                               <span :class="balanceFull < 0 ? 'red--text' : 'green--text'">R$ {{ balanceFull | currency }} </span>
                             </div>
                         </v-list-item-title>

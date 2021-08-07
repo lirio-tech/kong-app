@@ -6,9 +6,10 @@
       >
 
         <AppBar />             
+
+
+
         <v-main class="">
-          <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
-          <DialogRateUs :dialog="dialogRateUs" />
           
             <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
               <v-progress-linear
@@ -28,13 +29,25 @@
                     :userLogged="userLogged"
                     :userBalance="userBalance"
                     v-if="!isAdmin() && !loading"
-                />     
+                />  
+
+                <HomeBalanceAdminToPay
+                  :userLogged="userLogged"
+                  :balanceFull="balanceFull"
+                  v-if="isAdmin() && !loading"
+                />                
+
               </v-col>
             </v-row>
             <v-row justify="start">
               
-                <v-expansion-panels class="px-3" hover focusable>
-                  <v-expansion-panel>
+                <v-expansion-panels 
+                  class="px-3" 
+                  hover 
+                  focusable 
+                  style="margin-bottom: -9px"
+                >
+                  <v-expansion-panel> 
                     <v-expansion-panel-header> Filtro </v-expansion-panel-header>
                     <v-expansion-panel-content>
 
@@ -121,7 +134,7 @@
 
             <br/>
             
-            <HomeAdmin 
+            <HomeOrderServiceAdmin 
               v-if="isAdmin() && !loading"
               :ordersGroup="ordersGroup" 
               :ordersByUsers="ordersByUsers"
@@ -129,14 +142,8 @@
               :company="company"
               :balanceFull="balanceFull"
             />
-            <br/>
-            <HomeBalanceAdminToPay
-              :userLogged="userLogged"
-              :balanceFull="balanceFull"
-              v-if="isAdmin() && !loading"
-            />
 
-            <HomeEmployee 
+            <HomeOrderServiceEmployee 
               style="margin-top: -25px"
               v-if="!isAdmin() && !loading"
               :ordersGroup="ordersGroup" 
@@ -144,14 +151,17 @@
               :userLogged="userLogged"
               :company="company"
             />       
-            <br/>
+            
             <HomeAgendamentos
+              style="margin-top: 12px;"
               :userLogged="userLogged"
               v-if="!loading"
             />
             
         </v-main>
       </VuePullRefresh>
+      <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+      <DialogRateUs :dialog="dialogRateUs" />      
       <br/><br/><br/><br/><br/>
   </v-container>
   
@@ -162,8 +172,8 @@ import gateway from '../api/gateway'
 import AppBar from '../components/AppBar'
 import DialogPlan from '../components/DialogPlan'
 import DialogRateUs from '../components/DialogRateUs'
-import HomeEmployee from '../components/HomeEmployee'
-import HomeAdmin from '../components/HomeAdmin'
+import HomeOrderServiceEmployee from '../components/HomeOrderServiceEmployee'
+import HomeOrderServiceAdmin from '../components/HomeOrderServiceAdmin'
 import HomeBalanceAdminToPay from '../components/HomeBalanceAdminToPay'
 import HomeBalanceEmployeeToReceiver from '../components/HomeBalanceEmployeeToReceiver'
 import HomeAgendamentos from '../components/HomeAgendamentos'
@@ -178,8 +188,8 @@ export default {
       DialogPlan,
       DialogRateUs,
       VuePullRefresh,
-      HomeEmployee,
-      HomeAdmin,
+      HomeOrderServiceEmployee,
+      HomeOrderServiceAdmin,
       HomeBalanceAdminToPay,
       HomeBalanceEmployeeToReceiver,
       HomeAgendamentos

@@ -62,7 +62,7 @@
                         class="text-no-wrap cyan--text"
                         style="font-size: 1.1rem;"
                       >
-                        Cadastre seu estabelecimento
+                        Cadastre seu Estabelecimento
                       </span>
                     </router-link>                    
                     <br /><br />
