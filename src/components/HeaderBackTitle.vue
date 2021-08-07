@@ -16,7 +16,10 @@
             <v-btn 
                 :to="{ path: btnPath}" 
                 class="primary--text"
-            >{{ btnName ? btnName : 'Novo' }}</v-btn>                        
+            >
+                <!-- <v-icon>mdi-plus</v-icon> -->
+                {{ btnName ? btnName : 'Novo' }}
+            </v-btn>                        
         </v-col>         
     </v-row>
 </template>

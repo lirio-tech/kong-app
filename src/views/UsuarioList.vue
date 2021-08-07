@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <app-bar />             
+        <app-bar v-if="!isMobile()" />             
         <v-main class="">
             <header-back-title title="Funcionários" btnPath="/admin/users/_newUser" btnName="Novo"/>
             <!-- <v-row>
@@ -103,6 +103,7 @@ import AppBar from '../components/AppBar.vue';
 import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
+import device from '../utils/device'
   export default {
   components: { AppBar, HeaderBackTitle },
     name: 'UsuarioList',
@@ -147,7 +148,10 @@ import UserTypes from '../utils/UserTypes';
           search != null &&
           typeof value === 'string' &&
           value.toString().toLocaleUpperCase().indexOf(search.toString().toLocaleUpperCase()) !== -1
-      }
+      },
+      isMobile() {
+          return device.isMobile();
+      }      
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

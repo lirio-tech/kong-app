@@ -1,13 +1,13 @@
 <template>
     <v-container>
-        <AppBar />             
+        <AppBar v-if="!isMobile()"/>             
         <v-main class="">
           <header-back-title title="Comissão a Pagar"/>        
             <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
                       class="mx-auto"
-                      max-width="800"
+                      max-width="1200"
                       outlined
                     >
                             <v-list-item three-line>
@@ -26,7 +26,8 @@
                                           </v-col>
                                       </v-row>                      
                                     </v-list-item-content>
-                                    <hr style="border: 1px dotted #424242;border-radius: 5px;" />   
+                                    <hr-line />
+
                                     <br/>
                                     <br/>        
                                     <v-row 
@@ -44,6 +45,7 @@
                                           <v-btn 
                                               :to="{ path:'/users-balance-detail/'+userBalance.user._id}" 
                                               style="width: 90%"
+                                              large
                                               class="ma-2"
                                           >
                                             <v-icon>
@@ -54,7 +56,7 @@
                                         </v-col>                    
                                         <br/>        
                                         <v-col cols="12" class="text-center" style="margin-top: -15px;">              
-                                          <hr style="border: 1px dotted #424242;border-radius: 5px;" />   
+                                          <hr-line />
                                         </v-col>
                                         <br/>                      
                                     </v-row>                       
@@ -73,9 +75,11 @@ import AppBar from '../components/AppBar'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
+import device from '../utils/device'
+import HrLine from '../components/HrLine.vue';
   export default {
     name: 'PaymentsUsers',
-    components: { AppBar, HeaderBackTitle, },
+    components: { AppBar, HeaderBackTitle, HrLine, },
     data: () => ({
       headers: [
         { text: "Funcionario", value: "name" },
@@ -88,6 +92,9 @@ import UserTypes from '../utils/UserTypes';
       isAdmin(type) {
         return UserTypes.isAdmin(type);
       },
+      isMobile() {
+          return device.isMobile();
+      }      
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
