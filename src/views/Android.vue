@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <AppBar />
+    <AppBar v-if="!isMobile()"/>
     <v-main>
         <v-row >
             <v-col cols="2" style="margin-top: 16px;" >   
@@ -41,7 +41,7 @@
         </v-row>    
         <br/><br/><br/> -->
         <v-row >
-            <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
+            <v-col align="center" xl="12" lg="12" md="12" sm="12" xs="12" cols="12" class="pt-6">
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
                     1. No Menu <v-icon>mdi-dots-vertical</v-icon>
@@ -117,10 +117,16 @@
 <script>
 import Contact from '../components/Contact'
 import AppBar from '../components/AppBar'
+import device from '../utils/device'
 export default {
     components: {
         AppBar,
         Contact
+    },
+    methods: {
+        isMobile() {
+            return device.isMobile();
+        }
     }
 }
 </script>

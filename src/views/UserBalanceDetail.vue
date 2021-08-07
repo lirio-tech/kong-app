@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <AppBar />             
+        <AppBar v-if="!isMobile()" />             
         <v-main class="">
           <header-back-title title="Vales e Pagamentos" />        
           <v-row>
@@ -145,6 +145,7 @@ import DialogMoneyVoucherOrPaymentEmployee from '../components/DialogMoneyVouche
 import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
+import device from '../utils/device'
   export default {
     name: 'UserBalanceDetail',
     components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, },
@@ -159,6 +160,9 @@ import UserTypes from '../utils/UserTypes';
       isAdmin(type) {
         return UserTypes.isAdmin(type);
       },
+      isMobile() {
+          return device.isMobile();
+      } ,      
       getUserBalanceByUserId(_userId) {
         gateway.getUserBalanceByUserId(_userId,
           res => {
