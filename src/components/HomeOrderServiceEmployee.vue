@@ -72,9 +72,10 @@
                         <v-col cols="12" class="text-center" style="margin-top: -15px;">
                           <v-btn 
                               :to="{ path:'/ordem-servico'}" 
-                              class="ma-2"
+                              class="ma-2 primary--text"
                               x-large
                               style="width: 80%"
+                              :color="btnNew"
                           >
                             <v-icon style="margin-right: 10px;">
                               mdi-content-cut
@@ -103,8 +104,14 @@ export default {
     props: [ 'ordersGroup', 'ordersByUsers', 'userLogged', 'company' ],
     data() {
       return {
-        
+        btnNew: ''
       }
+    },
+    mounted() {
+      setTimeout(() => {
+        this.btnNew = this.$vuetify.theme.dark ? 'cyan lighten-5' : 'primary lighten-4'
+        setTimeout(() => { this.btnNew = '' }, 1000)
+      }, 2000) 
     }
   }
 </script>

@@ -116,11 +116,12 @@
                       class="ma-2 primary--text"
                       x-large
                       style="width: 80%"
+                      :color="btnNew"
                   >
                     <v-icon style="margin-right: 10px;">
                       mdi-content-cut
                     </v-icon>
-                    Novo
+                    Novo 
                   </v-btn>  
                 </v-col>
             </v-card-actions>
@@ -129,7 +130,7 @@
                 <v-btn text class="overline grey--text">
                   Ver Detalhes                                    
                 </v-btn>
-                
+                  
               </router-link>
             </v-col>        
     </v-card>              
@@ -143,9 +144,19 @@ import HrLine from './HrLine.vue'
 export default {
   name: 'HomeOrderServiceAdmin',
   components: { HrLine },
-    name: 'HomeAdmin',
-    props: [ 'ordersGroup', 'ordersByUsers', 'company']
-  }
+  props: [ 'ordersGroup', 'ordersByUsers', 'company'],
+  data() {
+    return {
+      btnNew: ''
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.btnNew = this.$vuetify.theme.dark ? 'cyan lighten-5' : 'primary lighten-4'
+      setTimeout(() => { this.btnNew = '' }, 1000)
+    }, 2000)
+  }      
+}
 </script>
 <style scoped>
   .green--text--lighten-3 {

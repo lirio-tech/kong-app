@@ -28,7 +28,7 @@
                       <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
                           <v-col cols="12">
                               <span class="grey--text">
-                                Você não possui cliente agendado :)
+                                Você não possui cliente agendado :(
                               </span>
                               <br/>
                               <br/>

@@ -4,10 +4,7 @@
         :on-refresh="onRefresh"
         :config="config"
       >
-
         <AppBar />             
-
-
 
         <v-main class="">
           
@@ -24,7 +21,9 @@
               ></v-progress-linear>
             </v-col>   
             <v-row>
+              
               <v-col cols="12">
+
                 <HomeBalanceEmployeeToReceiver
                     :userLogged="userLogged"
                     :userBalance="userBalance"
@@ -45,7 +44,6 @@
                   class="px-3" 
                   hover 
                   focusable 
-                  style="margin-bottom: -9px"
                 >
                   <v-expansion-panel> 
                     <v-expansion-panel-header> Filtro </v-expansion-panel-header>
@@ -144,7 +142,6 @@
             />
 
             <HomeOrderServiceEmployee 
-              style="margin-top: -25px"
               v-if="!isAdmin() && !loading"
               :ordersGroup="ordersGroup" 
               :ordersByUsers="ordersByUsers[0]"              

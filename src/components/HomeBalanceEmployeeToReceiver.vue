@@ -20,18 +20,18 @@
                                   </span>                            
                                   <br/><br/>
                                   <span 
-                                    style="font-size: 1.0rem !important;"
+                                    style="font-size: 0.9rem !important;"
                                     class="caption grey--text"
                                   >
-                                    Voce tem a Receber
+                                    Você tem a Receber
                                   </span>
                               </v-col>        
                               <v-col cols="1">
                                   <v-icon style="margin-top: -40px; margin-left: -5px">mdi-chevron-right</v-icon>
                               </v-col>                                     
-                              <v-col cols="12">
+                              <v-col cols="12" style="margin-bottom: -18px">
                                 <v-list-item-title class="mb-1" style="margin-top: -25px;">
-                                    <div style="font-size: 2.1rem">
+                                    <div style="font-size: 2.0rem">
                                       <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
                                     </div>
                                 </v-list-item-title>

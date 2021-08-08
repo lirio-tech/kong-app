@@ -48,6 +48,6 @@
 <script>
 export default {
     name: 'HomeBalanceAdminToPay',
-    props: [ 'userLogged', 'balanceFull' ]
+    props: [ 'userLogged', 'balanceFull' ],
   }
 </script>
