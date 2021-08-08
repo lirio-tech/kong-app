@@ -10,13 +10,16 @@
             <v-list-item three-line>
             
                 <v-list-item-content>           
-                      <v-col cols="11">
+                      <!-- <v-col cols="12">
                           <span 
                             style="font-size: 1.0rem !important;"
                           >
                             Olá {{ userLogged.name }}
                           </span>                            
-                      </v-col>     
+                      </v-col>                        -->
+                      <v-col cols="11">
+                          <v-icon>mdi-account-cash</v-icon> <span class="grey--text" style="margin-left: 15px">Pagamentos</span>
+                      </v-col>   
                       <v-col cols="1">
                           <v-icon style="margin-top: -20px; margin-left: -5px">mdi-chevron-right</v-icon>
                       </v-col>                                

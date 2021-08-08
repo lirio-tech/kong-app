@@ -11,24 +11,23 @@
                 style="color: inherit; text-decoration: none"
               >
                   <v-list-item three-line>
-                        <v-list-item-content>                                  
-                              <v-col cols="11">
+                        <v-list-item-content>                 
+                              <!-- <v-col cols="11">
                                   <span 
                                     style="font-size: 1.0rem !important;"
                                   >
                                     Olá {{ userLogged.name }}
                                   </span>                            
-                                  <br/><br/>
-                                  <span 
-                                    style="font-size: 0.9rem !important;"
-                                    class="caption grey--text"
-                                  >
-                                    Você tem a Receber
-                                  </span>
-                              </v-col>        
+                              </v-col>                             -->
+                              <v-col cols="11">
+                                  <v-icon>mdi-account-cash</v-icon> <span class="grey--text" style="margin-left: 15px">Comissão a Receber</span>
+                              </v-col>   
                               <v-col cols="1">
-                                  <v-icon style="margin-top: -40px; margin-left: -5px">mdi-chevron-right</v-icon>
-                              </v-col>                                     
+                                  <v-icon style="margin-top: -20px; margin-left: -5px">mdi-chevron-right</v-icon>
+                              </v-col>         
+                              <v-col cols="12" class="grey--text">
+                                  Saldo
+                              </v-col>                                                               
                               <v-col cols="12" style="margin-bottom: -18px">
                                 <v-list-item-title class="mb-1" style="margin-top: -25px;">
                                     <div style="font-size: 2.0rem">

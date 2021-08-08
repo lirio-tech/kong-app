@@ -10,15 +10,19 @@
             <v-list-item three-line>
               <router-link :to="{ path:'/analytics'}" style="color: inherit; text-decoration: none">
                   <v-list-item-content >       
-                        <v-col cols="11" style="margin-top: -20px; margin-left: -10px;">
+                        <v-col cols="11">
+                            <v-icon>mdi-content-cut</v-icon> <span class="grey--text" style="margin-left: 15px">Ordem de Serviços</span>
+                        </v-col>      
+                        <v-col cols="1">  
+                            <v-icon style="margin-top: -15px;">mdi-chevron-right</v-icon>
+                        </v-col>                                            
+                        <v-col cols="11" style="margin-top: -20px;">
                           <div class="overline mb-4 grey--text" >
                               Periodo: 
                               <span class="">{{ ordersGroup.periodDescription }}</span>
                           </div>                           
                         </v-col>       
-                        <v-col cols="1">  
-                            <v-icon style="margin-top: -40px;">mdi-chevron-right</v-icon>
-                        </v-col>               
+            
                         <v-col cols="7">
                           <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
                               <span class="caption grey--text">Total</span><br/>

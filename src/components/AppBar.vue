@@ -16,7 +16,8 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on" style="margin-bottom: 20px;">
-                    <v-icon style="font-size: 1.6rem">mdi-menu</v-icon>
+                    <v-icon v-if="userLogged" style="font-size: 1.6rem">mdi-account-circle</v-icon>
+                    <v-icon v-else style="font-size: 1.6rem">mdi-menu</v-icon>
                 </v-btn>
                 </template>
                 <v-card >
