@@ -37,5 +37,11 @@ export default {
     },
     getPlanCustom() {
         return JSON.parse(localStorage.getItem('planCustom'));
-    }    
+    },   
+    incrementButton(number) {
+        localStorage.setItem('INC_BTN', String(number));
+    },    
+    getIncrementButton() {
+        return Number(localStorage.getItem('INC_BTN'));
+    },    
 }

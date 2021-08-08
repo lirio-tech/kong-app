@@ -97,6 +97,7 @@
 </template>
  
 <script>
+import storage from '../storage'
 import HrLine from './HrLine.vue'
 export default {
   components: { HrLine },
@@ -108,10 +109,15 @@ export default {
       }
     },
     mounted() {
-      setTimeout(() => {
-        this.btnNew = this.$vuetify.theme.dark ? 'cyan lighten-5' : 'primary lighten-4'
-        setTimeout(() => { this.btnNew = '' }, 1000)
-      }, 2000) 
+      let incBtn = storage.getIncrementButton();
+      if(incBtn % 3 === 0 || incBtn === 0) {
+          setTimeout(() => {
+            this.btnNew = this.$vuetify.theme.dark ? 'secondary darken-5' : 'purple lighten-5'
+            setTimeout(() => { this.btnNew = '' }, 1000)
+          }, 2000) 
+      }
+      incBtn++;
+      storage.incrementButton(incBtn);
     }
   }
 </script>
