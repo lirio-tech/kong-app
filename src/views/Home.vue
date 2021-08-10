@@ -27,12 +27,14 @@
                 <HomeBalanceEmployeeToReceiver
                     :userLogged="userLogged"
                     :userBalance="userBalance"
+                    :loading="loadingBalance"
                     v-if="!isAdmin()"
                 />  
 
                 <HomeBalanceAdminToPay
                   :userLogged="userLogged"
                   :balanceFull="balanceFull"
+                  :loading="loadingBalance"
                   v-if="isAdmin()"
                 />                
 
@@ -199,6 +201,7 @@ export default {
         loadingLabel: "Carregando..."
       },
       loading: false,
+      loadingBalance: false,
       dialogPlan: false,
       dialogRateUs: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Personalizado'],
@@ -317,22 +320,26 @@ export default {
       },
       findBalance() {
         if(!this.isAdmin()) {
+          this.loadingBalance = true;
           gateway.getUserBalanceByUserId(this.userLogged._id,
             res => {
+              this.loadingBalance = false;
               this.userBalance = res;
             }, 
-            () => { }
+            () => { this.loadingBalance = false; }
           )
         } else {
           this.balanceFull = 0;
+          this.loadingBalance = true;
           gateway.getUsersBalance(
             res => {
+              this.loadingBalance = false;
               res.forEach(b => {
                 this.balanceFull += b.balance;
               })
               console.log(res);
             }, 
-            () => { }
+            () => { this.loadingBalance = false; }
           )        
         }
       },

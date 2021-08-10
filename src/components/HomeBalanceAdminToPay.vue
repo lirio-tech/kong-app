@@ -10,13 +10,6 @@
             <v-list-item three-line>
             
                 <v-list-item-content>           
-                      <!-- <v-col cols="12">
-                          <span 
-                            style="font-size: 1.0rem !important;"
-                          >
-                            Olá {{ userLogged.name }}
-                          </span>                            
-                      </v-col>                        -->
                       <v-col cols="11">
                           <v-icon>mdi-account-cash</v-icon> <span class="grey--text" style="margin-left: 15px">Pagamentos</span>
                       </v-col>   
@@ -33,8 +26,11 @@
                       </v-col>
                       <v-col cols="12" style="margin-bottom: -15px">
                         <v-list-item-title class="mb-1" style="margin-top: -25px;">
-                            <div style="font-size: 1.8rem">
+                            <div style="font-size: 1.8rem" v-if="!loading">
                               <span :class="balanceFull < 0 ? 'red--text' : 'green--text'">R$ {{ balanceFull | currency }} </span>
+                            </div>
+                            <div v-else> 
+                                  <v-skeleton-loader tile type="heading" />
                             </div>
                         </v-list-item-title>
                       </v-col>                     
@@ -51,6 +47,6 @@
 <script>
 export default {
     name: 'HomeBalanceAdminToPay',
-    props: [ 'userLogged', 'balanceFull' ],
+    props: [ 'userLogged', 'balanceFull', 'loading' ],
   }
 </script>
