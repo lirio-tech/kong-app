@@ -17,7 +17,7 @@
                 buffer-value="100"
                 height="7"
                 value="0"
-                color="light-blue"
+                color="success"
               ></v-progress-linear>
             </v-col>   
             <v-row>
@@ -27,13 +27,13 @@
                 <HomeBalanceEmployeeToReceiver
                     :userLogged="userLogged"
                     :userBalance="userBalance"
-                    v-if="!isAdmin() && !loading"
+                    v-if="!isAdmin()"
                 />  
 
                 <HomeBalanceAdminToPay
                   :userLogged="userLogged"
                   :balanceFull="balanceFull"
-                  v-if="isAdmin() && !loading"
+                  v-if="isAdmin()"
                 />                
 
               </v-col>
