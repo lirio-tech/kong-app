@@ -2,19 +2,6 @@
     <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">           
         <v-main class="">
           <header-back-title title="Cadastro de Funcionários" titleColor="primary" />
-          <!-- <v-row>
-              <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
-                  <v-btn icon small style="display: inline;"
-                      :to="{ 'path': '/admin/users'}"
-                  >
-                      <v-icon large color="primary darken-2">mdi-chevron-left</v-icon>
-                  </v-btn>
-              </v-col>
-              <v-col cols="10" align="center">   
-                      <span style="font-size: 1.6rem !important;" class="primary--text"> </span>
-              </v-col>
-          </v-row>           -->
-        
             <v-form 
                 v-model="valid" 
                 v-on:submit.prevent="save"
@@ -138,15 +125,6 @@
                                 ></v-switch>    
                                 
                         </v-col>                           
-                        <!-- <v-col cols="12" >
-                            <v-subheader>Comissão</v-subheader>
-                            <v-card-text>
-                            <v-slider
-                                v-model="user.percentCommission"
-                                :label="`${user.percentCommission}%`"
-                            ></v-slider>
-                            </v-card-text>
-                        </v-col> -->
                         <v-col 
                             cols="9" md="4" 
                             style="margin-left: 10%" 
