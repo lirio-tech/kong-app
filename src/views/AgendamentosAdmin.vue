@@ -306,6 +306,7 @@ export default {
         });        
     },
     mounted () {
+      window.scrollTo(0,0);
       this.$refs.calendar.checkChange(); // 60f1bca6b0529e00088c8750 -> feeh :: 60f1c34cb0529e00088c8752 -> grazi
     },
     methods: {
