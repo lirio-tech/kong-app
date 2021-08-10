@@ -110,7 +110,7 @@
                               v-if="loading"
                               cols="12" 
                             >
-                              <v-skeleton-loader tile type="list-item-two-line" />
+                              <v-skeleton-loader tile type="list-item" />
                             </v-col>                            
                         </v-row>                           
                         <div class="caption grey--text" v-if="ordersByUsers && ordersByUsers.length > 0">
