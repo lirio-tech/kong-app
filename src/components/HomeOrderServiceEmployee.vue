@@ -105,7 +105,7 @@ import HrLine from './HrLine.vue'
 export default {
   components: { HrLine },
     name: 'HomeOrderServiceEmployee',
-    props: [ 'ordersGroup', 'ordersByUsers', 'userLogged', 'company' ],
+    props: [ 'ordersGroup', 'ordersByUsers', 'userLogged', 'company', 'loading' ],
     data() {
       return {
         btnNew: ''

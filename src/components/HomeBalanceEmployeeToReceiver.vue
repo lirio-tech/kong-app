@@ -12,13 +12,6 @@
               >
                   <v-list-item three-line>
                         <v-list-item-content>                 
-                              <!-- <v-col cols="11">
-                                  <span 
-                                    style="font-size: 1.0rem !important;"
-                                  >
-                                    Olá {{ userLogged.name }}
-                                  </span>                            
-                              </v-col>                             -->
                               <v-col cols="11">
                                   <v-icon>mdi-account-cash</v-icon> <span class="grey--text" style="margin-left: 15px">Comissão a Receber</span>
                               </v-col>   
@@ -30,9 +23,12 @@
                               </v-col>                                                               
                               <v-col cols="12" style="margin-bottom: -18px">
                                 <v-list-item-title class="mb-1" style="margin-top: -25px;">
-                                    <div style="font-size: 2.0rem">
+                                    <div style="font-size: 2.0rem" v-if="!loading">
                                       <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
                                     </div>
+                                    <div v-else> 
+                                          <v-skeleton-loader tile type="heading" />
+                                    </div>                                    
                                 </v-list-item-title>
                               </v-col>                     
                         </v-list-item-content>
@@ -45,7 +41,7 @@
 <script>
 export default {
     name: 'HomeBalanceEmployeeToReceiver',
-    props: [ 'userLogged', 'userBalance' ],
+    props: [ 'userLogged', 'userBalance', 'loading' ],
     data() {
       return {
         

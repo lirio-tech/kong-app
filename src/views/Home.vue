@@ -135,26 +135,27 @@
             <br/>
             
             <HomeOrderServiceAdmin 
-              v-if="isAdmin() && !loading"
+              v-if="isAdmin()"
               :ordersGroup="ordersGroup" 
               :ordersByUsers="ordersByUsers"
               :userLogged="userLogged"
               :company="company"
               :balanceFull="balanceFull"
+              :loading="loading"
             />
 
             <HomeOrderServiceEmployee 
-              v-if="!isAdmin() && !loading"
+              v-if="!isAdmin()"
               :ordersGroup="ordersGroup" 
               :ordersByUsers="ordersByUsers[0]"              
               :userLogged="userLogged"
               :company="company"
+              :loading="loading"
             />       
             
             <HomeAgendamentos
               style="margin-top: 12px;"
               :userLogged="userLogged"
-              v-if="!loading"
             />
             
         </v-main>
