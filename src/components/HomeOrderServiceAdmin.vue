@@ -92,19 +92,26 @@
                         <v-row 
                           style="margin-top:-5px"
                         >
-                            <v-col cols="2" class="text-center">
+                            <v-col cols="2" class="text-center" v-if="!loading">
                                 <v-icon color="grey">mdi-home</v-icon>
                             </v-col>
-                            <v-col cols="5" class="grey--text" style="font-size: 1.1rem">
+                            <v-col cols="5" class="grey--text" style="font-size: 1.1rem" v-if="!loading">
                                   {{ company.shortName }}
                             </v-col> 
                             <v-col 
+                              v-if="!loading"
                               cols="4" 
                               class="grey--text" 
                               :style="'font-size: 1.1rem;'"
                             >
                                 R$ {{ ordersGroup.totalCompany | currency }}
                             </v-col>
+                            <v-col 
+                              v-if="loading"
+                              cols="12" 
+                            >
+                              <v-skeleton-loader tile type="list-item-two-line" />
+                            </v-col>                            
                         </v-row>                           
                         <div class="caption grey--text" v-if="ordersByUsers && ordersByUsers.length > 0">
                             <span class="">Comissão</span>
