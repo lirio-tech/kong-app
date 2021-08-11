@@ -10,6 +10,7 @@
     "prod": "vue-cli-service serve --mode prod"
   },
   "dependencies": {
+    "animated-number-vue": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "moment": "^2.29.1",

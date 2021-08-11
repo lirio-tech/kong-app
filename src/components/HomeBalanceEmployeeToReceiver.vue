@@ -24,7 +24,12 @@
                               <v-col cols="12" style="margin-bottom: -18px">
                                 <v-list-item-title class="mb-1" style="margin-top: -25px;">
                                     <div style="font-size: 2.0rem" v-if="!loading">
-                                      <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
+                                      <animated-number
+                                        :value="userBalance.balance"
+                                        :formatValue="formatToPrice"
+                                        :duration="500"
+                                        :class="{ active: userBalance.balance < 0, 'green--text': 'red--text'}"
+                                      />                                                
                                     </div>
                                     <div v-else> 
                                           <v-skeleton-loader tile type="heading" />
@@ -39,13 +44,20 @@
 </template>
  
 <script>
+import AnimatedNumber from "animated-number-vue";
 export default {
+  components: { AnimatedNumber },
     name: 'HomeBalanceEmployeeToReceiver',
     props: [ 'userLogged', 'userBalance', 'loading' ],
     data() {
       return {
         
       }
-    }
+    },
+    methods: {
+      formatToPrice(value) {
+        return value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+      }
+    }       
   }
 </script>
