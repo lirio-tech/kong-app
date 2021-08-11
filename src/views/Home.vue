@@ -355,7 +355,7 @@ export default {
         this.ordersGroup.card = 0.0;
         this.ordersGroup.cash = 0.0;
         this.ordersGroup.pix = 0.0;
-
+        this.ordersByUsers = [];
         gateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
             console.log(res);

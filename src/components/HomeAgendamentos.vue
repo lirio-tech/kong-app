@@ -23,13 +23,17 @@
                       <home-agendamento-card :agendamento="ag" :userLogged="userLogged" />
                       <br/>
                   </div> 
-                  
+
                   <div v-if="agendamentos.length == 0" style="margin-top: -20px">
                       <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
                           <v-col cols="12">
-                              <span class="grey--text">
+                              <span class="grey--text" v-if="!loadingAgendamentos">
                                 Você não possui cliente agendado :(
                               </span>
+                              <div v-else > 
+                                    <v-skeleton-loader tile type="heading" />
+                              </div>                                                                                           
+
                               <br/>
                               <br/>
                             <v-btn>
@@ -56,7 +60,8 @@ export default {
     props: [ 'userLogged' ],
     data() {
       return {
-          agendamentos: []
+          agendamentos: [],
+          loadingAgendamentos: false,
       }
     },
     methods: {
@@ -68,9 +73,13 @@ export default {
       },
     },
     beforeMount() {
+        this.loadingAgendamentos = true;
+        this.agendamentos = [];
         agendamentoGateway.getPriorAndNext(res => {
+            this.loadingAgendamentos = false;
             this.agendamentos = res;
           }, () => {
+            this.loadingAgendamentos = false;
             this.agendamentos = [];
           }
         )
