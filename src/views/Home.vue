@@ -20,6 +20,26 @@
                 color="success"
               ></v-progress-linear>
             </v-col>   
+            <v-col cols="12"  v-if="notifications && notifications.length > 0" >
+                <v-alert
+                      v-for="notify in notifications"
+                      :key="notify.text"
+                      :type="notify.type"
+                      :icon="notify.icon"
+                      border="left"
+                      :dismissible="notify.closeable"
+                      prominent
+                    >
+                      <v-row align="center">
+                        <v-col class="grow">
+                          {{ notify.text }}
+                        </v-col>
+                        <v-col class="shrink" v-if="notify.link">
+                          <v-btn @click="goToLinkNotify(notify.link)">{{ notify.linkTitle }}</v-btn>
+                        </v-col>
+                      </v-row>
+                </v-alert>
+            </v-col>
             <v-row>
               
               <v-col cols="12">
@@ -169,6 +189,7 @@
 
 <script>
 import gateway from '../api/gateway'
+import orderGateway from '../api/orderGateway'
 import AppBar from '../components/AppBar'
 import DialogPlan from '../components/DialogPlan'
 import DialogRateUs from '../components/DialogRateUs'
@@ -192,7 +213,7 @@ export default {
       HomeOrderServiceAdmin,
       HomeBalanceAdminToPay,
       HomeBalanceEmployeeToReceiver,
-      HomeAgendamentos
+      HomeAgendamentos,
     },
     data: () => ({
       config: {
@@ -230,6 +251,7 @@ export default {
       dates: [dateUtils.getNewDateAddDay(-6), dateUtils.dateToStringEnUS(new Date())],
       userBalance: {},
       balanceFull: 0,
+      notifications: [],
     }),
     methods: {
       onRefresh() {
@@ -356,7 +378,7 @@ export default {
         this.ordersGroup.cash = 0.0;
         this.ordersGroup.pix = 0.0;
 
-        gateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
+        orderGateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {
             console.log(res);
             this.loading = false;
@@ -371,6 +393,7 @@ export default {
             });
             storage.setUserLogged(JSON.stringify(res.user));
             storage.setCompany(JSON.stringify(res.company));
+            this.notifications = res.notifications;
           }, err => {
             this.loading = false;
             console.log(err);
@@ -393,6 +416,9 @@ export default {
           this.ordersGroup.periodDescription = this.datesDisplay;
           this.filterOrders();
         }
+      },
+      goToLinkNotify(path) {
+        this.$router.push(path);
       }
     },
     beforeMount() {
