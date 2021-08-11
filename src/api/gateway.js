@@ -325,7 +325,7 @@ export default{
           })      
     },      
     getPaymentsHistByCompany(callback, errorCb) {
-      let url = `${PAYMENT_API}`;
+      let url = `${PAYMENT_API}?size=6`;
       Axios.get(url)
           .then(data => {
               callback(data.data)

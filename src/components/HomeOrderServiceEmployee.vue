@@ -24,18 +24,24 @@
                                 <v-col cols="7">
                                   <v-list-item-title class="headline mb-1" style="margin-top: -35px;">
                                       <span class="caption grey--text">Seu Valor</span><br/>
-                                      <div style="font-size: 1.5rem" >
+                                      <div style="font-size: 1.5rem" v-if="!loading">
                                         <span class="">R$ {{ ordersByUsers ? ordersByUsers.commission : 0 | currency }} </span>
                                       </div>
+                                      <div v-else> 
+                                            <v-skeleton-loader tile type="heading" />
+                                      </div>                                                                    
                                   </v-list-item-title>
                                 </v-col>
                                 <v-col cols="4">
                                   <v-list-item-title class="headline mb-1 text-center" style="margin-top: -35px;">
                                       <span class="caption grey--text">Qtde.</span><br/>
-                                      <div style="font-size: 1.5rem">
+                                      <div style="font-size: 1.5rem" v-if="!loading">
                                         <span class="">{{ ordersGroup.amount }} </span>
                                         <br/>
                                       </div>
+                                      <div v-else style="margin-left: 30px"> 
+                                            <v-skeleton-loader tile type="heading" />
+                                      </div>                                                            
                                   </v-list-item-title> 
                                 </v-col>                
                                 <hr-line />            
@@ -44,27 +50,36 @@
                                       mdi-cash
                                     </v-icon> 
                                     <br/>
-                                    <span class="grey--text" style="font-size: 1.1rem">
+                                    <span class="grey--text" style="font-size: 1.1rem" v-if="!loading">
                                       R$ {{ ordersGroup.cash | currency }}
                                     </span>
+                                    <div v-else style="margin-left: 30px"> 
+                                          <v-skeleton-loader tile type="heading" />
+                                    </div>                                                                                           
                                 </v-col>
                                 <v-col cols="4" style="margin-top:5px" class="text-center">
                                     <v-icon color="purple" style="margin-top: -5px">
                                       mdi-credit-card
                                     </v-icon>                                    
                                     <br/>
-                                    <span class="grey--text" style="font-size: 1.1rem">
+                                    <span class="grey--text" style="font-size: 1.1rem" v-if="!loading">
                                       R$ {{ ordersGroup.card | currency }}
                                     </span>                     
+                                    <div v-else style="margin-left: 30px"> 
+                                          <v-skeleton-loader tile type="heading" />
+                                    </div>                                                                                           
                                 </v-col> 
                                 <v-col cols="4" style="margin-top:5px" class="text-center" small>
                                     <v-icon color="teal lighten-2" style="margin-top: -2px">
                                       mdi-rhombus-split
                                     </v-icon>               
                                     <br/>                     
-                                    <span class="grey--text" style="font-size: 1.1rem">
+                                    <span class="grey--text" style="font-size: 1.1rem" v-if="!loading">
                                       R$ {{ ordersGroup.pix | currency }}
                                     </span>                                
+                                    <div v-else style="margin-left: 30px"> 
+                                          <v-skeleton-loader tile type="heading" />
+                                    </div>                                                                                           
                                 </v-col> 
                                 <hr-line v-if="ordersGroup.amount" style="margin-top: 15px;"/>
                           </v-list-item-content>
