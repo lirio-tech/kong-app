@@ -28,7 +28,7 @@
                                         :value="userBalance.balance"
                                         :formatValue="formatToPrice"
                                         :duration="500"
-                                        :class="userBalance.balance < 0 ? 'red--text' : 'green--text'"
+                                         :class="userBalance.balance < 0 ? 'red--text' : 'green--text'"
                                       />                                                
                                     </div>
                                     <div v-else> 
