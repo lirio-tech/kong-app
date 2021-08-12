@@ -31,7 +31,8 @@
                                 :value="balanceFull"
                                 :formatValue="formatToPrice"
                                 :duration="500"
-                                :class="{ active: balanceFull < 0, 'green--text': 'red--text'}"
+                                :class="balanceFull < 0 ? 'red--text' : 'green--text'"
+
                               />                              
                             </div>
                             <div v-else> 
