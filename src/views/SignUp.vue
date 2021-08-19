@@ -66,11 +66,12 @@
                                 prepend-icon="mdi-home"
                                 :rules="[ 
                                     val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
-                                    val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
+                                    val => val && val.length <= 15 || 'tamanho maximo eh de 15 Caracteres',
                                 ]"
                                 required
                                 v-model="signup.company.shortName"
                                 ref="companyShortName"
+                                :counter="15"
                             />
                             <!-- <br/><br/> -->
                             <!-- <v-slider
@@ -117,6 +118,7 @@
                                     val =>  val && val.length > 3    || 'Deve ser maior do que 3 Caracteres',
                                     val => (val && val.length <= 20) || 'Nome deve ser menor que 20 caracteres'
                                 ]"
+                                :counter="20"
                             />
                             <v-text-field
                                 autocomplete="off"

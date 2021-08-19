@@ -63,14 +63,32 @@
                                         prepend-icon="mdi-home"
                                         :rules="[ 
                                             val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
-                                            val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
+                                            val => val && val.length <= 15 || 'tamanho maximo eh de 15 Caracteres',
                                         ]"
                                         required
                                         v-model="company.shortName"
                                         ref="companyShortName"
+                                        :counter="15"
                                         :disabled="!isAdmin()"
                                     />
                                 </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Link"
+                                        prepend-icon="mdi-link"
+                                        :rules="[ 
+                                            val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
+                                            val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
+                                        ]"
+                                        required
+                                        v-model="company.link"
+                                        ref="companyLink"
+                                        :counter="40"
+                                        :disabled="!isAdmin()"
+                                        :hint="`app.kongbarber.com/#/${company.link}`" 
+                                    />
+                                </v-col>                                
                                 <br/>
                                 <v-btn
                                     color="success"

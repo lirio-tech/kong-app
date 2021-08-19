@@ -101,7 +101,7 @@ export default {
         components: {
           SnackBar,
           AppBar,
-          GetItOnGooglePlay
+          GetItOnGooglePlay,
         },
         data() {
             return {
