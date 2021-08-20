@@ -740,7 +740,7 @@ export default {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
                 this.companyWithoutUpdate.shortName = this.company.shortName;
-                gateway.saveCompany(this.companyWithoutUpdate,
+                companyGateway.saveCompany(this.companyWithoutUpdate,
                     () => {
                         alert('Atualizado com Sucesso!!!');
                         storage.setCompany(JSON.stringify(this.companyWithoutUpdate));
