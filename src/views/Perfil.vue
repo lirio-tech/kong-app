@@ -82,11 +82,11 @@
                                             val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
                                         ]"
                                         required
-                                        v-model="company.link"
-                                        ref="companyLink"
+                                        v-model="company.path"
+                                        ref="companypath"
                                         :counter="40"
                                         :disabled="!isAdmin()"
-                                        :hint="`app.kongbarber.com/#/${company.link}`" 
+                                        :hint="linkCompany" 
                                     />
                                 </v-col>                                
                                 <br/>
@@ -740,6 +740,7 @@ export default {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
                 this.companyWithoutUpdate.shortName = this.company.shortName;
+                this.companyWithoutUpdate.path = this.company.path;
                 companyGateway.saveCompany(this.companyWithoutUpdate,
                     () => {
                         alert('Atualizado com Sucesso!!!');
@@ -816,6 +817,11 @@ export default {
         themeKong() {
             this.$vuetify.theme.dark = this.themeKong ;
             storage.setThemeKong(this.themeKong);
+        }
+    },
+    computed: {
+        linkCompany: function() {
+            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/${this.company.path}`;
         }
     }
   }
