@@ -35,6 +35,8 @@ import UsersBalance from '../views/UsersBalance'
 import UserBalanceDetail from '../views/UserBalanceDetail'
 import Agendamentos from '../views/Agendamentos'
 import AgendamentosAdmin from '../views/AgendamentosAdmin'
+import CompanySite from '../views/CompanySite'
+
 
 Vue.use(VueRouter)
 
@@ -215,6 +217,11 @@ const routes = [
     name: 'AgendamentosAdmin',
     component: AgendamentosAdmin
   },   
+  {
+    path: '/site/:companyPath',
+    name: 'SiteCompany',
+    component: CompanySite
+  },     
 ]
 
 const router = new VueRouter({
@@ -223,7 +230,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const token = storage.getToken();
-  if(to.path.startsWith('/public')) {
+  if(to.path.startsWith('/public') || to.path.startsWith('/site')) {
     next()
   } else if(to.name !== 'Login' && to.name !== 'SignUp') {
     console.log(token);
