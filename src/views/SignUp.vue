@@ -262,6 +262,7 @@ export default {
                         this.$router.push('/');                       
                     },
                     (err) => {
+                        this.loading = false;
                         if(err.response.status === 500) {
                             alert('Erro ao se Cadastrar, tente novamente mais tarde ');
                         } else {
