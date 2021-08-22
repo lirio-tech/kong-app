@@ -83,6 +83,7 @@
                                         ]"
                                         required
                                         v-model="company.path"
+                                        @blur="company.path = company.path.toLowerCase()"
                                         ref="companypath"
                                         :counter="40"
                                         :disabled="!isAdmin()"
