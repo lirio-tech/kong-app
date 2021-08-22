@@ -27,15 +27,15 @@
 
           <v-spacer></v-spacer>
     
-          <v-btn icon>
+          <v-btn icon @click="openWhats()">
             <v-icon>mdi-whatsapp</v-icon>
           </v-btn>
 
-          <v-btn icon>
+          <v-btn icon  @click="openInsta()">
             <v-icon>mdi-instagram</v-icon>
           </v-btn>
 
-          <v-btn icon>
+          <v-btn icon  @click="openFace()">
             <v-icon>mdi-facebook</v-icon>
           </v-btn>      
 
@@ -78,8 +78,24 @@
 
 export default {
   data: () => ({
-    tabView: 'HOME'
+    tabView: 'HOME',
+    company: {
+      telWhatsApp: '11961409798',
+      facebook: 'liriodiego',
+      instagram: 'diegolirio'
+    }
   }),
+  methods: {
+    openWhats() {
+        window.location.href = `https://api.whatsapp.com/send?phone=55${this.company.telWhatsApp}&text=Olá Barbearia, estou no seu site!`
+    },
+    openInsta() {
+        window.location.href = `https://instagram.com/${this.company.instagram}`
+    },
+    openFace() {
+        window.location.href = `https://facebook.com/${this.company.facebook}`        
+    }, 
+  }
 }
 </script>
 
