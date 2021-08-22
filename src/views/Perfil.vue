@@ -745,8 +745,12 @@ export default {
                     () => {
                         alert('Atualizado com Sucesso!!!');
                         storage.setCompany(JSON.stringify(this.companyWithoutUpdate));
-                    }, () => {
-                        alert('Erro ao Salvar');
+                    }, (err) => {
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Cadastrar, tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
                     });
             }
         },      
