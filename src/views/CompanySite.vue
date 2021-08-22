@@ -7,7 +7,7 @@
           dark
           shrink-on-scroll
           prominent
-          src="https://picsum.photos/1920/1080?random"
+          :src="imageAppBarSite"
           fade-img-on-scroll
           scroll-target="#scrolling-techniques-3"
         >
@@ -82,7 +82,8 @@ export default {
     company: {
       telWhatsApp: '11961409798',
       facebook: 'liriodiego',
-      instagram: 'diegolirio'
+      instagram: 'diegolirio',
+      imageAppBarSite: 'https://picsum.photos/1920/1080?random'
     }
   }),
   methods: {
