@@ -104,5 +104,15 @@ export default{
                 errorCb(error)
             })   
       },
-  
+      getCompanySiteById(companyId, callback, errorCb) {
+        let url = `${COMPANIES_API}/${companyId}/site-info`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },        
 }

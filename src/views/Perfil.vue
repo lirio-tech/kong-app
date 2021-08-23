@@ -134,6 +134,79 @@
                         </v-col>
                     </v-expansion-panel-content>
                 </v-expansion-panel>  
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Site</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12">  
+                            <v-form 
+                                id="formCompanySite" 
+                                ref="formCompanySite" 
+                                v-model="valid" 
+                                lazy-validation 
+                                v-on:submit.prevent="onSubmitCompanySite"
+                            >          
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Facebook"
+                                        prepend-icon="mdi-facebook"
+                                        v-model="companySite.facebook"
+                                        @blur="companySite.facebook = companySite.facebook.toLowerCase()"
+                                        :disabled="!isAdmin()"
+                                        :hint="`facebook.com/${companySite.facebook}`" 
+                                    />
+                                </v-col>                   
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Facebook"
+                                        prepend-icon="mdi-instagram"
+                                        v-model="companySite.instagram"
+                                        @blur="companySite.instagram = companySite.instagram.toLowerCase()"
+                                        :disabled="!isAdmin()"
+                                        :hint="`instagram.com/${companySite.instagram}`" 
+                                    />
+                                </v-col>            
+                                <v-col cols="12">
+                                    <v-text-field 
+                                        v-model="companySite.whatsapp"
+                                        label="WhatsApp"
+                                        ref="whats"
+                                        v-mask="'(##) #####-####'"
+                                        prepend-icon="mdi-whatsapp"
+                                        :disabled="!isAdmin()"
+                                    />                                    
+                                </v-col>                                                                              
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Link"
+                                        prepend-icon="mdi-link"
+                                        :rules="[ 
+                                            val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
+                                            val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
+                                        ]"
+                                        required
+                                        v-model="companySite.subdomain"
+                                        @blur="companySite.subdomain = companySite.subdomain.toLowerCase()"
+                                        ref="companysubdomain"
+                                        :counter="40"
+                                        :disabled="!isAdmin()"
+                                        :hint="linkCompany" 
+                                    />
+                                </v-col>                                
+                                <br/>
+                                <v-btn
+                                    color="success"
+                                    type="submit"
+                                    :disabled="!isAdmin()"
+                                >
+                                    Salvar
+                                </v-btn>                                
+                            </v-form>
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                  
                 <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>Serviços de {{ company.shortName }}</v-expansion-panel-header>
                     <v-expansion-panel-content>            
@@ -602,6 +675,7 @@ export default {
       }, 
       userNew: {},
       company: {},
+      companySite: {},
       services: [],
       companyWithoutUpdate: {},
       users: [],
@@ -769,6 +843,14 @@ export default {
                     alert('Erro ao Buscar pagamentos');
                 });
         },         
+        getCompanySite(companyId) {
+            companyGateway.getCompanySiteById(companyId,
+                (res) => {
+                    this.companySite = res;
+                }, () => {
+                    alert('Erro ao buscar informaçoes do Site ');
+                });
+        },
         onSubmitCompanyName() {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
@@ -847,7 +929,8 @@ export default {
       this.services = this.companyWithoutUpdate.services;
       this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      
       this.getUsers();
-      this.getPaymentsHistByCompany();      
+      this.getPaymentsHistByCompany();     
+      this.getCompanySite(this.company._id); 
       this.themeKong = Boolean(storage.getThemeKong());
     },
     watch: {
@@ -858,7 +941,7 @@ export default {
     },
     computed: {
         linkCompany: function() {
-            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.company.path}`;
+            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.companySite.subdomain}`;
         }
     }
   }
