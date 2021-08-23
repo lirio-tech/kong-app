@@ -7,7 +7,7 @@
           dark
           shrink-on-scroll
           prominent
-          :src="imageAppBarSite"
+          :src="companySite.photoCover"
           fade-img-on-scroll
           scroll-target="#scrolling-techniques-3"
         >
@@ -22,11 +22,10 @@
 
           <v-app-bar-title>
             <span style="width: 500px;"> Lirio Barber </span>
-            
           </v-app-bar-title>
 
           <v-spacer></v-spacer>
-    
+     
           <v-btn icon @click="openWhats()">
             <v-icon>mdi-whatsapp</v-icon>
           </v-btn>
@@ -63,6 +62,11 @@
         </v-sheet>
         
       </v-card>
+      <center v-if="userLogged">
+          <br/>
+          <v-btn small to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
+          <v-btn small><v-icon>mdi-edit</v-icon>Alterar Site</v-btn>
+      </center>
       <v-container v-if="tabView === 'HOME'">
           <h1>Home</h1>
           <h4>
@@ -107,15 +111,17 @@
   </div>
 </template>
 <script>
+import storage from '../storage'
 
 export default {
   data: () => ({
     tabView: 'HOME',
-    company: {
-      telWhatsApp: '11961409798',
+    userLogged: {},
+    companySite: {
+      whatsapp: '11961409798',
       facebook: 'liriodiego',
       instagram: 'diegolirio',
-      imageAppBarSite: 'https://picsum.photos/1920/1080?random'
+      photoCover: 'https://picsum.photos/1920/1080?random'
     }
   }),
   methods: {
@@ -128,6 +134,9 @@ export default {
     openFace() {
         window.location.href = `https://facebook.com/${this.company.facebook}`        
     }, 
+  },
+  beforeMount() {
+      this.userLogged = storage.getUserLogged();
   }
 }
 </script>

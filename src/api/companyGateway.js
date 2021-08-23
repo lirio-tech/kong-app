@@ -114,5 +114,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })        
-    },        
+    },     
+    saveCompanySite(companyId, copmanySite, callback, errorCb)     {
+        let url = `${COMPANIES_API}/${companyId}/site-info`;
+        Axios.put(url, copmanySite)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+      },       
 }
