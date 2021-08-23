@@ -65,6 +65,38 @@
       </v-card>
       <v-container v-if="tabView === 'HOME'">
           <h1>Home</h1>
+          <h4>
+            A melhor Barbearia da sua Região!!!
+          </h4>
+          <v-row>
+            <v-col
+              v-for="n in 9"
+              :key="n"
+              class="d-flex child-flex"
+              xl="4" lg="4" md="4" sm="6" xs="12" cols="12"
+
+            >
+              <v-img
+                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                aspect-ratio="1"
+                class="grey lighten-2"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </v-col>
+          </v-row>          
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
           <h1>AGENDA</h1>
