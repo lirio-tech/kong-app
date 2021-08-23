@@ -75,6 +75,38 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         autocomplete="off"
+                                        label="Facebook"
+                                        prepend-icon="mdi-facebook"
+                                        v-model="company.facebook"
+                                        @blur="company.facebook = company.facebook.toLowerCase()"
+                                        :disabled="!isAdmin()"
+                                        :hint="`facebook.com/${company.facebook}`" 
+                                    />
+                                </v-col>                   
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Facebook"
+                                        prepend-icon="mdi-instagram"
+                                        v-model="company.instagram"
+                                        @blur="company.instagram = company.instagram.toLowerCase()"
+                                        :disabled="!isAdmin()"
+                                        :hint="`instagram.com/${company.instagram}`" 
+                                    />
+                                </v-col>            
+                                <v-col cols="12">
+                                    <v-text-field 
+                                        v-model="company.whatsapp"
+                                        label="WhatsApp"
+                                        ref="whats"
+                                        v-mask="'(##) #####-####'"
+                                        prepend-icon="mdi-whatsapp"
+                                        :disabled="!isAdmin()"
+                                    />                                    
+                                </v-col>                                                                              
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
                                         label="Link"
                                         prepend-icon="mdi-link"
                                         :rules="[ 
