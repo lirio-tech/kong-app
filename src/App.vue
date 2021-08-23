@@ -12,6 +12,7 @@ export default {
   }),
   methods: {
       isSiteCustom() {
+          console.log('window.location', window.location);
           return !(
             String(window.location).includes('localhost:8080') || 
             String(window.location).includes('app.kongbarber.com') || 
@@ -22,6 +23,7 @@ export default {
   },
   beforeMount() {
       if(this.isSiteCustom()) {
+          // Find Company Site Custom
           this.$router.push('/site/1233445');
       }
   },
