@@ -63,14 +63,33 @@
                                         prepend-icon="mdi-home"
                                         :rules="[ 
                                             val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
-                                            val => val && val.length <= 16 || 'tamanho maximo eh de 15 Caracteres',
+                                            val => val && val.length <= 15 || 'tamanho maximo eh de 15 Caracteres',
                                         ]"
                                         required
                                         v-model="company.shortName"
                                         ref="companyShortName"
+                                        :counter="15"
                                         :disabled="!isAdmin()"
                                     />
                                 </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Link"
+                                        prepend-icon="mdi-link"
+                                        :rules="[ 
+                                            val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
+                                            val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
+                                        ]"
+                                        required
+                                        v-model="company.path"
+                                        @blur="company.path = company.path.toLowerCase()"
+                                        ref="companypath"
+                                        :counter="40"
+                                        :disabled="!isAdmin()"
+                                        :hint="linkCompany" 
+                                    />
+                                </v-col>                                
                                 <br/>
                                 <v-btn
                                     color="success"
@@ -722,12 +741,17 @@ export default {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
                 this.companyWithoutUpdate.shortName = this.company.shortName;
-                gateway.saveCompany(this.companyWithoutUpdate,
+                this.companyWithoutUpdate.path = this.company.path;
+                companyGateway.saveCompany(this.companyWithoutUpdate,
                     () => {
                         alert('Atualizado com Sucesso!!!');
                         storage.setCompany(JSON.stringify(this.companyWithoutUpdate));
-                    }, () => {
-                        alert('Erro ao Salvar');
+                    }, (err) => {
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Cadastrar, tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
                     });
             }
         },      
@@ -798,6 +822,11 @@ export default {
         themeKong() {
             this.$vuetify.theme.dark = this.themeKong ;
             storage.setThemeKong(this.themeKong);
+        }
+    },
+    computed: {
+        linkCompany: function() {
+            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.company.path}`;
         }
     }
   }
