@@ -73,7 +73,7 @@
           <br/>
           <v-btn to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
           <v-btn ><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
-          <v-btn @click="shareMyCompany"><v-icon>mdi-share</v-icon></v-btn>
+          <v-btn @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
@@ -158,11 +158,11 @@ export default {
             });
     },    
     sharedMyCompany() {
-            const shareData = {
-                title: this.company.name,
-                text: `💈 Conheça nosso Site`,
-                url: commons.urlCompany(this.companySite, this.company.companyType),
-            }            
+        const shareData = {
+            title: this.company.name,
+            text: `💈 Conheça nosso Site`,
+            url: commons.urlCompany(this.companySite, this.company.companyType),
+        }            
         return navigator.share(shareData);      
     }
   },
