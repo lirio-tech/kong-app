@@ -21,26 +21,26 @@
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
           <v-app-bar-title>
-            <span style="width: 500px;"> Lirio Barber </span>
+            <span style="width: 500px;"> {{ company.name }} </span>
           </v-app-bar-title>
 
           <v-spacer></v-spacer>
      
-          <v-btn icon @click="openWhats()">
+          <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
             <v-icon>mdi-whatsapp</v-icon>
           </v-btn>
 
-          <v-btn icon  @click="openInsta()">
+          <v-btn icon  @click="openInsta()" v-if="companySite.instagram">
             <v-icon>mdi-instagram</v-icon>
           </v-btn>
 
-          <v-btn icon  @click="openFace()">
+          <v-btn icon  @click="openFace()" v-if="companySite.facebook">
             <v-icon>mdi-facebook</v-icon>
           </v-btn>      
 
-          <v-btn icon>
+          <!-- <v-btn icon>
             <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
+          </v-btn> -->
 
           <template v-slot:extension>
             <v-tabs align-with-title>
@@ -65,7 +65,7 @@
       <center v-if="userLogged">
           <br/>
           <v-btn small to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
-          <v-btn small><v-icon>mdi-edit</v-icon>Alterar Site</v-btn>
+          <v-btn small><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
           <v-btn small><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
@@ -151,7 +151,8 @@ export default {
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
-      
+      alert(this.$route.params.subdomain)
+      this.getCompanySubdomain(this.$route.params.subdomain)
   }
 }
 </script>

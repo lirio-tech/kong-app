@@ -218,7 +218,7 @@ const routes = [
     component: AgendamentosAdmin
   },   
   {
-    path: '/site/:companyPath',
+    path: '/site/:subdomain',
     name: 'SiteCompany',
     component: CompanySite
   },     
