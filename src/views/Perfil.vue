@@ -132,7 +132,21 @@
                                         :disabled="!isAdmin()"
                                         :hint="linkCompany" 
                                     />
-                                </v-col>                                
+                                </v-col>        
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Site"
+                                        prepend-icon="mdi-site"
+                                        required
+                                        v-model="companySite.site"
+                                        @blur="companySite.site = companySite.site.toLowerCase()"
+                                        ref="site"
+                                        :counter="40"
+                                        :disabled="!isAdmin()"
+                                        :hint="`Ex: www.barbearia.com.br`" 
+                                    />
+                                </v-col>                                                                                            
                                 <br/>
                                 <v-btn
                                     color="success"
