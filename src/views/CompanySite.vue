@@ -151,7 +151,6 @@ export default {
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
-      alert(this.$route.params.subdomain)
       this.getCompanySubdomain(this.$route.params.subdomain)
   }
 }
