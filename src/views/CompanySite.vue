@@ -69,6 +69,7 @@
           <v-btn small><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
+          <br/>
           <center>
             A Melhor Barbearia da Região!!!
           </center>
