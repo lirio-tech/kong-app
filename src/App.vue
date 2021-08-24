@@ -27,7 +27,7 @@ export default {
           // Find Company Site Custom
           companyGateway.getCompanySiteDiscoveryByWindowLocation(String(window.location.hostname), 
             res => {
-              this.$router.push(`/site/${res.subdomain}`);
+              this.$router.push(`/@/${res.arroba}`);
             },
             () => {
                 alert('Site não Sincronizado, entre em contato com o Aplicativo!');
