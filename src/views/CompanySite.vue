@@ -75,15 +75,15 @@
           </h4>
           <v-row>
             <v-col
-              v-for="n in 9"
-              :key="n"
+              v-for="photo in companySite.photos"
+              :key="photo._id"
               class="d-flex child-flex"
               xl="4" lg="4" md="4" sm="6" xs="12" cols="12"
 
             >
               <v-img
-                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                :src="`${photo.photo}`"
+                :lazy-src="`${photo.photo}`"
                 aspect-ratio="1"
                 class="grey lighten-2"
               >
