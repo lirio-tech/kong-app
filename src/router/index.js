@@ -218,7 +218,7 @@ const routes = [
     component: AgendamentosAdmin
   },   
   {
-    path: '/site/:arroba',
+    path: '/@/:arroba',
     name: 'SiteCompany',
     component: CompanySite
   },     
@@ -230,7 +230,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const token = storage.getToken();
-  if(to.path.startsWith('/public') || to.path.startsWith('/site')) {
+  if(to.path.startsWith('/public') || to.path.startsWith('/@/')) {
     next()
   } else if(to.name !== 'Login' && to.name !== 'SignUp') {
     console.log(token);

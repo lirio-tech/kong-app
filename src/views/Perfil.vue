@@ -158,7 +158,7 @@
                                 &nbsp;           
                                 <v-btn
                                     type="button"
-                                    :to="`/site/${companySite.arroba}`"
+                                    :to="`/@/${companySite.arroba}`"
                                     :disabled="!isAdmin() && userLogged.username === 'diego'"
                                 >
                                     Alterar Site
@@ -915,7 +915,7 @@ export default {
     },
     computed: {
         linkCompany: function() {
-            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.companySite.arroba}`;
+            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/@/${this.companySite.arroba}`;
         }
     }
   }
