@@ -115,8 +115,8 @@ export default{
                 errorCb(error)
             })        
     },     
-    getCompanySiteBySubdomain(subdomain, callback, errorCb) {
-        let url = `${COMPANIES_API}/${subdomain}/site-info/subdomain`;
+    getCompanySiteByArroba(arroba, callback, errorCb) {
+        let url = `${COMPANIES_API}/${arroba}/site-info/arroba`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)
