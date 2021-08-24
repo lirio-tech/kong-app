@@ -1,18 +1,6 @@
 <template>
     <v-container>
         <header-back-title title="Configurações" />
-        <!-- <v-row>
-            <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
-                <v-btn icon small style="display: inline;"
-                    :to="{ 'path': '/'}"
-                >
-                    <v-icon large color="white darken-2">mdi-chevron-left</v-icon>
-                </v-btn>
-            </v-col>
-            <v-col cols="8" align="center">   
-                    <span style="font-size: 1.8rem !important;" class="white--text">Configurações</span>
-            </v-col>
-        </v-row> -->
         <br/>
         <v-expansion-panels
             v-model="panel"
@@ -71,7 +59,7 @@
                                         :counter="15"
                                         :disabled="!isAdmin()"
                                     />
-                                </v-col>                             
+                                </v-col>                              
                                 <br/>
                                 <v-btn
                                     color="success"
@@ -84,6 +72,101 @@
                         </v-col>
                     </v-expansion-panel-content>
                 </v-expansion-panel>  
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Site</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12">  
+                            <v-form 
+                                id="formCompanySite" 
+                                ref="formCompanySite" 
+                                v-model="valid" 
+                                lazy-validation 
+                                v-on:submit.prevent="onSubmitCompanySite"
+                            >          
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Facebook"
+                                        prepend-icon="mdi-facebook"
+                                        v-model="companySite.facebook"
+                                        @blur="companySite.facebook = companySite.facebook.toLowerCase()"
+                                        :disabled="!isAdmin()"
+                                        :hint="`facebook.com/${companySite.facebook ? companySite.facebook : ''}`" 
+                                    />
+                                </v-col>                   
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Instagram"
+                                        prepend-icon="mdi-instagram"
+                                        v-model="companySite.instagram"
+                                        @blur="companySite.instagram = companySite.instagram.toLowerCase()"
+                                        :disabled="!isAdmin()"
+                                        :hint="`instagram.com/${companySite.instagram ? companySite.instagram : ''}`" 
+                                    />
+                                </v-col>            
+                                <v-col cols="12">
+                                    <v-text-field 
+                                        v-model="companySite.whatsapp"
+                                        label="WhatsApp"
+                                        ref="whats"
+                                        v-mask="'(##) #####-####'"
+                                        prepend-icon="mdi-whatsapp"
+                                        :disabled="!isAdmin()"
+                                    />                                    
+                                </v-col>                                                                              
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Link"
+                                        prepend-icon="mdi-at"
+                                        :rules="[ 
+                                            val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
+                                            val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
+                                        ]"
+                                        required
+                                        v-model="companySite.subdomain"
+                                        @blur="companySite.subdomain = companySite.subdomain.toLowerCase()"
+                                        ref="companysubdomain"
+                                        :counter="40"
+                                        :disabled="!isAdmin()"
+                                        :hint="linkCompany" 
+                                    />
+                                </v-col>        
+                                <!-- <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        label="Site"
+                                        prepend-icon="mdi-link"
+                                        required
+                                        v-model="companySite.site"
+                                        @blur="companySite.site = companySite.site.toLowerCase()"
+                                        ref="site"
+                                        :counter="40"
+                                        :disabled="!isAdmin()"
+                                        :hint="`Ex: www.barbearia.com.br`" 
+                                    />
+                                </v-col>                                                                                             -->
+                                <br/>
+                                <v-btn
+                                    color="success"
+                                    type="submit"
+                                    :disabled="!isAdmin()"
+                                >
+                                    Salvar
+                                </v-btn>           
+                                &nbsp;           
+                                <v-btn
+                                    type="button"
+                                    :to="`/site/${companySite.subdomain}`"
+                                    :disabled="!isAdmin() && userLogged.username === 'diego'"
+                                >
+                                    Alterar Site
+                                </v-btn>                                               
+                            </v-form>
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                  
                 <v-expansion-panel v-if="isAdmin()">
                     <v-expansion-panel-header>Serviços de {{ company.shortName }}</v-expansion-panel-header>
                     <v-expansion-panel-content>            
@@ -551,7 +634,8 @@ export default {
         type: 'none'
       }, 
       userNew: {},
-      company: {},
+      company: {facebook: '', instagram: ''},
+      companySite: {},
       services: [],
       companyWithoutUpdate: {},
       users: [],
@@ -719,11 +803,18 @@ export default {
                     alert('Erro ao Buscar pagamentos');
                 });
         },         
+        getCompanySite(companyId) {
+            companyGateway.getCompanySiteById(companyId,
+                (res) => {
+                    if(res) this.companySite = res;
+                }, () => {
+                    alert('Erro ao buscar informaçoes do Site ');
+                });
+        },
         onSubmitCompanyName() {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
                 this.companyWithoutUpdate.shortName = this.company.shortName;
-                this.companyWithoutUpdate.path = this.company.path;
                 companyGateway.saveCompany(this.companyWithoutUpdate,
                     () => {
                         alert('Atualizado com Sucesso!!!');
@@ -736,7 +827,22 @@ export default {
                         }
                     });
             }
-        },      
+        },  
+        onSubmitCompanySite() {
+            if(this.$refs.formCompanySite.validate()) {
+                companyGateway.saveCompanySite(this.company._id, this.companySite,
+                    () => {
+                        alert('Atualizado com Sucesso!!!');
+                        storage.setCompany(JSON.stringify(this.companyWithoutUpdate));
+                    }, (err) => {
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Atualizar Infos do Site :( Tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
+                    });
+            }
+        },    
         deleteService(svc) {
             if(confirm('Atenção :: Ao Excluir Serviço será excluído de todos os Funcionários, desejá continuar?')) {
                 this.deleteServiceIndex = this.services.indexOf(svc);
@@ -797,7 +903,8 @@ export default {
       this.services = this.companyWithoutUpdate.services;
       this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      
       this.getUsers();
-      this.getPaymentsHistByCompany();      
+      this.getPaymentsHistByCompany();     
+      this.getCompanySite(this.company._id); 
       this.themeKong = Boolean(storage.getThemeKong());
     },
     watch: {
@@ -808,7 +915,7 @@ export default {
     },
     computed: {
         linkCompany: function() {
-            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.company.path}`;
+            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.companySite.subdomain}`;
         }
     }
   }

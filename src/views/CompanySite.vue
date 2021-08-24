@@ -7,7 +7,7 @@
           dark
           shrink-on-scroll
           prominent
-          :src="imageAppBarSite"
+          :src="companySite.photoCover"
           fade-img-on-scroll
           scroll-target="#scrolling-techniques-3"
         >
@@ -21,27 +21,26 @@
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
           <v-app-bar-title>
-            <span style="width: 500px;"> Lirio Barber </span>
-            
+            <span style="width: 500px;"> {{ company.name }} </span>
           </v-app-bar-title>
 
           <v-spacer></v-spacer>
-    
-          <v-btn icon @click="openWhats()">
+     
+          <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
             <v-icon>mdi-whatsapp</v-icon>
           </v-btn>
 
-          <v-btn icon  @click="openInsta()">
+          <v-btn icon  @click="openInsta()" v-if="companySite.instagram">
             <v-icon>mdi-instagram</v-icon>
           </v-btn>
 
-          <v-btn icon  @click="openFace()">
+          <v-btn icon  @click="openFace()" v-if="companySite.facebook">
             <v-icon>mdi-facebook</v-icon>
           </v-btn>      
 
-          <v-btn icon>
+          <!-- <v-btn icon>
             <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
+          </v-btn> -->
 
           <template v-slot:extension>
             <v-tabs align-with-title>
@@ -63,22 +62,28 @@
         </v-sheet>
         
       </v-card>
+      <center v-if="userLogged">
+          <br/>
+          <v-btn small to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
+          <v-btn small><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
+          <v-btn small><v-icon>mdi-share</v-icon></v-btn>
+      </center>
       <v-container v-if="tabView === 'HOME'">
-          <h1>Home</h1>
-          <h4>
-            A melhor Barbearia da sua Região!!!
-          </h4>
+          <center>
+            A Melhor Barbearia da Região!!!
+          </center>
+          <br/>
           <v-row>
             <v-col
-              v-for="n in 9"
-              :key="n"
+              v-for="photo in companySite.photos"
+              :key="photo._id"
               class="d-flex child-flex"
               xl="4" lg="4" md="4" sm="6" xs="12" cols="12"
 
             >
               <v-img
-                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                :src="`${photo.photo}`"
+                :lazy-src="`${photo.photo}`"
                 aspect-ratio="1"
                 class="grey lighten-2"
               >
@@ -99,35 +104,54 @@
           </v-row>          
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
-          <h1>AGENDA</h1>
+          <h4>Agenda</h4>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
-          <h1>CONTATO</h1>
+          <h4>Contato</h4>
       </v-container>            
   </div>
 </template>
 <script>
+import companyGateway from '../api/companyGateway'
+import storage from '../storage'
 
 export default {
   data: () => ({
     tabView: 'HOME',
-    company: {
-      telWhatsApp: '11961409798',
-      facebook: 'liriodiego',
-      instagram: 'diegolirio',
-      imageAppBarSite: 'https://picsum.photos/1920/1080?random'
-    }
+    userLogged: {},
+    companySite: {
+      whatsapp: '',
+      facebook: '',
+      instagram: '',
+      photoCover: 'https://picsum.photos/1920/1080?random'
+    },
+    company: {}
   }),
   methods: {
     openWhats() {
-        window.location.href = `https://api.whatsapp.com/send?phone=55${this.company.telWhatsApp}&text=Olá Barbearia, estou no seu site!`
+        window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Olá Barbearia, estou no seu site!`
     },
     openInsta() {
-        window.location.href = `https://instagram.com/${this.company.instagram}`
+        window.location.href = `https://instagram.com/${this.companySite.instagram}`
     },
     openFace() {
-        window.location.href = `https://facebook.com/${this.company.facebook}`        
+        window.location.href = `https://facebook.com/${this.companySite.facebook}`        
     }, 
+    getCompanySubdomain(subdomain) {
+        companyGateway.getCompanySiteBySubdomain(subdomain,
+            (res) => {
+                if(res) {
+                    this.companySite = res.companySite;
+                    this.company = res.company;
+                }
+            }, () => {
+                alert('Erro ao buscar informaçoes do Site ');
+            });
+    },    
+  },
+  beforeMount() {
+      this.userLogged = storage.getUserLogged();
+      this.getCompanySubdomain(this.$route.params.subdomain)
   }
 }
 </script>

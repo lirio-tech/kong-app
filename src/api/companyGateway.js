@@ -104,5 +104,37 @@ export default{
                 errorCb(error)
             })   
       },
-  
+      getCompanySiteById(companyId, callback, errorCb) {
+        let url = `${COMPANIES_API}/${companyId}/site-info`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },     
+    getCompanySiteBySubdomain(subdomain, callback, errorCb) {
+        let url = `${COMPANIES_API}/${subdomain}/site-info/subdomain`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },
+    saveCompanySite(companyId, copmanySite, callback, errorCb)     {
+        let url = `${COMPANIES_API}/${companyId}/site-info`;
+        Axios.put(url, copmanySite)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+      },       
 }
