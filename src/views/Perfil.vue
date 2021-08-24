@@ -118,7 +118,7 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         autocomplete="off"
-                                        label="Link"
+                                        label="@rroba"
                                         prepend-icon="mdi-at"
                                         :rules="[ 
                                             val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
