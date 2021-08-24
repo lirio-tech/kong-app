@@ -112,6 +112,7 @@
   </div>
 </template>
 <script>
+import companyGateway from '../api/companyGateway'
 import storage from '../storage'
 
 export default {
@@ -119,25 +120,38 @@ export default {
     tabView: 'HOME',
     userLogged: {},
     companySite: {
-      whatsapp: '11961409798',
-      facebook: 'liriodiego',
-      instagram: 'diegolirio',
+      whatsapp: '',
+      facebook: '',
+      instagram: '',
       photoCover: 'https://picsum.photos/1920/1080?random'
-    }
+    },
+    company: {}
   }),
   methods: {
     openWhats() {
-        window.location.href = `https://api.whatsapp.com/send?phone=55${this.company.telWhatsApp}&text=Olá Barbearia, estou no seu site!`
+        window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Olá Barbearia, estou no seu site!`
     },
     openInsta() {
-        window.location.href = `https://instagram.com/${this.company.instagram}`
+        window.location.href = `https://instagram.com/${this.companySite.instagram}`
     },
     openFace() {
-        window.location.href = `https://facebook.com/${this.company.facebook}`        
+        window.location.href = `https://facebook.com/${this.companySite.facebook}`        
     }, 
+    getCompanySubdomain(subdomain) {
+        companyGateway.getCompanySiteBySubdomain(subdomain,
+            (res) => {
+                if(res) {
+                    this.companySite = res.companySite;
+                    this.company = res.company;
+                }
+            }, () => {
+                alert('Erro ao buscar informaçoes do Site ');
+            });
+    },    
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
+      
   }
 }
 </script>
