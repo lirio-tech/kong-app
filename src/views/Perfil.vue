@@ -71,25 +71,7 @@
                                         :counter="15"
                                         :disabled="!isAdmin()"
                                     />
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        autocomplete="off"
-                                        label="Link"
-                                        prepend-icon="mdi-link"
-                                        :rules="[ 
-                                            val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
-                                            val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
-                                        ]"
-                                        required
-                                        v-model="company.path"
-                                        @blur="company.path = company.path.toLowerCase()"
-                                        ref="companypath"
-                                        :counter="40"
-                                        :disabled="!isAdmin()"
-                                        :hint="linkCompany" 
-                                    />
-                                </v-col>                                
+                                </v-col>                             
                                 <br/>
                                 <v-btn
                                     color="success"
