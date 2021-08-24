@@ -125,9 +125,9 @@
                                             val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
                                         ]"
                                         required
-                                        v-model="companySite.subdomain"
-                                        @blur="companySite.subdomain = companySite.subdomain.toLowerCase()"
-                                        ref="companysubdomain"
+                                        v-model="companySite.arroba"
+                                        @blur="companySite.arroba = companySite.arroba.toLowerCase()"
+                                        ref="companyarroba"
                                         :counter="40"
                                         :disabled="!isAdmin()"
                                         :hint="linkCompany" 
@@ -158,7 +158,7 @@
                                 &nbsp;           
                                 <v-btn
                                     type="button"
-                                    :to="`/site/${companySite.subdomain}`"
+                                    :to="`/site/${companySite.arroba}`"
                                     :disabled="!isAdmin() && userLogged.username === 'diego'"
                                 >
                                     Alterar Site
@@ -915,7 +915,7 @@ export default {
     },
     computed: {
         linkCompany: function() {
-            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.companySite.subdomain}`;
+            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/site/${this.companySite.arroba}`;
         }
     }
   }

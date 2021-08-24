@@ -130,7 +130,7 @@ export default {
   }),
   methods: {
     openWhats() {
-        window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Olá Barbearia, estou no seu site!`
+        window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Olá ${company.name}, estou no seu site!`
     },
     openInsta() {
         window.location.href = `https://instagram.com/${this.companySite.instagram}`
@@ -138,8 +138,8 @@ export default {
     openFace() {
         window.location.href = `https://facebook.com/${this.companySite.facebook}`        
     }, 
-    getCompanySubdomain(subdomain) {
-        companyGateway.getCompanySiteBySubdomain(subdomain,
+    getCompanyArroba(arroba) {
+        companyGateway.getCompanySiteByArroba(arroba,
             (res) => {
                 if(res) {
                     this.companySite = res.companySite;
@@ -152,7 +152,7 @@ export default {
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.getCompanySubdomain(this.$route.params.subdomain)
+      this.getCompanyArroba(this.$route.params.arroba)
   }
 }
 </script>
