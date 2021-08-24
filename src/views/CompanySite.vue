@@ -38,6 +38,13 @@
             <v-icon>mdi-facebook</v-icon>
           </v-btn>      
 
+
+          <a href="https://app.kongbarber.com" target="blank" style="color: inherit; text-decoration: none">
+            <v-btn icon >
+              <v-icon>mdi-login</v-icon>
+            </v-btn>              
+          </a>
+
           <!-- <v-btn icon>
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn> -->
