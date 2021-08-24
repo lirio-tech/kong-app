@@ -119,7 +119,7 @@
                                     <v-text-field
                                         autocomplete="off"
                                         label="Link"
-                                        prepend-icon="mdi-link"
+                                        prepend-icon="mdi-at"
                                         :rules="[ 
                                             val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
                                             val => val && val.length <= 40 || 'tamanho maximo eh de 40 Caracteres',
@@ -137,7 +137,7 @@
                                     <v-text-field
                                         autocomplete="off"
                                         label="Site"
-                                        prepend-icon="mdi-site"
+                                        prepend-icon="mdi-link"
                                         required
                                         v-model="companySite.site"
                                         @blur="companySite.site = companySite.site.toLowerCase()"
