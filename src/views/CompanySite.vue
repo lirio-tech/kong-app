@@ -64,9 +64,9 @@
       </v-card>
       <center v-if="userLogged">
           <br/>
-          <v-btn small to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
-          <v-btn small><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
-          <v-btn small><v-icon>mdi-share</v-icon></v-btn>
+          <v-btn to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
+          <v-btn ><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
+          <v-btn ><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
