@@ -126,6 +126,17 @@ export default{
                 errorCb(error)
             })        
     },
+    getCompanySiteDiscoveryByWindowLocation(hostname, callback, errorCb) {
+        let url = `${COMPANIES_API}/site-info/discovery/origin/app/?hostname=${hostname}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })    
+    },
     saveCompanySite(companyId, copmanySite, callback, errorCb)     {
         let url = `${COMPANIES_API}/${companyId}/site-info`;
         Axios.put(url, copmanySite)

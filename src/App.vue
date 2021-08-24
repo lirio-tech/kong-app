@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import companyGateway from './api/companyGateway';
 export default {
   name: 'App',
   data: () => ({
@@ -14,17 +15,23 @@ export default {
       isSiteCustom() {
           console.log('window.location', window.location);
           return !(
-            String(window.location).includes('localhost:8080') || 
-            String(window.location).includes('app.kongbarber.com') || 
-            String(window.location).includes('ladyapp.com.br') || 
-            String(window.location).includes('kong-app-develop.netlify.app') 
+            String(window.location.hostname).includes('localhost:8080') || 
+            String(window.location.hostname).includes('app.kongbarber.com') || 
+            String(window.location.hostname).includes('app.ladyapp.com.br') || 
+            String(window.location.hostname).includes('kong-app-develop.netlify.app') 
           )
       }
   },
   beforeMount() {
       if(this.isSiteCustom()) {
           // Find Company Site Custom
-          this.$router.push('/site/1233445');
+          companyGateway.getCompanySiteDiscoveryByWindowLocation(String(window.location.hostname), 
+            res => {
+              this.$router.push(`/site/${res.subdomain}`);
+            },
+            () => {
+                alert('Site não Sincronizado, entre em contato com o Aplicativo!');
+            })
       }
   },
   computed:{
