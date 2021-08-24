@@ -122,7 +122,6 @@
 <script>
 import companyGateway from '../api/companyGateway'
 import storage from '../storage'
-import commons from '../utils/commons'
 
 export default {
   data: () => ({
@@ -161,8 +160,9 @@ export default {
         const shareData = {
             title: this.company.name,
             text: `💈 Conheça nosso Site`,
-            url: commons.urlCompany(this.companySite, this.company.companyType),
-        }            
+            url: String(window.location),
+        }    
+        console.log(shareData)        
         return navigator.share(shareData);      
     }
   },
