@@ -159,7 +159,7 @@
                                 <v-btn
                                     type="button"
                                     :to="`/site/${companySite.subdomain}`"
-                                    :disabled="!isAdmin()"
+                                    :disabled="!isAdmin() && userLogged.username === 'diego'"
                                 >
                                     Alterar Site
                                 </v-btn>                                               

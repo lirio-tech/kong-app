@@ -69,10 +69,10 @@
           <v-btn small><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
-          <h1>Home</h1>
-          <h4>
-            A melhor Barbearia da sua Região!!!
-          </h4>
+          <center>
+            A Melhor Barbearia da Região!!!
+          </center>
+          <br/>
           <v-row>
             <v-col
               v-for="photo in companySite.photos"
@@ -104,10 +104,10 @@
           </v-row>          
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
-          <h1>AGENDA</h1>
+          <h4>Agenda</h4>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
-          <h1>CONTATO</h1>
+          <h4>Contato</h4>
       </v-container>            
   </div>
 </template>
