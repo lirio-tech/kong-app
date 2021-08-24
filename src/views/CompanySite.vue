@@ -21,7 +21,7 @@
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
           <v-app-bar-title>
-            <span style="width: 500px;"> {{ company.name }} </span>
+            <span style="width: 800px;"> {{ company.name }} </span>
           </v-app-bar-title>
 
           <v-spacer></v-spacer>
