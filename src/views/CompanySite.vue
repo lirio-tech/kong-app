@@ -73,7 +73,7 @@
           <br/>
           <v-btn to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
           <v-btn ><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
-          <v-btn ><v-icon>mdi-share</v-icon></v-btn>
+          <v-btn @click="shareMyCompany"><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
@@ -122,6 +122,7 @@
 <script>
 import companyGateway from '../api/companyGateway'
 import storage from '../storage'
+import commons from '../utils/commons'
 
 export default {
   data: () => ({
@@ -156,6 +157,14 @@ export default {
                 alert('Erro ao buscar informaçoes do Site ');
             });
     },    
+    sharedMyCompany() {
+            const shareData = {
+                title: this.company.name,
+                text: `💈 Conheça nosso Site`,
+                url: commons.urlCompany(this.companySite, this.company.companyType),
+            }            
+        return navigator.share(shareData);      
+    }
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();

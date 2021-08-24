@@ -606,6 +606,7 @@ import storage from '../storage'
 import gateway from '../api/gateway'
 import companyGateway from '../api/companyGateway'
 import UserTypes from '../utils/UserTypes'
+import Commons from '../utils/commons'
 import DialogPlan from '../components/DialogPlan.vue'
 import SnackBar from '../components/SnackBar.vue'
 import CardPlanData from '../components/CardPlanData.vue'
@@ -915,7 +916,7 @@ export default {
     },
     computed: {
         linkCompany: function() {
-            return (this.$vuetify.theme.dark ? 'app.kongbarber.com' : 'ladyapp.com.br') +`/#/@/${this.companySite.arroba}`;
+            return Commons.urlCompany(this.companySite, this.company.companyType);
         }
     }
   }

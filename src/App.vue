@@ -15,7 +15,7 @@ export default {
       isSiteCustom() {
           console.log('window.location', window.location);
           return !(
-            String(window.location.hostname).includes('localhost:8080') || 
+            String(window.location.hostname).includes('localhost') || 
             String(window.location.hostname).includes('app.kongbarber.com') || 
             String(window.location.hostname).includes('app.ladyapp.com.br') || 
             String(window.location.hostname).includes('kong-app-develop.netlify.app') 
