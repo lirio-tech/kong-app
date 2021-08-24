@@ -66,6 +66,7 @@
           <br/>
           <v-btn small to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
           <v-btn small><v-icon>mdi-edit</v-icon>Alterar Site</v-btn>
+          <v-btn small><v-icon>mdi-shared</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <h1>Home</h1>
