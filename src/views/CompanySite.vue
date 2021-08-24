@@ -130,7 +130,7 @@ export default {
   }),
   methods: {
     openWhats() {
-        window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Olá ${company.name}, estou no seu site!`
+        window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Olá ${this.company.name}, estou no seu site!`
     },
     openInsta() {
         window.location.href = `https://instagram.com/${this.companySite.instagram}`
