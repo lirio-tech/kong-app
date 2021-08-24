@@ -161,7 +161,7 @@
                                     :to="`/@/${companySite.arroba}`"
                                     :disabled="!isAdmin() && userLogged.username === 'diego'"
                                 >
-                                    Alterar Site
+                                    Site <v-icon>mdi-share</v-icon>
                                 </v-btn>                                               
                             </v-form>
                         </v-col>
