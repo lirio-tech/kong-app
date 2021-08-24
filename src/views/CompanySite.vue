@@ -71,9 +71,9 @@
       </v-card>
       <center v-if="userLogged">
           <br/>
-          <v-btn to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
-          <v-btn ><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
-          <v-btn @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
+          <v-btn color="primary" to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
+          <v-btn color="primary"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
+          <v-btn color="primary" @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
@@ -122,6 +122,7 @@
 <script>
 import companyGateway from '../api/companyGateway'
 import storage from '../storage'
+import commons from '../utils/commons'
 
 export default {
   data: () => ({
@@ -153,14 +154,14 @@ export default {
                     this.company = res.company;
                 }
             }, () => {
-                alert('Erro ao buscar informaçoes do Site ');
+                alert('Erro ao buscar informações do Site ');
             });
     },    
     sharedMyCompany() {
         const shareData = {
             title: this.company.name,
             text: `💈 Conheça nosso Site`,
-            url: String(window.location),
+            url: 'https://'+commons.urlCompany(this.companySite, this.company.companyType),
         }    
         console.log(shareData)        
         return navigator.share(shareData);      
