@@ -98,7 +98,7 @@
                             &nbsp;
                             <v-btn
                                 large        
-                                to="/login"
+                                to="/sign-up"
                                 color="primary"
                             >
                                Cadastrar
