@@ -83,7 +83,7 @@
                     </v-col>       
                 </v-row>
                 <br/><br/><br/>
-                <v-row align="center">
+                <v-row align="center" v-if="userLogged">
                     <v-col
                         xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
                         align="center"
@@ -101,7 +101,7 @@
                                 to="/sign-up"
                                 color="primary"
                             >
-                               Cadastrar
+                               Cadastre-se
                             </v-btn>
                     </v-col>                                       
                 </v-row>
@@ -116,7 +116,11 @@ import VueQrcode from 'vue-qrcode';
 // import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import device from '../utils/device'
 import appConfig from '../utils/appConfig'
+import storage from '../storage';
 export default {
+    data: () => ({
+        userLogged: null
+    }),
     components: {
         VueQrcode,
         // GetItOnGooglePlay,
@@ -164,6 +168,9 @@ export default {
        urlShare() {
            return `${this.urlApp}/#/public/identify-device`;
        }
+    },
+    beforeMount() {
+        this.userLogged = storage.getUserLogged();
     }
 }
 </script>

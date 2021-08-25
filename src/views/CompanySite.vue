@@ -39,7 +39,7 @@
           </v-btn>      
 
 
-          <a href="https://app.kongbarber.com/#/public/help" target="blank" style="color: inherit; text-decoration: none">
+          <a :href="forwardApp()" target="blank" style="color: inherit; text-decoration: none">
             <v-btn icon >
               <v-icon>mdi-login</v-icon>
             </v-btn>              
@@ -165,7 +165,15 @@ export default {
         }    
         console.log(shareData)        
         return navigator.share(shareData);      
-    }
+    },
+    forwardApp() {
+        let path = '/public/help';
+        if(this.company.companyType === 'BARBER') {
+            return `https://app.kongbarber.com/#${path}`;
+        } else {
+            return `https://app.ladyapp.com.br/#${path}`;
+        }
+    } 
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
