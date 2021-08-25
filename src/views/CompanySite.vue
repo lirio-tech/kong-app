@@ -72,12 +72,12 @@
       <center v-if="userLogged">
           <br/>
           <v-btn color="primary" to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
-          <v-btn color="primary"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
+          <v-btn color="primary" @click="showDialog(true)"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
           <v-btn color="primary" @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
-          <center>
+          <center class="white--text">
             A Melhor Barbearia da Região!!!
           </center>
           <br/>
@@ -116,17 +116,24 @@
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
           <h4>Contato</h4>
-      </v-container>            
+      </v-container>     
+      <dialog-update-site 
+        :dialog="dialogUpdate"
+        v-on:show-dialog="showDialog"
+      ></dialog-update-site>       
   </div>
 </template>
 <script>
 import companyGateway from '../api/companyGateway'
+import DialogUpdateSite from '../components/DialogUpdateSite.vue'
 import storage from '../storage'
 import commons from '../utils/commons'
 
 export default {
+  components: { DialogUpdateSite, },
   data: () => ({
     tabView: 'HOME',
+    dialogUpdate: false,
     userLogged: {},
     companySite: {
       whatsapp: '',
@@ -173,7 +180,10 @@ export default {
         } else {
             return `https://app.ladyapp.com.br/#${path}`;
         }
-    } 
+    },
+    showDialog(show) {
+      this.dialogUpdate = show;
+    }
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
