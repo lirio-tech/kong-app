@@ -160,6 +160,7 @@
                                     type="button"
                                     :to="`/@/${companySite.arroba}`"
                                     :disabled="!isAdmin() && userLogged.username === 'diego'"
+                                    color="primary"
                                 >
                                     Site <v-icon>mdi-share</v-icon>
                                 </v-btn>                                               

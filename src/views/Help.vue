@@ -2,122 +2,112 @@
     <v-container >
         <div >
             <v-row>
-                <v-col cols="2" style="margin-top: 10px;">   
+                <v-col cols="2" style="margin-top: 5px;">   
                     <v-btn icon small style="display: inline;"
                         @click="goBack"
                     > 
-                        <v-icon large color="white-grey darken-2">mdi-chevron-left</v-icon>
+                        <v-icon color="white-grey darken-2">mdi-chevron-left</v-icon>
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  
-                        <span style="font-size: 2.0rem !important;" class="white--text">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
-                        <br/><small class="grey--text">Versão: {{ version() }} </small>
+                        <span style="font-size: 1.6rem !important;" class="white--text">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
                 </v-col>       
             </v-row>   
+            <br/>
 
-            <br/><br/>
+            <v-container >
+                <v-row align="center">
 
-            <v-row 
-                class="d-flex justify-center"
-                flex 
-            >
-                <h3 class="grey--text">Compartilhe o App</h3>
-            </v-row>   
-            
-            <br/><br/>
-
-            <v-row>
-                
-                <v-container >
-                    <v-row align="center">
-                        <v-col
-                            cols="6"
-                            sm="6"
-                            md="6"
-                            align="center"
+                    <v-col
+                        xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+                        align="center"
+                    >
+                        <h4 class="grey--text">Compartilhe o App</h4>
+                        <p class="grey--text">
+                            Versão: {{ version() }} 
+                        </p>                           
+                        <br/>
+                        <vue-qrcode 
+                            :value="urlShare" 
+                            
+                            :width="120"
+                        />
+                        <v-btn
+                            style="margin-top:-100px;margin-left:30px;"
+                            fab
+                            x-large        
+                            @click="share"            
                         >
-                            <vue-qrcode 
-                                :value="urlShare" 
-                                style="margin-left:50px;"
-                            />
-                        </v-col>
-                        <v-col
-                            cols="6"
-                            sm="6"
-                            md="6"
-                            align="center"
-                        >
-                            <v-btn
-                                elevation="2"
-                                fab
-                                x-large        
-                                @click="share"            
+                            <v-icon
+                                icon-size="30px"
                             >
-                                <v-icon
-                                    icon-size="30px"
-                                >
-                                    mdi-share
-                                </v-icon>
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-row>
-
-            <br/><br/><br/>            
-
-            <div>
-                <v-row 
-                    class="d-flex justify-center"
-                    flex 
-                >
-                    <h2 class="grey--text">Android ou IPhone ? </h2>
-                </v-row>      
-                <v-row 
-                    class="d-flex justify-center"
-                    flex 
-                >
-                    <span class="grey--text">
-                        clique no icone 
-                    </span>
-                </v-row>   
-                <v-row 
-                    class="d-flex justify-center"
-                    flex 
-                >
-                    <span class="grey--text">
-                        e siga os passos para instalar o App
-                    </span>
-                </v-row>   
-
-                <br/><br/>
-                <v-row 
-                    class="d-flex justify-center"
-                    flex 
-                >
-                    <v-col cols="6" align="center">
-                        <!-- <get-it-on-google-play /> -->
-                        <router-link to="/public/android">
-                            <v-img 
-                                src="../assets/android.webp"
-                                height="125"
-                                width="125"
-                                style="margin-left:50px;"
-                            ></v-img>
-                        </router-link>                        
+                                mdi-share
+                            </v-icon>
+                        </v-btn>
                     </v-col>
-                    <v-col cols="6">
-                        <router-link to="/public/iphone">
-                            <v-img 
-                                src="../assets/apple.png"
-                                height="95"
-                                width="85"              
-                                style="margin-top:-15px;"              
-                            ></v-img>
-                        </router-link>
-                    </v-col>                
-                </v-row>   
-            </div>
+                    <v-col
+                        xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+                        align="center"
+                    >
+                            <h4 class="grey--text">Android ou IPhone ?</h4>
+                            <p class="grey--text">
+                                clique no icone  e siga os passos para instalar o App
+                            </p>     
+                            <br/>
+
+                            <v-btn
+                                x-large    
+                                text    
+                                to="/public/iphone"
+                            >
+                                <v-img 
+                                    
+                                    src="../assets/apple.png"
+                                    height="115"
+                                    width="105"              
+                                            
+                                ></v-img>
+                            </v-btn>
+                            <v-btn
+                                x-large    
+                                text    
+                                to="/public/android"
+                            >
+                                <v-img 
+                                    src="../assets/android.webp"
+                                    height="100"
+                                    width="90"
+                                    
+                                ></v-img> 
+                            </v-btn>
+                    </v-col>       
+                </v-row>
+                <br/><br/><br/>
+                <v-row align="center">
+                    <v-col
+                        xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
+                        align="center"
+                    >
+                           
+                            <v-btn
+                                large        
+                                to="/login"
+                            >
+                               Login
+                            </v-btn>
+                            &nbsp;
+                            <v-btn
+                                large        
+                                to="/login"
+                                color="primary"
+                            >
+                               Cadastrar
+                            </v-btn>
+                    </v-col>                                       
+                </v-row>
+            </v-container>
+              
+
         </div>           
     </v-container>
 </template>
