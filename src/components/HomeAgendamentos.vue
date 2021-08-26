@@ -10,7 +10,7 @@
                       <v-list-item style="margin-bottom: 0px" >
                         <v-list-item-content>        
                             <v-col cols="11">
-                                <v-icon>mdi-clock</v-icon> <span class="grey--text" style="margin-left: 15px">Agendamentos</span>
+                                🕑 <span class="grey--text" style="margin-left: 15px">Agendamentos</span>
                             </v-col>      
                             <v-col cols="1">  
                                 <v-icon style="margin-top: -15px;">mdi-chevron-right</v-icon>

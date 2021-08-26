@@ -54,7 +54,7 @@
                                 id="updateInfosForm"
                               >         
                     
-                                  <h4 class="secondary--text">Site</h4>
+                                  <h4>🏠 Site</h4>
 
                                   <v-text-field
                                       :value="urlSite()"
@@ -99,7 +99,7 @@
 
                                   </v-col>                                  
 
-                                  <h4>Redes Sociais</h4>
+                                  <h4>📱 Redes Sociais</h4>
                               
                                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
                                           <instagram-input 
@@ -120,7 +120,7 @@
                                           ></whatsapp-input>
                                     </v-col>           
 
-                                    <h4>Endereço</h4>    
+                                    <h4>📍 Endereço</h4>    
 
                                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
                                       <v-text-field
