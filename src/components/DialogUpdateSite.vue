@@ -134,6 +134,7 @@
                                           color="success"
                                           x-large
                                           type="submit"
+                                          :loading="loadingInfo"
                                       >
                                         Salvar
                                       </v-btn>                                                                               
@@ -177,6 +178,7 @@ import ArrobaInput from './inputs/ArrobaInput.vue'
 import WhatsappInput from './inputs/WhatsappInput.vue'
 import commons from '../utils/commons'
 import SnackBar from './SnackBar.vue'
+import companyGateway from '../api/companyGateway'
 export default {
     components: { 
       InstagramInput, 
@@ -194,7 +196,7 @@ export default {
         type: Object,
         require: true,
       },
-      company: {
+      company: { 
         type: Object,
         require: true,
       }      
