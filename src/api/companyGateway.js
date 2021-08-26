@@ -149,4 +149,15 @@ export default{
                 errorCb(error)
             })   
       },       
+      updateCompanySite(companyId, _idSite, copmanySite, callback, errorCb)     {
+        let url = `${COMPANIES_SITE_API}/${companyId}/site-info/${_idSite}`;
+        Axios.patch(url, copmanySite)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })   
+      },          
 }

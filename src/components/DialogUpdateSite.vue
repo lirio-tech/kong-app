@@ -201,6 +201,7 @@ export default {
     },
     data () {
       return {
+        loadingInfo: false,
         userLogged: {},
         message: { show: false, color: 'primary', text: '' },  
         tab: null,
@@ -219,7 +220,19 @@ export default {
       },
       updateInfos() {
           if(this.$refs.updateInfosForm.validate()) {
-              alert(JSON.stringify(this.companySite))
+                this.loadingInfo = true;
+                companyGateway.updateCompanySite(this.company._id, this.companySite._id, this.companySite,
+                    () => {
+                        this.showMessage('Atualizado com Sucesso!!!'); 
+                        this.loadingInfo = false;
+                    }, (err) => {
+                        this.loadingInfo = false;
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Atualizar Infos do Site :( Tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
+                    });
           }
       },
       urlSite() {
