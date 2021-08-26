@@ -1,17 +1,17 @@
 <template>
     <v-text-field
         autocomplete="off"
-        label="Instagram"
-        prepend-icon="mdi-instagram"
+        label="Facebook"
+        prepend-icon="mdi-facebook"
         v-model="model"
         filled
         :disabled="disabled"
-        :hint="`instagram.com/${model ? model : ''}`" 
+        :hint="`facebook.com/${model ? model : ''}`" 
     />    
 </template>
 <script>
 export default {
-    name: 'InstagramInput',
+    name: 'FacebookInput',
     props: {
         value: { 
             type: String,
@@ -29,9 +29,7 @@ export default {
           return this.value;
         },
         set(value) {
-            let v = String(value).toLocaleLowerCase().trim();
-            v=v.replace(/[^a-zA-Z_.0-9]/g, "");
-            this.$emit('set-instagram', v); 
+            this.$emit('set-facebook', value); 
         },
       },
     },

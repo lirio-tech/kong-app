@@ -1,17 +1,17 @@
-<template>
-    <v-text-field
-        autocomplete="off"
-        label="Instagram"
-        prepend-icon="mdi-instagram"
+<template>  
+    <v-text-field 
         v-model="model"
-        filled
+        label="WhatsApp"
+        ref="whats"
+        :v-mask="mask"
+        prepend-icon="mdi-whatsapp"
         :disabled="disabled"
-        :hint="`instagram.com/${model ? model : ''}`" 
-    />    
+        filled
+    />                  
 </template>
 <script>
 export default {
-    name: 'InstagramInput',
+    name: 'WhatsappInput',
     props: {
         value: { 
             type: String,
@@ -21,7 +21,11 @@ export default {
             type: Boolean,
             require: false,
             default: false,
-        }    
+        },
+        mask: {
+            type: String,
+            default: '(##) #####-####'
+        }
     },
     computed: {
       model: {
@@ -29,9 +33,7 @@ export default {
           return this.value;
         },
         set(value) {
-            let v = String(value).toLocaleLowerCase().trim();
-            v=v.replace(/[^a-zA-Z_.0-9]/g, "");
-            this.$emit('set-instagram', v); 
+            this.$emit('set-whatsapp', value); 
         },
       },
     },

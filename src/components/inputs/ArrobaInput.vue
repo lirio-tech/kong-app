@@ -1,17 +1,26 @@
 <template>
+
     <v-text-field
         autocomplete="off"
-        label="Instagram"
-        prepend-icon="mdi-instagram"
+        label="@rroba"
+        prepend-icon="mdi-at"
+        :rules="[ 
+            val => val && val.length > 1 || 'Deve ser maior do que 3 Caracteres',
+            val => val && val.length <= 30 || 'tamanho maximo eh de 30 Caracteres',
+        ]"
+        :counter="30"
+        required
         v-model="model"
-        filled
+        ref="companyarroba"
         :disabled="disabled"
-        :hint="`instagram.com/${model ? model : ''}`" 
-    />    
+        filled
+    />
+
+
 </template>
 <script>
 export default {
-    name: 'InstagramInput',
+    name: 'ArrobaInput',
     props: {
         value: { 
             type: String,
@@ -21,7 +30,7 @@ export default {
             type: Boolean,
             require: false,
             default: false,
-        }    
+        },
     },
     computed: {
       model: {
@@ -30,10 +39,10 @@ export default {
         },
         set(value) {
             let v = String(value).toLocaleLowerCase().trim();
-            v=v.replace(/[^a-zA-Z_.0-9]/g, "");
-            this.$emit('set-instagram', v); 
+            v=v.replace(/[^a-zA-Z-_0-9]/g, "");
+            this.$emit('set-arroba', v); 
         },
-      },
+      }, 
     },
 }
 </script>

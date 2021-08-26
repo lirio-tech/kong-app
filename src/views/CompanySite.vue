@@ -119,7 +119,9 @@
       </v-container>     
       <dialog-update-site 
         :dialog="dialogUpdate"
-        v-on:show-dialog="showDialog"
+        :companySite="companySite"
+        :company="company"
+        @show-dialog="showDialog"
       ></dialog-update-site>       
   </div>
 </template>

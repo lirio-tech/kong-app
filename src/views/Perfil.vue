@@ -84,28 +84,21 @@
                                 v-on:submit.prevent="onSubmitCompanySite"
                             >          
                                 <v-col cols="12">
-                                    <v-text-field
-                                        autocomplete="off"
-                                        label="Facebook"
-                                        prepend-icon="mdi-facebook"
-                                        v-model="companySite.facebook"
-                                        @blur="companySite.facebook = companySite.facebook.toLowerCase()"
+                                    <facebook-input 
+                                        :value="companySite.facebook"
+                                        @set-facebook="setFacebook"
                                         :disabled="!isAdmin()"
-                                        :hint="`facebook.com/${companySite.facebook ? companySite.facebook : ''}`" 
-                                    />
+                                    ></facebook-input>
                                 </v-col>                   
                                 <v-col cols="12">
-                                    <v-text-field
-                                        autocomplete="off"
-                                        label="Instagram"
-                                        prepend-icon="mdi-instagram"
-                                        v-model="companySite.instagram"
-                                        @blur="companySite.instagram = companySite.instagram.toLowerCase()"
+                                    <instagram-input 
+                                        :value="companySite.instagram"
+                                        @set-instagram="setInstagram"
                                         :disabled="!isAdmin()"
-                                        :hint="`instagram.com/${companySite.instagram ? companySite.instagram : ''}`" 
-                                    />
+                                    ></instagram-input>
                                 </v-col>            
                                 <v-col cols="12">
+
                                     <v-text-field 
                                         v-model="companySite.whatsapp"
                                         label="WhatsApp"
@@ -613,6 +606,8 @@ import SnackBar from '../components/SnackBar.vue'
 import CardPlanData from '../components/CardPlanData.vue'
 import MyMoney from '../components/inputs/MyMoney.vue'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue'
+import InstagramInput from '../components/inputs/InstagramInput.vue'
+import FacebookInput from '../components/inputs/FacebookInput.vue'
 export default {
     name: 'Perfil',
     components: {
@@ -621,6 +616,8 @@ export default {
         SnackBar, 
         MyMoney,
         HeaderBackTitle,
+        InstagramInput,
+        FacebookInput,
     },
     data: () => ({
       dialogServiceUpdate: false,
@@ -680,6 +677,12 @@ export default {
         getTypeDescription(type) {
             return UserTypes.getDescriptionPtBR(type);
         },
+        setInstagram(v) {
+            this.companySite.instagram = v;
+        },
+        setFacebook(v) {
+            this.companySite.facebook = v;
+        },        
         updateConfiguration() {
             this.isLoading = true;
             gateway.updateConfigurationUser(this.userLogged._id, this.userLogged.configuration,
