@@ -82,13 +82,21 @@
                                       ></v-text-field>           
                                   </v-col>              
 
-                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
-                                      <v-text-field
-                                          label="Descrição do Site"
-                                          v-model="companySite.description"
-                                          filled
-                                          prepend-icon="mdi-home"                 
-                                      ></v-text-field>           
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">      
+                                      <v-textarea
+                                        v-model="companySite.description"
+                                        prepend-icon="mdi-home"    
+                                        filled
+                                        rows="3"
+                                      >
+                                        <template v-slot:label>
+                                          <div>
+                                            Descrição do Site
+                                          </div>
+                                        </template>
+                                      </v-textarea>
+
+
                                   </v-col>                                  
 
                                   <h4>Redes Sociais</h4>
