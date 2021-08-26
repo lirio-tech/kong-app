@@ -21,89 +21,147 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>    
-          <v-card-text>
-            <v-container >
-                <v-form 
-                  v-on:submit.prevent="updateInfos"
-                  ref="updateInfosForm"
-                  id="updateInfosForm"
-                >              
+          
 
-                    <h4>Site</h4>
+                    <v-tabs
+                      v-model="tab"
+                      centered
+                      icons-and-text
+                      fixed-tabs
+                    >
+                      <v-tabs-slider></v-tabs-slider>
 
-                    <v-text-field
-                        :value="urlSite()"
-                        readonly
-                        :append-icon="'mdi-content-copy'"
-                        v-clipboard:copy="urlSite()"
-                        v-clipboard:success="onCopy"
-                        v-clipboard:error="onError"                        
-                    ></v-text-field>
+                      <v-tab href="#tab-infos">
+                        Informações
+                        <v-icon>mdi-at</v-icon>
+                      </v-tab>
 
-                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">      
-                          <arroba-input 
-                              :value="companySite.arroba"
-                              @set-arroba="setArroba"        
-                              :disabled="companySite.subdomainSync"                  
-                          ></arroba-input>
-                    </v-col>              
+                      <v-tab href="#tab-photos">
+                        Fotos do Site
+                        <v-icon>mdi-image</v-icon>
+                      </v-tab>
 
-                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
-                        <v-text-field
-                            label="Título do Site"
-                            v-model="companySite.title"
-                            filled
-                            prepend-icon="mdi-home"                 
-                        ></v-text-field>           
-                    </v-col>              
+                    </v-tabs>
 
-                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
-                        <v-text-field
-                            label="Descrição do Site"
-                            v-model="companySite.description"
-                            filled
-                            prepend-icon="mdi-home"                 
-                        ></v-text-field>           
-                    </v-col>                                  
-
-                    <h4>Rede Social</h4>
-                
-                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
-                            <instagram-input 
-                              :value="companySite.instagram"
-                              @set-instagram="setInstagram"
-                            ></instagram-input>
-                      </v-col>       
-                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">    
-                            <facebook-input
-                              :value="companySite.facebook"
-                              @set-facebook="setFacebook"
-                            ></facebook-input>                        
-                      </v-col>       
-                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
-                            <whatsapp-input
-                                :value="companySite.whatsapp"
-                                @set-whatsapp="setWhatsapp"                          
-                            ></whatsapp-input>
-                      </v-col>               
-                      <v-col 
-                          cols="12"
-                          sm="6"
-                          align="center"
-                          justify="space-around"
+                    <v-tabs-items v-model="tab">
+                      <v-tab-item
+                        value="tab-infos"
                       >
-                        <v-btn 
-                            style="width: 90%"
-                            color="success"
-                            x-large
-                            type="submit"
-                        >
-                          Salvar
-                        </v-btn>                                                                               
-                      </v-col>           
-                </v-form>                                          
-            </v-container>
-          </v-card-text>          
+                          <v-container >
+                              <v-form 
+                                v-on:submit.prevent="updateInfos"
+                                ref="updateInfosForm"
+                                id="updateInfosForm"
+                              >         
+                    
+                                  <h4 class="secondary--text">Site</h4>
+
+                                  <v-text-field
+                                      :value="urlSite()"
+                                      readonly
+                                      :append-icon="'mdi-content-copy'"
+                                      v-clipboard:copy="urlSite()"
+                                      v-clipboard:success="onCopy"
+                                      v-clipboard:error="onError"                        
+                                  ></v-text-field>
+
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">      
+                                        <arroba-input 
+                                            :value="companySite.arroba"
+                                            @set-arroba="setArroba"        
+                                            :disabled="companySite.subdomainSync"                  
+                                        ></arroba-input>
+                                  </v-col>              
+
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Título do Site"
+                                          v-model="companySite.title"
+                                          filled
+                                          prepend-icon="mdi-home"                 
+                                      ></v-text-field>           
+                                  </v-col>              
+
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Descrição do Site"
+                                          v-model="companySite.description"
+                                          filled
+                                          prepend-icon="mdi-home"                 
+                                      ></v-text-field>           
+                                  </v-col>                                  
+
+                                  <h4>Redes Sociais</h4>
+                              
+                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
+                                          <instagram-input 
+                                            :value="companySite.instagram"
+                                            @set-instagram="setInstagram"
+                                          ></instagram-input>
+                                    </v-col>       
+                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">    
+                                          <facebook-input
+                                            :value="companySite.facebook"
+                                            @set-facebook="setFacebook"
+                                          ></facebook-input>                        
+                                    </v-col>       
+                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
+                                          <whatsapp-input
+                                              :value="companySite.whatsapp"
+                                              @set-whatsapp="setWhatsapp"                          
+                                          ></whatsapp-input>
+                                    </v-col>           
+
+                                    <h4>Endereço</h4>    
+
+                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Pesquisa de Endereço"
+                                          v-model="companySite.description"
+                                          filled
+                                          prepend-icon="mdi-google-maps"                 
+                                      ></v-text-field>           
+                                  </v-col>                                            
+
+                                    <v-col 
+                                        cols="12"
+                                        sm="6"
+                                        align="center"
+                                        justify="space-around"
+                                    >
+                                      <v-btn 
+                                          style="width: 90%"
+                                          color="success"
+                                          x-large
+                                          type="submit"
+                                      >
+                                        Salvar
+                                      </v-btn>                                                                               
+                                    </v-col>     
+
+                                    <br/><br/><br/>  
+
+
+                              </v-form>                                          
+                          </v-container>
+                      </v-tab-item>
+                      <v-tab-item
+                        value="tab-photos"
+                      >
+                          <v-container >
+                              <v-form 
+                                v-on:submit.prevent="updatePhotos"
+                                ref="updatePhotosForm"
+                                id="updatePhotosForm"
+                              >                               
+                                <h4>Photos</h4>
+                              </v-form>
+                          </v-container>
+                      </v-tab-item>
+                    </v-tabs-items>      
+                   
+
+          
           <div style="flex: 1 1 auto;"></div>
         </v-card>
         <snack-bar :color="message.color" :text="message.text" :show="message.show" />
@@ -145,6 +203,8 @@ export default {
       return {
         userLogged: {},
         message: { show: false, color: 'primary', text: '' },  
+        tab: null,
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',        
       }
     }, 
     methods: {

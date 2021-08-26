@@ -25,6 +25,7 @@
     "vue-pull-refresh": "^0.2.7",
     "vue-qrcode": "^0.3.5",
     "vue-router": "^3.5.1",
+    "vue2-google-maps": "^0.10.7",
     "vuetify": "^2.2.11",
     "vuetify-money": "^1.2.0",
     "vuex": "^3.6.2"
@@ -33,7 +34,7 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "^3.1.1",
     "@vue/cli-plugin-pwa": "^4.5.11",
-    "@vue/cli-service": "^3.3.1",
+    "@vue/cli-service": "^4.5.13",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
