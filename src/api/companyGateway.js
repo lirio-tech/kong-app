@@ -1,6 +1,7 @@
 import Axios from "axios";
 
 const COMPANIES_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies';
+const COMPANIES_SITE_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/companies-site';
 
 export default{
     getCompanyById(_id, callback, errorCb) {
@@ -105,7 +106,7 @@ export default{
             })   
       },
       getCompanySiteById(companyId, callback, errorCb) {
-        let url = `${COMPANIES_API}/${companyId}/site-info`;
+        let url = `${COMPANIES_SITE_API}/${companyId}/site-info`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)
@@ -116,7 +117,7 @@ export default{
             })        
     },     
     getCompanySiteByArroba(arroba, callback, errorCb) {
-        let url = `${COMPANIES_API}/${arroba}/site-info/arroba`;
+        let url = `${COMPANIES_SITE_API}/${arroba}/site-info/arroba`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)
@@ -127,7 +128,7 @@ export default{
             })        
     },
     getCompanySiteDiscoveryByWindowLocation(hostname, callback, errorCb) {
-        let url = `${COMPANIES_API}/site-info/discovery/origin/app/?hostname=${hostname}`;
+        let url = `${COMPANIES_SITE_API}/site-info/discovery/origin/app/?hostname=${hostname}`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)
@@ -138,7 +139,7 @@ export default{
             })    
     },
     saveCompanySite(companyId, copmanySite, callback, errorCb)     {
-        let url = `${COMPANIES_API}/${companyId}/site-info`;
+        let url = `${COMPANIES_SITE_API}/${companyId}/site-info`;
         Axios.put(url, copmanySite)
             .then(data => {
                 callback(data.data)

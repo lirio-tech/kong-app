@@ -40,22 +40,31 @@
                         v-clipboard:error="onError"                        
                     ></v-text-field>
 
-                    <h4>Arroba</h4>
                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">      
                           <arroba-input 
                               :value="companySite.arroba"
-                              @set-arroba="setArroba"                          
+                              @set-arroba="setArroba"        
+                              :disabled="companySite.subdomainSync"                  
                           ></arroba-input>
                     </v-col>              
 
-                    <h4>Título do Site</h4>
                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
                         <v-text-field
+                            label="Título do Site"
                             v-model="companySite.title"
                             filled
                             prepend-icon="mdi-home"                 
                         ></v-text-field>           
-                    </v-col>                      
+                    </v-col>              
+
+                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                        <v-text-field
+                            label="Descrição do Site"
+                            v-model="companySite.description"
+                            filled
+                            prepend-icon="mdi-home"                 
+                        ></v-text-field>           
+                    </v-col>                                  
 
                     <h4>Rede Social</h4>
                 

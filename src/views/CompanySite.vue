@@ -20,9 +20,9 @@
 
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-          <v-app-bar-title>
-            <span style="width: 800px;"> {{ company.name }} </span>
-          </v-app-bar-title>
+       
+            <span style="align-self: flex-end; width: 1000px;"> {{ companySite.title }} 💈</span>
+     
 
           <v-spacer></v-spacer>
      
@@ -78,7 +78,7 @@
       <v-container v-if="tabView === 'HOME'">
           <br/>
           <center class="white--text">
-            A Melhor Barbearia da Região!!!
+            {{ companySite.description }}
           </center>
           <br/>
           <v-row>
@@ -118,6 +118,7 @@
           <h4>Contato</h4>
       </v-container>     
       <dialog-update-site 
+        v-if="isAdmin()"
         :dialog="dialogUpdate"
         :companySite="companySite"
         :company="company"
@@ -130,6 +131,7 @@ import companyGateway from '../api/companyGateway'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
 import storage from '../storage'
 import commons from '../utils/commons'
+import UserTypes from '../utils/UserTypes'
 
 export default {
   components: { DialogUpdateSite, },
@@ -146,6 +148,9 @@ export default {
     company: {}
   }),
   methods: {
+    isAdmin() {
+      return UserTypes.isAdmin(this.userLogged.type);
+    },    
     openWhats() {
         window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Oi ${this.company.name} 💈, estou no seu site 🙂`
     },
