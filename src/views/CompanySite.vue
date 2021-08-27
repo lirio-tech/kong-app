@@ -151,9 +151,26 @@
                     </div>
                     <br/>
                     <div v-if="companySite.instagram || companySite.facebook">
-                        <h4 class="white--text">📱 Siga a gente nas Redes </h4>   
-                        <p style="margin-left: 10px; margin-top: 15px;"><v-icon class="white--text">mdi-instagram</v-icon> /{{companySite.instagram}}</p>
-                        <p style="margin-left: 10px;"><v-icon class="white--text" >mdi-facebook</v-icon> /{{companySite.facebook}}</p>
+                        
+                        <h4 class="white--text">
+                          📱 Siga a gente nas Redes 
+                        </h4>   
+
+                        <p v-if="companySite.instagram" 
+                          style="margin-left: 10px; margin-top: 15px;"
+                        >
+                            <v-btn text @click="openInsta()" v-if="companySite.instagram">
+                              <v-icon color="white">mdi-instagram</v-icon> &nbsp;&nbsp; <span style="text-transform: lowercase;" class="white--text">@{{companySite.instagram}}</span>
+                            </v-btn>                        
+                        </p>
+                        
+                        <p v-if="companySite.facebook" 
+                          style="margin-left: 10px;"
+                        >
+                            <v-btn text @click="openFace()" v-if="companySite.facebook">
+                              <v-icon color="white">mdi-facebook</v-icon> &nbsp;&nbsp; <span style="text-transform: lowercase;" class="white--text">/{{companySite.facebook}}</span>
+                            </v-btn>     
+                        </p>
                     </div>
                     <br/>
 
@@ -165,7 +182,11 @@
                   xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
                 >               
                     <center v-if="companySite.whatsapp">
-                        <h2 class="white--text"> <v-icon class="green--text">mdi-whatsapp</v-icon> {{ companySite.whatsapp }} </h2>   
+                        
+                        <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
+                          <v-icon color="green">mdi-whatsapp</v-icon>
+                        </v-btn>
+                        <span class="green--text">{{ companySite.whatsapp }}</span>
                     </center>
                 </v-col>
             </v-row>
