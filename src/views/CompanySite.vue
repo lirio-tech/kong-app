@@ -133,8 +133,9 @@
                       :position="getPosition(item)" 
                       :clickable="true" 
                       @click="toggleInfo(item, key)" 
-                      :icon="{ url: require('../../assets/img/marker-a.png')}"
+                   
                     />
+                       <!-- :icon="{ url: require('../../assets/img/marker-a.png')}" -->
                 </GmapMap>
 
             </v-col>
