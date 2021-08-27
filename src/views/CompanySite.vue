@@ -236,7 +236,7 @@ export default {
   }),
   methods: {
     isAdmin() {
-      return userLogged && UserTypes.isAdmin(this.userLogged.type);
+      return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
     },    
     openWhats() {
         window.location.href = `https://api.whatsapp.com/send?phone=55${this.companySite.whatsapp}&text=Oi ${this.company.name} 💈, estou no seu site 🙂`
