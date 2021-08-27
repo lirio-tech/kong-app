@@ -127,7 +127,14 @@
                   <gmap-info-window :options="infoOptions" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
                     {{infoContent}}
                   </gmap-info-window>                
-                    <gmap-marker v-for="(item, key) in coordinates" :key="key" :position="getPosition(item)" :clickable="true" @click="toggleInfo(item, key)" />
+                    <gmap-marker 
+                      v-for="(item, key) in coordinates" 
+                      :key="key" 
+                      :position="getPosition(item)" 
+                      :clickable="true" 
+                      @click="toggleInfo(item, key)" 
+                      :icon="{ url: require('../../assets/img/marker-a.png')}"
+                    />
                 </GmapMap>
 
             </v-col>
