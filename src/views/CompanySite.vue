@@ -160,7 +160,7 @@
                           style="margin-left: 10px; margin-top: 15px;"
                         >
                             <v-btn text @click="openInsta()" v-if="companySite.instagram">
-                              <v-icon color="white">mdi-instagram</v-icon> &nbsp;&nbsp; <span style="text-transform: lowercase;" class="white--text">@{{companySite.instagram}}</span>
+                              <v-icon color="white">mdi-instagram</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
                             </v-btn>                        
                         </p>
                         
@@ -168,7 +168,7 @@
                           style="margin-left: 10px;"
                         >
                             <v-btn text @click="openFace()" v-if="companySite.facebook">
-                              <v-icon color="white">mdi-facebook</v-icon> &nbsp;&nbsp; <span style="text-transform: lowercase;" class="white--text">/{{companySite.facebook}}</span>
+                              <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
                             </v-btn>     
                         </p>
                     </div>
