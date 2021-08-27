@@ -112,35 +112,15 @@
           </v-row>          
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
-          <h4>Agenda</h4>
+          <h2 class="white--text">Agenda</h2>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
-          <h4>Contato</h4>
-          <v-card
-            class="pa-4"
-            flat
-            height="300px"
-            img="https://cdn.vuetifyjs.com/images/toolbar/map.jpg"
-          >
-            <v-toolbar
-              dense
-              floating
+          <h2 class="white--text">Contato</h2>
+            <v-col
+              xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
             >
-              <v-text-field
-                hide-details
-                prepend-icon="search"
-                single-line
-              ></v-text-field>
-
-              <v-btn icon>
-                <v-icon>my_location</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </v-toolbar>
-          </v-card>          
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14632.983728804074!2d-46.37206755134668!3d-23.52365541044936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce6557d3049745%3A0xe904bb356744f48b!2sWiskrit%C3%B3rio%20Barber%20shop!5e0!3m2!1spt-BR!2sbr!4v1630073809397!5m2!1spt-BR!2sbr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </v-col>
       </v-container>     
       <dialog-update-site 
         v-if="isAdmin()"
