@@ -115,30 +115,60 @@
           <h2 class="white--text">Agenda</h2>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
-          <h2 class="white--text">Contato</h2>
-            <v-col
-              xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
-            >
-                <GmapMap
-                  :center='center'
-                  :zoom='16'
-                  style='width:100%;  height: 400px;'
+            <h2 class="white--text">Contato</h2>
+            <br/>
+            <v-row>
+                <v-col
+                  v-if="companySite.address && companySite.address.lat && companySite.address.lng"
+                  xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
                 >
-                  <gmap-info-window :options="infoOptions" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
-                    <span class="black--text">{{infoContent}}</span>
-                  </gmap-info-window>                
-                    <gmap-marker 
-                      v-for="(item, key) in coordinates" 
-                      :key="key" 
-                      :position="getPosition(item)" 
-                      :clickable="true" 
-                      @click="toggleInfo(item, key)" 
-                   
-                    />
-                       <!-- :icon="{ url: require('../../assets/img/marker-a.png')}" -->
-                </GmapMap>
+                    <GmapMap
+                      :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
+                      :zoom='16'
+                      style='width:100%;  height: 400px;'
+                    >
+                      <gmap-info-window :options="{ pixelOffset: { width: 0, height: -35 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
+                        <span class="black--text">{{infoContent}}</span>
+                      </gmap-info-window>                
+                        <gmap-marker 
+                          v-for="(item, key) in coordinates" 
+                          :key="key" 
+                          :position="getPosition(item)" 
+                          :clickable="true" 
+                          @click="toggleInfo(item, key)" 
+                      
+                        />
+                          <!-- :icon="{ url: require('../../assets/img/marker-a.png')}" -->
+                    </GmapMap>
 
-            </v-col>
+                </v-col>
+                <v-col
+                  xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+                > 
+                    <div v-if="companySite.address">
+                        <h4 class="white--text">📍 Endereço</h4>   
+                        <p style="margin-left: 10px;"><small class="white--text">{{ `${companySite.address.street}, ${companySite.address.number} - ${companySite.address.district} - ${companySite.address.city} - ${companySite.address.state}` }}</small> </p>
+                    </div>
+                    <br/>
+                    <div v-if="companySite.instagram || companySite.facebook">
+                        <h4 class="white--text">📱 Siga a gente nas Redes </h4>   
+                        <p style="margin-left: 10px; margin-top: 15px;"><v-icon class="white--text">mdi-instagram</v-icon> /{{companySite.instagram}}</p>
+                        <p style="margin-left: 10px;"><v-icon class="white--text" >mdi-facebook</v-icon> /{{companySite.facebook}}</p>
+                    </div>
+                    <br/>
+
+                </v-col>
+            </v-row>
+            <br/><br/><br/>
+            <v-row>
+                <v-col
+                  xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
+                >               
+                    <center v-if="companySite.whatsapp">
+                        <h2 class="white--text"> <v-icon class="green--text">mdi-whatsapp</v-icon> {{ companySite.whatsapp }} </h2>   
+                    </center>
+                </v-col>
+            </v-row>
       </v-container>     
       <dialog-update-site 
         v-if="isAdmin()"
@@ -163,6 +193,8 @@ export default {
     dialogUpdate: false,
     userLogged: {},
     companySite: {
+      title: '',
+      description: '',
       whatsapp: '',
       facebook: '',
       instagram: '',
@@ -171,23 +203,11 @@ export default {
     },
     company: {},
 
-    center: { lat: -23.533900584696596, lng: -46.36626008454244  },
-    coordinates: {
-      0: {
-        full_name: 'Wiskritorio Barber Shop',
-            lat: -23.533900584696596, lng: -46.36626008454244 
-      },
-    },
+    coordinates: { },
     infoPosition: null,
     infoContent: null,
-    infoOpened: false,
+    infoOpened: true,
     infoCurrentKey: null,
-    infoOptions: {
-      pixelOffset: {
-        width: 0,
-        height: -35
-      }
-    },    
 
   }),
   methods: {
@@ -210,6 +230,13 @@ export default {
                     this.companySite = res.companySite;
                     if(!this.companySite.address) this.companySite.address = {};
                     this.company = res.company;
+                    this.coordinates = { 
+                        0: {
+                            full_name: 'Wiskritorio Barber Shop',
+                            lat: -23.533900584696596, lng: -46.36626008454244 
+                        },
+                    };    
+                    this.toggleInfo(this.coordinates[0], "0");                    
                 }
             }, () => {
                 alert('Erro ao buscar informações do Site ');
@@ -257,9 +284,6 @@ export default {
   beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.getCompanyArroba(this.$route.params.arroba);
-
-      this.toggleInfo(this.coordinates[0], "0");
-
   }
 }
 </script>
