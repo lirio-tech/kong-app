@@ -126,25 +126,12 @@
                                         :hint="linkCompany" 
                                     />
                                 </v-col>        
-                                <!-- <v-col cols="12">
-                                    <v-text-field
-                                        autocomplete="off"
-                                        label="Site"
-                                        prepend-icon="mdi-link"
-                                        required
-                                        v-model="companySite.site"
-                                        @blur="companySite.site = companySite.site.toLowerCase()"
-                                        ref="site"
-                                        :counter="40"
-                                        :disabled="!isAdmin()"
-                                        :hint="`Ex: www.barbearia.com.br`" 
-                                    />
-                                </v-col>                                                                                             -->
                                 <br/>
                                 <v-btn
                                     color="success"
                                     type="submit"
                                     :disabled="!isAdmin()"
+                                    v-if="userLogged.type === 'sys_admin'"
                                 >
                                     Salvar
                                 </v-btn>           
@@ -152,8 +139,8 @@
                                 <v-btn
                                     type="button"
                                     :to="`/@/${companySite.arroba}`"
-                                    :disabled="!isAdmin() && userLogged.username === 'diego'"
                                     color="primary"
+                                    v-if="userLogged.type === 'sys_admin'"
                                 >
                                     Site <v-icon>mdi-share</v-icon>
                                 </v-btn>                                               

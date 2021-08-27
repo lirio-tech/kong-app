@@ -168,7 +168,8 @@ export default {
       whatsapp: '',
       facebook: '',
       instagram: '',
-      photoCover: 'https://picsum.photos/1920/1080?random'
+      photoCover: 'https://picsum.photos/1920/1080?random',
+      address: {}
     },
     company: {}
   }),
@@ -190,6 +191,7 @@ export default {
             (res) => {
                 if(res) {
                     this.companySite = res.companySite;
+                    if(!this.companySite.address) this.companySite.address = {};
                     this.company = res.company;
                 }
             }, () => {

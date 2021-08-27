@@ -124,12 +124,69 @@
 
                                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
                                       <v-text-field
-                                          label="Pesquisa de Endereço"
-                                          v-model="companySite.description"
+                                          label="CEP"
+                                          v-model="companySite.address.postalCode"
+                                          filled
+                                          v-mask="'#####-###'"
+                                          @keyup="getAddress"
+                                          prepend-icon="mdi-google-maps"      
+                                          ref="postalCode"           
+                                      ></v-text-field>           
+                                  </v-col>                 
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Rua"
+                                          v-model="companySite.address.street"
+                                          filled
+                                          prepend-icon="mdi-google-maps"       
+                                          ref="street"                     
+                                      ></v-text-field>           
+                                  </v-col>   
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Número"
+                                          v-model="companySite.address.number"
+                                          filled
+                                          prepend-icon="mdi-google-maps"   
+                                          ref="number"              
+                                      ></v-text-field>           
+                                  </v-col>   
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Bairro"
+                                          v-model="companySite.address.district"
+                                          filled
+                                          prepend-icon="mdi-google-maps"       
+                                          ref="district"                               
+                                      ></v-text-field>           
+                                  </v-col>   
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Cidade"
+                                          v-model="companySite.address.city"
                                           filled
                                           prepend-icon="mdi-google-maps"                 
                                       ></v-text-field>           
-                                  </v-col>                                            
+                                  </v-col>   
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                      <v-text-field
+                                          label="Estado"
+                                          v-model="companySite.address.state"
+                                          filled
+                                          prepend-icon="mdi-google-maps"    
+                                          max="2"             
+                                          ref="state"                               
+                                      ></v-text-field>           
+                                  </v-col>                 
+                                  <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                                    <v-text-field
+                                        label="Complemento"
+                                        v-model="companySite.address.complement"
+                                        filled
+                                        prepend-icon="mdi-google-maps"            
+                                        ref="complement" 
+                                    ></v-text-field>           
+                                </v-col>                                                                                                                                                                                                                            
 
                                     <v-col 
                                         cols="12"
@@ -187,6 +244,7 @@ import WhatsappInput from './inputs/WhatsappInput.vue'
 import commons from '../utils/commons'
 import SnackBar from './SnackBar.vue'
 import companyGateway from '../api/companyGateway'
+import addressGateway from '../api/addressGateway'
 export default {
     components: { 
       InstagramInput, 
@@ -235,6 +293,7 @@ export default {
                     () => {
                         this.showMessage('Atualizado com Sucesso!!!'); 
                         this.loadingInfo = false;
+                        this.$router.push(`/@/${this.companySite.arroba}`)
                     }, (err) => {
                         this.loadingInfo = false;
                         if(err.response.status === 500) {
@@ -259,6 +318,30 @@ export default {
         this.message.color = 'info';
         this.message.text = text;
         setTimeout(() => this.message.show = false, 4000);
+      },     
+      getAddress() {
+        if(this.companySite.address.postalCode.length === 9) {
+            addressGateway.getAddreesByCep(this.companySite.address.postalCode.replace(/[^0-9]/g, ""), 
+              res => {
+                console.log(res);
+                  this.companySite.address.postalCode = res.postalCode;
+                  this.companySite.address.street = res.street;
+                  this.companySite.address.district = res.district;
+                  this.companySite.address.city = res.city;
+                  this.companySite.address.state = res.state;
+                  this.setFocusAddress();
+              }, () => {
+
+              }) 
+        }
+      },
+      setFocusAddress() {
+          if(!this.companySite.address.postalCode) this.$refs.postalCode.focus();
+          else if(!this.companySite.address.number) this.$refs.number.focus();
+          else if(!this.companySite.address.district) this.$refs.district.focus();
+          else if(!this.companySite.address.city) this.$refs.city.focus();
+          else if(!this.companySite.address.state) this.$refs.state.focus();
+          else this.$refs.complement.focus();
       },      
     },
     computed: {
