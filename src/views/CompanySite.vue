@@ -21,7 +21,7 @@
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
        
-            <span style="align-self: flex-end; width: 1000px;">💈 {{ companySite.title }} </span>
+            <span style="align-self: flex-end; width: 900px;">💈 <br/>{{ companySite.title }} </span>
      
 
           <v-spacer></v-spacer>
@@ -113,6 +113,8 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
           <h2 class="white--text">Agenda</h2>
+          <br/>
+          <site-agendamentos></site-agendamentos>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
             <h2 class="white--text">Contato</h2>
@@ -203,12 +205,13 @@
 <script>
 import companyGateway from '../api/companyGateway'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
+import SiteAgendamentos from '../components/SiteAgendamentos.vue'
 import storage from '../storage'
 import commons from '../utils/commons'
 import UserTypes from '../utils/UserTypes'
 
 export default {
-  components: { DialogUpdateSite, },
+  components: { DialogUpdateSite, SiteAgendamentos, },
   data: () => ({
     tabView: 'HOME',
     dialogUpdate: false,
