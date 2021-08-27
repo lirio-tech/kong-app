@@ -146,7 +146,7 @@
                   xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
                 > 
                     <div v-if="companySite.address">
-                        <h4 class="white--text">📍 Endereço</h4>   
+                        <h4 class="white--text">📍 Endereço</h4>   <br/>
                         <p style="margin-left: 10px;"><small class="white--text">{{ `${companySite.address.street}, ${companySite.address.number} - ${companySite.address.district} - ${companySite.address.city} - ${companySite.address.state}` }}</small> </p>
                     </div>
                     <br/>
