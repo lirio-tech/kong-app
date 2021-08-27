@@ -92,73 +92,6 @@
                     @change="updateRange"
                   >
                   </v-calendar>
-                  <v-menu
-                    v-model="selectedOpen"
-                    :close-on-content-click="false"
-                    :activator="selectedElement"
-                    offset-x
-                  >
-                    <v-card
-                      color="grey lighten-4"
-                      min-width="350px"
-                      flat
-                    >
-                      <v-toolbar
-                        :color="selectedEvent.color"
-                        dark
-                      >
-                        <v-btn icon @click="selectedOpen = false">
-                          <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                        <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                        
-                      </v-toolbar>
-                      <v-card-text class="indigo--text">
-                        {{ selectedEvent.detail }}<br/>
-                        Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
-                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
-                        {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
-                        
-                        <span v-if="selectedEvent.status === 'DONE'">R$ {{ selectedEvent.total | currency }}</span> <br/>
-                        <h3 v-if="selectedEvent.status === 'DONE'" class="success--text">Concluído</h3>
-                        <router-link
-                          v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
-                          :to="{ path: `/ordem-servico/${selectedEvent.orderId}` }"
-                        >
-                          Ordem de Serviço
-                        </router-link>
-                      </v-card-text>
-                      <v-card-actions v-if="selectedEvent.status === 'PENDING'">
-                        <v-btn
-                          color="white" 
-                          @click="alterarAgendamentoShowDialog(selectedEvent._id)" 
-                          v-if="selectedEvent.status === 'PENDING'"
-                          class="indigo--text"
-                          small
-                        >
-                          Alterar
-                        </v-btn>                        
-                        <v-btn
-                          color="red" 
-                          @click="cancel(selectedEvent._id)"
-                          class="white--text"
-                          :loading="loadingCancel"
-                          small
-                        >
-                          Cancelar
-                        </v-btn>
-                        
-                        <v-btn
-                          color="success"
-                          @click="showDialogConcluir(true, selectedEvent._id)"
-                          :loading="loadingConcluir"
-                          small
-                        >
-                          Concluir
-                        </v-btn>                                        
-                      </v-card-actions>
-                    </v-card>
-                  </v-menu>
                 </v-sheet>
               </v-col>
             </v-row>
@@ -171,8 +104,8 @@
 
 <script>
 import storage from '../storage'
-import dateUtil from '../utils/date'
-import agendamentoGateway from '../api/agendamentoGateway';
+// import dateUtil from '../utils/date'
+// import agendamentoGateway from '../api/agendamentoGateway';
 export default {
     name: 'SiteAgendamentos',
     components: { 
@@ -182,7 +115,7 @@ export default {
         value: '',
         agendamentos: [],
         agendamento: {},
-        typePeriod: 'day',
+        typePeriod: 'week',
         selectedEvent: {},
         selectedElement: null,
         selectedOpen: false,
@@ -203,19 +136,19 @@ export default {
     },
     methods: {
         findAgendamento() {
-           let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
-           agendamentoGateway.getAgendamentos(_date, _date,
-               res => {
-                   this.agendamentos = res;
-                   console.log('before');
-                   this.updateCalendar(_date, _date);
-                   if(this.$route.query._id) {
-                      this.alterarAgendamentoShowDialog(this.$route.query._id);
-                      this.$route.query._id = null;
-                   }
-               }, () => {
-                 alert('Erro ao Buscar agendamentos');
-               })    
+           //let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
+          //  agendamentoGateway.getSiteAgendamentos(
+          //      res => {
+          //          this.agendamentos = res;
+          //          console.log('before');
+          //          this.updateCalendar(_date, _date);
+          //          if(this.$route.query._id) {
+          //             this.alterarAgendamentoShowDialog(this.$route.query._id);
+          //             this.$route.query._id = null;
+          //          }
+          //      }, () => {
+          //        alert('Erro ao Buscar agendamentos');
+          //      })    
         },  
         setTypePeriod(tp) {
           this.typePeriod = tp;

@@ -149,7 +149,7 @@
                 > 
                     <div v-if="companySite.address">
                         <h4 class="white--text">📍 Endereço</h4>   <br/>
-                        <p style="margin-left: 10px;"><small class="white--text">{{ `${companySite.address.street}, ${companySite.address.number} - ${companySite.address.district} - ${companySite.address.city} - ${companySite.address.state}` }}</small> </p>
+                        <p style="margin-left: 30px;"><small class="white--text">{{ `${companySite.address.street}, ${companySite.address.number} - ${companySite.address.district} - ${companySite.address.city} - ${companySite.address.state}` }}</small> </p>
                     </div>
                     <br/>
                     <div v-if="companySite.instagram || companySite.facebook">
