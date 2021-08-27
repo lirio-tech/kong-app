@@ -119,7 +119,17 @@
             <v-col
               xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
             >
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14632.983728804074!2d-46.37206755134668!3d-23.52365541044936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce6557d3049745%3A0xe904bb356744f48b!2sWiskrit%C3%B3rio%20Barber%20shop!5e0!3m2!1spt-BR!2sbr!4v1630073809397!5m2!1spt-BR!2sbr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <GmapMap
+                  :center='center'
+                  :zoom='16'
+                  style='width:100%;  height: 400px;'
+                >
+                  <gmap-info-window :options="infoOptions" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
+                    {{infoContent}}
+                  </gmap-info-window>                
+                    <gmap-marker v-for="(item, key) in coordinates" :key="key" :position="getPosition(item)" :clickable="true" @click="toggleInfo(item, key)" />
+                </GmapMap>
+
             </v-col>
       </v-container>     
       <dialog-update-site 
@@ -151,7 +161,26 @@ export default {
       photoCover: 'https://picsum.photos/1920/1080?random',
       address: {}
     },
-    company: {}
+    company: {},
+
+    center: { lat: -23.533900584696596, lng: -46.36626008454244  },
+    coordinates: {
+      0: {
+        full_name: 'Wiskritorio Barber Shop',
+            lat: -23.533900584696596, lng: -46.36626008454244 
+      },
+    },
+    infoPosition: null,
+    infoContent: null,
+    infoOpened: false,
+    infoCurrentKey: null,
+    infoOptions: {
+      pixelOffset: {
+        width: 0,
+        height: -35
+      }
+    },    
+
   }),
   methods: {
     isAdmin() {
@@ -197,11 +226,32 @@ export default {
     },
     showDialog(show) {
       this.dialogUpdate = show;
+    },
+    getPosition: function(marker) {
+      return {
+        lat: parseFloat(marker.lat),
+        lng: parseFloat(marker.lng)
+      }
+    },
+    toggleInfo: function(marker, key) {
+      console.log(marker, key);
+      this.infoPosition = this.getPosition(marker)
+      this.infoContent = marker.full_name
+      if (this.infoCurrentKey == key) {
+        this.infoOpened = !this.infoOpened
+      } else {
+        this.infoOpened = true
+        this.infoCurrentKey = key
+      }
     }
+
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.getCompanyArroba(this.$route.params.arroba)
+      this.getCompanyArroba(this.$route.params.arroba);
+
+      this.toggleInfo(this.coordinates[0], "0");
+
   }
 }
 </script>

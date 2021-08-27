@@ -11,7 +11,15 @@ import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
 import VueGoogleCharts from 'vue-google-charts'
 import money from 'v-money'
-import "./plugins/vuetify-money.js";
+import "./plugins/vuetify-money.js"
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: process.env.VUE_APP_GOOGLE_MAPS_KEY,
+    libraries: 'places',
+  }
+});
 
 Vue.config.productionTip = false
 Vue.use(VueClipboard)
