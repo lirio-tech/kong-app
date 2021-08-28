@@ -45,7 +45,7 @@
                 </v-alert>
                 </v-card>
             </v-col>
-            <v-row v-if="userLogged.type === 'sys_admin'">
+            <v-row v-if="userLogged.type === 'sys_admin' || company._id === '606627b33919e16f05f4b1a7'" >
                 <v-col cols="12">
                       <home-site 
                         :company="company" 
