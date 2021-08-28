@@ -200,6 +200,7 @@
         @show-dialog="showDialog"
         @set-company-site="setCompanySite"
         @set-company-site-photo-cover-url="setCompanySitePhotoCoverUrl"
+        @set-company-site-photos="setCompanySitePhotos"
       ></dialog-update-site>       
   </div>
 </template>
@@ -300,6 +301,9 @@ export default {
     setCompanySitePhotoCoverUrl(urlPhotoCover) {
         this.companySite.photoCover = urlPhotoCover;
     },    
+    setCompanySitePhotos(photosGallery) {
+        this.companySite.photos = photosGallery;
+    },
     toggleInfo: function(marker, key) {
       console.log(marker, key);
       this.infoPosition = this.getPosition(marker)

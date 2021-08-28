@@ -278,15 +278,15 @@
                                                   </v-btn>                                                     
                                               </v-card-title>
 
-                                    </v-img>
-                                    <input
-                                      ref="uploaderItem"
-                                      class="d-none"
-                                      type="file"
-                                      accept="image/jpeg, image/jpg"
-                                      @change="onFileItemChanged"
-                                    >                                       
+                                    </v-img>                                 
                                   </v-col>
+                                  <input
+                                    ref="uploaderGalleryItem"
+                                    class="d-none"
+                                    type="file"
+                                    accept="image/jpeg, image/jpg"
+                                    @change="onFileItemChanged"
+                                  >                                        
                                 </v-row>      
 
 
@@ -402,7 +402,7 @@ export default {
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado :(');
+                  alert('Algo deu errado ao alterar Foto da Capa :(');
                 }
               )
           };
@@ -414,7 +414,7 @@ export default {
           window.addEventListener('focus', () => {
             this.photoItemGallerySeletedIndex = CLEAN_INDEX;
           }, { once: true })
-          this.$refs.uploaderItem.click()             
+          this.$refs.uploaderGalleryItem.click()             
       },      
       onFileItemChanged(event) {
           event.preventDefault();
@@ -426,13 +426,13 @@ export default {
               let payload = { _siteId: this.companySite._id, photoGallery: 'data:image/jpeg;base64,' + this.photoGallery };
               this.photoItemGallerySeletedIndex = this.companySite.photos.indexOf(this.photoGalleryItem);
               companyGateway.uploadPhotoGallery(this.companySite._id, this.photoGalleryItem._id, payload, 
-                () => {
+                (res) => {
                   this.photoItemGallerySeletedIndex = CLEAN_INDEX;
-                  this.$emit('set-company-site', this.companySite)
+                  this.$emit('set-company-site-photos', res)
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado :(');
+                  alert('Algo deu errado Foto da Galeria :(');
                 }
               )
           };
