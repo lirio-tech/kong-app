@@ -170,5 +170,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })               
-      }
+      },
+      uploadPhotoGallery(siteId, photoGalleryId, photoGalley, callback, errorCb) {
+        let url = `${COMPANIES_SITE_API}/site-info/${siteId}/upload-photo-gallery/${photoGalleryId}`;
+        Axios.patch(url, photoGalley)
+            .then(data => {
+                callback(data.data) 
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })               
+      }      
 }

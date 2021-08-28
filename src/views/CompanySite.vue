@@ -198,6 +198,8 @@
         :companySite="companySite"
         :company="company"
         @show-dialog="showDialog"
+        @set-company-site="setCompanySite"
+        @set-company-site-photo-cover-url="setCompanySitePhotoCoverUrl"
       ></dialog-update-site>       
   </div>
 </template>
@@ -208,7 +210,8 @@ import SiteAgendamentos from '../components/SiteAgendamentos.vue'
 import storage from '../storage'
 import commons from '../utils/commons'
 import UserTypes from '../utils/UserTypes'
-
+const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
+//const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
   components: { DialogUpdateSite, SiteAgendamentos, },
   data: () => ({
@@ -221,7 +224,7 @@ export default {
       whatsapp: '',
       facebook: '',
       instagram: '',
-      photoCover: 'https://picsum.photos/1920/1080?random',
+      photoCover: IMAGES_RANDOM_URL,
       address: {}
     },
     company: {},
@@ -291,6 +294,12 @@ export default {
         lng: parseFloat(marker.lng)
       }
     },
+    setCompanySite(companySite) {
+        this.companySite = companySite;
+    },
+    setCompanySitePhotoCoverUrl(urlPhotoCover) {
+        this.companySite.photoCover = urlPhotoCover;
+    },    
     toggleInfo: function(marker, key) {
       console.log(marker, key);
       this.infoPosition = this.getPosition(marker)

@@ -269,10 +269,23 @@
                                     >
 
                                               <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn fab small style="z-index: 9999" @click="uploadPhotoGallery(photo)"><v-icon>mdi-camera</v-icon></v-btn>
+                                                  <v-btn 
+                                                    fab small style="z-index: 9999" 
+                                                    @click="clickUploadPhotoGalleryItem(photo)"
+                                                    :loading="companySite && companySite.photos && photoItemGallerySeletedIndex === companySite.photos.indexOf(photo)"
+                                                  >
+                                                    <v-icon>mdi-camera</v-icon>
+                                                  </v-btn>                                                     
                                               </v-card-title>
 
                                     </v-img>
+                                    <input
+                                      ref="uploaderItem"
+                                      class="d-none"
+                                      type="file"
+                                      accept="image/jpeg, image/jpg"
+                                      @change="onFileItemChanged"
+                                    >                                       
                                   </v-col>
                                 </v-row>      
 
@@ -301,6 +314,7 @@ import commons from '../utils/commons'
 import SnackBar from './SnackBar.vue'
 import companyGateway from '../api/companyGateway'
 import addressGateway from '../api/addressGateway'
+const CLEAN_INDEX = -9999
 export default {
     components: { 
       InstagramInput, 
@@ -330,7 +344,10 @@ export default {
         message: { show: false, color: 'primary', text: '' },  
         tab: null,
         isSelecting: false,
-        photoCover: ''
+        photoCover: '',
+        photoGallery: '',
+        photoGalleryItem: {},
+        photoItemGallerySeletedIndex: CLEAN_INDEX,
       }
     }, 
     methods: {
@@ -347,9 +364,10 @@ export default {
           if(this.$refs.updateInfosForm.validate()) {
                 this.loadingInfo = true;
                 companyGateway.updateCompanySite(this.company._id, this.companySite._id, this.companySite,
-                    () => {
+                    (res) => {
                         this.showMessage('Atualizado com Sucesso!!!'); 
                         this.loadingInfo = false;
+                        this.$emit('set-company-site', res);
                         this.$router.push(`/@/${this.companySite.arroba}`);
                     }, (err) => {
                         this.loadingInfo = false;
@@ -376,21 +394,50 @@ export default {
               //file = file;
               this.photoCover = reader.result.split(',')[1];
               let payload = { _siteId: this.companySite._id, photoCover: 'data:image/jpeg;base64,' + this.photoCover };
-              console.log(payload);
+              this.isSelecting = true
               companyGateway.uploadPhotoCover(payload,
                 res => {
-                  this.companySite = res;
+                  this.isSelecting = false
+                  this.$emit('set-company-site-photo-cover-url', res.urlImage)
                 },
                 () => {
+                  this.isSelecting = false
                   alert('Algo deu errado :(');
                 }
               )
           };
           reader.readAsDataURL(file);
+      },         
+      clickUploadPhotoGalleryItem(photo) {
+          this.photoGalleryItem = photo;
+          this.photoItemGallerySeletedIndex = this.companySite.photos.indexOf(this.photoGalleryItem);
+          window.addEventListener('focus', () => {
+            this.photoItemGallerySeletedIndex = CLEAN_INDEX;
+          }, { once: true })
+          this.$refs.uploaderItem.click()             
       },      
-      uploadPhotoGallery(photo) {
-          alert(photo._id);
-      },      
+      onFileItemChanged(event) {
+          event.preventDefault();
+          let reader = new FileReader();
+          let file = event.target.files[0];
+          reader.onloadend = () => {
+              //file = file;
+              this.photoGallery = reader.result.split(',')[1];
+              let payload = { _siteId: this.companySite._id, photoGallery: 'data:image/jpeg;base64,' + this.photoGallery };
+              this.photoItemGallerySeletedIndex = this.companySite.photos.indexOf(this.photoGalleryItem);
+              companyGateway.uploadPhotoGallery(this.companySite._id, this.photoGalleryItem._id, payload, 
+                () => {
+                  this.photoItemGallerySeletedIndex = CLEAN_INDEX;
+                  this.$emit('set-company-site', this.companySite)
+                },
+                () => {
+                  this.isSelecting = false
+                  alert('Algo deu errado :(');
+                }
+              )
+          };
+          reader.readAsDataURL(file);
+      },            
       urlSite() {
         return commons.urlCompany(this.companySite, this.company.companyType);
       },
@@ -436,7 +483,6 @@ export default {
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
-      this.companySite.instagram = 'diegolirio'
     }
 }
 </script>
