@@ -130,7 +130,7 @@
                       style='width:100%;  height: 400px;'
                     >
                       <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
-                        <span class="black--text">{{infoContent}}</span>
+                        <h3 class="black--text">{{infoContent}}</h3>
                       </gmap-info-window>                
                         <gmap-marker 
                           v-for="(item, key) in coordinates" 
