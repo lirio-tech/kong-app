@@ -45,10 +45,17 @@
                 </v-alert>
                 </v-card>
             </v-col>
+            <v-row v-if="userLogged.type === 'sys_admin'">
+                <v-col cols="12">
+                      <home-site 
+                        :company="company" 
+                        style="margin-bottom: -10px"
+                      />
+                </v-col>
+            </v-row>
             <v-row>
               
               <v-col cols="12">
-
                 <HomeBalanceEmployeeToReceiver
                     :userLogged="userLogged"
                     :userBalance="userBalance"
@@ -62,7 +69,7 @@
                   :loading="loadingBalance"
                   v-if="isAdmin()"
                 />                
-
+ 
               </v-col>
             </v-row>
             <v-row justify="center">
@@ -204,6 +211,7 @@ import HomeOrderServiceAdmin from '../components/HomeOrderServiceAdmin'
 import HomeBalanceAdminToPay from '../components/HomeBalanceAdminToPay'
 import HomeBalanceEmployeeToReceiver from '../components/HomeBalanceEmployeeToReceiver'
 import HomeAgendamentos from '../components/HomeAgendamentos'
+import HomeSite from '../components/HomeSite'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
@@ -213,13 +221,14 @@ export default {
     components: { 
       AppBar,
       DialogPlan,
-      DialogRateUs,
+      DialogRateUs, 
       VuePullRefresh,
       HomeOrderServiceEmployee,
       HomeOrderServiceAdmin,
       HomeBalanceAdminToPay,
       HomeBalanceEmployeeToReceiver,
       HomeAgendamentos,
+      HomeSite,
     },
     data: () => ({
       config: {

@@ -31,14 +31,14 @@
                     >
                       <v-tabs-slider></v-tabs-slider>
 
-                      <v-tab href="#tab-infos">
-                        Informações
-                        <v-icon>mdi-at</v-icon>
-                      </v-tab>
-
                       <v-tab href="#tab-photos">
                         Fotos do Site
                         <v-icon>mdi-image</v-icon>
+                      </v-tab>
+
+                      <v-tab href="#tab-infos">
+                        Informações
+                        <v-icon>mdi-at</v-icon>
                       </v-tab>
 
                     </v-tabs>

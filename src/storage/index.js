@@ -20,6 +20,15 @@ export default {
         }
         return null;
     },
+    setCompanySite(site) {
+        localStorage.setItem('company-site', site);
+    },    
+    getCompanySite() {
+        if(localStorage.getItem('company-site')) {
+            return JSON.parse(localStorage.getItem('company-site'));
+        }
+        return null;
+    },    
     setThemeKong(isKong) {
         localStorage.setItem('THEME_KONG', isKong);
     },
