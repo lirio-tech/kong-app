@@ -53,6 +53,7 @@
                                 ref="updateInfosForm"
                                 id="updateInfosForm"
                               >         
+                                
                                   <br/>
                                   <h4>🏠 Site</h4>
 
@@ -219,7 +220,7 @@
                                 v-on:submit.prevent="updatePhotos"
                                 ref="updatePhotosForm"
                                 id="updatePhotosForm"
-                              >                     
+                              >       
                                 <br/>          
                                 <h4>Foto de Capa</h4>
                                 <br/>
@@ -228,11 +229,11 @@
                                     <v-card flat class="rounded-0">
                                         <v-img
                                           :src="companySite.photoCover"
-                                          height="125"
+                                          height="175"
                                           class="grey darken-4"
                                         >
                                               <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn fab style="z-index: 9999" @click="clickUploadPhotoCover" :loading="isSelecting">
+                                                  <v-btn fab style="z-index: 9999" small @click="clickUploadPhotoCover" :loading="isSelecting">
                                                     <v-icon>mdi-camera</v-icon>
                                                   </v-btn>
                                                   <input
@@ -257,7 +258,7 @@
                                     v-for="photo in companySite.photos"
                                     :key="photo._id"
                                     class="d-flex child-flex"
-                                    xl="4" lg="4" md="4" sm="6" xs="12" cols="12"
+                                    xl="3" lg="3" md="3" sm="6" xs="6" cols="6"
 
                                   >
                                     <v-img
@@ -268,7 +269,7 @@
                                     >
 
                                               <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn fab style="z-index: 9999" @click="uploadPhotoGallery(photo)"><v-icon>mdi-camera</v-icon></v-btn>
+                                                  <v-btn fab small style="z-index: 9999" @click="uploadPhotoGallery(photo)"><v-icon>mdi-camera</v-icon></v-btn>
                                               </v-card-title>
 
                                     </v-img>
