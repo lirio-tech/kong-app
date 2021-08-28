@@ -129,7 +129,7 @@
                       :zoom='16'
                       style='width:100%;  height: 400px;'
                     >
-                      <gmap-info-window :options="{ pixelOffset: { width: 0, height: -35 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
+                      <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
                         <span class="black--text">{{infoContent}}</span>
                       </gmap-info-window>                
                         <gmap-marker 
@@ -138,9 +138,8 @@
                           :position="getPosition(item)" 
                           :clickable="true" 
                           @click="toggleInfo(item, key)" 
-                      
+                          :icon="{ url: require('../assets/barber_marker.png')}" 
                         />
-                          <!-- :icon="{ url: require('../../assets/img/marker-a.png')}" -->
                     </GmapMap>
 
                 </v-col>
