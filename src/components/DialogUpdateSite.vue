@@ -232,7 +232,7 @@
                                           class="grey darken-4"
                                         >
                                               <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn fab style="z-index: 9999" @click="uploadPhotoCover" :loading="isSelecting">
+                                                  <v-btn fab style="z-index: 9999" @click="clickUploadPhotoCover" :loading="isSelecting">
                                                     <v-icon>mdi-camera</v-icon>
                                                   </v-btn>
                                                   <input
@@ -360,7 +360,7 @@ export default {
                     });
           }
       },
-      uploadPhotoCover() {
+      clickUploadPhotoCover() {
           this.isSelecting = true
           window.addEventListener('focus', () => {
             this.isSelecting = false
@@ -376,7 +376,14 @@ export default {
               this.photoCover = reader.result.split(',')[1];
               let payload = { _siteId: this.companySite._id, photoCover: 'data:image/jpeg;base64,' + this.photoCover };
               console.log(payload);
-              //this.editProfilePhoto(payload);
+              companyGateway.uploadPhotoCover(payload,
+                res => {
+                  this.companySite = res;
+                },
+                () => {
+                  alert('Algo deu errado :(');
+                }
+              )
           };
           reader.readAsDataURL(file);
       },      

@@ -160,4 +160,15 @@ export default{
                 errorCb(error)
             })   
       },          
+      uploadPhotoCover(sitePhotoCover) {
+        let url = `${COMPANIES_SITE_API}/site-info/${sitePhotoCover._siteId}/upload-cover`;
+        Axios.patch(url, sitePhotoCover)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })               
+      }
 }
