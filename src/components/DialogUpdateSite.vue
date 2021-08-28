@@ -53,7 +53,7 @@
                                 ref="updateInfosForm"
                                 id="updateInfosForm"
                               >         
-                    
+                                  <br/>
                                   <h4>🏠 Site</h4>
 
                                   <v-text-field
@@ -219,8 +219,63 @@
                                 v-on:submit.prevent="updatePhotos"
                                 ref="updatePhotosForm"
                                 id="updatePhotosForm"
-                              >                               
-                                <h4>Photos</h4>
+                              >                     
+                                <br/>          
+                                <h4>Foto de Capa</h4>
+                                <br/>
+                                <v-row>
+                                  <v-col xl="12" lg="12" md="12" sm="12" xs="12" cols="12">   
+                                    <v-card flat class="rounded-0">
+                                        <v-img
+                                          :src="companySite.photoCover"
+                                          height="125"
+                                          class="grey darken-4"
+                                        >
+                                              <v-card-title class="align-end fill-height" style="float: right;">
+                                                  <v-btn fab style="z-index: 9999" @click="uploadPhotoCover" :loading="isSelecting">
+                                                    <v-icon>mdi-camera</v-icon>
+                                                  </v-btn>
+                                                  <input
+                                                    ref="uploader"
+                                                    class="d-none"
+                                                    type="file"
+                                                    accept="image/jpeg, image/jpg"
+                                                    @change="onFileChanged"
+                                                  >                                                      
+                                              </v-card-title>
+                                        </v-img>
+                                    </v-card>
+                                  </v-col> 
+                                </v-row>
+
+                                <br/>          
+                                <h4>Fotos de Galeria</h4>
+                                <br/>
+
+                                <v-row>
+                                  <v-col
+                                    v-for="photo in companySite.photos"
+                                    :key="photo._id"
+                                    class="d-flex child-flex"
+                                    xl="4" lg="4" md="4" sm="6" xs="12" cols="12"
+
+                                  >
+                                    <v-img
+                                      :src="`${photo.photo}`"
+                                      :lazy-src="`${photo.photo}`"
+                                      aspect-ratio="1"
+                                      class="grey lighten-2"
+                                    >
+
+                                              <v-card-title class="align-end fill-height" style="float: right;">
+                                                  <v-btn fab style="z-index: 9999" @click="uploadPhotoGallery(photo)"><v-icon>mdi-camera</v-icon></v-btn>
+                                              </v-card-title>
+
+                                    </v-img>
+                                  </v-col>
+                                </v-row>      
+
+
                               </v-form>
                           </v-container>
                       </v-tab-item>
@@ -273,7 +328,8 @@ export default {
         userLogged: {},
         message: { show: false, color: 'primary', text: '' },  
         tab: null,
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',        
+        isSelecting: false,
+        photoCover: ''
       }
     }, 
     methods: {
@@ -304,6 +360,29 @@ export default {
                     });
           }
       },
+      uploadPhotoCover() {
+          this.isSelecting = true
+          window.addEventListener('focus', () => {
+            this.isSelecting = false
+          }, { once: true })
+          this.$refs.uploader.click()          
+      },
+      onFileChanged(event) {
+          event.preventDefault();
+          let reader = new FileReader();
+          let file = event.target.files[0];
+          reader.onloadend = () => {
+              //file = file;
+              this.photoCover = reader.result.split(',')[1];
+              let payload = { _siteId: this.companySite._id, photoCover: 'data:image/jpeg;base64,' + this.photoCover };
+              console.log(payload);
+              //this.editProfilePhoto(payload);
+          };
+          reader.readAsDataURL(file);
+      },      
+      uploadPhotoGallery(photo) {
+          alert(photo._id);
+      },      
       urlSite() {
         return commons.urlCompany(this.companySite, this.company.companyType);
       },
