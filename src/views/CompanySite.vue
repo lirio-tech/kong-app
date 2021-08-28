@@ -256,11 +256,11 @@ export default {
                     this.company = res.company;
                     this.coordinates = { 
                         0: {
-                            full_name: 'Wiskritorio Barber Shop',
-                            lat: -23.533900584696596, lng: -46.36626008454244 
+                            full_name: this.companySite.title,
+                            lat: this.companySite.address.lat, lng: this.companySite.address.lng
                         },
                     };    
-                    this.toggleInfo(this.coordinates[0], "0");                    
+                    this.toggleInfo(this.coordinates[0], "0");                
                 }
             }, () => {
                 alert('Erro ao buscar informações do Site ');
