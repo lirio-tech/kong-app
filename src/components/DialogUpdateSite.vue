@@ -293,7 +293,7 @@ export default {
                     () => {
                         this.showMessage('Atualizado com Sucesso!!!'); 
                         this.loadingInfo = false;
-                        this.$router.push(`/@/${this.companySite.arroba}`)
+                        this.$router.push(`/@/${this.companySite.arroba}`);
                     }, (err) => {
                         this.loadingInfo = false;
                         if(err.response.status === 500) {
