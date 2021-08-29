@@ -13,6 +13,7 @@ import VueGoogleCharts from 'vue-google-charts'
 import money from 'v-money'
 import "./plugins/vuetify-money.js"
 import * as VueGoogleMaps from 'vue2-google-maps'
+import '@/assets/css/main.css';
 
 Vue.use(VueGoogleMaps, {
   load: {

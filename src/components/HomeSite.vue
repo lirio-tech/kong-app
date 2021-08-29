@@ -9,7 +9,7 @@
         <router-link :to="{ path: '/@/'+companySite.arroba }"  style="color: inherit; text-decoration: none">
              <v-card-text class="black--text" style="margin-top: -10px;margin-bottom: -12px;">
                 <v-col cols="12" >
-                    <span style="font-size: 20px;">💎</span> 
+                    <span class="icon-emoji">💎</span> 
                     <span class="grey--text" style="margin-left: 25px; font-size: 1.2rem">Meu Site</span>
                     <v-icon style="margin-top: 0px;float: right;">mdi-chevron-right</v-icon>
                 </v-col>   

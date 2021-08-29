@@ -9,7 +9,7 @@
         >
                     <router-link :to="isAdmin() ? `/admin/agendamentos/?date=${agendamento.dateTimeStartAt}` : `/agendamentos/?date=${agendamento.dateTimeStartAt}`" style="color: inherit; text-decoration: none">
                           <v-card-text class="black--text">
-                            <div> {{ agendamento.title }} <span style="font-size: 30px; float: right;">📌</span></div> 
+                            <div> {{ agendamento.title }} <span class="icon-emoji-30" style="float: right;">📌</span></div> 
                             <p class="text-h6 black--text">
                               {{ agendamento.customer.name }} 
                             </p>
