@@ -11,9 +11,7 @@
                           <v-list-item-content>       
                                 <v-col cols="11">
                                     <span class="icon-emoji">✂️</span> <span class="grey--text" style="margin-left: 15px">Ordem de Serviços</span>
-                                </v-col>      
-                                <v-col cols="1">  
-                                    <v-icon style="margin-top: -15px;">mdi-chevron-right</v-icon>
+                                    <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                                 </v-col>                                            
                                 <v-col cols="11" style="margin-top: -20px;">
                                   <div class="overline mb-4 grey--text" >
