@@ -124,7 +124,6 @@
                   v-if="companySite.address && companySite.address.lat && companySite.address.lng"
                   xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
                 >
-                {{ companySite.address }}
                     <GmapMap
                       :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
                       :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 5 : 16'

@@ -10,11 +10,9 @@
             <v-list-item three-line>
             
                 <v-list-item-content>           
-                      <v-col cols="11" style="margin-top: -10px">
+                      <v-col cols="12" style="margin-top: -10px">
                           <span class="icon-emoji">💰</span> <span class="grey--text" style="margin-left: 15px">Pagamentos</span>
-                      </v-col>   
-                      <v-col cols="1">
-                          <v-icon style="margin-top: -20px; margin-left: -5px">mdi-chevron-right</v-icon>
+                          <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                       </v-col>                                
                       <v-col cols="12" style="margin-top: -15px">
                         <span 

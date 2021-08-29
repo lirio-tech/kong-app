@@ -11,7 +11,7 @@
                 <v-col cols="12" >
                     <span class="icon-emoji">💎</span> 
                     <span class="grey--text" style="margin-left: 25px; font-size: 1.2rem">Meu Site</span>
-                    <v-icon style="margin-top: 0px;float: right;">mdi-chevron-right</v-icon>
+                    <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                 </v-col>   
              </v-card-text>
         </router-link>

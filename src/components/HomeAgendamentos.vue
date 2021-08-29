@@ -9,11 +9,9 @@
                   <router-link :to="isAdmin() ? '/admin/agendamentos/' : '/agendamentos/'" style="color: inherit; text-decoration: none">
                       <v-list-item style="margin-bottom: 0px" >
                         <v-list-item-content>        
-                            <v-col cols="11">
-                               <span class="icon-emoji">🕑</span> <span class="grey--text" style="margin-left: 15px">Agendamentos</span>
-                            </v-col>      
-                            <v-col cols="1">  
-                                <v-icon style="margin-top: -15px;">mdi-chevron-right</v-icon>
+                            <v-col cols="12">
+                                <span class="icon-emoji">🕑</span> <span class="grey--text" style="margin-left: 15px">Agendamentos</span>
+                                <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                             </v-col>                                                       
                         </v-list-item-content>
                       </v-list-item>            
