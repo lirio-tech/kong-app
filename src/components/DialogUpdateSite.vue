@@ -435,7 +435,7 @@ export default {
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado Foto da Galeria :(');
+                  alert('Algo deu errado ao carregar Foto da Galeria :(');
                 }
               )
           };
