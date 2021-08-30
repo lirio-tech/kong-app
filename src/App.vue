@@ -3,7 +3,7 @@
     <router-view v-if="!loadingSite" />  
     <v-progress-circular
       v-else
-      :size="70"
+      :size="100"
       :width="7"
       color="primary"
       indeterminate
@@ -56,7 +56,7 @@ export default {
 <style scoped>
   .centered {
     position: fixed; /* or absolute */
-    top: 50%;
-    left: 50%;
+    top: 30%;
+    left: 40%;
   }
 </style>
