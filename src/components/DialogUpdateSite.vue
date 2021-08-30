@@ -55,7 +55,7 @@
                               >         
                                 
                                   <br/>
-                                  <h4>🏠 Site</h4>
+                                  <h4>🏠 &nbsp;Site</h4>
 
                                   <v-text-field
                                       :value="urlSite()"
@@ -115,10 +115,15 @@
                                           ></facebook-input>                        
                                     </v-col>       
                                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
-                                          <whatsapp-input
-                                              :value="companySite.whatsapp"
-                                              @set-whatsapp="setWhatsapp"                          
-                                          ></whatsapp-input>
+                                          <v-text-field 
+                                              v-model="companySite.whatsapp"
+                                              label="WhatsApp"
+                                              ref="whats"
+                                              v-mask="'(##) #####-####'"
+                                              filled
+                                              prepend-icon="mdi-whatsapp"
+                                          />                                    
+
                                     </v-col>           
 
                                     <h4>📍 Endereço</h4>    
@@ -309,7 +314,6 @@ import storage from '../storage'
 import InstagramInput from './inputs/InstagramInput.vue'
 import FacebookInput from './inputs/FacebookInput.vue'
 import ArrobaInput from './inputs/ArrobaInput.vue'
-import WhatsappInput from './inputs/WhatsappInput.vue'
 import commons from '../utils/commons'
 import SnackBar from './SnackBar.vue'
 import companyGateway from '../api/companyGateway'
@@ -319,7 +323,6 @@ export default {
     components: { 
       InstagramInput, 
       FacebookInput,
-      WhatsappInput,
       ArrobaInput,
       SnackBar,
     },
