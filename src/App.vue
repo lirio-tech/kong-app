@@ -25,6 +25,7 @@ export default {
   beforeMount() {
       if(this.isSiteCustom()) {
           // Find Company Site Custom
+          // Loading
           companyGateway.getCompanySiteDiscoveryByWindowLocation(String(window.location.hostname), 
             res => {
               this.$router.push(`/@/${res.arroba}`);
