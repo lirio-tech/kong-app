@@ -202,10 +202,14 @@
         @set-company-site-photo-cover-url="setCompanySitePhotoCoverUrl"
         @set-company-site-photos="setCompanySitePhotos"
       ></dialog-update-site>       
+
+    <dialog-plan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+
   </div>
 </template>
 <script>
 import companyGateway from '../api/companyGateway'
+import DialogPlan from '../components/DialogPlan.vue'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
 import SiteAgendamentos from '../components/SiteAgendamentos.vue'
 import storage from '../storage'
@@ -214,10 +218,11 @@ import UserTypes from '../utils/UserTypes'
 const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
 //const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
-  components: { DialogUpdateSite, SiteAgendamentos, },
+  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, },
   data: () => ({
     tabView: 'HOME',
     dialogUpdate: false,
+    dialogPlan: false,
     userLogged: {},
     companySite: {
       title: '',
@@ -287,7 +292,12 @@ export default {
         }
     },
     showDialog(show) {
-      this.dialogUpdate = show;
+      if(this.company.plan.name != 'Free') { 
+          this.dialogUpdate = show;
+      } else {
+        alert('Para Personalizar seu Site assine agora mesmo o Plano Premium');
+        this.showPlanDialog(true);
+      }
     },
     getPosition: function(marker) {
       return {
@@ -304,6 +314,9 @@ export default {
     setCompanySitePhotos(photosGallery) {
         this.companySite.photos = photosGallery;
     },
+    showPlanDialog(show) {
+      this.dialogPlan = show
+    },    
     toggleInfo: function(marker, key) {
       console.log(marker, key);
       this.infoPosition = this.getPosition(marker)
