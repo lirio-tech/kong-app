@@ -104,6 +104,7 @@
                                         label="WhatsApp"
                                         ref="whats"
                                         v-mask="'(##) #####-####'"
+                                        filled
                                         prepend-icon="mdi-whatsapp"
                                         :disabled="!isAdmin()"
                                     />                                    
@@ -121,6 +122,7 @@
                                         v-model="companySite.arroba"
                                         @blur="companySite.arroba = companySite.arroba.toLowerCase()"
                                         ref="companyarroba"
+                                        filled
                                         :counter="40"
                                         :disabled="!isAdmin()"
                                         :hint="linkCompany" 
