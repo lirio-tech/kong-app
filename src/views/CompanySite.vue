@@ -69,10 +69,10 @@
         
       </v-card>
       <center v-if="userLogged">
-          <br/>
-          <v-btn color="primary" to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
-          <v-btn color="primary" @click="showDialog(true)"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
-          <v-btn color="primary" @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
+          <br/> 
+          <v-btn :color="btnUpdateSite" to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
+          <v-btn :color="btnUpdateSite" @click="showDialog(true)"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
+          <v-btn :color="btnUpdateSite" @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
@@ -239,7 +239,7 @@ export default {
     infoContent: null,
     infoOpened: true,
     infoCurrentKey: null,
-
+    btnUpdateSite: 'primary'
   }),
   methods: {
     isAdmin() {
@@ -332,7 +332,13 @@ export default {
   beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.getCompanyArroba(this.$route.params.arroba);
-  }
+  },
+  mounted() {
+      setTimeout(() => {
+        this.btnUpdateSite = ''
+        setTimeout(() => { this.btnUpdateSite = 'primary' }, 1000)
+      }, 2000);
+  }        
 }
 </script>
 
