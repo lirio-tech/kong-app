@@ -39,12 +39,11 @@
           </v-btn>      
 
 
-          <a :href="forwardApp()" target="blank" style="color: inherit; text-decoration: none">
+          <!-- <a :href="forwardApp()" target="blank" style="color: inherit; text-decoration: none">
             <v-btn icon >
               <v-icon>mdi-login</v-icon>
             </v-btn>              
-          </a>
-
+          </a> -->
           <!-- <v-btn icon>
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn> -->
