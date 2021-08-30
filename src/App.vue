@@ -1,6 +1,13 @@
 <template>
   <v-app id="inspire" :style="{background: $vuetify.theme.themes[theme].background}">         
-    <router-view />  
+    <router-view v-if="!loadingSite" />  
+    <v-progress-circular
+      v-else
+      :size="70"
+      :width="7"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>    
   </v-app>
 </template>
 
@@ -10,6 +17,7 @@ export default {
   name: 'App',
   data: () => ({
     //
+    loadingSite: false,
   }),
   methods: {
       isSiteCustom() {
@@ -25,12 +33,14 @@ export default {
   beforeMount() {
       if(this.isSiteCustom()) {
           // Find Company Site Custom
-          // Loading
+          this.loadingSite = true;
           companyGateway.getCompanySiteDiscoveryByWindowLocation(String(window.location.hostname), 
             res => {
+              this.loadingSite = false;
               this.$router.push(`/@/${res.arroba}`);
             },
             () => {
+                this.loadingSite = false;
                 alert('Site não Sincronizado, entre em contato com o Aplicativo!');
             })
       }

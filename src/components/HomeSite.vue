@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="companySite">
+  <div v-if="companySite.arroba">
     <v-card
       class="mx-auto"
       max-width="800"
