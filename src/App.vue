@@ -7,6 +7,7 @@
       :width="7"
       color="primary"
       indeterminate
+      class="centered"
     ></v-progress-circular>    
   </v-app>
 </template>
@@ -52,3 +53,10 @@ export default {
   }  
 };
 </script>
+<style scoped>
+  .centered {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+  }
+</style>
