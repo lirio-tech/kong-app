@@ -126,7 +126,7 @@
                 >
                     <GmapMap
                       :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
-                      :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 5 : 16'
+                      :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 4 : 16'
                       style='width:100%;  height: 400px;'
                     >
                       <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
