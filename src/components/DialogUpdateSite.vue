@@ -405,7 +405,7 @@ export default {
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado ao alterar Foto da Capa :(');
+                  alert('Algo deu errado ao alterar Foto da Capa :( Tente novamente.');
                 }
               )
           };
@@ -435,7 +435,7 @@ export default {
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado ao carregar Foto da Galeria :(');
+                  alert('Algo deu errado ao carregar Foto da Galeria :( Tente novamente');
                 }
               )
           };
