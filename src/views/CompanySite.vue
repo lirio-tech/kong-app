@@ -192,7 +192,7 @@
             </v-row>
       </v-container>     
       <dialog-update-site 
-        v-if="isAdmin()"
+        v-if="userLogged"
         :dialog="dialogUpdate"
         :companySite="companySite"
         :company="company"
@@ -326,6 +326,21 @@ export default {
         this.infoOpened = true
         this.infoCurrentKey = key
       }
+    },
+    flashingButtons() {
+      const interval = 700;
+      const startAt = 3000;
+      setTimeout(() => {
+        this.btnUpdateSite = ''
+        setTimeout(() => { 
+          this.btnUpdateSite = 'primary' 
+          setTimeout(() => {
+            this.btnUpdateSite = ''
+            setTimeout(() => { this.btnUpdateSite = 'primary' }, interval)
+          }, interval);          
+        }
+        , interval)
+      }, startAt);
     }
 
   },
@@ -334,10 +349,7 @@ export default {
       this.getCompanyArroba(this.$route.params.arroba);
   },
   mounted() {
-      setTimeout(() => {
-        this.btnUpdateSite = ''
-        setTimeout(() => { this.btnUpdateSite = 'primary' }, 1000)
-      }, 2000);
+    this.flashingButtons()
   }        
 }
 </script>
