@@ -21,7 +21,7 @@
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
        
-            <span style="align-self: flex-end; width: 100%;" >💈 {{ companySite.title }} </span>
+            <span style="align-self: flex-end; position: absolute;" >💈 {{ companySite.title }} </span>
      
 
           <v-spacer></v-spacer>
