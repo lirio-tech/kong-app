@@ -261,18 +261,21 @@ export default {
                     this.companySite = res.companySite;
                     if(!this.companySite.address) this.companySite.address = {};
                     this.company = res.company;
-                    this.coordinates = { 
-                        0: {
-                            full_name: this.companySite.title,
-                            lat: this.companySite.address.lat, lng: this.companySite.address.lng
-                        },
-                    };    
-                    this.toggleInfo(this.coordinates[0], "0");                
+                    this.coordinates(this.companySite);             
                 }
             }, () => {
                 alert('Erro ao buscar informações do Site ');
             });
     },    
+    setCoordinates(companySite) {
+        this.coordinates = { 
+            0: {
+                full_name: companySite.title,
+                lat: companySite.address.lat, lng: companySite.address.lng
+            },
+        };    
+        this.toggleInfo(this.coordinates[0], "0");  
+    },
     sharedMyCompany() {
         const shareData = {
             title: this.company.name,
@@ -306,6 +309,7 @@ export default {
     },
     setCompanySite(companySite) {
         this.companySite = companySite;
+        this.coordinates(this.companySite);  
     },
     setCompanySitePhotoCoverUrl(urlPhotoCover) {
         this.companySite.photoCover = urlPhotoCover;
