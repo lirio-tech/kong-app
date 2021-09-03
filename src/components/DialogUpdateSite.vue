@@ -368,6 +368,7 @@ export default {
                 this.loadingInfo = true;
                 companyGateway.updateCompanySite(this.company._id, this.companySite._id, this.companySite,
                     (res) => {
+                        console.log('res', res)
                         this.showMessage('Atualizado com Sucesso!!!'); 
                         this.loadingInfo = false;
                         this.$emit('set-company-site', res);

@@ -261,13 +261,14 @@ export default {
                     this.companySite = res.companySite;
                     if(!this.companySite.address) this.companySite.address = {};
                     this.company = res.company;
-                    this.coordinates(this.companySite);             
+                    this.setCoordinates(this.companySite);             
                 }
             }, () => {
                 alert('Erro ao buscar informações do Site ');
             });
     },    
     setCoordinates(companySite) {
+        console.log(companySite.address.lat, companySite.address.lng)
         this.coordinates = { 
             0: {
                 full_name: companySite.title,
@@ -309,7 +310,7 @@ export default {
     },
     setCompanySite(companySite) {
         this.companySite = companySite;
-        this.coordinates(this.companySite);  
+        this.setCoordinates(this.companySite);  
     },
     setCompanySitePhotoCoverUrl(urlPhotoCover) {
         this.companySite.photoCover = urlPhotoCover;
