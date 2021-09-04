@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    
+        <app-bar v-if="!isMobile()" />  
         <v-main class="">
           <header-back-title title="Ordens de Serviços" btnPath="/ordem-servico" />          
           <v-col cols="12"  v-if="loading" style="margin-top: -23px; width: 100%">
@@ -179,15 +179,18 @@
 </template>
 
 <script>
-import gateway from '../api/gateway'
+import orderGateway from '../api/orderGateway'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import dateUtils from '../utils/date'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue'
+import device from '../utils/device'
+import AppBar from '../components/AppBar.vue'
 export default {
     name: 'Home',
     components: {
-        HeaderBackTitle 
+        HeaderBackTitle,
+        AppBar, 
     },
     data: () => ({
       loading: false,
@@ -309,7 +312,7 @@ export default {
         this.orders = [];
         this.loading = true;
         this.finishPagination = false;
-        gateway.getOrdersByDataBetween(
+        orderGateway.getOrdersByDataBetween(
           this.periodo.inicio, 
           this.periodo.fim, 
           this.userLogged,
@@ -347,7 +350,7 @@ export default {
           if(this.finishPagination === false) {
             this.pageNumber++;
             this.loading = true;
-            gateway.getOrdersByDataBetween(
+            orderGateway.getOrdersByDataBetween(
               this.periodo.inicio, 
               this.periodo.fim, 
               this.userLogged,
@@ -366,6 +369,9 @@ export default {
           }
         }, 500);
       },      
+      isMobile() {
+          return device.isMobile();
+      } ,         
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

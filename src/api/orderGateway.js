@@ -34,7 +34,7 @@ export default{
         let url = `${ORDERS_API}/v9`;
         Axios.post(url, order)
             .then(data => {
-                callback(data.data)
+                callback(data.data) 
             })
             .catch(error => {
                 console.log(error);

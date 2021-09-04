@@ -1,7 +1,8 @@
 <template>
     <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">
+               <app-bar v-if="!isMobile()" />  
               <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
-              <div v-if="true">
+              <v-main class="">
                   <header-back-title :title="order._id ? 'Ordem de Serviço' : 'Nova Ordem Serviço'" titleColor="second"/>
                   <v-row>
                       <v-col cols="12" sm="12">
@@ -154,7 +155,7 @@
                                 </v-col>     
                               </v-row>
                               <v-row>
-                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">        
+                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin() || order._id" >        
                                     <v-combobox 
                                         v-model="order.user" 
                                         size="1" 
@@ -164,8 +165,7 @@
                                         ref="user"
                                         required filled 
                                         item-text='name'
-                                        item-value='_id'          
-                                        v-if="isAdmin() || order._id"     
+                                        item-value='_id'            
                                         :disabled="order._id || order.total > 0"
                                         @change="setServices"
                                         style="margin-top: -20px;"                         
@@ -235,23 +235,27 @@
                           </v-form>                
                       </v-col>
                   </v-row>
-              </div>      
+              </v-main>      
               <br/><br/><br/><br/><br/><br/>            
     </v-container>
 </template>
 
 <script>
 import gateway from '../api/gateway'
+import orderGateway from '../api/orderGateway'
 import { mapGetters } from 'vuex'
 import DialogPlan from '../components/DialogPlan'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue'
+import device from '../utils/device'
+import AppBar from '../components/AppBar.vue'
   export default {
     name: 'OrdemServico',
     components: {
       DialogPlan,
-        HeaderBackTitle
+        HeaderBackTitle,
+        AppBar,
     },
     data: vm => ({
         loadingSave: false,
@@ -312,7 +316,7 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
           }
           this.loadingSave = true;     
           this.order.company = this.myCompany._id;     
-          gateway.saveOrder(this.order,
+          orderGateway.saveOrder(this.order,
             res => {
               this.order = res;
               this.loadingSave = false;          
@@ -424,7 +428,7 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
       deleteOrder() {        
         if (this.isAdmin() && confirm('Deseja Relamente Excluir?')) {
           this.loadingDelete = true;          
-          gateway.deleteOrder(this.order._id,
+          orderGateway.deleteOrder(this.order._id,
             () => {
               this.loadingDelete = false;              
               alert('Excluido com sucesso');
@@ -461,7 +465,10 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
       setServices() {
           this.typeServices = [];
           this.order.user.services.forEach(s => this.typeServices.push(s.type) );        
-      }
+      },
+      isMobile() {
+          return device.isMobile();
+      } ,        
     },
     mounted() {
       window.scrollTo(0,0);
@@ -472,7 +479,7 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
       this.userLogged.services.forEach(s => this.typeServices.push(s.type) );
 
       if(this.$route.params._id) {
-        gateway.getOrderById(this.$route.params._id,
+        orderGateway.getOrderById(this.$route.params._id,
           res => {
             this.order = res;
             this.dateFormatted = this.formatDate(this.order.date); 
@@ -486,7 +493,8 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
             this.loadingSave = false;            
           });
       } else {
-        this.order.user = this.userLogged;        
+        this.order.user = this.userLogged; 
+        this.order.cardRate = this.myCompany.cardRate;       
       }
       if(this.isAdmin()) {
           this.findAllUsers();
