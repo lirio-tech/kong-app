@@ -183,7 +183,7 @@ export default{
             })               
       },
       saveCompanyPaymentTypes(companyId, companyPaymentTypes, callback, errorCb) {
-        let url = `${COMPANIES_SITE_API}/${companyId}/payment-types`;
+        let url = `${COMPANIES_API}/${companyId}/payment-types`;
         Axios.patch(url, companyPaymentTypes)
             .then(data => {
                 callback(data.data) 

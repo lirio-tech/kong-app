@@ -73,7 +73,7 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>  
                 <v-expansion-panel>
-                    <v-expansion-panel-header>Tipo de Pagamentos</v-expansion-panel-header>
+                    <v-expansion-panel-header>Tipos de Pagamento</v-expansion-panel-header>
                     <v-expansion-panel-content>              
                         <v-col cols="12">  
                             <v-form 
@@ -83,6 +83,14 @@
                                 lazy-validation 
                                 v-on:submit.prevent="onSubmitCompanyCardRate"
                             >          
+                               
+                                <v-col cols="12" >
+                                    <h4>
+                                        <v-icon color="green" size="28">mdi-cash</v-icon> &nbsp; Dinheiro
+                                    </h4>
+                                </v-col>
+                                <hr-line />
+                                <br/>
                                 <v-col cols="12" >
                                     <h4>
                                         <v-icon color="purple">mdi-credit-card</v-icon> &nbsp; Cartão
@@ -114,18 +122,20 @@
                                         </template>
                                     </v-slider>                                
                                 </v-col>     
+                                <hr-line />
+                                <br/>
                                 <v-col cols="12" >
                                     <h4>
                                         <v-icon color="teal lighten-2">mdi-rhombus-split</v-icon> &nbsp; Pix
                                     </h4>
                                     <small class="grey--text">Pix para apresentar para os Clientes dentro do App</small>
-                                    <!-- :rules="[val => val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']" -->
                                     <v-text-field
-                                        label="Cópigo Copie e Cole"
+                                        label="Código Copie e Cole"
                                         required
                                         v-model="company.pixCopyPast"
                                         ref="companyPixCopyPast"
-                                        :disabled="true || !isAdmin()"
+                                        :rules="[val => val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']"
+                                        :disabled="!isAdmin()"
                                     />                        
                                 </v-col>                                                        
                                 <br/>
@@ -665,6 +675,7 @@ import MyMoney from '../components/inputs/MyMoney.vue'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue'
 import InstagramInput from '../components/inputs/InstagramInput.vue'
 import FacebookInput from '../components/inputs/FacebookInput.vue'
+import HrLine from '../components/HrLine.vue'
 export default {
     name: 'Perfil',
     components: {
@@ -675,6 +686,7 @@ export default {
         HeaderBackTitle,
         InstagramInput,
         FacebookInput,
+        HrLine,
     },
     data: () => ({
       dialogServiceUpdate: false,
@@ -873,9 +885,13 @@ export default {
                     alert('Erro ao buscar informaçoes do Site ');
                 });
         },
-        onSubmitCompanyName() {
+        onSubmitCompanyCardRate() {
             if(this.$refs.formCompanyCardRate.validate()) {
-                companyGateway.saveCompanyPaymentTypes(this.company._id, this.company.cardRate,
+                const paymentTypes = {
+                    cardRate: this.company.cardRate,
+                    pixCopyPast: this.company.pixCopyPast,
+                }
+                companyGateway.saveCompanyPaymentTypes(this.company._id, paymentTypes,
                     () => {
                         alert('Atualizado com Sucesso!!!');
                         storage.setCompany(JSON.stringify(this.company));
@@ -888,7 +904,7 @@ export default {
                     });
             }
         },  
-        onSubmitCompanyCardRate() {
+        onSubmitCompanyName() {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
                 this.companyWithoutUpdate.shortName = this.company.shortName;
