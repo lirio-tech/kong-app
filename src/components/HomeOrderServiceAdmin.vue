@@ -23,7 +23,14 @@
             
                         <v-col cols="7">
                           <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
-                              <span class="caption grey--text">Total Recebido</span><br/>
+
+                              <span class="caption grey--text">
+                                 Total Recebido
+                                  <!-- <v-icon color="grey lighten-1" small>
+                                      mdi-information-outline
+                                  </v-icon> -->
+                              </span><br/> 
+
                               <div style="font-size: 1.5rem" v-if="!loading">
                                 <span class="">R$ {{ ordersGroup.total | currency }} </span>
                               </div>
