@@ -45,14 +45,37 @@
                 </v-alert>
                 </v-card>
             </v-col>
-            <!-- <v-row v-if="userLogged.type === 'sys_admin' || company._id === '606627b33919e16f05f4b1a7'" > -->
             <v-row>
                 <v-col cols="12">
-                      <home-site 
-                        :company="company" 
-                        style="margin-bottom: -10px"
-                      />
-                </v-col>
+<!-- 
+                <v-sheet
+                  class="mx-auto"
+                  elevation="8"
+                  max-width="800"
+                >
+                  <v-slide-group
+                    v-model="model"               
+                    class="pa-4"
+                    active-class="success"
+                    show-arrows
+
+                  >
+                    <v-slide-item
+                      width="200"  
+                    >
+                          <home-site
+                              :company="company" 
+                              style="margin-bottom: -10px"
+                            />     
+                    </v-slide-item>       
+                  </v-slide-group>
+                </v-sheet> -->
+
+                <home-site 
+                    :company="company" 
+                    style="margin-bottom: -10px"
+                  />   
+                </v-col>                
             </v-row>
             <v-row>
               
