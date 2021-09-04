@@ -7,7 +7,7 @@
                 <v-icon large :color="titleColor ? titleColor : 'white darken-2'">mdi-chevron-left</v-icon>
             </v-btn>
         </v-col>
-        <v-col cols="8" style="margin-left: 20px;">   
+        <v-col cols="8" style="margin-left: 0px;">   
             <span style="font-size: 1.6rem !important;" :class="titleColor ? titleColor+'--text' : 'white--text'">  
                 {{ title }}
             </span>

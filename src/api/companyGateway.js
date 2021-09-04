@@ -181,5 +181,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })               
-      }      
+      },
+      saveCompanyPaymentTypes(companyId, companyPaymentTypes, callback, errorCb) {
+        let url = `${COMPANIES_SITE_API}/${companyId}/payment-types`;
+        Axios.patch(url, companyPaymentTypes)
+            .then(data => {
+                callback(data.data) 
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })            
+      }     
 }

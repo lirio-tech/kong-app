@@ -73,6 +73,56 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>  
                 <v-expansion-panel>
+                    <v-expansion-panel-header>Tipo de Pagamentos</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12">  
+                            <v-form 
+                                id="formCompanyCardRate" 
+                                ref="formCompanyCardRate" 
+                                v-model="valid" 
+                                lazy-validation 
+                                v-on:submit.prevent="onSubmitCompanyCardRate"
+                            >          
+                                <v-col cols="12" >
+                                    <v-subheader class="">{{ company.cardRate }}% Taxa do Cartão</v-subheader>
+                                    <v-slider
+                                        v-model="company.cardRate"
+                                        min="0"
+                                        max="10"
+                                        thumb-label
+                                    >
+                                        <template v-slot:prepend>
+                                        <v-icon
+                                            color="secondary"
+                                            @click="company.cardRate--"
+                                        >
+                                            mdi-minus
+                                        </v-icon>
+                                        </template>
+
+                                        <template v-slot:append>
+                                        <v-icon
+                                            color="secondary"
+                                            @click="company.cardRate++"
+                                        >
+                                            mdi-plus
+                                        </v-icon>
+                                        </template>
+                                    </v-slider>                                
+                                </v-col>                          
+                                <br/>
+                                <v-btn
+                                    color="success"
+                                    type="submit"
+                                    :disabled="!isAdmin()"
+                                >
+                                    Salvar
+                                </v-btn>                                
+                            </v-form>
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                  
+                <v-expansion-panel>
                     <v-expansion-panel-header>Site</v-expansion-panel-header>
                     <v-expansion-panel-content>              
                         <v-col cols="12">  
@@ -806,6 +856,21 @@ export default {
                 });
         },
         onSubmitCompanyName() {
+            if(this.$refs.formCompanyCardRate.validate()) {
+                companyGateway.saveCompanyPaymentTypes(this.company._id, this.company.cardRate,
+                    () => {
+                        alert('Atualizado com Sucesso!!!');
+                        storage.setCompany(JSON.stringify(this.company));
+                    }, (err) => {
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Cadastrar, tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
+                    });
+            }
+        },  
+        onSubmitCompanyCardRate() {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
                 this.companyWithoutUpdate.shortName = this.company.shortName;
@@ -821,7 +886,7 @@ export default {
                         }
                     });
             }
-        },  
+        },
         onSubmitCompanySite() {
             if(this.$refs.formCompanySite.validate()) {
                 companyGateway.saveCompanySite(this.company._id, this.companySite,

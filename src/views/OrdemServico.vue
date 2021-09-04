@@ -125,6 +125,35 @@
                                 </v-col>
                               </v-row>
                               <v-row>
+                                <v-col cols="12" >
+                                    <v-subheader class="">{{ order.cardRate }}% Taxa do Cartão</v-subheader>
+                                    <v-slider
+                                        v-model="order.cardRate"
+                                        min="0"
+                                        max="10"
+                                        thumb-label
+                                    >
+                                        <template v-slot:prepend>
+                                        <v-icon
+                                            color="secondary"
+                                            @click="order.cardRate--"
+                                        >
+                                            mdi-minus
+                                        </v-icon>
+                                        </template>
+
+                                        <template v-slot:append>
+                                        <v-icon
+                                            color="secondary"
+                                            @click="order.cardRate++"
+                                        >
+                                            mdi-plus
+                                        </v-icon>
+                                        </template>
+                                    </v-slider>                                
+                                </v-col>     
+                              </v-row>
+                              <v-row>
                                 <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">        
                                     <v-combobox 
                                         v-model="order.user" 
