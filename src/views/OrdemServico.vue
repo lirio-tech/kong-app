@@ -127,29 +127,28 @@
                               </v-row>
                               <v-row v-if="order.paymentType === 'card'">
                                 <v-col cols="12" >
-                                    <v-subheader class="">% Taxa do Cartão</v-subheader>
+                                    <v-subheader class="">{{rate}}% Taxa do Cartão</v-subheader>
                                     <v-slider
-                                        v-model="order.cardRate"
+                                        v-model="rate"
                                         min="0"
                                         max="10"
                                         thumb-label
                                     >
                                         <template v-slot:prepend>
-                                        <v-icon
-                                            color="secondary"
-                                            @click="order.cardRate--"
-                                        >
-                                            mdi-minus
-                                        </v-icon>
+                                              <v-icon 
+                                                @click="cardRateDecr()"
+                                              >
+                                                  mdi-minus
+                                              </v-icon>
                                         </template>
 
                                         <template v-slot:append>
-                                        <v-icon
-                                            color="secondary"
-                                            @click="order.cardRate++"
-                                        >
-                                            mdi-plus
-                                        </v-icon>
+
+                                              <v-icon
+                                                @click="cardRateIncr()"
+                                              >
+                                                  mdi-plus
+                                              </v-icon>
                                         </template>
                                     </v-slider>                                
                                 </v-col>     
@@ -278,6 +277,7 @@ import AppBar from '../components/AppBar.vue'
         dateFormatted: vm.formatDate(new Date().toLocaleString( 'sv', { timeZoneName: 'short' } ).substr(0,10)),     
         updatedAt: null,
         createdAt: null,   
+        rate: 0,
         order: {
           services: [],
           total: 0,
@@ -307,6 +307,12 @@ import AppBar from '../components/AppBar.vue'
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
       },
+      cardRateIncr() {
+          this.rate++;
+      },
+      cardRateDecr() {
+        this.rate--;
+      },      
       save() {
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
           this.order.date = this.date;
@@ -316,6 +322,7 @@ import AppBar from '../components/AppBar.vue'
           }
           this.loadingSave = true;     
           this.order.company = this.myCompany._id;     
+          this.order.cardRate = this.rate;
           orderGateway.saveOrder(this.order,
             res => {
               this.order = res;
@@ -423,6 +430,7 @@ import AppBar from '../components/AppBar.vue'
         return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
       },           
       numberUsToBr(v) {
+          if(!v) v = 0;
           return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
       },      
       deleteOrder() {        
@@ -482,19 +490,22 @@ import AppBar from '../components/AppBar.vue'
         orderGateway.getOrderById(this.$route.params._id,
           res => {
             this.order = res;
+            console.log(this.order)
             this.dateFormatted = this.formatDate(this.order.date); 
             this.createdAt = this.formatDateTime(this.order.createdAt);
             this.updatedAt = this.formatDateTime(this.order.updatedAt);
-            this.order.priceBR = this.numberUsToBr(this.order.price);
+            //this.order.priceBR = this.numberUsToBr(this.order.price);
             this.loadingDelete = false;
             this.loadingSave = false;           
+            this.rate = this.order.cardRate;       
+            
           }, () => {
             this.loadingDelete = false;
             this.loadingSave = false;            
           });
       } else {
         this.order.user = this.userLogged; 
-        this.order.cardRate = this.myCompany.cardRate;       
+        this.rate = this.myCompany.cardRate;       
       }
       if(this.isAdmin()) {
           this.findAllUsers();
