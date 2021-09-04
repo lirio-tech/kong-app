@@ -23,7 +23,7 @@
             
                         <v-col cols="7">
                           <v-list-item-title class="headline mb-1" style="margin-top: -40px;">
-                              <span class="caption grey--text">Total</span><br/>
+                              <span class="caption grey--text">Total Recebido</span><br/>
                               <div style="font-size: 1.5rem" v-if="!loading">
                                 <span class="">R$ {{ ordersGroup.total | currency }} </span>
                               </div>
@@ -32,20 +32,26 @@
                               </div>                              
                           </v-list-item-title>
                         </v-col>
-                        <v-col cols="4">
-                          <v-list-item-title class="headline mb-1 text-center" style="margin-top: -40px;">
+                        <v-col cols="5">
+                          <v-list-item-title class="text-center" style="margin-top: -40px;">
                               <span class="caption grey--text">Qtde.</span><br/>
-                              <div style="font-size: 1.5rem" v-if="!loading">
-                                <span class="">{{ ordersGroup.amount }} </span>
-                                <br/>
-                              </div>
-                              <div v-else style="margin-left: 30px"> 
-                                    <v-skeleton-loader tile type="heading" />
-                              </div>                                                            
+                              <span class="">{{ ordersGroup.amount }} </span>                                                   
                           </v-list-item-title>
-                        </v-col>                            
+                        </v-col>          
+                        <v-col cols="7" v-if="!loading">
+                          <v-list-item-title class="" style="margin-top: -10px;">
+                              <span class="caption grey--text">Liquido Recebido</span><br/>
+                                <span class="">R$ {{ ordersGroup.netTotal | currency }} </span>                           
+                          </v-list-item-title>
+                        </v-col>
+                        <v-col cols="5" v-if="!loading">
+                          <v-list-item-title class="text-center" style="margin-top: -10px;">
+                              <span class="caption grey--text">Paguei de Taxa</span><br/>
+                              <span class="">R$ {{ ordersGroup.cardRateValueDiscount | currency }} </span>                        
+                          </v-list-item-title>
+                        </v-col>                                             
                         <hr-line />
-                        <v-col cols="4" style="margin-top:5px" class="text-center">
+                        <v-col cols="4" class="text-center">
                             <v-icon color="green" style="margin-top: -4px">
                               mdi-cash
                             </v-icon> 

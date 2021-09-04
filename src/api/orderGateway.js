@@ -19,7 +19,7 @@ export default{
             })
     },
     getOrdersSummaryByDataBetween(dataInicio,dataFim,callback,errorCb){       
-        let url = `${ORDERS_API}/v3/summary/${dataInicio}/${dataFim}`; 
+        let url = `${ORDERS_API}/v4/summary/${dataInicio}/${dataFim}`; 
         console.log(url);
         Axios.get(url)
             .then(data => {

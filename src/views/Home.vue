@@ -393,6 +393,9 @@ export default {
         this.ordersGroup.card = 0.0;
         this.ordersGroup.cash = 0.0;
         this.ordersGroup.pix = 0.0;
+        this.ordersGroup.netTotal = 0.0;
+        this.ordersGroup.cardRateValueDiscount = 0.0;
+
 
         this.ordersByUsers = [];
         orderGateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
@@ -407,6 +410,8 @@ export default {
               this.ordersGroup.card += obu.card;
               this.ordersGroup.cash += obu.cash;
               this.ordersGroup.pix += obu.pix;
+              this.ordersGroup.netTotal += obu.netTotal;
+              this.ordersGroup.cardRateValueDiscount += obu.cardRateValueDiscount;
             });
             storage.setUserLogged(JSON.stringify(res.user));
             storage.setCompany(JSON.stringify(res.company));

@@ -83,7 +83,7 @@
                     </v-col>       
                 </v-row>
                 <br/><br/><br/>
-                <v-row align="center" v-if="userLogged">
+                <v-row align="center" v-if="!userLogged">
                     <v-col
                         xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
                         align="center"
