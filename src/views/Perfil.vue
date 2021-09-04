@@ -95,7 +95,7 @@
                                     <h4>
                                         <v-icon color="purple">mdi-credit-card</v-icon> &nbsp; Cartão
                                     </h4>           
-                                    <small class="grey--text">Percental que Pago ao realizar Vendas no Cartão</small>                         
+                                    <small class="grey--text">Percentual que Pago ao realizar Vendas no Cartão</small>                         
                                     <v-subheader class="">{{ company.cardRate }}% Taxa do Cartão</v-subheader>
                                     <v-slider
                                         v-model="company.cardRate"

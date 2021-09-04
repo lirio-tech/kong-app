@@ -45,36 +45,24 @@
                 </v-alert>
                 </v-card>
             </v-col>
-            <v-row>
-                <v-col cols="12">
-<!-- 
-                <v-sheet
-                  class="mx-auto"
-                  elevation="8"
-                  max-width="800"
-                >
-                  <v-slide-group
-                    v-model="model"               
-                    class="pa-4"
-                    active-class="success"
-                    show-arrows
+            <v-row style="margin-bottom: -23px">
+                <v-col cols="12">         
 
-                  >
-                    <v-slide-item
-                      width="200"  
+                    <v-sheet
+                      class="mx-auto"
+                      max-width="800"
+                      height="50"
                     >
-                          <home-site
-                              :company="company" 
-                              style="margin-bottom: -10px"
-                            />     
-                    </v-slide-item>       
-                  </v-slide-group>
-                </v-sheet> -->
+                      <v-slide-group
+                        multiple
+                        show-arrows
+                      >
+                        <button-slider-site :company="company" />
+                        <button-slider-pix :company="company" />
+                      
+                      </v-slide-group>
+                    </v-sheet>
 
-                <home-site 
-                    :company="company" 
-                    style="margin-bottom: -10px"
-                  />   
                 </v-col>                
             </v-row>
             <v-row>
@@ -235,11 +223,12 @@ import HomeOrderServiceAdmin from '../components/HomeOrderServiceAdmin'
 import HomeBalanceAdminToPay from '../components/HomeBalanceAdminToPay'
 import HomeBalanceEmployeeToReceiver from '../components/HomeBalanceEmployeeToReceiver'
 import HomeAgendamentos from '../components/HomeAgendamentos'
-import HomeSite from '../components/HomeSite'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
 import dateUtils from '../utils/date'
+import ButtonSliderSite from '../components/ButtonSliderSite.vue'
+import ButtonSliderPix from '../components/ButtonSliderPix.vue'
 export default {
     name: 'Home',
     components: { 
@@ -252,7 +241,8 @@ export default {
       HomeBalanceAdminToPay,
       HomeBalanceEmployeeToReceiver,
       HomeAgendamentos,
-      HomeSite,
+      ButtonSliderSite,
+        ButtonSliderPix,
     },
     data: () => ({
       config: {
