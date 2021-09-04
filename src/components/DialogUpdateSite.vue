@@ -371,7 +371,6 @@ export default {
                         console.log('res', res)
                         this.showMessage('Atualizado com Sucesso!!!'); 
                         this.loadingInfo = false;
-                        this.$emit('set-company-site', res);
                         this.$router.push(`/@/${this.companySite.arroba}`);
                     }, (err) => {
                         this.loadingInfo = false;
