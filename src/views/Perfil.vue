@@ -119,13 +119,13 @@
                                         <v-icon color="teal lighten-2">mdi-rhombus-split</v-icon> &nbsp; Pix
                                     </h4>
                                     <small class="grey--text">Pix para apresentar para os Clientes dentro do App</small>
+                                    <!-- :rules="[val => val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']" -->
                                     <v-text-field
                                         label="Cópigo Copie e Cole"
                                         required
-                                        :rules="[val => val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']"
                                         v-model="company.pixCopyPast"
                                         ref="companyPixCopyPast"
-                                        :disabled="!isAdmin()"
+                                        :disabled="true || !isAdmin()"
                                     />                        
                                 </v-col>                                                        
                                 <br/>
