@@ -142,7 +142,7 @@ export default {
 
                       }, err => {
                         console.log('err', err.response); 
-                        this.loading = true;
+                        this.loading = false;
                         if(err.response.status === 401) {
                           alert('Usuario ou Senha Invalido');
                         } else {

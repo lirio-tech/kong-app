@@ -124,7 +124,7 @@
                                   </v-radio-group>                              
                                 </v-col>
                               </v-row>
-                              <v-row>
+                              <v-row v-if="order.paymentType === 'card'">
                                 <v-col cols="12" >
                                     <v-subheader class="">{{ order.cardRate }}% Taxa do Cartão</v-subheader>
                                     <v-slider
@@ -462,6 +462,9 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
           this.typeServices = [];
           this.order.user.services.forEach(s => this.typeServices.push(s.type) );        
       }
+    },
+    mounted() {
+      window.scrollTo(0,0);
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
