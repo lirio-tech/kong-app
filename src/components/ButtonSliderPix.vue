@@ -42,7 +42,8 @@
           
           <v-col cols="12">
               <center>
-                  <h3>Mostre o QR code para a Pessoa que irá Pagar</h3>
+                  <h1>Mostre o QR code para a Pessoa que irá Pagar</h1>
+                  <br/><br/>
                   <vue-qrcode :value="company.pixCopyPast" />
               </center>
           </v-col>
