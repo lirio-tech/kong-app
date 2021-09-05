@@ -60,7 +60,7 @@
                         <button-slider-site :company="company" />
                         <button-slider-pix :company="company" />
                         <button-slider-kongbot :company="company" />
-                        <button-slider-kongbot :company="company" />
+                        <button-slider-analytics :company="company" />
                       
                       </v-slide-group>
                     </v-sheet>
@@ -232,6 +232,7 @@ import dateUtils from '../utils/date'
 import ButtonSliderSite from '../components/ButtonSliderSite.vue'
 import ButtonSliderPix from '../components/ButtonSliderPix.vue'
 import ButtonSliderKongbot from '../components/ButtonSliderKongbot.vue'
+import ButtonSliderAnalytics from '../components/ButtonSliderAnalytics.vue'
 export default {
     name: 'Home',
     components: { 
@@ -247,6 +248,7 @@ export default {
       ButtonSliderSite,
       ButtonSliderPix,
       ButtonSliderKongbot,
+        ButtonSliderAnalytics,
     },
     data: () => ({
       config: {

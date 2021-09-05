@@ -8,7 +8,7 @@
         style="margin-top: 7px;"
         class="mx-2"
         :input-value="active"
-        active-class="purple white--text"
+        active-class="primary white--text"
         depressed
         @click="toggle; showWarning()"
       >
