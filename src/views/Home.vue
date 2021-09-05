@@ -60,6 +60,7 @@
                         <button-slider-site :company="company" />
                         <button-slider-pix :company="company" />
                         <button-slider-kongbot :company="company" />
+                        <button-slider-kongbot :company="company" />
                       
                       </v-slide-group>
                     </v-sheet>
