@@ -61,7 +61,7 @@
 
 <script>
 export default {
-    name: 'ButtonSliderPix',
+    name: 'ButtonSliderKongbot',
     props: [ 'company' ],
     data: () => ({
       dialog: false

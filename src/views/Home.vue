@@ -59,6 +59,7 @@
                       >
                         <button-slider-site :company="company" />
                         <button-slider-pix :company="company" />
+                        <button-slider-kongbot :company="company" />
                       
                       </v-slide-group>
                     </v-sheet>
@@ -229,6 +230,7 @@ import VuePullRefresh from 'vue-pull-refresh'
 import dateUtils from '../utils/date'
 import ButtonSliderSite from '../components/ButtonSliderSite.vue'
 import ButtonSliderPix from '../components/ButtonSliderPix.vue'
+import ButtonSliderKongbot from '../components/ButtonSliderKongbot.vue'
 export default {
     name: 'Home',
     components: { 
@@ -242,7 +244,8 @@ export default {
       HomeBalanceEmployeeToReceiver,
       HomeAgendamentos,
       ButtonSliderSite,
-        ButtonSliderPix,
+      ButtonSliderPix,
+      ButtonSliderKongbot,
     },
     data: () => ({
       config: {
