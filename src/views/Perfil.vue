@@ -96,17 +96,16 @@
                                         <v-icon color="purple">mdi-credit-card</v-icon> &nbsp; Cartão
                                     </h4>           
                                     <small class="grey--text">Percentual que Pago ao realizar Vendas no Cartão</small>                         
-                                    <v-subheader class="">{{ company.cardRate }}% Taxa do Cartão</v-subheader>
+                                    <v-subheader class="">{{ rate/100 }}% Taxa do Cartão</v-subheader>
                                     <v-slider
-                                        v-model="company.cardRate"
+                                        v-model="rate"
                                         min="0"
-                                        max="10"
-                                        thumb-label
+                                        max="1000"
                                     >
                                         <template v-slot:prepend>
                                         <v-icon
                                             color="secondary"
-                                            @click="company.cardRate--"
+                                            @click="rate--"
                                         >
                                             mdi-minus
                                         </v-icon>
@@ -115,11 +114,14 @@
                                         <template v-slot:append>
                                         <v-icon
                                             color="secondary"
-                                            @click="company.cardRate++"
+                                            @click="rate++"
                                         >
                                             mdi-plus
                                         </v-icon>
                                         </template>
+                                        <template v-slot:thumb-label="{ rate }">
+                                            {{ rate/100  }}
+                                        </template>                                        
                                     </v-slider>                                
                                 </v-col>     
                                 <hr-line />
@@ -728,6 +730,7 @@ export default {
             time: "01:00"                       
       },        
       themeKong: true,
+      rate: 0,
       money: {
             decimal: ',',
             thousands: '.',
@@ -880,7 +883,9 @@ export default {
         getCompanySite(companyId) {
             companyGateway.getCompanySiteById(companyId,
                 (res) => {
-                    if(res) this.companySite = res;
+                    if(res) {
+                        this.companySite = res;
+                    }
                 }, () => {
                     alert('Erro ao buscar informaçoes do Site ');
                 });
@@ -888,12 +893,14 @@ export default {
         onSubmitCompanyCardRate() {
             if(this.$refs.formCompanyCardRate.validate()) {
                 const paymentTypes = {
-                    cardRate: this.company.cardRate,
+                    cardRate: this.rate/100,
                     pixCopyPast: this.company.pixCopyPast,
                 }
+                console.log(paymentTypes);
                 companyGateway.saveCompanyPaymentTypes(this.company._id, paymentTypes,
                     () => {
                         alert('Atualizado com Sucesso!!!');
+                        this.company.cardRate = paymentTypes.cardRate;
                         storage.setCompany(JSON.stringify(this.company));
                     }, (err) => {
                         if(err.response.status === 500) {
@@ -992,6 +999,7 @@ export default {
           this.userLogged.configuration = {table: 'mobile'};
       }
       this.company = storage.getCompany();
+      this.rate = this.company.cardRate*100;
       this.companyWithoutUpdate = storage.getCompany();
       this.services = this.companyWithoutUpdate.services;
       this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      

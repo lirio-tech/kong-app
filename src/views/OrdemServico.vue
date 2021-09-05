@@ -127,12 +127,11 @@
                               </v-row>
                               <v-row v-if="order.paymentType === 'card'">
                                 <v-col cols="12" >
-                                    <v-subheader class="">{{rate}}% Taxa do Cartão</v-subheader>
+                                    <v-subheader class="">{{rate/100}}% Taxa do Cartão</v-subheader>
                                     <v-slider
                                         v-model="rate"
                                         min="0"
-                                        max="10"
-                                        thumb-label
+                                        max="1000"
                                     >
                                         <template v-slot:prepend>
                                               <v-icon 
@@ -322,7 +321,7 @@ import AppBar from '../components/AppBar.vue'
           }
           this.loadingSave = true;     
           this.order.company = this.myCompany._id;     
-          this.order.cardRate = this.rate;
+          this.order.cardRate = this.rate/100;
           orderGateway.saveOrder(this.order,
             res => {
               this.order = res;
@@ -497,7 +496,7 @@ import AppBar from '../components/AppBar.vue'
             //this.order.priceBR = this.numberUsToBr(this.order.price);
             this.loadingDelete = false;
             this.loadingSave = false;           
-            this.rate = this.order.cardRate;       
+            this.rate = this.order.cardRate*100;       
             
           }, () => {
             this.loadingDelete = false;
@@ -505,7 +504,7 @@ import AppBar from '../components/AppBar.vue'
           });
       } else {
         this.order.user = this.userLogged; 
-        this.rate = this.myCompany.cardRate;       
+        this.rate = this.myCompany.cardRate*100;       
       }
       if(this.isAdmin()) {
           this.findAllUsers();
