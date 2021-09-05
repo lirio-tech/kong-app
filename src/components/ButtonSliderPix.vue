@@ -41,9 +41,10 @@
           </v-toolbar>    
           
           <v-col cols="12">
-              <h5>Apresente para a Pessoa que irá Pagar</h5>
-              {{ company.pixCopyPast }}
-
+              <center>
+                  <h3>Mostre o QR code para a Pessoa que irá Pagar</h3>
+                  <vue-qrcode :value="company.pixCopyPast" />
+              </center>
           </v-col>
 
 
@@ -58,9 +59,11 @@
 </template>
 
 <script>
+import VueQrcode from 'vue-qrcode'
 export default {
     name: 'ButtonSliderPix',
     props: [ 'company' ],
+    components: { VueQrcode },
     data: () => ({
       dialog: false
     }),
