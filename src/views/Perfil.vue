@@ -96,7 +96,7 @@
                                         <v-icon color="purple">mdi-credit-card</v-icon> &nbsp; Cartão
                                     </h4>           
                                     <small class="grey--text">Percentual que Pago ao realizar Vendas no Cartão</small>                         
-                                    <v-subheader class="">{{ rate/100 }}% Taxa do Cartão</v-subheader>
+                                    <v-subheader class="">{{ rate/100 | currency }}% Taxa do Cartão</v-subheader>
                                     <v-slider
                                         v-model="rate"
                                         min="0"
@@ -119,9 +119,9 @@
                                             mdi-plus
                                         </v-icon>
                                         </template>
-                                        <template v-slot:thumb-label="{ rate }">
+                                        <!-- <template v-slot:thumb-label="{ rate }">
                                             {{ rate/100  }}
-                                        </template>                                        
+                                        </template>                                         -->
                                     </v-slider>                                
                                 </v-col>     
                                 <hr-line />
@@ -136,7 +136,7 @@
                                         required
                                         v-model="company.pixCopyPast"
                                         ref="companyPixCopyPast"
-                                        :rules="[val => val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']"
+                                        :rules="[val => !val || val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']"
                                         :disabled="!isAdmin()"
                                     />                        
                                 </v-col>                                                        

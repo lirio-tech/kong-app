@@ -23,6 +23,14 @@
                         > 
                               Comissão de R$ {{ order.commission | currency }}
                         </center>
+                        <center 
+                          v-if="order.paymentType === 'card'"
+                          class="grey--text" 
+                          align="center" 
+                          justify="space-around"
+                        > 
+                            Taxa R$ {{ order.total * (rate/100) / 100 | currency }}
+                        </center>                        
 
                       </v-col>
                       <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true ||  !order._id">
@@ -127,7 +135,7 @@
                               </v-row>
                               <v-row v-if="order.paymentType === 'card'">
                                 <v-col cols="12" >
-                                    <v-subheader class="">{{rate/100}}% Taxa do Cartão</v-subheader>
+                                    <v-subheader class="">{{rate/100 | currency }}% Taxa do Cartão</v-subheader>
                                     <v-slider
                                         v-model="rate"
                                         min="0"
