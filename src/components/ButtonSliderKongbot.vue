@@ -44,7 +44,7 @@
               <center>
                   <h1>Em breve seus clientes poderá realizar agendamento pelo Chatbot quando você não responder na hora. </h1>
                   <br/><br/>
-                  <h2 class="warning--text">Aguarde. </h2>
+                  <h2 class="warning--text">Aguarde... </h2>
               </center>
           </v-col>
 
