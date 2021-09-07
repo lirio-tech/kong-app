@@ -112,12 +112,12 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
         <v-row>
-            <v-col cols="6" style="margin-left: 0px;">   
+            <v-col cols="4" style="margin-left: 0px;">   
                 <span style="font-size: 1.6rem !important;" class="white--text">  
                     Agenda
                 </span>
             </v-col> 
-            <v-col cols="6" v-if="userLogged && userLogged.type === 'sys_admin'" align="right">   
+            <v-col cols="8" v-if="userLogged && userLogged.type === 'sys_admin'" align="right">   
               <v-btn
                 class="mx-2"
                 active-class="primary white--text"
@@ -125,7 +125,7 @@
                 v-if="userLogged && userLogged.type === 'sys_admin'"
               >
                   <span class="icon-emoji">🐵 </span>
-                  <span class="grey--text" style="margin-left: 5px; ">Chatbot</span>          
+                  <span class="grey--text">Chatbot</span>          
               </v-btn>              
               <v-btn 
                   class="ma-2"
