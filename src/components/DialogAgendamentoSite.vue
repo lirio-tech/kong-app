@@ -13,6 +13,7 @@
               icon
               small
               @click="$emit('show-dialog-agendamento', false)"
+              v-if="!isAgendado"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>      
@@ -153,7 +154,11 @@
                 </v-form>                 
                 <div v-else>
                     <h1>Seu Agendamento foi enviado, em breve entraremos em contato confirmando, aguarde...</h1>
-                    <v-btn>
+                    <br/><br/><br/>
+                    <v-btn
+                      large
+                      @click="isAgendado = false; $emit('show-dialog-agendamento', false)"
+                    >
                         OK
                     </v-btn>
                 </div>                         

@@ -117,7 +117,7 @@
                     Agenda
                 </span>
             </v-col> 
-            <v-col cols="9" v-if="userLogged && userLogged.type === 'sys_admin'" align="right">   
+            <v-col cols="9" align="right">   
               <v-btn
                 class="mx-2"
                 active-class="primary white--text"
