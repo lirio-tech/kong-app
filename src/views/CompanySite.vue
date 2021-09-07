@@ -112,12 +112,12 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
         <v-row>
-            <v-col cols="4" style="margin-left: 0px;">   
-                <span style="font-size: 1.6rem !important;" class="white--text">  
+            <v-col cols="3" style="margin-left: 0px;">   
+                <span style="font-size: 1.4rem !important;" class="white--text">  
                     Agenda
                 </span>
             </v-col> 
-            <v-col cols="8" v-if="userLogged && userLogged.type === 'sys_admin'" align="right">   
+            <v-col cols="9" v-if="userLogged && userLogged.type === 'sys_admin'" align="right">   
               <v-btn
                 class="mx-2"
                 active-class="primary white--text"
@@ -125,17 +125,25 @@
                 v-if="userLogged && userLogged.type === 'sys_admin'"
               >
                   <span class="icon-emoji">🐵 </span>
-                  <span class="grey--text">Chatbot</span>          
+                  <span class="grey--text" style="margin-left: 5px; ">Chatbot</span>          
               </v-btn>              
               <v-btn 
                   class="ma-2"
+                  @click="showDialogAgendamento(true)"
               >
                 <v-icon >mdi-plus</v-icon>
               </v-btn>                
             </v-col> 
         </v-row>     
-          <br/>
-          <site-agendamentos></site-agendamentos>
+        <br/>
+        <site-agendamentos></site-agendamentos>
+        <dialog-agendamento-site 
+          :dialog="dialogAgendamento" 
+          :agendamento="agendamento" 
+          :date="new Date()"
+          :servicesSelected="['Corte de Cabelo', 'Barba']"
+          v-on:show-dialog-agendamento="showDialogAgendamento"
+        />
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
 
@@ -240,6 +248,7 @@
 </template>
 <script>
 import companyGateway from '../api/companyGateway'
+import DialogAgendamentoSite from '../components/DialogAgendamentoSite.vue'
 import DialogPlan from '../components/DialogPlan.vue'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
 import SiteAgendamentos from '../components/SiteAgendamentos.vue'
@@ -249,10 +258,11 @@ import UserTypes from '../utils/UserTypes'
 const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
 //const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
-  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, },
+  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, DialogAgendamentoSite, },
   data: () => ({
     tabView: 'HOME',
     dialogUpdate: false,
+    dialogAgendamento: false,
     dialogPlan: false,
     userLogged: {},
     companySite: {
@@ -271,7 +281,13 @@ export default {
     infoContent: null,
     infoOpened: true,
     infoCurrentKey: null,
-    btnUpdateSite: 'primary'
+    btnUpdateSite: 'primary',
+
+    agendamento: {
+      customer: {},
+      timeStartAt: '11:00',
+      timeEndAt: '12:00',
+    }
   }),
   methods: {
     isAdmin() {
@@ -333,6 +349,9 @@ export default {
         alert('Para Personalizar seu Site assine agora mesmo o Plano Premium');
         this.showPlanDialog(true);
       }
+    },
+    showDialogAgendamento(show) {
+      this.dialogAgendamento = show;
     },
     getPosition: function(marker) {
       return {
