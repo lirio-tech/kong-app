@@ -29,32 +29,34 @@
                     align="center"
                     justify="space-around"
                 >
-                    <v-col cols="12" md="12" align="center">
+                    <v-col cols="4" md="4" align="center">
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('day')"
                             :color="typePeriod === 'day' ? 'primary' : ''"              
                         >Dia</v-btn>     
-                        &nbsp; 
+                    </v-col>
+                    <v-col cols="4" md="4" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('week')"
                             :color="typePeriod === 'week' ? 'primary' : ''"
                         > 
                             Semana
                         </v-btn>    
-                        &nbsp;  
+                    </v-col>
+                    <v-col cols="4" md="4" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('month')"
                             :color="typePeriod === 'month' ? 'primary' : ''"
                         >Mês</v-btn>                               
@@ -64,23 +66,28 @@
                     align="center"
                     justify="space-around"
                 >
+                    <v-col cols="9" md="9" >                   
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 69%"
+                            style="width: 100%"
                             @click="typePeriod = 'category'"
                             :color="typePeriod === 'category' ? 'primary' : ''"
-                        >Funcionários</v-btn>                               
+                        >Funcionários</v-btn>    
+                    </v-col>
+                    <v-col cols="3" md="3" >                                                      
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
+                            style="width: 100%"
                             @click="showDialogEmployees(true)"
                             :color="typePeriod === 'category' ? 'primary' : ''"
                         >
                           <v-icon>mdi-account-multiple-plus</v-icon>
-                        </v-btn>                                                                                              
+                        </v-btn>      
+                    </v-col>                                                                                        
             </v-row>                 
 
             <v-row class="fill-height">

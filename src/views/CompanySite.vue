@@ -111,85 +111,117 @@
           </v-row>          
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
-          <h2 class="white--text">Agenda</h2>
+        <v-row>
+            <v-col cols="6" style="margin-left: 0px;">   
+                <span style="font-size: 1.6rem !important;" class="white--text">  
+                    Agenda
+                </span>
+            </v-col> 
+            <v-col cols="6" v-if="userLogged && userLogged.type === 'sys_admin'" align="right">   
+              <v-btn
+                class="mx-2"
+                active-class="primary white--text"
+                depressed
+                v-if="userLogged && userLogged.type === 'sys_admin'"
+              >
+                  <span class="icon-emoji">🐵 </span>
+                  <span class="grey--text" style="margin-left: 5px; ">Chatbot</span>          
+              </v-btn>              
+              <v-btn 
+                  class="ma-2"
+              >
+                <v-icon >mdi-plus</v-icon>
+              </v-btn>                
+            </v-col> 
+        </v-row>     
           <br/>
           <site-agendamentos></site-agendamentos>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
-            <h2 class="white--text">Contato</h2>
-            <br/>
-            <v-row>
-                <v-col
-                  v-if="companySite.address && companySite.address.lat && companySite.address.lng"
-                  xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+
+        <v-row>
+            <v-col cols="10" style="margin-left: 0px;">   
+                <span style="font-size: 1.6rem !important;" class="white--text">  
+                    Contato
+                </span>
+            </v-col> 
+            <v-col cols="2" v-if="userLogged && userLogged.type === 'sys_admin'">   
+                  <v-img align="" src="@/assets/img/Waze.png" height="40" width="40" />
+            </v-col> 
+        </v-row>                
+        <br/>
+        <v-row>
+            <v-col
+              v-if="companySite.address && companySite.address.lat && companySite.address.lng"
+              xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+            >
+                <GmapMap
+                  :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
+                  :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 4 : 16'
+                  style='width:100%;  height: 400px;'
                 >
-                    <GmapMap
-                      :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
-                      :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 4 : 16'
-                      style='width:100%;  height: 400px;'
+                  <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
+                    <h3 class="black--text">{{infoContent}}</h3>
+                  </gmap-info-window>                
+                    <gmap-marker 
+                      v-for="(item, key) in coordinates" 
+                      :key="key" 
+                      :position="getPosition(item)" 
+                      :clickable="true" 
+                      @click="toggleInfo(item, key)" 
+                      :icon="{ url: require('../assets/barber_marker.png')}" 
+                    />
+                </GmapMap>
+
+            </v-col>
+            <v-col
+              xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+            > 
+                <div v-if="companySite.address && companySite.address.description">
+                    <h4 class="white--text">📍 Endereço</h4>   <br/>
+                    <p style="margin-left: 30px;"><small class="white--text">{{ companySite.address.description }}</small> </p>
+                </div>
+                <br/>
+                <div v-if="companySite.instagram || companySite.facebook">
+                    
+                    <h4 class="white--text">
+                      📱 Siga a gente nas Redes 
+                    </h4>   
+
+                    <p v-if="companySite.instagram" 
+                      style="margin-left: 10px; margin-top: 15px;"
                     >
-                      <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
-                        <h3 class="black--text">{{infoContent}}</h3>
-                      </gmap-info-window>                
-                        <gmap-marker 
-                          v-for="(item, key) in coordinates" 
-                          :key="key" 
-                          :position="getPosition(item)" 
-                          :clickable="true" 
-                          @click="toggleInfo(item, key)" 
-                          :icon="{ url: require('../assets/barber_marker.png')}" 
-                        />
-                    </GmapMap>
+                        <v-btn text @click="openInsta()" v-if="companySite.instagram">
+                          <v-icon color="white">mdi-instagram</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
+                        </v-btn>                        
+                    </p>
+                    
+                    <p v-if="companySite.facebook" 
+                      style="margin-left: 10px;"
+                    >
+                        <v-btn text @click="openFace()" v-if="companySite.facebook">
+                          <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
+                        </v-btn>     
+                    </p>
+                </div>
+                <br/>
 
-                </v-col>
-                <v-col
-                  xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
-                > 
-                    <div v-if="companySite.address && companySite.address.description">
-                        <h4 class="white--text">📍 Endereço</h4>   <br/>
-                        <p style="margin-left: 30px;"><small class="white--text">{{ companySite.address.description }}</small> </p>
-                    </div>
-                    <br/>
-                    <div v-if="companySite.instagram || companySite.facebook">
-                        
-                        <h4 class="white--text">
-                          📱 Siga a gente nas Redes 
-                        </h4>   
-
-                        <p v-if="companySite.instagram" 
-                          style="margin-left: 10px; margin-top: 15px;"
-                        >
-                            <v-btn text @click="openInsta()" v-if="companySite.instagram">
-                              <v-icon color="white">mdi-instagram</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
-                            </v-btn>                        
-                        </p>
-                        
-                        <p v-if="companySite.facebook" 
-                          style="margin-left: 10px;"
-                        >
-                            <v-btn text @click="openFace()" v-if="companySite.facebook">
-                              <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
-                            </v-btn>     
-                        </p>
-                    </div>
-                    <br/>
-
-                </v-col>
-            </v-row>
-            <br/><br/><br/>
-            <v-row>
-                <v-col
-                  xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
-                >               
-                    <center v-if="companySite.whatsapp">
-                        
-                        <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
-                          <v-icon color="green">mdi-whatsapp</v-icon>
-                        </v-btn>
-                        <span class="green--text">{{ companySite.whatsapp }}</span>
-                    </center>
-                </v-col>
-            </v-row>
+            </v-col>
+        </v-row>
+        <br/><br/><br/>
+        <v-row>
+            <v-col
+              xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
+            >               
+                <center v-if="companySite.whatsapp">
+                    
+                    <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
+                      <v-icon color="green">mdi-whatsapp</v-icon>
+                    </v-btn>
+                    <span class="green--text">{{ companySite.whatsapp }}</span>
+                </center>
+            </v-col>
+        </v-row>
       </v-container>     
       <dialog-update-site 
         v-if="userLogged"
