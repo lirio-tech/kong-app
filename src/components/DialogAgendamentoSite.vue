@@ -74,7 +74,7 @@
                           prepend-icon="mdi-content-cut"
                           :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
                         ></v-select>
-                      </v-col>                              
+                      </v-col>       
                       <v-col
                         cols="12"
                         sm="6"
@@ -94,6 +94,7 @@
                               label="Data do Agendamento"
                               readonly
                               filled
+                              :rules="[v => v.length > 0 || 'Data Obrigatória',]"      
                               prepend-icon="mdi-calendar"
                               v-bind="attrs"
                               v-on="on"
@@ -105,7 +106,7 @@
                             locale="pt-br"
                           ></v-date-picker>
                         </v-menu>
-                      </v-col>              
+                      </v-col>                                                        
                       <v-col cols="12" sm="6">           
                           <v-simple-table dense >
                               <template v-slot:default>
@@ -198,14 +199,14 @@ export default {
           timeEndAt: '12:00',
           services: []
         },
-        date: new Date(),
+        date: null,
         servicesSelected: ['Corte de Cabelo', 'Barba'],
       }
     }, 
     methods: {
       formatDate (date) {
         if (!date) return null;
-
+        console.log(date)
         const [year, month, day] = date.split('-')
         return `${day}/${month}/${year}`
       },
@@ -245,7 +246,7 @@ export default {
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.date = this.date;
           if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
-            alert('Horario de Inicio deve ser menor que o horario final do agendamento');
+            alert('Horário de Inicio deve ser menor que o horario final do agendamento');
             return;
           }
 
@@ -267,7 +268,6 @@ export default {
               this.loagindAgendar = false; 
               if(err.response.status === 422) {
                 alert('Você já possui um agendamento solicitado, aguarde entraremos em contato');    
-                console.log(err.response.data.schedulesVerify[0])
                 this.agendamento = err.response.data.schedulesVerify[0];     
                 this.ok();   
                 return;

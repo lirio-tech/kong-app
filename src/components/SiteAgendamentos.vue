@@ -245,6 +245,8 @@ export default {
           if(show === false && agendamento) {
               this.agendamentos.push(agendamento)
               console.log(this.agendamentos[0]._id)
+              window.scrollTo(0,document.body.scrollHeight);
+
           }
         },        
     },        
