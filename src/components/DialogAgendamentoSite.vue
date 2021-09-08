@@ -261,7 +261,8 @@ export default {
               this.loagindAgendar = false; 
               if(err.response.status === 422) {
                 alert('Você já possui um agendamento solicitado, aguarde entraremos em contato');    
-                this.agendamento = err.response.data;     
+                console.log(err.response.data.schedulesVerify[0])
+                this.agendamento = err.response.data.schedulesVerify[0];     
                 this.ok();   
                 return;
               }                     

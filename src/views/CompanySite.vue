@@ -125,7 +125,7 @@
                 v-if="userLogged && userLogged.type === 'sys_admin'"
               >
                   <span class="icon-emoji">🐵 </span>
-                  <span class="grey--text" style="margin-left: 5px; ">Chatbot</span>          
+                  <span class="grey--text" style="margin-left: 5px; ">Kongbot</span>          
               </v-btn>              
               <v-btn 
                   class="ma-2"
