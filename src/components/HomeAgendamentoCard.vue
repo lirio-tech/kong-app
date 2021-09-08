@@ -43,11 +43,21 @@
                         <v-btn
                           color="success"
                           @click="showDialogConcluir(true, agendamento._id)"
-                          :loading="loadingConcluir"                          
+                          :loading="loadingConcluir"        
+                          v-if="agendamento.status === 'PENDING'"                  
                           small
                         >
                           Concluir
                         </v-btn>   
+                        <v-btn
+                          color="info"
+                          @click="goAgendamentoUpdate(agendamento)"
+                          :loading="loadingConcluir"        
+                          v-if="agendamento.status === 'REQUESTED'"                  
+                          small
+                        >
+                          Confirmar
+                        </v-btn>                           
                     </v-card-actions>
 
         </v-card>      
