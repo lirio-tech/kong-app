@@ -257,8 +257,14 @@ export default {
               this.isAgendado = true;
               this.agendamento = res;
             },
-            () => { 
+            (err) => { 
               this.loagindAgendar = false; 
+              if(err.response.status === 422) {
+                alert('Você já possui um agendamento solicitado, aguarde entraremos em contato');    
+                this.agendamento = err.response.data;     
+                this.ok();   
+                return;
+              }                     
               alert('Erro ao registrar agendamento')
             }
           )          

@@ -249,7 +249,6 @@ export default {
         });
       },      
       registrarAgendamento() {
-        console.log(this.total)
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.date = this.date;
           if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
@@ -264,17 +263,35 @@ export default {
 
           if(this.agendamento._id) {
               this.loagindAgendar = true;
-              agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
-                      () => {
-                        this.loagindAgendar = false;
-                        this.$emit('scheduled-success', new Date(),new Date())
-                        this.$emit('show-dialog',false)
-                      },
-                      () => {
-                        this.loagindAgendar = false;
-                        alert('Erro ao registrar agendamento')
-                      }
-                    )
+
+              if(this.agendamento.status === 'REQUESTED') {
+
+                  agendamentoGateway.confirmarAgendamento(this.agendamento._id, this.agendamento,
+                          () => {
+                            this.loagindAgendar = false;
+                            this.$emit('scheduled-success', new Date(),new Date())
+                            this.$emit('show-dialog',false)
+                          },
+                          () => {
+                            this.loagindAgendar = false;
+                            alert('Erro ao registrar agendamento')
+                          }
+                        )
+
+              } else {
+
+                  agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
+                          () => {
+                            this.loagindAgendar = false;
+                            this.$emit('scheduled-success', new Date(),new Date())
+                            this.$emit('show-dialog',false)
+                          },
+                          () => {
+                            this.loagindAgendar = false;
+                            alert('Erro ao registrar agendamento')
+                          }
+                        )
+              }
           
 
           } else {
