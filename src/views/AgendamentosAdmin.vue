@@ -189,8 +189,9 @@
                       <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
                           <v-btn
                           small
+                          color="success"
                           >
-                            <v-icon>mdi-whatsapp</v-icon> Falar com {{ selectedEvent.customer.name }}
+                            <v-icon>mdi-whatsapp</v-icon> Falar com {{ selectedEvent.name }}
                           </v-btn>  
                       </v-card-actions>                        
                       <v-card-actions >
@@ -228,6 +229,7 @@
                           @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
                           v-if="selectedEvent.status === 'REQUESTED'"
                           class="indigo--text"
+                          small
                         >
                           Confirmar
                         </v-btn>                                      

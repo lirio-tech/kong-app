@@ -148,7 +148,7 @@
                           sm="6"
                           align="center"
                           justify="space-around"
-                          v-if="agendamento === 'PENDING'"
+                          v-if="agendamento.status !== 'REQUESTED' && agendamento.status !== 'DONE'"
                       >
                         <v-btn 
                             style="width: 90%"
@@ -165,7 +165,7 @@
                           sm="6"
                           align="center"
                           justify="space-around"
-                          v-if="agendamento === 'REQUESTED'"
+                          v-if="agendamento.status === 'REQUESTED'"
                       >
                         <v-btn 
                             style="width: 90%"
