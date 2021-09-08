@@ -186,11 +186,18 @@
                           Ordem de Serviço
                         </router-link>                      
                       </v-card-text>
-                      <v-card-actions v-if="selectedEvent.status === 'PENDING'">
+                      <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
+                          <v-btn
+                          small
+                          >
+                            <v-icon>mdi-whatsapp</v-icon> Falar com {{ selectedEvent.customer.name }}
+                          </v-btn>  
+                      </v-card-actions>                        
+                      <v-card-actions >
                         <v-btn
                           color="white" 
                           @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
-                          v-if="selectedEvent.status === 'PENDING'"
+                          v-if="selectedEvent.status === 'PENDING' || selectedEvent.status === 'REQUESTED'"
                           class="indigo--text"
                           small
                         >
@@ -201,6 +208,7 @@
                           @click="cancel(selectedEvent._id)"
                           class="white--text"
                           :loading="loadingCancel"
+                          v-if="selectedEvent.status === 'PENDING' || selectedEvent.status === 'REQUESTED'"
                           small
                         >
                           Cancelar
@@ -210,10 +218,19 @@
                           color="success"
                           @click="showDialogConcluir(true, selectedEvent._id)"
                           :loading="loadingConcluir"
+                          v-if="selectedEvent.status === 'PENDING'"
                           small
                         >
                           Concluir
-                        </v-btn>                        
+                        </v-btn>               
+                        <v-btn
+                          color="info"
+                          @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
+                          v-if="selectedEvent.status === 'REQUESTED'"
+                          class="indigo--text"
+                        >
+                          Confirmar
+                        </v-btn>                                      
                       </v-card-actions>
                     </v-card>
                   </v-menu>
