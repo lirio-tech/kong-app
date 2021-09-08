@@ -345,10 +345,10 @@ export default {
                   this.agendamentos = res;
                   console.log('before');
                   this.updateCalendar(_date, _date);
-                   if(this.$route.query._id) {
+                  if(this.$route.query._id) {
                       this.alterarAgendamentoShowDialog(this.$route.query._id);
                       this.$route.query._id = null;
-                   }                  
+                  }                  
               }, () => {
                 alert('Erro ao Buscar agendamentos');
               })
@@ -399,6 +399,8 @@ export default {
               return 'blue'
             if(agendamento.status === 'DONE')
               return 'blue-grey darken-2'
+            if(agendamento.status === 'REQUESTED')
+              return 'green'              
             return 'indigo'
         },            
         setTypePeriod(tp) {
@@ -439,9 +441,16 @@ export default {
         updateCalendar(start, end) {
           console.log(start, end);
           const events = []
+          console.log(this.agendamentos)
           for(var i in this.agendamentos) {
             const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
             const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
+            if(!this.agendamentos[i].user && this.agendamentos[i].status === 'REQUESTED') {
+                this.agendamentos[i].user = {
+                  username: 'requested',
+                  name: 'Sem profissional adicionado', 
+                }
+            }
             events.push({
                 _id: this.agendamentos[i]._id,
                 name: this.agendamentos[i].customer.name,
