@@ -36,11 +36,13 @@
                             @click="setTypePeriod('month')"
                             :color="typePeriod === 'month' ? 'primary' : ''"
                         >Mês</v-btn>                               
-                    </v-col>       
-                    <v-col cols="3" md="3">    
+                    </v-col>        
+                    <v-col cols="3" md="3" >    
                         <v-btn 
-                            style="float: right;"
-                            large
+                            type="button" 
+                            depressed  
+                            large 
+                            style="width: 100%"
                             @click="showDialogAgendamento(true)"
                         >
                           <v-icon >mdi-plus</v-icon>

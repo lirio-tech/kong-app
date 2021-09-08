@@ -135,7 +135,7 @@
                 class="mx-2"
                 active-class="primary white--text"
                 depressed
-                style="width: 91%;"
+                style="width: 95%;"
                 @click="sharedMyCompanyAgendamento"
               >
                   <v-icon color="grey">mdi-share</v-icon>
