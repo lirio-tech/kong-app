@@ -157,11 +157,11 @@
                     <br/><br/><br/>
                     <v-btn
                       large
-                      @click="isAgendado = false; $emit('show-dialog-agendamento', false)"
+                      @click="ok()"
                     >
                         OK
                     </v-btn>
-                </div>                         
+                </div>                          
             </v-container>
           </v-card-text>          
           <div style="flex: 1 1 auto;"></div>
@@ -176,7 +176,7 @@ import moment from 'moment'
 import storage from '../storage'
 export default {
     name: 'DialogAgendamentoSite',
-    props:['dialog', 'agendamento', 'date', 'servicesSelected'],
+    props:['dialog',],
     data () {
       return {
         loagindAgendar: false,
@@ -188,6 +188,13 @@ export default {
         menu2: false,
         modal: false,
         isAgendado: false,
+        agendamento: {
+          customer: {},
+          timeStartAt: '11:00',
+          timeEndAt: '12:00',
+        },
+        date: new Date(),
+        servicesSelected: ['Corte de Cabelo', 'Barba'],
       }
     }, 
     methods: {
@@ -237,6 +244,7 @@ export default {
             return;
           }
 
+          this.agendamento.companyId = this.myCompany._id;
           this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
           this.agendamento.dateAt = this.agendamento.date;
           console.log(this.agendamento);
@@ -244,11 +252,10 @@ export default {
           this.loagindAgendar = true;
 
           agendamentoGateway.registrarAgendamentoSite(this.agendamento,
-            () => {
+            (res) => {
               this.loagindAgendar = false;
               this.isAgendado = true;
-              this.$emit('show-dialog-agendamento', false)
-              //this.$router.push(`/@/${this.myCompany}`)
+              this.agendamento = res;
             },
             () => { 
               this.loagindAgendar = false; 
@@ -257,6 +264,10 @@ export default {
           )          
         }
       },
+      ok() {
+        this.isAgendado = false; 
+        this.$emit('show-dialog-agendamento', false, this.agendamento  )        
+      }
     },
     computed: {
       computedDateFormattedMomentjs() {

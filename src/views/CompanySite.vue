@@ -139,9 +139,6 @@
         <site-agendamentos></site-agendamentos>
         <dialog-agendamento-site 
           :dialog="dialogAgendamento" 
-          :agendamento="agendamento" 
-          :date="new Date()"
-          :servicesSelected="['Corte de Cabelo', 'Barba']"
           v-on:show-dialog-agendamento="showDialogAgendamento"
         />
       </v-container>
@@ -282,12 +279,7 @@ export default {
     infoOpened: true,
     infoCurrentKey: null,
     btnUpdateSite: 'primary',
-
-    agendamento: {
-      customer: {},
-      timeStartAt: '11:00',
-      timeEndAt: '12:00',
-    }
+    agendamentos: [],
   }),
   methods: {
     isAdmin() {
@@ -350,8 +342,12 @@ export default {
         this.showPlanDialog(true);
       }
     },
-    showDialogAgendamento(show) {
+    showDialogAgendamento(show, agendamento) {
       this.dialogAgendamento = show;
+      if(show === false && agendamento) {
+          this.agendamentos.push(agendamento)
+          console.log(this.agendamentos[0]._id)
+      }
     },
     getPosition: function(marker) {
       return {
@@ -403,6 +399,9 @@ export default {
   beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.getCompanyArroba(this.$route.params.arroba);
+      if(this.$route.query.tab) { this.tabView = this.$route.query.tab }
+      if(this.$route.query.realizarAgendamento) { this.dialogAgendamento = this.$route.query.realizarAgendamento === 'true' }
+
   },
   mounted() {
     this.flashingButtons()

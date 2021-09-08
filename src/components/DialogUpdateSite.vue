@@ -45,6 +45,87 @@
 
                     <v-tabs-items v-model="tab">
                       <v-tab-item
+                        value="tab-photos"
+                      >
+                          <v-container >
+                              <v-form 
+                                v-on:submit.prevent="updatePhotos"
+                                ref="updatePhotosForm"
+                                id="updatePhotosForm"
+                              >       
+                                <br/>          
+                                <h4>Foto de Capa</h4>
+                                <br/>
+                                <v-row>
+                                  <v-col xl="12" lg="12" md="12" sm="12" xs="12" cols="12">   
+                                    <v-card flat class="rounded-0">
+                                        <v-img
+                                          :src="companySite.photoCover"
+                                          height="175"
+                                          class="grey darken-4"
+                                        >
+                                              <v-card-title class="align-end fill-height" style="float: right;">
+                                                  <v-btn fab style="z-index: 9999" small @click="clickUploadPhotoCover" :loading="isSelecting">
+                                                    <v-icon>mdi-camera</v-icon>
+                                                  </v-btn>
+                                                  <input
+                                                    ref="uploader"
+                                                    class="d-none"
+                                                    type="file"
+                                                    accept="image/jpeg, image/jpg"
+                                                    @change="onFileChanged"
+                                                  >                                                      
+                                              </v-card-title>
+                                        </v-img>
+                                    </v-card>
+                                  </v-col> 
+                                </v-row>
+
+                                <br/>          
+                                <h4>Fotos de Galeria</h4>
+                                <br/>
+
+                                <v-row>
+                                  <v-col
+                                    v-for="photo in companySite.photos"
+                                    :key="photo._id"
+                                    class="d-flex child-flex"
+                                    xl="3" lg="3" md="3" sm="6" xs="6" cols="6"
+
+                                  >
+                                    <v-img
+                                      :src="`${photo.photo}`"
+                                      :lazy-src="`${photo.photo}`"
+                                      aspect-ratio="1"
+                                      class="grey lighten-2"
+                                    >
+
+                                              <v-card-title class="align-end fill-height" style="float: right;">
+                                                  <v-btn 
+                                                    fab small style="z-index: 9999" 
+                                                    @click="clickUploadPhotoGalleryItem(photo)"
+                                                    :loading="companySite && companySite.photos && photoItemGallerySeletedIndex === companySite.photos.indexOf(photo)"
+                                                  >
+                                                    <v-icon>mdi-camera</v-icon>
+                                                  </v-btn>                                                     
+                                              </v-card-title>
+
+                                    </v-img>                                 
+                                  </v-col>
+                                  <input
+                                    ref="uploaderGalleryItem"
+                                    class="d-none"
+                                    type="file"
+                                    accept="image/jpeg, image/jpg"
+                                    @change="onFileItemChanged"
+                                  >                                        
+                                </v-row>      
+
+
+                              </v-form>
+                          </v-container>
+                      </v-tab-item>                      
+                      <v-tab-item
                         value="tab-infos"
                       >
                           <v-container >
@@ -215,87 +296,6 @@
 
 
                               </v-form>                                          
-                          </v-container>
-                      </v-tab-item>
-                      <v-tab-item
-                        value="tab-photos"
-                      >
-                          <v-container >
-                              <v-form 
-                                v-on:submit.prevent="updatePhotos"
-                                ref="updatePhotosForm"
-                                id="updatePhotosForm"
-                              >       
-                                <br/>          
-                                <h4>Foto de Capa</h4>
-                                <br/>
-                                <v-row>
-                                  <v-col xl="12" lg="12" md="12" sm="12" xs="12" cols="12">   
-                                    <v-card flat class="rounded-0">
-                                        <v-img
-                                          :src="companySite.photoCover"
-                                          height="175"
-                                          class="grey darken-4"
-                                        >
-                                              <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn fab style="z-index: 9999" small @click="clickUploadPhotoCover" :loading="isSelecting">
-                                                    <v-icon>mdi-camera</v-icon>
-                                                  </v-btn>
-                                                  <input
-                                                    ref="uploader"
-                                                    class="d-none"
-                                                    type="file"
-                                                    accept="image/jpeg, image/jpg"
-                                                    @change="onFileChanged"
-                                                  >                                                      
-                                              </v-card-title>
-                                        </v-img>
-                                    </v-card>
-                                  </v-col> 
-                                </v-row>
-
-                                <br/>          
-                                <h4>Fotos de Galeria</h4>
-                                <br/>
-
-                                <v-row>
-                                  <v-col
-                                    v-for="photo in companySite.photos"
-                                    :key="photo._id"
-                                    class="d-flex child-flex"
-                                    xl="3" lg="3" md="3" sm="6" xs="6" cols="6"
-
-                                  >
-                                    <v-img
-                                      :src="`${photo.photo}`"
-                                      :lazy-src="`${photo.photo}`"
-                                      aspect-ratio="1"
-                                      class="grey lighten-2"
-                                    >
-
-                                              <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn 
-                                                    fab small style="z-index: 9999" 
-                                                    @click="clickUploadPhotoGalleryItem(photo)"
-                                                    :loading="companySite && companySite.photos && photoItemGallerySeletedIndex === companySite.photos.indexOf(photo)"
-                                                  >
-                                                    <v-icon>mdi-camera</v-icon>
-                                                  </v-btn>                                                     
-                                              </v-card-title>
-
-                                    </v-img>                                 
-                                  </v-col>
-                                  <input
-                                    ref="uploaderGalleryItem"
-                                    class="d-none"
-                                    type="file"
-                                    accept="image/jpeg, image/jpg"
-                                    @change="onFileItemChanged"
-                                  >                                        
-                                </v-row>      
-
-
-                              </v-form>
                           </v-container>
                       </v-tab-item>
                     </v-tabs-items>      
