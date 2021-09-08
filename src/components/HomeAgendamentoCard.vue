@@ -13,6 +13,9 @@
                             <p class="text-h6 black--text">
                               {{ agendamento.customer.name }} 
                             </p>
+                            <p class="black--text" v-if="agendamento.customer.phone_number">
+                              <v-icon class="black--text">mdi-whatsapp</v-icon> {{ agendamento.customer.phone_number }} 
+                            </p>                            
                             <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
                             <v-icon class="black--text">mdi-clock</v-icon> &nbsp; 
                               <b>

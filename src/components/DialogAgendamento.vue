@@ -148,6 +148,7 @@
                           sm="6"
                           align="center"
                           justify="space-around"
+                          v-if="agendamento === 'PENDING'"
                       >
                         <v-btn 
                             style="width: 90%"
@@ -158,7 +159,24 @@
                         >
                           Agendar
                         </v-btn>                                                                               
-                      </v-col>           
+                      </v-col>                                
+                      <v-col 
+                          cols="12"
+                          sm="6"
+                          align="center"
+                          justify="space-around"
+                          v-if="agendamento === 'REQUESTED'"
+                      >
+                        <v-btn 
+                            style="width: 90%"
+                            color="info"
+                            x-large
+                            type="submit"
+                            :loading="loagindAgendar"
+                        >
+                          Confirmar
+                        </v-btn>                                                                               
+                      </v-col>                          
                 </v-form>                                          
             </v-container>
           </v-card-text>          
