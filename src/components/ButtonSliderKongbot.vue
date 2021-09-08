@@ -13,7 +13,7 @@
         @click="toggle; showWarning()"
       >
           <span class="icon-emoji">🐵 </span>
-          <span class="grey--text" style="margin-left: 5px; ">Chatbot</span>          
+          <span class="grey--text" style="margin-left: 5px; ">Kongbot</span>          
       </v-btn>
     </v-slide-item>             
 
@@ -35,7 +35,7 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>      
             <v-toolbar-title style="margin-left:-17px;">
-                Chatbot
+                Kongbot
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>    

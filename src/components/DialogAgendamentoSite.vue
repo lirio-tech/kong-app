@@ -153,7 +153,9 @@
                       </v-col>           
                 </v-form>                 
                 <div v-else>
-                    <h1>Seu Agendamento foi enviado, em breve entraremos em contato confirmando, aguarde...</h1>
+                    <center style="font-size: 1.1rem;">
+                        Seu Agendamento foi enviado, em breve entraremos em contato confirmando, aguarde...
+                    </center>
                     <br/><br/><br/>
                     <v-btn
                       large
@@ -192,6 +194,7 @@ export default {
           customer: {},
           timeStartAt: '11:00',
           timeEndAt: '12:00',
+          services: []
         },
         date: new Date(),
         servicesSelected: ['Corte de Cabelo', 'Barba'],
@@ -245,7 +248,8 @@ export default {
           }
 
           this.agendamento.companyId = this.myCompany._id;
-          this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
+          this.agendamento.services = this.myCompany.services.filter(it => this.servicesSelected.includes(it.type));
+          console.log(this.agendamento.services)
           this.agendamento.dateAt = this.agendamento.date;
           console.log(this.agendamento);
 
@@ -257,7 +261,7 @@ export default {
               this.isAgendado = true;
               this.agendamento = res;
             },
-            (err) => { 
+            (err) => {  
               this.loagindAgendar = false; 
               if(err.response.status === 422) {
                 alert('Você já possui um agendamento solicitado, aguarde entraremos em contato');    

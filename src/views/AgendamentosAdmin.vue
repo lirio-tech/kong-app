@@ -228,7 +228,6 @@
                           color="info"
                           @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
                           v-if="selectedEvent.status === 'REQUESTED'"
-                          class="indigo--text"
                           small
                         >
                           Confirmar
