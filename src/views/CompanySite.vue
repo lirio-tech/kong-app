@@ -112,7 +112,7 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
         <v-row>
-            <v-col cols="12" style="margin-left: 0px;">   
+            <v-col cols="6" style="margin-left: 0px;">   
                 <span style="font-size: 1.4rem !important;" class="white--text">  
                     Agenda
                 </span>
