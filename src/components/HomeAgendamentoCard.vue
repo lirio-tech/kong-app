@@ -27,19 +27,9 @@
                           </v-card-text>
                     </router-link>
                     <v-card-actions v-if="agendamento.status === 'REQUESTED'">
-                        <a 
-                          style="color: inherit; text-decoration: none"
-                          :href="`https://api.whatsapp.com/send?phone=55${agendamento.customer.phone_number.replace(/\D/g,'')}&text=Olá ${agendamento.customer.name}`"
-                        >                        
-                            <v-btn
-                            color="success darken-2"
-                            small
-                            >
-                              <v-icon>mdi-whatsapp</v-icon> <span style="margin-left: 5px;">Falar com {{ agendamento.customer.name }}</span>
-                            </v-btn>  
-                        </a>
+                        <button-contact-customer-whats-app :customer="agendamento.customer" /> 
                     </v-card-actions>                    
-                    <v-card-actions>
+                    <v-card-actions> 
                         <v-btn
                          @click="goAgendamentoUpdate(agendamento)"
                          small
@@ -91,8 +81,9 @@ import UserTypes from '../utils/UserTypes'
 import agendamentoGateway from '../api/agendamentoGateway';
 import DialogAgendamentoConcluir from './DialogAgendamentoConcluir.vue';
 import dateUtil from '../utils/date';
+import ButtonContactCustomerWhatsApp from './ButtonContactCustomerWhatsApp.vue';
 export default {
-  components: { DialogAgendamentoConcluir },
+  components: { DialogAgendamentoConcluir, ButtonContactCustomerWhatsApp },
     name: 'HomeAgendamentoCard',
     props: [ 'agendamento', 'userLogged' ],
     data() {

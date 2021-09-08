@@ -187,12 +187,7 @@
                         </router-link>                      
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
-                          <v-btn
-                          small
-                          color="success"
-                          >
-                            <v-icon>mdi-whatsapp</v-icon> Falar com {{ selectedEvent.name }}
-                          </v-btn>  
+                          <button-contact-customer-whats-app :customer="{ name: selectedEvent.name, phone_number: selectedEvent.phoneNumber }" />
                       </v-card-actions>                        
                       <v-card-actions >
                         <v-btn
@@ -276,13 +271,15 @@ import DialogAgendamento from '../components/DialogAgendamento'
 import DialogAgendamentoConcluir from '../components/DialogAgendamentoConcluir'
 import DialogAgendamentoEmployees from '../components/DialogAgendamentoEmployees'
 import SnackBar from '../components/SnackBar.vue';
+import ButtonContactCustomerWhatsApp from '../components/ButtonContactCustomerWhatsApp.vue';
 export default {
     name: 'Agendamentos',
     components: { 
         DialogAgendamento,
         DialogAgendamentoConcluir,
         DialogAgendamentoEmployees,
-        SnackBar, 
+        SnackBar,
+        ButtonContactCustomerWhatsApp, 
     },
     data: () => ({
         dialog: false,
@@ -472,6 +469,7 @@ export default {
             events.push({
                 _id: this.agendamentos[i]._id,
                 name: this.agendamentos[i].customer.name,
+                phoneNumber: this.agendamentos[i].customer.phone_number,
                 user: this.agendamentos[i].user.username,
                 userName: this.agendamentos[i].user.name,
                 detail: this.getDescriptionServices(this.agendamentos[i].services),
