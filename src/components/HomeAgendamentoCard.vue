@@ -27,12 +27,17 @@
                           </v-card-text>
                     </router-link>
                     <v-card-actions v-if="agendamento.status === 'REQUESTED'">
-                        <v-btn
-                         color="success"
-                         small
-                        >
-                          <v-icon>mdi-whatsapp</v-icon> Falar com {{ agendamento.customer.name }}
-                        </v-btn>  
+                        <a 
+                          style="color: inherit; text-decoration: none"
+                          :href="`https://api.whatsapp.com/send?phone=55${agendamento.customer.phone_number.replace(/\D/g,'')}&text=Olá ${agendamento.customer.name}!`"
+                        >                        
+                            <v-btn
+                            color="success"
+                            small
+                            >
+                              <v-icon>mdi-whatsapp</v-icon> Falar com {{ agendamento.customer.name }}
+                            </v-btn>  
+                        </a>
                     </v-card-actions>                    
                     <v-card-actions>
                         <v-btn
