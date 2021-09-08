@@ -70,5 +70,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })            
-    }            
+    },
+    registrarAgendamentoSite(agendamento, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/site`;
+        Axios.post(url, agendamento)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },                
 }

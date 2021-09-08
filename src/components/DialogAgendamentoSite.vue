@@ -37,11 +37,11 @@
                         >
                           <v-text-field 
                               v-model="agendamento.customer.name"
-                              label="Cliente"
+                              label="Seu Nome"
                               filled required
                               prepend-icon="mdi-account"
                               ref="customerName"
-                              :rules="[v => !!v || 'Nome do Cliente Obrigatório',]"
+                              :rules="[v => !!v || 'Nome Obrigatório',]"
                           ></v-text-field>  
                       </v-col>          
                       <v-col 
@@ -171,7 +171,7 @@
 </template>
 
 <script>
-// import agendamentoGateway from '../api/agendamentoGateway';
+import agendamentoGateway from '../api/agendamentoGateway';
 import moment from 'moment'
 import storage from '../storage'
 export default {
@@ -242,40 +242,19 @@ export default {
           console.log(this.agendamento);
 
           this.loagindAgendar = true;
-          setTimeout(() => {
+
+          agendamentoGateway.registrarAgendamentoSite(this.agendamento,
+            () => {
               this.loagindAgendar = false;
               this.isAgendado = true;
-          }, 2000)
-
-          // if(this.agendamento._id) {
-          //     this.loagindAgendar = true;
-          //     agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
-          //             () => {
-          //               this.loagindAgendar = false;
-          //               this.$emit('scheduled-success', new Date(),new Date())
-          //               this.$emit('show-dialog',false)
-          //             },
-          //             () => {
-          //               this.loagindAgendar = false;
-          //               alert('Erro ao registrar agendamento')
-          //             }
-          //           )
-          
-
-          // } else {
-          //       this.loagindAgendar = true;
-          //       agendamentoGateway.registrarAgendamento(this.agendamento,
-          //         () => {
-          //           this.loagindAgendar = false;
-          //           this.$emit('scheduled-success',new Date(),new Date())
-          //           this.$emit('show-dialog',false)
-          //         },
-          //         () => { 
-          //           this.loagindAgendar = false; 
-          //           alert('Erro ao registrar agendamento')
-          //         }
-          //       )
-          // }
+              this.$emit('show-dialog-agendamento', false)
+              //this.$router.push(`/@/${this.myCompany}`)
+            },
+            () => { 
+              this.loagindAgendar = false; 
+              alert('Erro ao registrar agendamento')
+            }
+          )          
         }
       },
     },
