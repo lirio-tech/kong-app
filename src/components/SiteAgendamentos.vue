@@ -4,7 +4,7 @@
             <v-row 
 
                 >
-                    <v-col cols="4" md="4" >
+                    <v-col cols="3" md="3" >
                         <v-btn 
                             type="button" 
                             depressed  
@@ -14,7 +14,7 @@
                             :color="typePeriod === 'day' ? 'primary' : ''"              
                         >Dia</v-btn>     
                     </v-col>
-                    <v-col cols="4" md="4" >    
+                    <v-col cols="3" md="3" >    
                         &nbsp; 
                         <v-btn 
                             type="button" 
@@ -27,7 +27,7 @@
                             Semana
                         </v-btn>    
                       </v-col>
-                      <v-col cols="4" md="4" >    
+                      <v-col cols="3" md="3" >    
                         <v-btn 
                             type="button" 
                             depressed  
@@ -36,7 +36,16 @@
                             @click="setTypePeriod('month')"
                             :color="typePeriod === 'month' ? 'primary' : ''"
                         >Mês</v-btn>                               
-                    </v-col>                                                  
+                    </v-col>       
+                    <v-col cols="3" md="3">    
+                        <v-btn 
+                            style="float: right;"
+                            large
+                            @click="showDialogAgendamento(true)"
+                        >
+                          <v-icon >mdi-plus</v-icon>
+                        </v-btn>                          
+                    </v-col>                                        
             </v-row>           
 
             <v-row class="fill-height">
@@ -100,19 +109,25 @@
      
         </v-main>
         <br/><br/>
-        
+        <dialog-agendamento-site 
+          :dialog="dialogAgendamento" 
+          v-on:show-dialog-agendamento="showDialogAgendamento"
+        />        
     </v-container>
 </template>
 
 <script>
 import storage from '../storage'
+import DialogAgendamentoSite from '../components/DialogAgendamentoSite.vue'
 // import dateUtil from '../utils/date'
 // import agendamentoGateway from '../api/agendamentoGateway';
 export default {
     name: 'SiteAgendamentos',
     components: { 
+      DialogAgendamentoSite,
     },
     data: () => ({
+        dialogAgendamento: false,
         userLogged: {},
         value: '',
         agendamentos: [],
@@ -131,6 +146,7 @@ export default {
           this.value = this.$route.query.date.substring(0,10);
         }
         this.findAgendamento();
+        if(this.$route.query.realizarAgendamento) { this.dialogAgendamento = this.$route.query.realizarAgendamento === 'true' }
     },
     mounted () {
       window.scrollTo(0,0);
@@ -221,7 +237,14 @@ export default {
               timeEndAt: '13:30:00',
               services: [],
             };
-        }
+        },
+        showDialogAgendamento(show, agendamento) {
+          this.dialogAgendamento = show;
+          if(show === false && agendamento) {
+              this.agendamentos.push(agendamento)
+              console.log(this.agendamentos[0]._id)
+          }
+        },        
     },        
 
   }
