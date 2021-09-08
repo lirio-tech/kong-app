@@ -35,6 +35,7 @@
                               size="1" 
                               :items="users"
                               label="Funcionário"
+                              prepend-icon="mdi-account"
                               :rules="[v => !!v || 'Funcionário Obrigatório',]"
                               ref="user"
                               required filled 
@@ -52,9 +53,24 @@
                               label="Cliente"
                               filled required
                               ref="customerName"
+                              prepend-icon="mdi-account"
                               :rules="[v => !!v || 'Nome do Cliente Obrigatório',]"
                           ></v-text-field>  
-                      </v-col>              
+                      </v-col>            
+                      <v-col 
+                        cols="12"
+                        sm="6"
+                      >
+                          <v-text-field 
+                              v-model="agendamento.customer.phone_number"
+                              label="WhatsApp ou Celular"
+                              ref="whats"
+                              v-mask="'(##) #####-####'"
+                              filled
+                              :rules="[v => !!v || 'WhatsApp Obrigatório',]"
+                              prepend-icon="mdi-whatsapp"
+                          />                                    
+                      </v-col>                            
                       <v-col
                         cols="12"
                         sm="6"
@@ -67,6 +83,7 @@
                           chips
                           label="Serviços"
                           multiple
+                          prepend-icon="mdi-content-cut"
                           ref="services"
                           :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
                         ></v-select>
