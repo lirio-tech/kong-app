@@ -17,7 +17,7 @@
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>      
-            <v-toolbar-title style="margin-left:-17px;">
+            <v-toolbar-title style="margin-left:-10px;">
                 Agendamento
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -118,6 +118,7 @@
                                             type="time"
                                             @blur="changeTimeStart"
                                             filled
+                                            :rules="[v => !!v || 'Horário Obrigatório',]"
                                             prepend-icon="mdi-clock"
                                           ></v-text-field>                     
                                       </th>
@@ -152,18 +153,19 @@
                         </v-btn>                                                                               
                       </v-col>           
                 </v-form>                 
-                <div v-else>
-                    <center style="font-size: 1.1rem;">
+                <center v-else>
+                    <span style="font-size: 1.4rem;">
                         Seu Agendamento foi enviado, em breve entraremos em contato confirmando, aguarde...
-                    </center>
-                    <br/><br/><br/>
+                    </span>
+                    <br/><br/>
                     <v-btn
                       large
+                      color="success"
                       @click="ok()"
                     >
                         OK
                     </v-btn>
-                </div>                          
+                </center>                          
             </v-container>
           </v-card-text>          
           <div style="flex: 1 1 auto;"></div>
