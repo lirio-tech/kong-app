@@ -32,10 +32,10 @@
                           :href="`https://api.whatsapp.com/send?phone=55${agendamento.customer.phone_number.replace(/\D/g,'')}&text=Olá ${agendamento.customer.name}!`"
                         >                        
                             <v-btn
-                            color="success"
+                            color="success darken-2"
                             small
                             >
-                              <v-icon>mdi-whatsapp</v-icon> Falar com {{ agendamento.customer.name }}
+                              <v-icon>mdi-whatsapp</v-icon> <span style="margin-left: 5px;">Falar com {{ agendamento.customer.name }}</span>
                             </v-btn>  
                         </a>
                     </v-card-actions>                    
