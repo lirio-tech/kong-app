@@ -13,6 +13,9 @@
                             <p class="text-h6 black--text">
                               {{ agendamento.customer.name }} 
                             </p>
+                            <p class="black--text" v-if="agendamento.customer.phone_number">
+                              <v-icon class="black--text" >mdi-whatsapp</v-icon> {{ agendamento.customer.phone_number }} 
+                            </p>                            
                             <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
                             <v-icon class="black--text">mdi-clock</v-icon> &nbsp; 
                               <b>
@@ -23,7 +26,10 @@
                               
                           </v-card-text>
                     </router-link>
-                    <v-card-actions>
+                    <v-card-actions v-if="agendamento.status === 'REQUESTED'">
+                        <button-contact-customer-whats-app :customer="agendamento.customer" /> 
+                    </v-card-actions>                    
+                    <v-card-actions> 
                         <v-btn
                          @click="goAgendamentoUpdate(agendamento)"
                          small
@@ -43,11 +49,21 @@
                         <v-btn
                           color="success"
                           @click="showDialogConcluir(true, agendamento._id)"
-                          :loading="loadingConcluir"                          
+                          :loading="loadingConcluir"        
+                          v-if="agendamento.status === 'PENDING'"                  
                           small
                         >
                           Concluir
                         </v-btn>   
+                        <v-btn
+                          color="info"
+                          @click="goAgendamentoUpdate(agendamento)"
+                          :loading="loadingConcluir"        
+                          v-if="agendamento.status === 'REQUESTED'"                  
+                          small
+                        >
+                          Confirmar
+                        </v-btn>                           
                     </v-card-actions>
 
         </v-card>      
@@ -65,8 +81,9 @@ import UserTypes from '../utils/UserTypes'
 import agendamentoGateway from '../api/agendamentoGateway';
 import DialogAgendamentoConcluir from './DialogAgendamentoConcluir.vue';
 import dateUtil from '../utils/date';
+import ButtonContactCustomerWhatsApp from './ButtonContactCustomerWhatsApp.vue';
 export default {
-  components: { DialogAgendamentoConcluir },
+  components: { DialogAgendamentoConcluir, ButtonContactCustomerWhatsApp },
     name: 'HomeAgendamentoCard',
     props: [ 'agendamento', 'userLogged' ],
     data() {

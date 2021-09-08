@@ -76,6 +76,7 @@ export default {
         agendamentoGateway.getPriorAndNext(res => {
             this.loadingAgendamentos = false;
             this.agendamentos = res;
+            console.log('agendamentos',this.agendamentos)
           }, () => {
             this.loadingAgendamentos = false;
             this.agendamentos = [];

@@ -59,7 +59,7 @@
                       >
                         <button-slider-site :company="company" />
                         <button-slider-pix :company="company" />
-                        <button-slider-kongbot :company="company" />
+                        <button-slider-kongbot v-if="userLogged && userLogged.type === 'sys_admin'" :company="company" />
                         <button-slider-analytics :company="company" />
                       
                       </v-slide-group>

@@ -29,32 +29,34 @@
                     align="center"
                     justify="space-around"
                 >
-                    <v-col cols="12" md="12" align="center">
+                    <v-col cols="4" md="4" align="center">
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('day')"
                             :color="typePeriod === 'day' ? 'primary' : ''"              
                         >Dia</v-btn>     
-                        &nbsp; 
+                    </v-col>
+                    <v-col cols="4" md="4" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('week')"
                             :color="typePeriod === 'week' ? 'primary' : ''"
                         > 
                             Semana
                         </v-btn>    
-                        &nbsp;  
+                    </v-col>
+                    <v-col cols="4" md="4" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('month')"
                             :color="typePeriod === 'month' ? 'primary' : ''"
                         >Mês</v-btn>                               
@@ -64,23 +66,28 @@
                     align="center"
                     justify="space-around"
                 >
+                    <v-col cols="9" md="9" >                   
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 69%"
+                            style="width: 100%"
                             @click="typePeriod = 'category'"
                             :color="typePeriod === 'category' ? 'primary' : ''"
-                        >Funcionários</v-btn>                               
+                        >Funcionários</v-btn>    
+                    </v-col>
+                    <v-col cols="3" md="3" >                                                      
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
+                            style="width: 100%"
                             @click="showDialogEmployees(true)"
                             :color="typePeriod === 'category' ? 'primary' : ''"
                         >
                           <v-icon>mdi-account-multiple-plus</v-icon>
-                        </v-btn>                                                                                              
+                        </v-btn>      
+                    </v-col>                                                                                        
             </v-row>                 
 
             <v-row class="fill-height">
@@ -179,11 +186,14 @@
                           Ordem de Serviço
                         </router-link>                      
                       </v-card-text>
-                      <v-card-actions v-if="selectedEvent.status === 'PENDING'">
+                      <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
+                          <button-contact-customer-whats-app :customer="{ name: selectedEvent.name, phone_number: selectedEvent.phoneNumber }" />
+                      </v-card-actions>                        
+                      <v-card-actions >
                         <v-btn
                           color="white" 
                           @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
-                          v-if="selectedEvent.status === 'PENDING'"
+                          v-if="selectedEvent.status === 'PENDING' || selectedEvent.status === 'REQUESTED'"
                           class="indigo--text"
                           small
                         >
@@ -194,6 +204,7 @@
                           @click="cancel(selectedEvent._id)"
                           class="white--text"
                           :loading="loadingCancel"
+                          v-if="selectedEvent.status === 'PENDING' || selectedEvent.status === 'REQUESTED'"
                           small
                         >
                           Cancelar
@@ -203,10 +214,19 @@
                           color="success"
                           @click="showDialogConcluir(true, selectedEvent._id)"
                           :loading="loadingConcluir"
+                          v-if="selectedEvent.status === 'PENDING'"
                           small
                         >
                           Concluir
-                        </v-btn>                        
+                        </v-btn>               
+                        <v-btn
+                          color="info"
+                          @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
+                          v-if="selectedEvent.status === 'REQUESTED'"
+                          small
+                        >
+                          Confirmar
+                        </v-btn>                                      
                       </v-card-actions>
                     </v-card>
                   </v-menu>
@@ -251,13 +271,15 @@ import DialogAgendamento from '../components/DialogAgendamento'
 import DialogAgendamentoConcluir from '../components/DialogAgendamentoConcluir'
 import DialogAgendamentoEmployees from '../components/DialogAgendamentoEmployees'
 import SnackBar from '../components/SnackBar.vue';
+import ButtonContactCustomerWhatsApp from '../components/ButtonContactCustomerWhatsApp.vue';
 export default {
     name: 'Agendamentos',
     components: { 
         DialogAgendamento,
         DialogAgendamentoConcluir,
         DialogAgendamentoEmployees,
-        SnackBar, 
+        SnackBar,
+        ButtonContactCustomerWhatsApp, 
     },
     data: () => ({
         dialog: false,
@@ -338,10 +360,10 @@ export default {
                   this.agendamentos = res;
                   console.log('before');
                   this.updateCalendar(_date, _date);
-                   if(this.$route.query._id) {
+                  if(this.$route.query._id) {
                       this.alterarAgendamentoShowDialog(this.$route.query._id);
                       this.$route.query._id = null;
-                   }                  
+                  }                  
               }, () => {
                 alert('Erro ao Buscar agendamentos');
               })
@@ -392,6 +414,8 @@ export default {
               return 'blue'
             if(agendamento.status === 'DONE')
               return 'blue-grey darken-2'
+            if(agendamento.status === 'REQUESTED')
+              return 'green'              
             return 'indigo'
         },            
         setTypePeriod(tp) {
@@ -432,12 +456,20 @@ export default {
         updateCalendar(start, end) {
           console.log(start, end);
           const events = []
+          console.log(this.agendamentos)
           for(var i in this.agendamentos) {
             const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
             const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
+            if(!this.agendamentos[i].user && this.agendamentos[i].status === 'REQUESTED') {
+                this.agendamentos[i].user = {
+                  username: 'requested',
+                  name: 'Sem profissional adicionado', 
+                }
+            }
             events.push({
                 _id: this.agendamentos[i]._id,
                 name: this.agendamentos[i].customer.name,
+                phoneNumber: this.agendamentos[i].customer.phone_number,
                 user: this.agendamentos[i].user.username,
                 userName: this.agendamentos[i].user.name,
                 detail: this.getDescriptionServices(this.agendamentos[i].services),

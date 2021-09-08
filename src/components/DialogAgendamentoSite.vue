@@ -12,12 +12,13 @@
             <v-btn
               icon
               small
-              @click="$emit('show-dialog', false)"
+              @click="$emit('show-dialog-agendamento', false)"
+              v-if="!isAgendado"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>      
-            <v-toolbar-title style="margin-left:-17px;">
-                Agendar novo Cliente
+            <v-toolbar-title style="margin-left:-10px;">
+                Agendamento
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>    
@@ -27,36 +28,22 @@
                   v-on:submit.prevent="registrarAgendamento"
                   ref="agendamentoForm"
                   id="agendamentoForm"
+                  v-if="!isAgendado"
                 >              
                     <br/>
-                      <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
-                          <v-select 
-                              v-model="agendamento.user._id" 
-                              size="1" 
-                              :items="users"
-                              label="Funcionário"
-                              prepend-icon="mdi-account"
-                              :rules="[v => !!v || 'Funcionário Obrigatório',]"
-                              ref="user"
-                              required filled 
-                              item-text='name'
-                              item-value='_id'      
-                               @change="setServices"      
-                          ></v-select>                                              
-                      </v-col>  
                       <v-col
                           cols="12"
                           sm="6"
                         >
                           <v-text-field 
                               v-model="agendamento.customer.name"
-                              label="Cliente"
+                              label="Seu Nome"
                               filled required
-                              ref="customerName"
                               prepend-icon="mdi-account"
-                              :rules="[v => !!v || 'Nome do Cliente Obrigatório',]"
+                              ref="customerName"
+                              :rules="[v => !!v || 'Nome Obrigatório',]"
                           ></v-text-field>  
-                      </v-col>            
+                      </v-col>          
                       <v-col 
                         cols="12"
                         sm="6"
@@ -70,39 +57,24 @@
                               :rules="[v => !!v || 'WhatsApp Obrigatório',]"
                               prepend-icon="mdi-whatsapp"
                           />                                    
-                      </v-col>                            
+                      </v-col>                                                    
                       <v-col
                         cols="12"
                         sm="6"
                       >
                         <v-select
                           v-model="servicesSelected"
-                          :items="services"
-                          item-text="display"
+                          :items="myCompany.services"
+                          item-text="type"
                           filled
                           chips
                           label="Serviços"
                           multiple
-                          prepend-icon="mdi-content-cut"
                           ref="services"
+                          prepend-icon="mdi-content-cut"
                           :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
                         ></v-select>
                       </v-col>       
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        v-if="agendamento._id"
-                      >
-                          <v-text-field 
-                              v-model="total"
-                              label="Total"
-                              readonly
-                              filled required
-                              ref="total"
-                              @keyup="total = maskCurrency(total)"
-                              :rules="[v => !!v || 'Total Obrigatório',]"
-                          ></v-text-field>
-                      </v-col>                              
                       <v-col
                         cols="12"
                         sm="6"
@@ -122,6 +94,8 @@
                               label="Data do Agendamento"
                               readonly
                               filled
+                              :rules="[v => v.length > 0 || 'Data Obrigatória',]"      
+                              prepend-icon="mdi-calendar"
                               v-bind="attrs"
                               v-on="on"
                             ></v-text-field>
@@ -132,7 +106,7 @@
                             locale="pt-br"
                           ></v-date-picker>
                         </v-menu>
-                      </v-col>              
+                      </v-col>                                                        
                       <v-col cols="12" sm="6">           
                           <v-simple-table dense >
                               <template v-slot:default>
@@ -145,16 +119,19 @@
                                             type="time"
                                             @blur="changeTimeStart"
                                             filled
+                                            :rules="[v => !!v || 'Horário Obrigatório',]"
+                                            prepend-icon="mdi-clock"
                                           ></v-text-field>                     
                                       </th>
-                                      <th>
+                                      <!-- <th >
                                             <v-text-field
+                                              disabled
                                               label="Fim"
                                               v-model="agendamento.timeEndAt"
                                               type="time"
                                               filled
                                             ></v-text-field>  
-                                      </th>
+                                      </th> -->
                                   </tr>
                                   </tbody>
                               </template>
@@ -165,7 +142,6 @@
                           sm="6"
                           align="center"
                           justify="space-around"
-                          v-if="agendamento.status !== 'REQUESTED' && agendamento.status !== 'DONE'"
                       >
                         <v-btn 
                             style="width: 90%"
@@ -176,25 +152,21 @@
                         >
                           Agendar
                         </v-btn>                                                                               
-                      </v-col>                                
-                      <v-col 
-                          cols="12"
-                          sm="6"
-                          align="center"
-                          justify="space-around"
-                          v-if="agendamento.status === 'REQUESTED'"
-                      >
-                        <v-btn 
-                            style="width: 90%"
-                            color="info"
-                            x-large
-                            type="submit"
-                            :loading="loagindAgendar"
-                        >
-                          Confirmar
-                        </v-btn>                                                                               
-                      </v-col>                          
-                </v-form>                                          
+                      </v-col>           
+                </v-form>                 
+                <center v-else>
+                    <span style="font-size: 1.4rem;">
+                        Seu Agendamento foi enviado, em breve entraremos em contato confirmando, aguarde...
+                    </span>
+                    <br/><br/>
+                    <v-btn
+                      large
+                      color="success"
+                      @click="ok()"
+                    >
+                        OK
+                    </v-btn>
+                </center>                          
             </v-container>
           </v-card-text>          
           <div style="flex: 1 1 auto;"></div>
@@ -205,11 +177,11 @@
 
 <script>
 import agendamentoGateway from '../api/agendamentoGateway';
-import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
 export default {
-    props:['dialog', 'agendamento', 'date','servicesSelected', 'users'],
+    name: 'DialogAgendamentoSite',
+    props:['dialog',],
     data () {
       return {
         loagindAgendar: false,
@@ -219,17 +191,22 @@ export default {
         value: [],        
 
         menu2: false,
-        modal: false
-
+        modal: false,
+        isAgendado: false,
+        agendamento: {
+          customer: {},
+          timeStartAt: '11:00',
+          timeEndAt: '12:00',
+          services: []
+        },
+        date: null,
+        servicesSelected: ['Corte de Cabelo', 'Barba'],
       }
     }, 
     methods: {
-      isAdmin() {
-        return UserTypes.isAdmin(this.userLogged.type)
-      },
       formatDate (date) {
         if (!date) return null;
-
+        console.log(date)
         const [year, month, day] = date.split('-')
         return `${day}/${month}/${year}`
       },
@@ -255,99 +232,67 @@ export default {
           this.agendamento.timeEndAt = `${hour > 10 ? hour : '0'+hour}:${this.agendamento.timeStartAt.substring(3,5)}`
       },
       setServices() {
-        if(this.agendamento.user._id) { 
-          this.services = this.users.filter(it => it._id === this.agendamento.user._id)[0].services
-          //this.services = this.isAdmin(this.userLogged.type) ? this.myCompany.services : this.userLogged.services;
-        } else {
-          this.services = this.userLogged.services;
-        }
-        this.services.forEach(element => {
-          element.display = element.type
-        });
+        // if(this.agendamento.user._id) { 
+        //   this.services = this.users.filter(it => it._id === this.agendamento.user._id)[0].services
+        //   //this.services = this.isAdmin(this.userLogged.type) ? this.myCompany.services : this.userLogged.services;
+        // } else {
+        //   this.services = this.userLogged.services;
+        // }
+        // this.services.forEach(element => {
+        //   element.display = element.type
+        // });
       },      
       registrarAgendamento() {
         if(this.$refs.agendamentoForm.validate()) {
           this.agendamento.date = this.date;
           if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
-            alert('Horario de Inicio deve ser menor que o horario final do agendamento');
+            alert('Horário de Inicio deve ser menor que o horario final do agendamento');
             return;
           }
 
-          this.agendamento.services = this.services.filter(it => this.servicesSelected.includes(it.type));
+          this.agendamento.companyId = this.myCompany._id;
+          this.agendamento.services = this.myCompany.services.filter(it => this.servicesSelected.includes(it.type));
+          console.log(this.agendamento.services)
           this.agendamento.dateAt = this.agendamento.date;
-          this.agendamento.total = this.numberBrToUS(this.total);
           console.log(this.agendamento);
 
-          if(this.agendamento._id) {
-              this.loagindAgendar = true;
+          this.loagindAgendar = true;
 
-              if(this.agendamento.status === 'REQUESTED') {
-
-                  agendamentoGateway.confirmarAgendamento(this.agendamento._id, this.agendamento,
-                          () => {
-                            this.loagindAgendar = false;
-                            this.$emit('scheduled-success', new Date(),new Date())
-                            this.$emit('show-dialog',false)
-                          },
-                          () => {
-                            this.loagindAgendar = false;
-                            alert('Erro ao registrar agendamento')
-                          }
-                        )
-
-              } else {
-
-                  agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
-                          () => {
-                            this.loagindAgendar = false;
-                            this.$emit('scheduled-success', new Date(),new Date())
-                            this.$emit('show-dialog',false)
-                          },
-                          () => {
-                            this.loagindAgendar = false;
-                            alert('Erro ao registrar agendamento')
-                          }
-                        )
-              }
-          
-
-          } else {
-                this.loagindAgendar = true;
-                agendamentoGateway.registrarAgendamento(this.agendamento,
-                  () => {
-                    this.loagindAgendar = false;
-                    this.$emit('scheduled-success',new Date(),new Date())
-                    this.$emit('show-dialog',false)
-                  },
-                  () => { 
-                    this.loagindAgendar = false; 
-                    alert('Erro ao registrar agendamento')
-                  }
-                )
-          }
+          agendamentoGateway.registrarAgendamentoSite(this.agendamento,
+            (res) => {
+              this.loagindAgendar = false;
+              this.isAgendado = true;
+              this.agendamento = res;
+            },
+            (err) => {  
+              this.loagindAgendar = false; 
+              if(err.response.status === 422) {
+                alert('Você já possui um agendamento solicitado, aguarde entraremos em contato');    
+                this.agendamento = err.response.data.schedulesVerify[0];     
+                this.ok();   
+                return;
+              }                     
+              alert('Erro ao registrar agendamento')
+            }
+          )          
         }
       },
+      ok() {
+        this.isAgendado = false; 
+        this.$emit('show-dialog-agendamento', false, this.agendamento  )        
+      }
     },
     computed: {
       computedDateFormattedMomentjs() {
         moment.locale('pt-br');
         return this.date ? moment(this.date).format('dddd, DD/MM') : ''
       },      
-      total: function () {
-        let svs = this.services.filter(it => this.servicesSelected.includes(it.type));
-        console.log(svs)
-        let total = 0;
-        for(var i in svs) {
-            total += svs[i].price;
-        }
-        console.log(total);
-        return this.maskCurrency(total);
-      },
+
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
-      this.setServices();
+      //this.setServices();
     }
 }
 </script>
