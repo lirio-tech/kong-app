@@ -29,7 +29,7 @@
                     <v-card-actions v-if="agendamento.status === 'REQUESTED'">
                         <a 
                           style="color: inherit; text-decoration: none"
-                          :href="`https://api.whatsapp.com/send?phone=55${agendamento.customer.phone_number.replace(/\D/g,'')}&text=Olá ${agendamento.customer.name}!`"
+                          :href="`https://api.whatsapp.com/send?phone=55${agendamento.customer.phone_number.replace(/\D/g,'')}&text=Olá ${agendamento.customer.name}`"
                         >                        
                             <v-btn
                             color="success darken-2"
