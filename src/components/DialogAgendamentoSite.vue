@@ -159,6 +159,8 @@
                         Seu Agendamento foi enviado, em breve entraremos em contato confirmando, aguarde...
                     </span>
                     <br/><br/>
+                    <span style="font-size: 40px;">😎</span>
+                    <br/><br/>
                     <v-btn
                       large
                       color="success"
