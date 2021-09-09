@@ -149,7 +149,7 @@
       <v-container v-if="tabView === 'CONTATO'">
 
         <v-row>
-            <v-col cols="10" style="margin-left: 0px;">   
+            <v-col cols="8" style="margin-left: 0px;">   
                 <span style="font-size: 1.6rem !important;" class="white--text">  
                     Contato
                 </span>
@@ -159,7 +159,15 @@
                 style="color: inherit; text-decoration: none" 
                 :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
-                  <v-img align="" src="@/assets/img/Waze.png" height="40" width="40" />
+                  <v-img align="" src="@/assets/img/uber.png" height="40" width="40" />
+              </a>
+            </v-col>              
+            <v-col cols="1" v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'">   
+              <a
+                style="color: inherit; text-decoration: none" 
+                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+              >
+                  <v-img align="" src="@/assets/img/99.png" height="40" width="40" />
               </a>
             </v-col>             
             <v-col cols="1" v-if="companySite.address && companySite.address.lat">   
