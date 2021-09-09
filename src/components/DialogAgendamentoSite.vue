@@ -181,12 +181,11 @@ import moment from 'moment'
 import storage from '../storage'
 export default {
     name: 'DialogAgendamentoSite',
-    props:['dialog',],
+    props:['dialog','myCompany'],
     data () {
       return {
         loagindAgendar: false,
         userLogged: {},
-        myCompany: { services: []},
         services: [],
         value: [],        
 

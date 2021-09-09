@@ -113,6 +113,7 @@
         <br/><br/>
         <dialog-agendamento-site 
           :dialog="dialogAgendamento" 
+          :myCompany="company"
           v-on:show-dialog-agendamento="showDialogAgendamento"
         />        
     </v-container>
@@ -125,6 +126,7 @@ import DialogAgendamentoSite from '../components/DialogAgendamentoSite.vue'
 // import agendamentoGateway from '../api/agendamentoGateway';
 export default {
     name: 'SiteAgendamentos',
+    props: ['company'],
     components: { 
       DialogAgendamentoSite,
     },
