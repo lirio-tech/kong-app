@@ -165,7 +165,7 @@
             <v-col cols="2" v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'">   
               <a
                 style="color: inherit; text-decoration: none" 
-                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+                :href="`uber://?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
                   <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
               </a>
