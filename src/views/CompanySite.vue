@@ -117,14 +117,13 @@
                     Agenda
                 </span>
             </v-col> 
-            <v-col cols="6" >                
+            <v-col cols="6" v-if="userLogged && userLogged.type === 'sys_admina'">                
               <v-btn
                 class="mx-2"
                 active-class="primary white--text"
                 depressed
-
-                style="width: 100%;"
-                v-if="userLogged && userLogged.type === 'sys_admin'"
+                small
+                style="width: 95%;" 
               >
                   <span class="icon-emoji">🐵 </span>
                   <span class="grey--text" style="margin-left: 5px; ">Kongbot</span>          
@@ -135,6 +134,7 @@
                 class="mx-2"
                 active-class="primary white--text"
                 depressed
+                small
                 style="width: 95%;"
                 @click="sharedMyCompanyAgendamento"
               >
@@ -154,24 +154,27 @@
                     Contato
                 </span>
             </v-col> 
-            <v-col cols="2" v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'">   
+            <v-col cols="2" >   
               <a
+                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
                 style="color: inherit; text-decoration: none" 
                 :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
                   <v-img align="" src="@/assets/img/uber.png" height="33" width="33" />
               </a>
             </v-col>              
-            <v-col cols="2" v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'">   
+            <v-col cols="2" >   
               <a
+                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
                 style="color: inherit; text-decoration: none" 
                 :href="`uber://?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
                   <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
               </a>
             </v-col>             
-            <v-col cols="2" v-if="companySite.address && companySite.address.lat" style=" margin-top: -3px;">   
+            <v-col cols="2" style=" margin-top: -3px;">   
               <a 
+                v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none;" 
                 :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >

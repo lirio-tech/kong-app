@@ -18,7 +18,7 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>      
             <v-toolbar-title style="margin-left:-10px;">
-                Agendamento
+                Agendamento - {{ myCompany.shortName }}
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>    
