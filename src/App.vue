@@ -38,7 +38,7 @@ export default {
           companyGateway.getCompanySiteDiscoveryByWindowLocation(String(window.location.hostname), 
             res => {
               this.loadingSite = false;
-              this.$router.push(`/@/${res.arroba}`);
+              this.$router.push(`/@/${res.arroba}${window.location.search}`);
             },
             () => {
                 this.loadingSite = false;
