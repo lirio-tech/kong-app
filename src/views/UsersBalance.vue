@@ -2,7 +2,7 @@
     <v-container>
         <AppBar v-if="!isMobile()"/>             
         <v-main class="">
-          <header-back-title title="Comissão a Pagar"/>        
+          <header-back-title title="Comissão a Pagar" :emoji="emoji" />        
             <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
@@ -85,6 +85,7 @@ import HrLine from '../components/HrLine.vue';
         { text: "Funcionario", value: "name" },
         { text: "Username", value: "valueReceive" }
       ],                
+      emoji: '💰',
       usersBalance: [],
       total: 0
     }),

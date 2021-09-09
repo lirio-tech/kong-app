@@ -2,7 +2,7 @@
     <v-container>
         <AppBar v-if="!isMobile()" />             
         <v-main class="">
-          <header-back-title title="Vales e Pagamentos" />        
+          <header-back-title title="Vales e Pagamentos" :emoji="emoji"/>        
           <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
@@ -34,20 +34,22 @@
                                         </v-col>
                                     </v-row>
                                     <v-row v-if="isAdmin(userLogged.type)">
-                                        <v-col cols="12" class="text-center">
+                                        <v-col cols="6" class="text-center">
                                           <v-btn 
-                                              style="width: 45%"
+                                              style="width: 100%"
                                               class="ma-2"
                                               @click="payUser('MONEY_VOUCHER')"                
                                               color="primary"
                                           >
                                             Vale
-                                          </v-btn>         
+                                          </v-btn>      
+                                        </v-col>
+                                        <v-col cols="6" class="text-center">   
                                           <v-btn 
-                                              style="width: 45%"
+                                              style="width: 100%"
                                               class="ma-2"
                                               @click="payUser('PAYMENT')"                
-                                              color="green"
+                                              color="success"
                                           >
                                             Pagamento
                                           </v-btn>                                                                               
@@ -150,6 +152,7 @@ import device from '../utils/device'
     name: 'UserBalanceDetail',
     components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, },
     data: () => ({
+      emoji: '💰',
       dialog: false,
       balanceValueTotal: 0,
       userBalance: {user:{}},

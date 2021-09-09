@@ -52,22 +52,22 @@
                             label="Basico"
                             value="Basico"
                         ></v-radio>
-                        <v-radio
+                        <!-- <v-radio
                             label="Gold"
                             value="Gold"
-                        ></v-radio>    
+                        ></v-radio>     -->
                         <v-radio
                             label="É Nóis"
                             value="É Nóis"
                         ></v-radio>      
-                        <v-radio
+                        <!-- <v-radio
                             label="Tamo Junto"
                             value="Tamo Junto"
-                        ></v-radio>          
-                        <v-radio
+                        ></v-radio>           -->
+                        <!-- <v-radio
                             label="Infinity"
                             value="Infinity"
-                        ></v-radio>        
+                        ></v-radio>         -->
                         <v-radio
                             label="Personalizado"
                             value="Custom"

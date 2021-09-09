@@ -7,12 +7,12 @@
                 <v-icon large :color="titleColor ? titleColor : 'white darken-2'">mdi-chevron-left</v-icon>
             </v-btn>
         </v-col>
-        <v-col cols="8" style="margin-left: 0px;">   
-            <span style="font-size: 1.6rem !important;" :class="titleColor ? titleColor+'--text' : 'white--text'">  
-                {{ title }}
+        <v-col cols="9" style="margin-left: 0px;">   
+            <span :style="`font-size: ${fontSize ? fontSize : '1.5rem'} !important; float: center`" :class="titleColor ? titleColor+'--text' : 'white--text'">  
+                {{ emoji }} {{ title }}
             </span>
         </v-col> 
-        <v-col cols="2" v-if="btnPath" style="margin-left: -21px;">   
+        <v-col cols="2" v-if="btnPath" style="margin-left: -40px;">   
             <v-btn 
                 :to="{ path: btnPath}" 
                 class="primary--text"
@@ -26,7 +26,7 @@
 <script>
 export default {
     name: 'HeaderBackTitle',
-    props: ['title', 'titleColor', 'btnPath', 'btnName'],
+    props: ['title', 'emoji', 'titleColor', 'btnPath', 'btnName', 'fontSize'],
     methods: {    
         goBack() {
             this.$router.go(-1)
