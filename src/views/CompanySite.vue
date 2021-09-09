@@ -154,10 +154,10 @@
                     Contato
                 </span>
             </v-col> 
-            <v-col cols="2" v-if="userLogged && userLogged.type === 'sys_admin'">   
+            <v-col cols="2" v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'">   
               <a
                 style="color: inherit; text-decoration: none" 
-                href="https://www.waze.com/ul?ll=40.75889500%2C-73.98513100&navigate=yes&zoom=17"
+                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
                   <v-img align="" src="@/assets/img/Waze.png" height="40" width="40" />
               </a>

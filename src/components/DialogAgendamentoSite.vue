@@ -186,7 +186,7 @@ export default {
       return {
         loagindAgendar: false,
         userLogged: {},
-        myCompany: {},
+        myCompany: { services: []},
         services: [],
         value: [],        
 
