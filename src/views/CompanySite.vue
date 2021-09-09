@@ -159,7 +159,7 @@
                 style="color: inherit; text-decoration: none" 
                 :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
-                  <v-img align="" src="@/assets/img/uber.png" height="32" width="32" />
+                  <v-img align="" src="@/assets/img/uber.png" height="33" width="33" />
               </a>
             </v-col>              
             <v-col cols="2" v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'">   
@@ -170,12 +170,12 @@
                   <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
               </a>
             </v-col>             
-            <v-col cols="2" v-if="companySite.address && companySite.address.lat">   
+            <v-col cols="2" v-if="companySite.address && companySite.address.lat" style=" margin-top: -3px;">   
               <a 
-                style="color: inherit; text-decoration: none; margin-top: -5px" 
+                style="color: inherit; text-decoration: none;" 
                 :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
-                  <v-img align="" src="@/assets/img/Waze.png" height="40" width="40" />
+                  <v-img align="" src="@/assets/img/Waze.png" height="41" width="41" />
               </a>
             </v-col> 
 
