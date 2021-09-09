@@ -144,7 +144,7 @@
             </v-col>            
         </v-row>     
         <br/>
-        <site-agendamentos></site-agendamentos>
+        <site-agendamentos :company="company"></site-agendamentos>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
 
