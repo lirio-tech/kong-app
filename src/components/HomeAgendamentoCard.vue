@@ -106,7 +106,7 @@ export default {
       },      
       goAgendamentoUpdate(agendamento) {
 
-        if(agendamento.status === 'REQUESTED') {
+        if(agendamento.status === 'REQUESTED' && !this.isAdmin()) {
           alert('Há um novo agendamento, avise ao administrador :)')
           return;
         }
@@ -119,7 +119,7 @@ export default {
       },
       cancel(agendamento) {
 
-        if(agendamento.status === 'REQUESTED') {
+        if(agendamento.status === 'REQUESTED' && !this.isAdmin()) {
           alert('Há um novo agendamento, avise ao administrador :)')
           return;
         }
