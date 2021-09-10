@@ -105,6 +105,12 @@ export default {
           return description.substring(0, description.length-2);
       },      
       goAgendamentoUpdate(agendamento) {
+
+        if(agendamento.status === 'REQUESTED') {
+          alert('Há um novo agendamento, avise ao administrador :)')
+          return;
+        }
+
         if(this.isAdmin()) {
           this.$router.push(`/admin/agendamentos/?_id=${agendamento._id}&date=${agendamento.dateTimeStartAt}`);
         } else {
@@ -112,6 +118,12 @@ export default {
         }
       },
       cancel(_id) {
+
+        if(agendamento.status === 'REQUESTED') {
+          alert('Há um novo agendamento, avise ao administrador :)')
+          return;
+        }
+
         if(confirm("Deseja Realmente Cancelar?")) {
             this.loadingCancel = true;
             agendamentoGateway.agendamentoCancelar(_id, 
