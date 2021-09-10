@@ -40,7 +40,7 @@
                           color="red" 
                           class="white--text"
                           :loading="loadingCancel"
-                          @click="cancel(agendamento._id)"
+                          @click="cancel(agendamento)"
                           small
                         >
                           Cancelar
@@ -117,7 +117,7 @@ export default {
           this.$router.push(`/agendamentos/?_id=${agendamento._id}&date=${agendamento.dateTimeStartAt}`);
         }
       },
-      cancel(_id) {
+      cancel(agendamento) {
 
         if(agendamento.status === 'REQUESTED') {
           alert('Há um novo agendamento, avise ao administrador :)')
@@ -126,7 +126,7 @@ export default {
 
         if(confirm("Deseja Realmente Cancelar?")) {
             this.loadingCancel = true;
-            agendamentoGateway.agendamentoCancelar(_id, 
+            agendamentoGateway.agendamentoCancelar(agendamento._id, 
               () => {
                   this.loadingCancel = false;
                   this.selectedOpen = false;
