@@ -47,8 +47,8 @@ export default{
                 errorCb(error)
             })      
     },
-    agendamentoDone(_id, agendamento, paymentType, callback, errorCb) {
-        let url = `${AGENDAMENTO_API}/v2/${_id}/${paymentType}`;
+    agendamentoDone(_id, agendamento, paymentType, cardRate, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/v2/${_id}/${paymentType}?cardRate=${cardRate}`;
         Axios.post(url, agendamento)
             .then(data => {
                 callback(data.data)
