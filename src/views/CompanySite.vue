@@ -156,7 +156,7 @@
             </v-col> 
             <v-col cols="2" >   
               <a
-                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none" 
                 :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
@@ -165,7 +165,7 @@
             </v-col>              
             <v-col cols="2" >   
               <a
-                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none" 
                 :href="`uber://?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
               >
