@@ -237,25 +237,45 @@
                           <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
                         </v-btn>     
                     </p>
+                    <br/>
+                    <p v-if="companySite.whatsapp">
+                        
+                        <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
+                          <v-icon color="green">mdi-whatsapp</v-icon>
+                        </v-btn>
+                        <span class="green--text">{{ companySite.whatsapp }}</span>
+                    </p>                    
                 </div>
                 <br/>
 
             </v-col>
         </v-row>
-        <br/><br/><br/>
         <v-row>
-            <v-col
-              xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
-            >               
-                <center v-if="companySite.whatsapp">
-                    
-                    <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
-                      <v-icon color="green">mdi-whatsapp</v-icon>
-                    </v-btn>
-                    <span class="green--text">{{ companySite.whatsapp }}</span>
+            <v-col cols="12" style="margin-left: 0px;">   
+                <span style="font-size: 1.2rem !important;" class="white--text">  
+                    Equipe
+                </span>
+            </v-col> 
+            <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+                <center>
+                    <v-card>
+                        <br/>
+                        <v-img 
+                          src="https://www.vippng.com/png/full/416-4161690_empty-profile-picture-blank-avatar-image-circle.png" 
+                          height="100" 
+                          width="100" 
+                          class="rounded-circle text-center" 
+                        />
+                        <span style="font-size: 1.0rem !important;">  
+                            Diego Lirio
+                        </span>      
+                        <br/><br/>                    
+                    </v-card>
                 </center>
-            </v-col>
+
+            </v-col>             
         </v-row>
+        <br/><br/><br/>
       </v-container>     
       <dialog-update-site 
         v-if="userLogged"

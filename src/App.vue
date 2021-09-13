@@ -32,6 +32,7 @@ export default {
       }
   },
   beforeMount() {
+
       if(this.isSiteCustom()) {
           // Find Company Site Custom
           this.loadingSite = true;
