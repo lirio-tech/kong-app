@@ -111,7 +111,7 @@
                           >
                             R$ {{ det.value | currency }}
                           </td>
-                          <td class="text-center" v-if="isAdmin(userLogged.type)">
+                          <td class="text-center" v-if="isAdmin(userLogged.type) && det.canDelete">
                               <v-icon 
                                 color="red" 
                                 v-if="det.type === 'MONEY_VOUCHER' || det.type === 'PAYMENT'"
