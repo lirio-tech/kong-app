@@ -258,22 +258,19 @@
             </v-col> 
             <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
                 <center>
-                    <v-card>
+                    <v-card v-for="u in team" :key="u.username">
                         <br/>
                         <v-img 
-                          src="https://www.vippng.com/png/full/416-4161690_empty-profile-picture-blank-avatar-image-circle.png" 
+                          :src="u.avatar ? u.avatar : 'https://www.vippng.com/png/full/416-4161690_empty-profile-picture-blank-avatar-image-circle.png'" 
                           height="100" 
                           width="100" 
                           class="rounded-circle text-center" 
                         />
                         <span style="font-size: 1.0rem !important;">  
-                            Diego Lirio
+                            {{ u.name }}
                         </span>      
                         <br/><br/>                    
                     </v-card>
-
-                    {{ team }}
-
                 </center>
 
             </v-col>             
