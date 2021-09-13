@@ -256,9 +256,9 @@
                     Equipe
                 </span>
             </v-col> 
-            <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
+            <v-col xl="6" lg="6" md="6" sm="12" xs="12" cols="12" v-for="u in team" :key="u.username">   
                 <center>
-                    <v-card v-for="u in team" :key="u.username">
+                    <v-card>
                         <br/>
                         <v-img 
                           :src="u.avatar ? u.avatar : 'https://www.vippng.com/png/full/416-4161690_empty-profile-picture-blank-avatar-image-circle.png'" 
@@ -269,8 +269,9 @@
                         <span style="font-size: 1.0rem !important;">  
                             {{ u.name }}
                         </span>      
-                        <br/><br/>                    
+                        <br/>                 
                     </v-card>
+                   
                 </center>
 
             </v-col>             
