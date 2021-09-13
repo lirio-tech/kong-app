@@ -109,9 +109,9 @@
                             class="text-center" 
                             :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
                           >
-                            R$ {{ det.value | currency }}
+                            R$ {{ det.value | currency }} 
                           </td>
-                          <td class="text-center" v-if="isAdmin(userLogged.type) && det.canDelete">
+                          <td class="text-center" v-if="isAdmin(userLogged.type)">
                               <v-icon 
                                 color="red" 
                                 v-if="det.type === 'MONEY_VOUCHER' || det.type === 'PAYMENT'"
@@ -207,7 +207,11 @@ import device from '../utils/device'
           () => {
             this.getUserBalanceByUserId(this.$route.params.userId);
             this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);
-          }, () => {
+          }, (err) => {
+            if(err.response.status >= 400 && err.response.status <= 499) {
+              alert(err.response.data.message)              
+              return;
+            }      
             alert('Erro ao Deletar Debito ' + balanceDetail.description);
           }) 
       }  
