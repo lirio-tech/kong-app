@@ -269,7 +269,7 @@
                         <span style="font-size: 1.0rem !important;">  
                             {{ u.name }}
                         </span>      
-                        <br/>                 
+                        <br/> <br/>                      
                     </v-card>
                    
                 </center>
