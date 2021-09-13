@@ -271,6 +271,9 @@
                         </span>      
                         <br/><br/>                    
                     </v-card>
+
+                    {{ team }}
+
                 </center>
 
             </v-col>             
@@ -294,7 +297,7 @@
 </template>
 <script>
 import companyGateway from '../api/companyGateway'
-
+import gateway from '../api/gateway'
 import DialogPlan from '../components/DialogPlan.vue'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
 import SiteAgendamentos from '../components/SiteAgendamentos.vue'
@@ -329,6 +332,7 @@ export default {
     infoCurrentKey: null,
     btnUpdateSite: 'primary',
     agendamentos: [],
+    team: []
   }),
   methods: {
     isAdmin() {
@@ -351,6 +355,12 @@ export default {
                     if(!this.companySite.address) this.companySite.address = {};
                     this.company = res.company;
                     this.setCoordinates(this.companySite);             
+
+                    gateway.getUsersSite(this.company._id, 
+                      res => this.team = res, 
+                      () => { }
+                    )
+
                 }
             }, () => {
                 alert('Erro ao buscar informações do Site ');

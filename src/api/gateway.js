@@ -121,6 +121,17 @@ export default{
                 errorCb(error)
             })        
     },         
+    getUsersSite(companyId, callback, errorCb) {
+        let url = `${USERS_API}/site/company/${companyId}/?enabledType=enabled`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })        
+    },      
     updateUser(_id, user, callback, errorCb) {
         let url = `${USERS_API}/${_id}`;
         Axios.patch(url, user)
