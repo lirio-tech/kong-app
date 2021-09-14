@@ -117,8 +117,9 @@
                     Agenda
                 </span>
             </v-col> 
-            <v-col cols="6" v-if="userLogged && userLogged.type === 'sys_admina'">                
+            <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6" >                
               <v-btn
+               v-if="userLogged && userLogged.type === 'sys_admina'"
                 class="mx-2"
                 active-class="primary white--text"
                 depressed
@@ -129,7 +130,7 @@
                   <span class="grey--text" style="margin-left: 5px; ">Kongbot</span>          
               </v-btn>                         
             </v-col> 
-            <v-col cols="6" >   
+            <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6">   
               <v-btn
                 class="mx-2"
                 active-class="primary white--text"
@@ -137,6 +138,9 @@
                 small
                 style="width: 95%;"
                 @click="sharedMyCompanyAgendamento"
+                v-clipboard:copy="urlAssistantSchedule()"
+                v-clipboard:success="onCopyUrlAssistantSchedule"
+                v-clipboard:error="onError"                   
               >
                   <v-icon color="grey">mdi-share</v-icon>
                   <span class="grey--text" >Compartilhar</span>          
@@ -290,7 +294,7 @@
       ></dialog-update-site>       
 
     <dialog-plan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
-
+    <snack-bar :color="message.color" :text="message.text" :show="message.show" :timeout="message.timeout" />
   </div>
 </template>
 <script>
@@ -299,13 +303,14 @@ import gateway from '../api/gateway'
 import DialogPlan from '../components/DialogPlan.vue'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
 import SiteAgendamentos from '../components/SiteAgendamentos.vue'
+import SnackBar from '../components/SnackBar.vue'
 import storage from '../storage'
 import commons from '../utils/commons'
 import UserTypes from '../utils/UserTypes'
 const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
 //const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
-  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, },
+  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, SnackBar, },
   data: () => ({
     tabView: 'HOME',
     dialogUpdate: false,
@@ -322,7 +327,7 @@ export default {
       address: {}
     },
     company: {},
-
+    message: { show: false, color: 'primary', text: '', timeout: 5000 },  
     coordinates: { },
     infoPosition: null,
     infoContent: null,
@@ -452,8 +457,22 @@ export default {
         }
         , interval)
       }, startAt);
-    }
-
+    },
+    showMessage(text) {
+      this.message.show = true;
+      this.message.color = 'info';
+      this.message.text = text;
+      setTimeout(() => this.message.show = false, this.message.timeout);
+    },       
+    urlAssistantSchedule() {
+      return 'https://'+commons.urlCompany(this.companySite, this.company.companyType) + '?tab=AGENDA&realizarAgendamento=true';
+    },    
+    onCopyUrlAssistantSchedule() {
+      this.showMessage('Copiado!!! \nEnvie para seus Clientes. \nUtilize o assistente como resposta automática no WhatsApp ;-) '); 
+    },      
+    onError(){
+      alert('Erro ao Copiar')
+    },
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
