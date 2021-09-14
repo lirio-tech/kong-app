@@ -141,11 +141,24 @@
                                   <v-text-field
                                       :value="urlSite()"
                                       readonly
+                                      filled
                                       :append-icon="'mdi-content-copy'"
                                       v-clipboard:copy="urlSite()"
                                       v-clipboard:success="onCopy"
                                       v-clipboard:error="onError"                        
                                   ></v-text-field>
+
+                                  <v-text-field
+                                      :value="urlAssistantSchedule()"
+                                      readonly
+                                      filled
+                                      prepend-icon="mdi-clock"    
+                                      label="Assistente de Agendamento"
+                                      :append-icon="'mdi-content-copy'"
+                                      v-clipboard:copy="urlAssistantSchedule()"
+                                      v-clipboard:success="onCopyUrlAssistantSchedule"
+                                      v-clipboard:error="onError"                        
+                                  ></v-text-field>                                  
 
                                   <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">      
                                         <arroba-input 
@@ -304,7 +317,7 @@
           
           <div style="flex: 1 1 auto;"></div>
         </v-card>
-        <snack-bar :color="message.color" :text="message.text" :show="message.show" />
+        <snack-bar :color="message.color" :text="message.text" :show="message.show" :timeout="message.timeout" />
     </v-dialog>    
 </template>
 
@@ -344,7 +357,7 @@ export default {
       return {
         loadingInfo: false,
         userLogged: {},
-        message: { show: false, color: 'primary', text: '' },  
+        message: { show: false, color: 'primary', text: '', timeout: 5000 },  
         tab: null,
         isSelecting: false,
         photoCover: '',
@@ -444,9 +457,17 @@ export default {
       urlSite() {
         return commons.urlCompany(this.companySite, this.company.companyType);
       },
-      onCopy() {
-        this.showMessage('Site Copiado :)'); 
+      urlAssistantSchedule() {
+        return this.urlSite() + '?tab=AGENDA&realizarAgendamento';
       },
+      onCopy() {
+        this.message.timeout = 5000;
+        this.showMessage('Copiado :)'); 
+      },
+      onCopyUrlAssistantSchedule() {
+        this.message.timeout = 9000;
+        this.showMessage('Copiado!!! \nEnvie para seus Clientes. \nUtilize o assistente como resposta automática no WhatsApp ;-) '); 
+      },      
       onError(){
         alert('Erro ao Copiar Codigo Copie e Cole')
       },
@@ -454,7 +475,7 @@ export default {
         this.message.show = true;
         this.message.color = 'info';
         this.message.text = text;
-        setTimeout(() => this.message.show = false, 4000);
+        setTimeout(() => this.message.show = false, this.message.timeout);
       },     
       getAddress() {
         if(this.companySite.address.postalCode.length === 9) {

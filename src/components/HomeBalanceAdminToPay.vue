@@ -11,7 +11,8 @@
             
                 <v-list-item-content>           
                       <v-col cols="12" style="margin-top: -10px">
-                          <span class="icon-emoji">💰</span> <span class="grey--text" style="margin-left: 15px">Pagamentos</span>
+                          <span class="icon-emoji">💰</span> 
+                          <span class="grey--text" style="margin-left: 15px">Pagamentos</span>
                           <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                       </v-col>                                
                       <v-col cols="12" style="margin-top: -15px">

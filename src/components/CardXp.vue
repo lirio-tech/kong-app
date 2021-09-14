@@ -20,11 +20,11 @@
                 </v-col>               
                 <v-col cols="12" >
                     <span class="icon-emoji">🚀</span> 
-                    <span class="orange--text" style="margin-left: 25px; font-size: 1.2rem">
+                    <span class="orange--text" style="margin-left: 15px; font-size: 1.2rem">
                         12.341 
                     </span>
                     <span class="red--text">XP</span> 
-                    <span class="grey--text" style="margin-left: 25px;"> Bora pro Game</span>
+                    <span class="grey--text" style="margin-left: 15px;"> Bora pro Game</span>
                 </v-col>   
              </v-card-text> 
         </router-link>
