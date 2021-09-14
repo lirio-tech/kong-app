@@ -66,7 +66,12 @@
                     </v-sheet>
 
                 </v-col>                
-            </v-row>
+            </v-row> 
+            <v-row v-if="userLogged.username === 'diego'" style="margin-bottom: -25px">
+                <v-col cols="12">
+                    <card-xp :userLogged="userLogged" :company="company" />
+                </v-col>
+            </v-row>             
             <v-row>
               
               <v-col cols="12">
@@ -233,7 +238,8 @@ import ButtonSliderSite from '../components/ButtonSliderSite.vue'
 import ButtonSliderPix from '../components/ButtonSliderPix.vue'
 import ButtonSliderKongbot from '../components/ButtonSliderKongbot.vue'
 import ButtonSliderAnalytics from '../components/ButtonSliderAnalytics.vue'
-export default {
+import CardXp from '../components/CardXp.vue'
+export default { 
     name: 'Home',
     components: { 
       AppBar,
@@ -248,7 +254,8 @@ export default {
       ButtonSliderSite,
       ButtonSliderPix,
       ButtonSliderKongbot,
-        ButtonSliderAnalytics,
+      ButtonSliderAnalytics,
+      CardXp,
     },
     data: () => ({
       config: {
