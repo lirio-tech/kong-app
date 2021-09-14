@@ -172,7 +172,7 @@ import device from '../utils/device'
           res => {
             this.userBalance = res;
           }, () => {
-            alert('Erro ao Buscar saldo dos usuarios');
+            alert('Erro ao Buscar Saldo');
           })
       },      
       getUserBalanceDetailExtractByUserId(_userId) {
@@ -180,7 +180,7 @@ import device from '../utils/device'
           res => {
             this.userBalanceDetail = res;
           }, () => {
-            alert('Erro ao Buscar movimentacoes usuarios');
+            alert('Erro ao Buscar Extrato');
           })
       },            
       showDialog(show) {
@@ -203,7 +203,7 @@ import device from '../utils/device'
         return `${day}/${month}/${year}`
       },        
       deleteDebit(balanceDetail) {
-        if(confirm(`Deseja realmente delete a movimentacao ${balanceDetail.description}?`))
+        if(confirm(`Deseja realmente Excluir a movimentação ${balanceDetail.description}?`))
         gateway.deleteBalanceDebit(this.userBalance._id, balanceDetail._id,
           () => {
             this.getUserBalanceByUserId(this.$route.params.userId);
@@ -213,7 +213,7 @@ import device from '../utils/device'
               alert(err.response.data.message)              
               return;
             }      
-            alert('Erro ao Deletar Debito ' + balanceDetail.description);
+            alert('Erro ao Excluir ' + balanceDetail.description);
           }) 
       }  
     },
