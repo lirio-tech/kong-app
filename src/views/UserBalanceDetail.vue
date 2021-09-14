@@ -79,6 +79,7 @@
                           <th class="text-center">
                             Valor
                           </th>
+                          <th class="text-center" v-if="isAdmin(userLogged.type)"></th>
                         </tr>
                       </thead>
                       <tbody>
