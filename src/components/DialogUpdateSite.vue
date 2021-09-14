@@ -458,7 +458,7 @@ export default {
         return commons.urlCompany(this.companySite, this.company.companyType);
       },
       urlAssistantSchedule() {
-        return this.urlSite() + '?tab=AGENDA&realizarAgendamento';
+        return this.urlSite() + '?tab=AGENDA&realizarAgendamento=true';
       },
       onCopy() {
         this.message.timeout = 5000;
