@@ -79,6 +79,7 @@
                           <th class="text-center">
                             Valor
                           </th>
+                          <th class="text-center" v-if="isAdmin(userLogged.type)"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -109,7 +110,7 @@
                             class="text-center" 
                             :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
                           >
-                            R$ {{ det.value | currency }}
+                            R$ {{ det.value | currency }} 
                           </td>
                           <td class="text-center" v-if="isAdmin(userLogged.type)">
                               <v-icon 
@@ -171,7 +172,7 @@ import device from '../utils/device'
           res => {
             this.userBalance = res;
           }, () => {
-            alert('Erro ao Buscar saldo dos usuarios');
+            alert('Erro ao Buscar Saldo');
           })
       },      
       getUserBalanceDetailExtractByUserId(_userId) {
@@ -179,7 +180,7 @@ import device from '../utils/device'
           res => {
             this.userBalanceDetail = res;
           }, () => {
-            alert('Erro ao Buscar movimentacoes usuarios');
+            alert('Erro ao Buscar Extrato');
           })
       },            
       showDialog(show) {
@@ -202,13 +203,17 @@ import device from '../utils/device'
         return `${day}/${month}/${year}`
       },        
       deleteDebit(balanceDetail) {
-        if(confirm(`Deseja realmente delete a movimentacao ${balanceDetail.description}?`))
+        if(confirm(`Deseja realmente Excluir a movimentação ${balanceDetail.description}?`))
         gateway.deleteBalanceDebit(this.userBalance._id, balanceDetail._id,
           () => {
             this.getUserBalanceByUserId(this.$route.params.userId);
             this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);
-          }, () => {
-            alert('Erro ao Deletar Debito ' + balanceDetail.description);
+          }, (err) => {
+            if(err.response.status >= 400 && err.response.status <= 499) {
+              alert(err.response.data.message)              
+              return;
+            }      
+            alert('Erro ao Excluir ' + balanceDetail.description);
           }) 
       }  
     },
