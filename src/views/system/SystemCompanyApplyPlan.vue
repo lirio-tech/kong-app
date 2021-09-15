@@ -228,7 +228,6 @@
                                     v-model="company.plan.dateStarted"
                                     label="Inicio do Plano"
                                     ref="date"
-                                    v-mask="'####-##-##'"
                                     prepend-icon="mdi-calendar"
                                     filled
                                 />
@@ -236,9 +235,8 @@
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
                                 <v-text-field 
                                     v-model="company.plan.dateEnd"
-                                    label="Inicio do Plano"
-                                    ref="date"
-                                    v-mask="'####-##-##'"
+                                    label="Fim do Plano"
+                                    ref="dateEnd"
                                     prepend-icon="mdi-calendar"
                                     filled
                                 />
@@ -321,7 +319,7 @@
                                 depressed  
                                 x-large 
                                 color="purple"
-                                style="width: 50%"
+                                style="width: 80%"
                                 @click="selectCompany"
                             >Entrar como {{ company.shortName }} </v-btn>                                
                     </v-row>       
