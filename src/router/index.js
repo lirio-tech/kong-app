@@ -162,7 +162,7 @@ const routes = [
     component: SystemCompanyApplyPlan
   },       
   {
-    path: '/system/users',
+    path: '/:companyId/system/users',
     name: 'SystemUserList', 
     component: SystemUserList
   },     

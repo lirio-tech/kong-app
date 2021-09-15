@@ -49,7 +49,7 @@ export default{
           })         
     },
     applyPlan(companyId, plan, callback, errorCb) {
-      let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
+      let url = `${COMPANIES_API}/v2/${companyId}/upgrade/plan`;
       Axios.put(url, plan)
           .then(data => {
               callback(data.data)

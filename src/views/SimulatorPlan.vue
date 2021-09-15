@@ -41,7 +41,7 @@
                 <v-slider
                     style="margin-top: -25px"
                     v-model="cashMouth"
-                    min="2"
+                    min="3"
                     prepend-icon="mdi-content-cut"
                     label="1K Mes"
                     max="60"
@@ -71,6 +71,13 @@
                             <span class="amber--text" style="margin-left:15px">
                                 {{ amountMouth + ' ' + (amountMouth > 1 ? 'Meses' : 'Mês') }} 
                             </span>
+                            <router-link 
+                                style="margin-left: 30px;" 
+                                :to="`/system/companies/${company._id}?planName=Smart&price=${plan.price}&amountUsers=${amountUsersAdmin+amountUsersCommon}&amountUsersAdmin=${amountUsersAdmin}&amountUsersCommon=${amountUsersCommon}&maxCash=${cashMouth*1000}&amountMouth=${amountMouth}`" 
+                                v-if="userLogged.type === 'sys_admin'"
+                            >
+                                Apply Plan
+                            </router-link>                            
                         </v-subheader>
                         <v-list-item two-line style="margin-top: -20px">
                             <v-list-item-content>
@@ -138,6 +145,7 @@
 //import gateway from '../api/gateway'
 import AppBar from '../components/AppBar'
 import storage from '../storage';
+import UserTypes from '../utils/UserTypes'
 export default {
     name: 'SimulatorPlan',
     components: { 
@@ -164,6 +172,9 @@ export default {
         numberUsToBr(v) {
             return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
         },      
+        isAdmin() {
+            return UserTypes.isAdmin(this.userLogged.type)
+        }        
     },
     beforeMount() {
         this.userLogged = storage.getUserLogged();
@@ -191,7 +202,7 @@ export default {
             if(priceAppliedDiscount < 9.99) {
                 priceAppliedDiscount = 9.99
             }
-            let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
+            let codePix = `00020126510014BR.GOV.BCB.PIX0114+55119431974870211Plano Smart5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062140510PlanoSmart63045227`;
             return {
                 name: "Personalizado",
                 type: `Meses=${this.amountMouth}`,

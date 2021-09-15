@@ -469,7 +469,7 @@ export default {
         this.showMessage('Copiado!!! \nEnvie para seus Clientes. \nUtilize o assistente como resposta automática no WhatsApp ;-) '); 
       },      
       onError(){
-        alert('Erro ao Copiar Codigo Copie e Cole')
+        alert('Erro ao Copiar')
       },
       showMessage(text) {
         this.message.show = true;

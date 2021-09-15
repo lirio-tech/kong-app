@@ -37,7 +37,16 @@
               outlined
             >
               <v-subheader class="overline">
-                Plano {{ (plan.type === 'Free' ? '' : 'Premium ') + plan.type }}
+                
+                Plano {{ (plan.type === 'Free' ? '' : 'Premium ') + plan.type }}  
+                <router-link 
+                  style="margin-left: 30px;" 
+                  :to="`/system/companies/${company._id}?planName=${plan.name}&price=${plan.price}`" 
+                  v-if="userLogged.type === 'sys_admin' && plan.name !== 'Free' && plan.name !== 'Smart'"
+                >
+                  Apply Plan
+                </router-link>
+
               </v-subheader>
               <v-list-item two-line style="margin-top: -15px">
                 <v-list-item-content>

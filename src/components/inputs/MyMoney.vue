@@ -43,9 +43,6 @@ export default {
             if (Number(v.replace('R$ ', '').replace('.', '').replace(',', '.')) >= 0) return true;
             return 'Valor deve ser maior que ZERO';
         },        
-    }),
-    computed() {
-        
-    }
+    })
 }
 </script>
