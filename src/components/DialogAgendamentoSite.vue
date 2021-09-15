@@ -173,7 +173,7 @@
           </v-card-text>          
           <div style="flex: 1 1 auto;"></div>
         </v-card>
-
+        <snack-bar :color="message.color" :text="message.text" :show="message.show" :timeout="message.timeout" />
     </v-dialog>    
 </template>
 
@@ -181,7 +181,9 @@
 import agendamentoGateway from '../api/agendamentoGateway';
 import moment from 'moment'
 import storage from '../storage'
+import SnackBar from './SnackBar.vue';
 export default {
+    components: { SnackBar },
     name: 'DialogAgendamentoSite',
     props:['dialog','myCompany'],
     data () {
@@ -202,6 +204,7 @@ export default {
         },
         date: null,
         servicesSelected: ['Corte de Cabelo', 'Barba'],
+        message: { show: false, color: 'primary', text: '', timeout: 5000 },  
       }
     }, 
     methods: {
@@ -244,7 +247,10 @@ export default {
         // });
       },      
       registrarAgendamento() {
-        if(this.$refs.agendamentoForm.validate()) {
+          if(!this.$refs.agendamentoForm.validate()) {
+              this.showMessage('Verifique os campos obrigatórios', 'error');
+              return;
+          }
           this.agendamento.date = this.date;
           if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
             alert('Horário de Inicio deve ser menor que o horario final do agendamento');
@@ -276,12 +282,18 @@ export default {
               alert('Erro ao registrar agendamento')
             }
           )          
-        }
+       
       },
       ok() {
         this.isAgendado = false; 
         this.$emit('show-dialog-agendamento', false, this.agendamento  )        
-      }
+      },
+      showMessage(text, color) {
+        this.message.show = true;
+        this.message.color = color;
+        this.message.text = text;
+        setTimeout(() => this.message.show = false, this.message.timeout);
+      },        
     },
     computed: {
       computedDateFormattedMomentjs() {
