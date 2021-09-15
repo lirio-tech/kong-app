@@ -42,7 +42,7 @@
                 <router-link 
                   style="margin-left: 30px;" 
                   :to="`/system/companies/${company._id}?planName=${plan.name}&price=${plan.price}`" 
-                  v-if="isAdmin() && plan.name !== 'Free' && plan.name !== 'Smart'"
+                  v-if="userLogged.type === 'sys_admin' && plan.name !== 'Free' && plan.name !== 'Smart'"
                 >
                   Apply Plan
                 </router-link>

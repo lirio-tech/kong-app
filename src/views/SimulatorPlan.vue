@@ -74,7 +74,7 @@
                             <router-link 
                                 style="margin-left: 30px;" 
                                 :to="`/system/companies/${company._id}?planName=Smart&price=${plan.price}&amountUsers=${amountUsersAdmin+amountUsersCommon}&amountUsersAdmin=${amountUsersAdmin}&amountUsersCommon=${amountUsersCommon}&maxCash=${cashMouth*1000}&amountMouth=${amountMouth}`" 
-                                v-if="isAdmin()"
+                                v-if="userLogged.type === 'sys_admin'"
                             >
                                 Apply Plan
                             </router-link>                            
