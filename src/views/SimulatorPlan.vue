@@ -191,7 +191,7 @@ export default {
             if(priceAppliedDiscount < 9.99) {
                 priceAppliedDiscount = 9.99
             }
-            let codePix = `00020126720014BR.GOV.BCB.PIX0111353576598690235kongPerson-AddValorDoSeuPlanoPerson5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512NUiIigUSB9Id63045348`;
+            let codePix = `00020126510014BR.GOV.BCB.PIX0114+55119431974870211Plano Smart5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062140510PlanoSmart63045227`;
             return {
                 name: "Personalizado",
                 type: `Meses=${this.amountMouth}`,
