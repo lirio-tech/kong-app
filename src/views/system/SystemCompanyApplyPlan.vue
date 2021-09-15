@@ -72,7 +72,7 @@
                                 @focus="$event.target.select()"
                                 ref="servicePrice"
                                 :rules="[v => !!v || 'Obrigatório',]"
-                                @keyup="splanView.price = maskCurrency(service.priceBR)"
+                                @keyup="planView.price = maskCurrency(planView.price)"
                                 filled
                             />
                             <!-- <kong-money 
@@ -418,7 +418,7 @@ export default {
             })
       },
       maskCurrency(value) {
-          this.planView.price = inputs.maskCurrency(value)
+          return inputs.maskCurrency(value)
       },
     },
     beforeMount() { 
