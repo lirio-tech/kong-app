@@ -65,12 +65,22 @@
                             </v-radio-group>                                                           
                         </v-col>    
                         <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12">
-                            <kong-money 
+                            <v-text-field
+                                autocomplete="off"
+                                label="Valor do pagamento"
+                                v-model="planView.price"
+                                @focus="$event.target.select()"
+                                ref="servicePrice"
+                                :rules="[v => !!v || 'Obrigatório',]"
+                                @keyup="splanView.price = maskCurrency(service.priceBR)"
+                                filled
+                            />
+                            <!-- <kong-money 
                                 v-model="planView.price"
                                 :label="'Valor do pagamento'"
                                 @mask-currency="maskCurrency"
                                 :rules="[v => !!v || 'Obrigatório',]"
-                            />
+                            /> -->
                         </v-col>        
                         <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12">
                             <v-menu
