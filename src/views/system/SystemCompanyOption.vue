@@ -40,7 +40,19 @@
                       :to="`/${company._id}/system/users`"
                   >Usuarios</v-btn>                   
               </v-col>
-          </v-row>                                 
+          </v-row>      
+          <v-row>
+              <v-col cols="12" sm="12" align="center"> 
+                  <v-btn 
+                      type="button" 
+                      depressed  
+                      x-large 
+                      color="purple"
+                      style="width: 96%"
+                      @click="intoBarber"
+                  >Entrar como {{ company.shortName }} </v-btn>                   
+              </v-col>
+          </v-row>                                        
         </v-main>
     </v-container>
 </template>
@@ -79,6 +91,12 @@
       showPlanDialog(show) {
         this.dialogPlan = show
       },
+      intoBarber() {
+          this.userLogged.company = this.company._id;
+          storage.setUserLogged(JSON.stringify(this.userLogged));
+          storage.setCompany(JSON.stringify(this.company));
+          this.$router.push('/');   
+      }
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();

@@ -320,10 +320,10 @@
                                 type="button"  
                                 depressed  
                                 x-large 
-                                color="primary"
+                                color="purple"
                                 style="width: 50%"
                                 @click="selectCompany"
-                            >Selecionar</v-btn>                                
+                            >Entrar como {{ company.shortName }} </v-btn>                                
                     </v-row>       
                 </v-form>    
               </v-col> 
@@ -415,7 +415,7 @@ export default {
           this.planView.price = inputs.maskCurrency(value)
       }
     },
-    beforeMount() {
+    beforeMount() { 
         this.userLogged = storage.getUserLogged();   
 
         companyGateway.getCompanyById(
