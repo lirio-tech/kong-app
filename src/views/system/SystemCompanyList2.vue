@@ -32,17 +32,22 @@
                 </p>  
               </v-col>
           </v-row>     
-          <!-- <v-row>
+          <v-row>
               <v-col cols="12">   
-                Pesquisar
+                  <v-text-field
+                      v-model="textSearch"
+                      label="Pesquisa"
+                      filled
+                      :append-icon="'mdi-search'"                   
+                  ></v-text-field>
               </v-col>
-          </v-row>              -->
+          </v-row>             
           <v-row v-if="companies.length !== 0 && !loading">
               <v-col cols="12" sm="12">
                   <v-sheet min-height="70vh" rounded="lg">
                       <v-data-table 
                           :headers="headers" 
-                          :items="companies" 
+                          :items="filteredCompanies" 
                           item-key="code"
                           class="elevation-1"
                           :items-per-page="companies.length"
@@ -80,7 +85,8 @@
       companies: [],      
       userLogged: {
         type: 'none'
-      }
+      },
+      textSearch: ''
     }),
     methods: {
       clickRow(row) {
@@ -110,6 +116,16 @@
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.findCompanies();
+    },
+    computed: {
+        filteredCompanies() {
+          return this.companies.filter(item => {
+            return (
+              item.name.toLowerCase().includes(this.textSearch.toLowerCase()) ||
+              item.shortName.toLowerCase().includes(this.textSearch.toLowerCase())
+            )
+          })
+        }      
     }
   }
 </script>

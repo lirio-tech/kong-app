@@ -33,127 +33,152 @@
               </v-container>
           </v-row>
           <v-row v-if="'APPLY_PLAN' === view">
-            <v-form 
-                v-model="valid" 
-                v-on:submit.prevent="applyPlanNow"
-                ref="applyPlanForm"
-                id="applyPlanForm"
-            >    
-              <v-container>
-                <v-col cols="12" md="4"
-                    style="margin-left: 20%"
-                >
-                    <h3>Plano: {{ applyPlan.name }}</h3>
-                    <v-radio-group
-                        v-model="applyPlan.name"
-                        mandatory
-                    >
-                        <v-radio
-                            label="Basico"
-                            value="Basico"
-                        ></v-radio>
-                        <!-- <v-radio
-                            label="Gold"
-                            value="Gold"
-                        ></v-radio>     -->
-                        <v-radio
-                            label="É Nóis"
-                            value="É Nóis"
-                        ></v-radio>      
-                        <!-- <v-radio
-                            label="Tamo Junto"
-                            value="Tamo Junto"
-                        ></v-radio>           -->
-                        <!-- <v-radio
-                            label="Infinity"
-                            value="Infinity"
-                        ></v-radio>         -->
-                        <v-radio
-                            label="Personalizado"
-                            value="Custom"
-                        ></v-radio>                                                                                                                                                                
-                    </v-radio-group>                                                           
-                </v-col>    
-                <v-col cols="12" md="4" v-if="applyPlan.name !== 'Free'">
-                    <v-text-field 
-                        v-model="applyPlan.payment.price"
-                        label="Valor do Pagamento"
-                        ref="applyPlanPrice"
-                        prepend-icon="mdi-cash"
-                        filled
-                    />
-                </v-col>        
-                <v-col cols="12" md="4" v-if="applyPlan.name !== 'Free'">
-                    <v-text-field 
-                        v-model="applyPlan.dateStartedPtBR"
-                        label="Inicio"
-                        ref="applyInicio"
-                        v-mask="'##/##/####'"
-                        prepend-icon="mdi-calendar"
-                        filled
-                    />
-                </v-col>
-                <v-col cols="12" md="4" v-if="applyPlan.name !== 'Free'">
-                    <v-text-field 
-                        v-model="applyPlan.dateEndPtBR"
-                        label="Final"
-                        v-mask="'##/##/####'"
-                        ref="applyFim"
-                        prepend-icon="mdi-calendar"
-                        filled
-                    />
-                </v-col>                                  
-                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
-                    <v-text-field 
-                        v-model="applyPlan.amountUsers"
-                        label="Qtde Usuarios"
-                        ref="applyAmountUsers"
-                        prepend-icon="mdi-account"
-                        filled
-                    />
-                </v-col>     
-                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
-                    <v-text-field 
-                        v-model="applyPlan.amountUsersAdmin"
-                        label="Qtde Usuarios Admin"
-                        ref="applyamountUsersAdmin"
-                        prepend-icon="mdi-account"
-                        filled
-                    />
-                </v-col>
-                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
-                    <v-text-field 
-                        v-model="applyPlan.amountUsersCommon"
-                        label="Qtde Usuarios Comum"
-                        ref="amountUsersCommon"
-                        prepend-icon="mdi-account"
-                        filled
-                    />
-                </v-col>                        
-                <v-col cols="12" md="4" v-if="applyPlan.name === 'Custom'">
-                    <v-text-field 
-                        v-model="applyPlan.maxCash"
-                        label="R$ Max de Valor Lancado"
-                        ref="maxCash"
-                        prepend-icon="mdi-cash"
-                        filled
-                    />
-                </v-col>    
+              <v-col cols="12">   
+                    <v-form 
+                        v-model="valid" 
+                        v-on:submit.prevent="applyPlanNow"
+                        ref="applyPlanForm"
+                        id="applyPlanForm"
+                    >    
+                    <v-container>
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12"
+                            style="margin-left: 20%"
+                        >
+                            <h3>Plano: {{ planView.name }}</h3>
+                            <v-radio-group
+                                v-model="planView.name"
+                                mandatory
+                            >
+                                <v-radio
+                                    label="Simples"
+                                    value="Simples"
+                                ></v-radio>
+                                <v-radio
+                                    label="Top"
+                                    value="Top"
+                                ></v-radio>      
 
-                    <v-btn 
-                        type="submit" 
-                        depressed  
-                        x-large 
-                        color="green"
-                        :loading="loadingSave"
-                        :disabled="loadingSave"
-                        style="width: 100%"
-                        align="center"
-                    >Aplicar Plano</v-btn>                                                        
-                
-              </v-container>
-            </v-form>
+                                <v-radio
+                                    label="Smart"
+                                    value="Smart"
+                                ></v-radio>                                                                                                                                                                
+                            </v-radio-group>                                                           
+                        </v-col>    
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12">
+                            <kong-money 
+                                v-model="planView.price"
+                                :label="'Valor do pagamento'"
+                                @mask-currency="maskCurrency"
+                                :rules="[v => !!v || 'Obrigatório',]"
+                            />
+                        </v-col>        
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12">
+                            <v-menu
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                        
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                :value="computedDateFormattedMomentjsStart"
+                                label="Inicio"
+                                readonly
+                                filled
+                                v-bind="attrs"
+                                v-on="on"
+                                :rules="[v => !!v || 'Obrigatório',]"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                v-model="planView.dateStart"
+                                @input="menu2 = false"
+                                locale="pt-br"
+                            ></v-date-picker>
+                            </v-menu>                            
+                        </v-col>
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12">
+                            <v-menu
+                            v-model="menu1"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                        
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                :value="computedDateFormattedMomentjsEnd"
+                                label="Fim"
+                                readonly
+                                filled
+                                v-bind="attrs"
+                                v-on="on"
+                                :rules="[v => !!v || 'Obrigatório',]"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                v-model="planView.dateEnd"
+                                @input="menu1 = false"
+                                locale="pt-br"
+                            ></v-date-picker>
+                            </v-menu>                            
+                        </v-col>                               
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="planView.name === 'Smart'">
+                            <v-text-field 
+                                v-model="planView.amountUsers"
+                                label="Qtde Usuarios"
+                                ref="applyAmountUsers"
+                                prepend-icon="mdi-account"
+                                filled
+                            />
+                        </v-col>     
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="planView.name === 'Smart'">
+                            <v-text-field 
+                                v-model="planView.amountUsersAdmin"
+                                label="Qtde Usuarios Admin"
+                                ref="applyamountUsersAdmin"
+                                prepend-icon="mdi-account"
+                                filled
+                            />
+                        </v-col>
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="planView.name === 'Smart'">
+                            <v-text-field 
+                                v-model="planView.amountUsersCommon"
+                                label="Qtde Usuarios Comum"
+                                ref="amountUsersCommon"
+                                prepend-icon="mdi-account"
+                                filled
+                            />
+                        </v-col>                        
+                        <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="planView.name === 'Smart'">
+                            <v-text-field 
+                                v-model="planView.maxCash"
+                                label="R$ Max de Valor Lancado"
+                                ref="maxCash"
+                                prepend-icon="mdi-cash"
+                                filled
+                            />
+                        </v-col>    
 
+                            <v-btn 
+                                type="submit" 
+                                depressed  
+                                x-large 
+                                color="green"
+                                :loading="loadingSave"
+                                :disabled="loadingSave"
+                                style="width: 100%"
+                                align="center"
+                            >Aplicar Plano</v-btn>                                                        
+                        
+                    </v-container>
+                    </v-form>
+              </v-col>
           </v-row>
           <v-row v-if="view === 'EDIT'">
               <v-col cols="12" align="center">   
@@ -217,43 +242,17 @@
                                     prepend-icon="mdi-calendar"
                                     filled
                                 />
-                            </v-col>                                                 
-                            <v-col cols="12" md="4"
-                                style="margin-left: 20%"
-                            >
-                                <v-radio-group
+                            </v-col>         
+                            <v-col cols="12" md="4">
+                                <v-text-field 
                                     v-model="company.plan.name"
-                                >
-                                    <v-radio
-                                        label="Free"
-                                        value="Free"
-                                    ></v-radio>
-                                    <v-radio
-                                        label="Basico"
-                                        value="Basico"
-                                    ></v-radio>
-                                    <v-radio
-                                        label="Gold"
-                                        value="Gold"
-                                    ></v-radio>    
-                                    <v-radio
-                                        label="É Nóis"
-                                        value="É Nóis"
-                                    ></v-radio>      
-                                    <v-radio
-                                        label="Tamo Junto"
-                                        value="Tamo Junto"
-                                    ></v-radio>          
-                                    <v-radio
-                                        label="Infinity"
-                                        value="Infinity"
-                                    ></v-radio>        
-                                    <v-radio
-                                        label="Personalizado"
-                                        value="Custom"
-                                    ></v-radio>                                                                                                                                                                
-                                </v-radio-group>                                                           
-                            </v-col>          
+                                    label="Plano"
+                                    ref="maxCash"
+                                    prepend-icon="mdi-cash"
+                                    filled 
+                                    :disabled="company.plan.name != 'Smart'"
+                                />
+                            </v-col>                                                                             
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
                                 <v-text-field 
                                     v-model="company.plan.amountUsers"
@@ -261,7 +260,7 @@
                                     ref="maxCash"
                                     prepend-icon="mdi-cash"
                                     filled 
-                                    :disabled="company.plan.name != 'Custom'"
+                                    :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>      
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
@@ -271,7 +270,7 @@
                                     ref="maxCash"
                                     prepend-icon="mdi-cash"
                                     filled 
-                                    :disabled="company.plan.name != 'Custom'"
+                                    :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>     
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
@@ -281,7 +280,7 @@
                                     ref="amountUsersCommon"
                                     prepend-icon="mdi-cash"
                                     filled 
-                                    :disabled="company.plan.name != 'Custom'"
+                                    :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>            
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
@@ -291,7 +290,7 @@
                                     ref="maxCash"
                                     prepend-icon="mdi-cash"
                                     filled
-                                    :disabled="company.plan.name != 'Custom'"
+                                    :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>                                                                                                                                                                                                                
                             <v-col cols="12" md="4">
@@ -317,17 +316,8 @@
                         align="center"
                         justify="space-around"
                     >
-                            <!-- <v-btn 
-                                type="submit" 
-                                depressed  
-                                x-large 
-                                color="success"
-                                :loading="loadingSave"
-                                :disabled="loadingSave"
-                                style="width: 50%"
-                            >Salvar</v-btn> -->
                             <v-btn 
-                                type="button" 
+                                type="button"  
                                 depressed  
                                 x-large 
                                 color="primary"
@@ -346,181 +336,124 @@
 <script>
 import companyGateway from '../../api/companyGateway'
 import storage from '../../storage'
- 
+import KongMoney from '../../components/inputs/KongMoney.vue'
+import inputs from '../../utils/inputs'
+import moment from 'moment'
+
 export default {
-    name: 'UsuarioForm',
+    name: 'UsuarioForm', 
     components: { 
+       KongMoney,
     },
     data: () => ({
+        menu1: false,
+        menu2: false,
         loadingSave: false,
         valid: true,
         show: false,
         company: { 
             plan: {}
         },
-        view: 'CHOOSE',
-        applyPlan: {
-            name: '',
-            payment: {price: 0}
-        }
+        view: 'APPLY_PLAN',
+        planView: { 
+            name: 'Simples', 
+            price: '9,90', 
+            amountUsers: 2, 
+            amountUsersAdmin: 1, 
+            amountUsersCommon: 1, 
+            maxCash: 5000,
+            dateStart: '',
+            dateEnd: '',
+        },
     }),
     methods: {
-      save() {
-        if(!this.$refs.companyForm.validate()) {
-            return;
-        }
-      },
       selectCompany() {
           this.userLogged.company = this.company._id;
           storage.setUserLogged(JSON.stringify(this.userLogged));
           storage.setCompany(JSON.stringify(this.company));
           this.$router.push('/');
-      },
-      parseDate(date) {
-        if (!date) return null;
-        const [day, month, year] = date.split('/');
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-      },           
-      getPlan(planName) {
-          let result = {
-              payment: { price: 0 },
-              dateStartedPtBR: new Date(),
-              dateEndPtBR: new Date(),
-              amountUsers: 1,
-              amountUsersAdmin: 1,
-              amountUsersCommon: 0,  
-              maxCash: 500,
-          };
-          if(this.applyPlan.name !== 'Custom') {
-            this.applyPlan = this.company.plan;
-          }
-          switch(planName) {
-              case 'Basico':
-                  result.payment.price = 10;
-                  result.amountUsers = 2;
-                  result.amountUsersAdmin = 1;
-                  result.amountUsersCommon = 1;
-                  result.maxCash = 2000;
-                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
-                  result.dateEndPtBR = new Date(
-                      result.dateEndPtBR.getFullYear(),
-                      result.dateEndPtBR.getMonth()+1,
-                      result.dateEndPtBR.getDate()
-                  ).toLocaleString('pt-BR').substring(0,10);
-                  break;
-              case 'Gold':
-                  result.payment.price = 90;
-                  result.amountUsers = 2;
-                  result.amountUsersAdmin = 1;
-                  result.amountUsersCommon = 1;
-                  result.maxCash = 4000;                  
-                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
-                  result.dateEndPtBR = new Date(
-                      result.dateEndPtBR.getFullYear(),
-                      result.dateEndPtBR.getMonth()+12,
-                      result.dateEndPtBR.getDate()
-                  ).toLocaleString('pt-BR').substring(0,10);
-                  break;                  
-              case 'É Nóis':
-                  result.payment.price = 20;
-                  result.amountUsers = 6;
-                  result.amountUsersAdmin = 2;
-                  result.amountUsersCommon = 4;     
-                  result.maxCash = 6000;             
-                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
-                  result.dateEndPtBR = new Date(
-                      result.dateEndPtBR.getFullYear(),
-                      result.dateEndPtBR.getMonth()+1,
-                      result.dateEndPtBR.getDate()
-                  ).toLocaleString('pt-BR').substring(0,10);
-                  break;                          
-              case 'Tamo Junto':
-                  result.payment.price = 180;
-                  result.amountUsers = 6;
-                  result.amountUsersAdmin = 2;
-                  result.amountUsersCommon = 4;       
-                  result.maxCash = 12000;                             
-                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
-                  result.dateEndPtBR = new Date(
-                      result.dateEndPtBR.getFullYear(),
-                      result.dateEndPtBR.getMonth()+12,
-                      result.dateEndPtBR.getDate()
-                  ).toLocaleString('pt-BR').substring(0,10);
-                  break;                            
-              case 'Infinity':
-                  result.payment.price = 900;
-                  result.amountUsers = 8;
-                  result.amountUsersAdmin = 3;
-                  result.amountUsersCommon = 5;    
-                  result.maxCash = 25000;                             
-                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
-                  result.dateEndPtBR = new Date(2099, 5, 20).toLocaleString('pt-BR').substring(0,10);
-                  break;                            
-              case 'Custom':
-                  result.payment.price = 200;
-                  result.amountUsers = 3;
-                  result.amountUsersAdmin = 1;
-                  result.amountUsersCommon = 2;    
-                  result.maxCash = 4500;                      
-                  result.dateStartedPtBR = new Date().toLocaleString('pt-BR').substring(0,10);
-                  result.dateEndPtBR = new Date(
-                      result.dateEndPtBR.getFullYear(),
-                      result.dateEndPtBR.getMonth()+2,
-                      result.dateEndPtBR.getDate()                      
-                  ).toLocaleString('pt-BR').substring(0,10);
-                  break;                                                                                          
-          }
-          return result;
-      },
+      },       
+      numberBrToUS(v) {
+        return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
+      },          
       applyPlanNow() {
-        this.applyPlan.dateStarted = this.parseDate(this.applyPlan.dateStartedPtBR);
-        this.applyPlan.dateEnd = this.parseDate(this.applyPlan.dateEndPtBR);
-        
-        if(!this.applyPlan.name) {
-            alert('Selecione o Plano');
-            return;
-        }
-        if( this.applyPlan.name === 'Free') {
-            alert('Plano Free em desenvolvimento');
+        if(!this.$refs.applyPlanForm.validate()) {
             return;
         }
 
-        companyGateway.applyPlan(this.company._id, this.applyPlan,
+        if(!this.planView.name) {
+            alert('Selecione o Plano');
+            return;
+        }
+
+        const planApply = {
+            name: this.planView.name,
+            price: this.numberBrToUS(this.planView.price),
+            amountUsers: this.planView.amountUsers,
+            amountUsersAdmin: this.planView.amountUsersAdmin,
+            amountUsersCommon: this.planView.amountUsersCommon,
+            maxCash: this.planView.maxCash,
+            dateStart: this.planView.dateStart,
+            dateEnd: this.planView.dateEnd,
+        };
+
+        companyGateway.applyPlan(this.company._id, planApply,
             res => {
                 this.company = res;
                 alert('Plano Alterado com Sucesso');
                 this.view = 'EDIT'
             },
-            () => {
+            (err) => {
+                if(err.response.status >= 400 && err.response.status <= 499) {
+                alert(err.response.data.message)              
+                return;
+                }                     
                 alert('Erro, Tente novamente');
             })
+      },
+      maskCurrency(value) {
+          this.planView.price = inputs.maskCurrency(value)
       }
     },
     beforeMount() {
-      this.userLogged = storage.getUserLogged();   
-      companyGateway.getCompanyById(
-                this.$route.params._id,
-                res => { 
-                    this.company = res;
-                    this.applyPlan.name = this.company.plan.name;
-                },
-                () => alert('Erro, tente novamente')
-        );  
+        this.userLogged = storage.getUserLogged();   
+
+        companyGateway.getCompanyById(
+                    this.$route.params._id,
+                    res => { 
+                        this.company = res;
+                        if(this.$route.query.planName) {
+                            this.planView.name = this.$route.query.planName;
+                            this.planView.price = this.$route.query.price;
+                            this.planView.amountUsers = this.$route.query.amountUsers;
+                            this.planView.amountUsersAdmin = this.$route.query.amountUsersAdmin;
+                            this.planView.amountUsersCommon = this.$route.query.amountUsersCommon;
+                            this.planView.maxCash = this.$route.query.maxCash;
+                        } else {
+                            this.planView.name = this.company.plan.name;
+                            // if(this.planView.name == 'Simples' || this.planView.name == 'Top' || this.planView.name == 'Smart') { 
+                            //     this.planView.price = this.company.plan.payment.price;
+                            //     this.planView.amountUsers = this.company.plan.amountUsers;
+                            //     this.planView.amountUsersAdmin = this.company.plan.amountUsersAdmin;
+                            //     this.planView.amountUsersCommon = this.company.plan.amountUsersCommon;
+                            //     this.planView.maxCash = this.company.plan.maxCash;                            
+                            // } 
+                        }
+                    },
+                    () => alert('Erro, tente novamente')
+            );        
+      
+
     },
-    watch: {
-        applyPlan: {
-            deep: true,
-            handler()  {
-                let getPlan = this.getPlan(this.applyPlan.name);
-                this.applyPlan.payment.price = getPlan.payment.price;
-                this.applyPlan.dateStartedPtBR = getPlan.dateStartedPtBR;
-                this.applyPlan.dateEndPtBR = getPlan.dateEndPtBR;
-                this.applyPlan.amountUsers = getPlan.amountUsers;
-                this.applyPlan.amountUsersAdmin = getPlan.amountUsersAdmin;
-                this.applyPlan.amountUsersCommon = getPlan.amountUsersCommon;    
-                this.applyPlan.maxCash = getPlan.maxCash;
-            }   
-        }
-    },
+    computed: {
+      computedDateFormattedMomentjsStart() {
+        moment.locale('pt-br');
+        return this.planView.dateStart ? moment(this.planView.dateStart).format('DD/MM/YYYY') : ''
+      },   
+      computedDateFormattedMomentjsEnd() {
+        moment.locale('pt-br');
+        return this.planView.dateEnd ? moment(this.planView.dateEnd).format('DD/MM/YYYY') : ''
+      },        
+    }    
   }
 </script>

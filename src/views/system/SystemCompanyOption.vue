@@ -37,8 +37,8 @@
                       x-large 
                       color="red"
                       style="width: 96%"
-                      to="/system/users"
-                  >Usuarios</v-btn>                    
+                      :to="`/${company._id}/system/users`"
+                  >Usuarios</v-btn>                   
               </v-col>
           </v-row>                                 
         </v-main>

@@ -12,7 +12,7 @@
               </v-col>
               <v-col cols="7" align="center">   
                   <span style="font-size: 1.8rem !important;">  
-                      Usuarios                    
+                      Usuarios                     
                   </span>
               </v-col>            
           </v-row>          
@@ -60,7 +60,8 @@ export default {
         return UserTypes.isAdmin(type);
       },
       getUsers() {
-        gateway.getUsers('all', res => {
+        
+        gateway.getUsersByCompanyId(this.$route.params.companyId,'all', res => {
           this.users = res;
         }, err => {
           console.log(err);
