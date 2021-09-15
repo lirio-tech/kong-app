@@ -344,14 +344,12 @@
 <script>
 import companyGateway from '../../api/companyGateway'
 import storage from '../../storage'
-import KongMoney from '../../components/inputs/KongMoney.vue'
 import inputs from '../../utils/inputs'
 import moment from 'moment'
 import date from '../../utils/date'
 export default {
     name: 'UsuarioForm', 
     components: { 
-       KongMoney,
     },
     data: () => ({
         menu1: false,
