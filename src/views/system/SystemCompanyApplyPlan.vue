@@ -194,7 +194,7 @@
                                     autocomplete="off"
                                     label="Nome do seu Estabelecimento"
                                     prepend-icon="mdi-home"
-                                    required filled
+                                    required filled readonly
                                     :rules="[val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres']"
                                     v-model="company.name"
                                     ref="companyName"
@@ -209,7 +209,7 @@
                                         val => val && val.length > 3 || 'Deve ser maior do que 3 Caracteres',
                                         val => val && val.length <= 13 || 'tamanho maximo eh de 13 Caracteres',
                                     ]"
-                                    required filled
+                                    required filled readonly
                                     v-model="company.shortName"
                                     ref="companyShortName"
                                 />
@@ -229,7 +229,7 @@
                                     label="Inicio do Plano"
                                     ref="date"
                                     prepend-icon="mdi-calendar"
-                                    filled
+                                    filled readonly
                                 />
                             </v-col>     
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
@@ -247,7 +247,7 @@
                                     label="Plano"
                                     ref="maxCash"
                                     prepend-icon="mdi-cash"
-                                    filled 
+                                    filled  readonly
                                     :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>                                                                             
@@ -267,7 +267,7 @@
                                     label="Usuarios Admin"
                                     ref="maxCash"
                                     prepend-icon="mdi-cash"
-                                    filled 
+                                    filled readonly
                                     :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>     
@@ -287,7 +287,7 @@
                                     label="Valor Maximo p/ Lancamento"
                                     ref="maxCash"
                                     prepend-icon="mdi-cash"
-                                    filled
+                                    filled readonly
                                     :disabled="company.plan.name != 'Smart'"
                                 />
                             </v-col>                                                                                                                                                                                                                
@@ -337,7 +337,7 @@ import storage from '../../storage'
 import KongMoney from '../../components/inputs/KongMoney.vue'
 import inputs from '../../utils/inputs'
 import moment from 'moment'
-
+import date from '../../utils/date'
 export default {
     name: 'UsuarioForm', 
     components: { 
@@ -360,8 +360,8 @@ export default {
             amountUsersAdmin: 1, 
             amountUsersCommon: 1, 
             maxCash: 5000,
-            dateStart: '',
-            dateEnd: '',
+            dateStart: date.getNewDateAddDay(0),
+            dateEnd: date.getNewDateAddDay(30),
         },
     }),
     methods: {
@@ -411,7 +411,7 @@ export default {
       },
       maskCurrency(value) {
           this.planView.price = inputs.maskCurrency(value)
-      }
+      },
     },
     beforeMount() { 
         this.userLogged = storage.getUserLogged();   
@@ -422,11 +422,15 @@ export default {
                         this.company = res;
                         if(this.$route.query.planName) {
                             this.planView.name = this.$route.query.planName;
-                            this.planView.price = this.$route.query.price;
+                            this.planView.price = inputs.maskCurrency(this.$route.query.price+'0');
                             this.planView.amountUsers = this.$route.query.amountUsers;
                             this.planView.amountUsersAdmin = this.$route.query.amountUsersAdmin;
                             this.planView.amountUsersCommon = this.$route.query.amountUsersCommon;
                             this.planView.maxCash = this.$route.query.maxCash;
+                            if(this.$route.query.amountMouth) { 
+                                this.planView.dateStart = date.getNewDateAddDay(0);
+                                this.planView.dateEnd = date.getNewDateAddDay(this.$route.query.amountMouth*30);
+                            }
                         } else {
                             this.planView.name = this.company.plan.name;
                             // if(this.planView.name == 'Simples' || this.planView.name == 'Top' || this.planView.name == 'Smart') { 
