@@ -355,7 +355,11 @@ export default{
                 {
                   "icon": "mdi-content-cut",
                   "description": "R$ 1000,00 por Mês de Lançamentos"
-                }
+                },
+                {
+                    "icon": "mdi-clock",
+                    "description": "30 agendamentos por mês"
+                }                
               ],
               "button": {
                 "label": "Voltar para o Plano Free",
@@ -376,7 +380,15 @@ export default{
                 {
                   "icon": "mdi-content-cut",
                   "description": "R$ 3.000,00 por Mês de Lançamentos"
-                }
+                },
+                {
+                    "icon": "mdi-clock",
+                    "description": "300 agendamentos por mês"
+                },
+                {
+                    "icon": "mdi-diamond",
+                    "description": "1 Site"
+                }        
               ],
               "button": {
                 "label": "Quero Esse",
@@ -398,7 +410,15 @@ export default{
                 {
                   "icon": "mdi-content-cut",
                   "description": "R$ 10.000,00 por Mês de Lançamentos"
-                }
+                },
+                {
+                    "icon": "mdi-clock",
+                    "description": "Agendamentos Ilimitados"
+                },
+                {
+                    "icon": "mdi-diamond",
+                    "description": "1 Site"
+                }     
               ],
               "button": {
                 "label": "Quero Esse",
