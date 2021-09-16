@@ -222,7 +222,11 @@ export default {
                     {
                         icon: "mdi-content-cut",
                         description: `R$${ this.numberUsToBr(this.cashMouth*1000)} por Mês de Lançamentos`
-                    }
+                    },
+                    {
+                        "icon": "mdi-diamond",
+                        "description": "1 Site"
+                    }    
                 ],
                 button: {
                     label: "Quero Esse",
