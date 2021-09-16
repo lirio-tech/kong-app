@@ -98,10 +98,10 @@
                                 <th class="text-center">
                                   Total
                                 </th>
-                                <th>
+                                <th class="text-center caption">
                                   Plano
                                 </th>                                                                                                  
-                                <th>
+                                <th class="text-center caption">
                                   Vencimento
                                 </th>                                  
                               </tr>
@@ -111,8 +111,12 @@
                                 v-for="c in companies"
                                 :key="c._id"
                               >
-                                <td class="text-center caption">{{ c.shortName }}</td>
-                                <td class="text-right caption">R$ {{ c.total | currency }}</td>
+                                <td class="text-center caption">
+                                    <router-link :to="`/system/companies/${c._id}/options`" class="primary--text">
+                                        {{ c.shortName }}
+                                    </router-link>
+                                </td>
+                                <td class="text-center caption">R$ {{ c.total | currency }}</td>
                                 <td class="text-center caption">{{ c.planName }}</td>
                                 <td class="text-center caption">{{ c.planDateEnd }}</td>
                               </tr>
@@ -122,7 +126,7 @@
               </v-col>
             </v-row>
             <br/><br/><br/>
-            <v-row justify="start">
+            <!-- <v-row justify="start">
 
               <v-expansion-panels class="px-3" hover focusable>
                 <v-expansion-panel>
@@ -162,7 +166,7 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>                
               </v-expansion-panels>
-          </v-row>                
+            </v-row>                 -->
         </v-main>
     </v-container>
 </template>
@@ -198,6 +202,9 @@ export default {
               this.loading = false;
               alert('Erro ao Buscar Estabelecimentos Ativos');
           });           
+      },
+      optionCompany(company) {
+          this.$route.push(`/system/companies/${company._id}/options`);
       }
     },
     beforeMount() {
