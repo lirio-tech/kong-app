@@ -27,7 +27,10 @@
                             hide-default-footer
                             loading-text="Carregando... Por favor aguarde"
                             @click:row="clickRow"
-                        >                        
+                        >                   
+                            <template v-slot:item.device="{ item }">
+                                {{ device(item.device) }}                            
+                            </template>                                
                         </v-data-table>               
                     </v-sheet>
                 </v-col>
@@ -52,6 +55,7 @@ export default {
         { text: "Criado", value: "createdAt" },
         { text: "Alterado", value: "updatedAt" },
         { text: "Desativado", value: "disabled" },
+        { text: "SmartPhone", value: "device" },
       ],                
       users: []
     }),
@@ -77,6 +81,12 @@ export default {
       },
       getTypePtBR(type) {
         return UserTypes.getDescriptionPtBR(type);
+      },
+      device(dvc) {
+          if(!dvc) return 'Outros';
+          if(dvc.toLowerCase().includes('iphone')) return 'iPhone';
+          if(dvc.toLowerCase().includes('android')) return 'Android';
+          return 'Outros'
       }
     },
     beforeMount() {
