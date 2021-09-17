@@ -55,6 +55,7 @@ export default {
         { text: "Criado", value: "createdAt" },
         { text: "Alterado", value: "updatedAt" },
         { text: "Desativado", value: "disabled" },
+        { text: "Telefone", value: "phone_number" },
         { text: "SmartPhone", value: "device" },
       ],                
       users: []

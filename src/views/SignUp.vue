@@ -139,6 +139,7 @@
                                 ref="phone"
                                 required
                                 v-mask="'(##) #####-####'"
+                                :rules="[val => val && val.length > 11 || 'Celular Obrigatório']"
                                 prepend-icon="mdi-whatsapp"
                                 filled
                             />
