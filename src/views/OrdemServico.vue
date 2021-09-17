@@ -135,7 +135,7 @@
                               </v-row>
                               <v-row v-if="order.paymentType === 'card'">
                                 <v-col cols="12" >
-                                    <v-subheader class="">{{rate/100 | currency }}% Taxa do Cartão</v-subheader>
+                                    <v-subheader class="">{{rate/100 | currency }}% Taxa da Maquininha</v-subheader>
                                     <v-slider
                                         v-model="rate"
                                         min="0"
