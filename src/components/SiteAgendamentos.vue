@@ -100,11 +100,40 @@
                     :events="events"
                     :event-color="getEventColor"
                     :type="typePeriod"
+                    @click:event="showEvent"
                     @click:more="viewDay"
                     @click:date="viewDay"
                     @change="updateRange"
                   >
                   </v-calendar>
+                  <v-menu
+                    v-model="selectedOpen"
+                    :close-on-content-click="false"
+                    :activator="selectedElement"
+                    offset-x
+                  >
+                    <v-card
+                      color="grey lighten-4"
+                      min-width="350px"
+                      flat
+                    >
+                      <v-toolbar
+                        :color="selectedEvent.color"
+                        dark
+                      >
+                        <v-btn icon @click="selectedOpen = false">
+                          <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                        <v-toolbar-title v-html="'RESERVADO'"></v-toolbar-title>
+                        
+                      </v-toolbar>
+                      <v-card-text class="indigo--text">
+                        Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
+                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
+                        {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
+                      </v-card-text>
+                    </v-card>
+                  </v-menu>                  
                 </v-sheet>
               </v-col>
             </v-row>
@@ -217,7 +246,7 @@ export default {
                   start: _start,
                   end: _end,
                   //total: this.agendamentos[i].total,
-                  color: 'green',
+                  color: 'info',
                   //orderId: this.agendamentos[i].orderId,
                   timed: true,
               });      
@@ -254,7 +283,23 @@ export default {
               window.scrollTo(0,document.body.scrollHeight);
 
           }
-        },        
+        },    
+        showEvent ({ nativeEvent, event }) {
+          const open = () => {
+            this.selectedEvent = event
+            this.selectedElement = nativeEvent.target
+            requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
+          }
+
+          if (this.selectedOpen) {
+            this.selectedOpen = false
+            requestAnimationFrame(() => requestAnimationFrame(() => open()))
+          } else {
+            open()
+          }
+
+          nativeEvent.stopPropagation()
+        },            
     },        
 
   }
