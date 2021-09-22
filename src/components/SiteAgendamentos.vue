@@ -123,7 +123,7 @@
 import storage from '../storage'
 import DialogAgendamentoSite from '../components/DialogAgendamentoSite.vue'
 // import dateUtil from '../utils/date'
-// import agendamentoGateway from '../api/agendamentoGateway';
+import agendamentoGateway from '../api/agendamentoGateway';
 export default {
     name: 'SiteAgendamentos',
     props: ['company'],
@@ -158,20 +158,31 @@ export default {
     },
     methods: {
         findAgendamento() {
-           //let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
-          //  agendamentoGateway.getSiteAgendamentos(
-          //      res => {
-          //          this.agendamentos = res;
-          //          console.log('before');
-          //          this.updateCalendar(_date, _date);
-          //          if(this.$route.query._id) {
-          //             this.alterarAgendamentoShowDialog(this.$route.query._id);
-          //             this.$route.query._id = null;
-          //          }
-          //      }, () => {
-          //        alert('Erro ao Buscar agendamentos');
-          //      })    
+            if(this.company && this.company._id) {
+                  this.getSiteAgendamentos(this.company._id)
+            } else { 
+                setTimeout(
+                  () => {
+                    if(this.company && this.company._id) {
+                      this.getSiteAgendamentos(this.company._id)
+                    } else {
+                      this.findAgendamento();
+                    }
+                  }, 
+                  3000
+                )
+            }
         },  
+        getSiteAgendamentos(companyId) {
+              agendamentoGateway.getSiteAgendamentos(companyId,
+                  res => {
+                    console.log('res', res);
+                      this.agendamentos = res;
+                      this.updateCalendar(null, null);
+                  }, () => {
+                    alert('Erro ao Buscar agendamentos');
+                  })   
+        },
         setTypePeriod(tp) {
           this.typePeriod = tp;
         },
@@ -194,35 +205,28 @@ export default {
         updateCalendar(start, end) {
            console.log(start, end);
            const events = []
+           console.log('this.agendamentos', this.agendamentos)
            for(var i in this.agendamentos) {
              const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
              const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
               events.push({
                   _id: this.agendamentos[i]._id,
                   name: 'RESERVADO',  //this.agendamentos[i].customer.name,
-                  detail: this.getDescriptionServices(this.agendamentos[i].services),
+                  //detail: this.getDescriptionServices(this.agendamentos[i].services),
                   status: this.agendamentos[i].status,
                   start: _start,
                   end: _end,
-                  total: this.agendamentos[i].total,
-                  color: 'blue',
-                  orderId: this.agendamentos[i].orderId,
+                  //total: this.agendamentos[i].total,
+                  color: 'green',
+                  //orderId: this.agendamentos[i].orderId,
                   timed: true,
               });      
            }
            this.events = events;
+           console.log(this.events);
         },
         updateRange ({ start, end }) {
-          console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
-          console.log('updateRange');
           this.updateCalendar(start, end);
-        },
-        getDescriptionServices(services) {
-            let description = ''
-            for(var i in services) {
-              description += `${services[i].type}, `
-            }
-            return description;
         },
         initAgendamento() {
           return { 

@@ -92,5 +92,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })        
-    },                
+    },           
+    getSiteAgendamentos(companyId, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/_/site/${companyId}`;
+        Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })      
+    },         
 }
