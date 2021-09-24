@@ -77,7 +77,7 @@
       <v-container v-if="tabView === 'HOME'">
           <br/>
           <center class="white--text">
-            {{ companySite }}
+            {{ companySite.description }}
           </center>
           <br/>
           <v-row>
@@ -112,12 +112,12 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
         <v-row>
-            <v-col cols="6" style="margin-left: 0px;">   
+            <v-col cols="12" style="margin-left: 0px;">   
                 <span style="font-size: 1.4rem !important;" class="white--text">  
                     Agenda
                 </span>
             </v-col> 
-            <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6" >                
+            <!-- <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6" >                
               <v-btn
                v-if="userLogged && userLogged.type === 'sys_admina'"
                 class="mx-2"
@@ -145,7 +145,10 @@
                   <v-icon color="grey">mdi-share</v-icon>
                   <span class="grey--text" >Compartilhar</span>          
               </v-btn>   
-            </v-col>            
+            </v-col>             -->
+            <v-col xl="4" lg="4" md="4" sm="12" xs="12" cols="12">   
+              <span>{{ getMessageAgenda() }}</span>
+            </v-col>
         </v-row>     
         <br/>
         <site-agendamentos :company="company"></site-agendamentos>
@@ -445,7 +448,7 @@ export default {
     },
     flashingButtons() {
       const interval = 700;
-      const startAt = 3000;
+      const timeStartAt = 3000;
       setTimeout(() => {
         this.btnUpdateSite = ''
         setTimeout(() => { 
@@ -456,7 +459,7 @@ export default {
           }, interval);          
         }
         , interval)
-      }, startAt);
+      }, timeStartAt);
     },
     showMessage(text) {
       this.message.show = true;
@@ -473,6 +476,60 @@ export default {
     onError(){
       alert('Erro ao Copiar')
     },
+    getMessageAgenda() {
+      
+      let today = new Date();
+      console.log(today.getDay());
+      if(today.getDay() == 0) {
+          if(this.companySite.openAt.sunday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.sunday.timeStartAt} às ${this.companySite.openAt.sunday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }
+      if(today.getDay() == 1) {
+          if(this.companySite.openAt.monday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.monday.timeStartAt} às ${this.companySite.openAt.monday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }         
+      if(today.getDay() == 2) {
+          if(this.companySite.openAt.tuesday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.tuesday.timeStartAt} às ${this.companySite.openAt.tuesday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }   
+      if(today.getDay() == 3) {
+          if(this.companySite.openAt.wednesday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.wednesday.timeStartAt} às ${this.companySite.openAt.wednesday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }  
+      if(today.getDay() == 4) {
+          if(this.companySite.openAt.thursday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.thursday.timeStartAt} às ${this.companySite.openAt.thursday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }  
+      if(today.getDay() == 5) {
+          if(this.companySite.openAt.friday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.friday.timeStartAt} às ${this.companySite.openAt.friday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }  
+      if(today.getDay() == 6) {
+          if(this.companySite.openAt.saturday.isOpen) {
+              return `Hoje estamos aberto das ${this.companySite.openAt.saturday.timeStartAt} às ${this.companySite.openAt.saturday.timeEndAt}`
+          } else {
+            return 'Hoje estamos Fechado';
+          }
+      }                                
+    }
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
