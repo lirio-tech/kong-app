@@ -253,7 +253,7 @@ export default {
                   start: _start,
                   end: _end,
                   //total: this.agendamentos[i].total,
-                  color: this.agendamentos[i].name === 'RESERVADO' ? 'info' : 'green',
+                  color: this.agendamentos[i].name === 'RESERVADO' ? 'green' : 'orange',
                   //orderId: this.agendamentos[i].orderId,
                   timed: true,
               });      
