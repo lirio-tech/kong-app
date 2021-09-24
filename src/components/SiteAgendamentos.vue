@@ -259,7 +259,6 @@ export default {
               });      
            }
            this.events = events;
-           console.log(this.events);
         },
         updateRange ({ start, end }) {
           this.updateCalendar(start, end);
@@ -285,8 +284,7 @@ export default {
         showDialogAgendamento(show, agendamento) {
           this.dialogAgendamento = show;
           if(show === false && agendamento) {
-              this.agendamentos.push(agendamento)
-              console.log(this.agendamentos[0]._id)
+              this.getSiteAgendamentos(this.company._id);
               window.scrollTo(0,document.body.scrollHeight);
 
           }
