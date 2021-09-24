@@ -220,6 +220,27 @@
 
                                     </v-col>           
 
+                                    <h4>🕑 Horário de Funcionamento</h4>  
+
+                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
+                                          <v-text-field
+                                              v-model="companySite.timeStartAt"
+                                              type="time"
+                                              filled
+                                              :rules="[v => !!v || 'Horário Obrigatório',]"
+                                              prepend-icon="mdi-clock"
+                                          ></v-text-field>            
+                                    </v-col>                  
+                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
+                                          <v-text-field
+                                              v-model="companySite.timeEndAt"
+                                              type="time"
+                                              filled
+                                              :rules="[v => !!v || 'Horário Obrigatório',]"
+                                              prepend-icon="mdi-clock"
+                                          ></v-text-field>            
+                                    </v-col>                                                 
+
                                     <h4>📍 Endereço</h4>    
 
                                     <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">   
@@ -379,6 +400,9 @@ export default {
       updateInfos() {
           if(this.$refs.updateInfosForm.validate()) {
                 this.loadingInfo = true;
+
+                console.log(this.companySite)
+
                 companyGateway.updateCompanySite(this.company._id, this.companySite._id, this.companySite,
                     (res) => {
                         console.log('res', res)
