@@ -127,7 +127,7 @@
                         <v-btn icon @click="selectedOpen = false">
                           <v-icon>mdi-close</v-icon>
                         </v-btn>
-                        <v-toolbar-title v-html="'RESERVADO'"></v-toolbar-title>
+                        <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                         
                       </v-toolbar>
                       <v-card-text class="indigo--text">
@@ -247,13 +247,13 @@ export default {
              const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
               events.push({
                   _id: this.agendamentos[i]._id,
-                  name: 'RESERVADO',  //this.agendamentos[i].customer.name,
+                  name: this.agendamentos[i].name,
                   //detail: this.getDescriptionServices(this.agendamentos[i].services),
                   status: this.agendamentos[i].status,
                   start: _start,
                   end: _end,
                   //total: this.agendamentos[i].total,
-                  color: 'info',
+                  color: this.agendamentos[i].name === 'RESERVADO' ? 'info' : 'green',
                   //orderId: this.agendamentos[i].orderId,
                   timed: true,
               });      
