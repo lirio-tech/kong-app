@@ -14,7 +14,7 @@
           <template v-slot:img="{ props }">
             <v-img
               v-bind="props"
-              gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+              gradient="to top right, rgba(70,85,151,.5), rgba(18,28,52,.7)"
             ></v-img>
           </template>
 
@@ -77,7 +77,7 @@
       <v-container v-if="tabView === 'HOME'">
           <br/>
           <center class="white--text">
-            {{ companySite.description }}
+            {{ companySite }}
           </center>
           <br/>
           <v-row>
@@ -324,7 +324,7 @@ export default {
       facebook: '',
       instagram: '',
       photoCover: IMAGES_RANDOM_URL,
-      address: {}
+      address: {},
     },
     company: {},
     message: { show: false, color: 'primary', text: '', timeout: 5000 },  

@@ -220,26 +220,217 @@
 
                                     </v-col>           
 
-                                    <!-- <h4>🕑 Horário de Funcionamento</h4>  
+                                    <h4>🕑  <span style="margin-left: 5px"> Horário de Funcionamento</span> </h4>        
+                                    <v-simple-table dense >
+                                        <template v-slot:default>
+                                          <tbody >
+                                            <tr>
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.monday.isOpen"
+                                                      :label="`Segunda-Feira ${!companySite.openAt.monday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr v-if="companySite.openAt.monday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.monday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.monday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>
+                                            <tr class="color-grid">
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.tuesday.isOpen"
+                                                      :label="`Terça-Feira ${!companySite.openAt.tuesday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr class="color-grid" v-if="companySite.openAt.tuesday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.tuesday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.tuesday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>
 
-                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
-                                          <v-text-field
-                                              v-model="companySite.timeStartAt"
-                                              type="time"
-                                              filled
-                                              :rules="[v => !!v || 'Horário Obrigatório',]"
-                                              prepend-icon="mdi-clock"
-                                          ></v-text-field>            
-                                    </v-col>                  
-                                    <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">     
-                                          <v-text-field
-                                              v-model="companySite.timeEndAt"
-                                              type="time"
-                                              filled
-                                              :rules="[v => !!v || 'Horário Obrigatório',]"
-                                              prepend-icon="mdi-clock"
-                                          ></v-text-field>            
-                                    </v-col>                                                  -->
+                                            <tr>
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.wednesday.isOpen"
+                                                      :label="`Quarta-Feira ${!companySite.openAt.wednesday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr v-if="companySite.openAt.wednesday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.wednesday.timeStartAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.wednesday.timeEndAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>
+
+                                            <tr class="color-grid">
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.thursday.isOpen"
+                                                      :label="`Quinta-Feira ${!companySite.openAt.thursday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr class="color-grid" v-if="companySite.openAt.thursday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.thursday.timeStartAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.thursday.timeEndAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>        
+
+                                            <tr >
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.friday.isOpen"
+                                                      :label="`Sexta-Feira ${!companySite.openAt.friday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr v-if="companySite.openAt.friday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.friday.timeStartAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.friday.timeEndAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>             
+
+                                            <tr class="color-grid">
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.saturday.isOpen"
+                                                      :label="`Sabado ${!companySite.openAt.saturday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr class="color-grid" v-if="companySite.openAt.saturday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.saturday.timeStartAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.saturday.timeEndAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>                                                                                                                                                                                                                     
+
+                                            <tr >
+                                                <td colspan="2">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.sunday.isOpen"
+                                                      :label="`Domingo ${!companySite.openAt.sunday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                            </tr>                                              
+                                            <tr v-if="companySite.openAt.sunday.isOpen">
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.sunday.timeStartAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.sunday.timeEndAt"
+                                                        type="time"
+                                                        
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>                                                                             
+
+                                          </tbody>
+                                        </template>
+                                    </v-simple-table>
+                                    <br/>
 
                                     <h4>📍 Endereço</h4>    
 
@@ -532,4 +723,7 @@ export default {
 }
 </script>
 <style scoped>
+.color-grid {
+  background-color: rgba(0, 0, 100, .05)
+}
 </style>
