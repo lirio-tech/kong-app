@@ -93,8 +93,8 @@ export default{
                 errorCb(error)
             })        
     },           
-    getSiteAgendamentos(companyId, callback, errorCb) {
-        let url = `${AGENDAMENTO_API}/_/site/${companyId}`;
+    getSiteAgendamentos(companyId, phone_number, callback, errorCb) {
+        let url = `${AGENDAMENTO_API}/_/site/${companyId}?phone_number=${phone_number}`;
         Axios.get(url)
             .then(data => {
                 callback(data.data)

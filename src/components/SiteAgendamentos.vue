@@ -206,7 +206,11 @@ export default {
             }
         },  
         getSiteAgendamentos(companyId) {
-              agendamentoGateway.getSiteAgendamentos(companyId,
+              let phone_number = "";
+              if(storage.getCustomerSiteAgendamento()) {
+                  phone_number = storage.getCustomerSiteAgendamento().phone_number;
+              }
+              agendamentoGateway.getSiteAgendamentos(companyId, phone_number,
                   res => {
                     console.log('res', res);
                       this.agendamentos = res;

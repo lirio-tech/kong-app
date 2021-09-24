@@ -270,6 +270,7 @@ export default {
               this.loagindAgendar = false;
               this.isAgendado = true;
               this.agendamento = res;
+              storage.setCustomerSiteAgendamento(this.agendamento.customer);
             },
             (err) => {  
               this.loagindAgendar = false; 
@@ -305,7 +306,10 @@ export default {
     beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
-      //this.setServices();
+      if(storage.getCustomerSiteAgendamento()) {
+        // Diego Lirio
+        this.agendamento.customer = storage.getCustomerSiteAgendamento();
+      }
     }
 }
 </script>
