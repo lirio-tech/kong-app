@@ -51,8 +51,8 @@
           <template v-slot:extension>
             <v-tabs align-with-title>
 
-              <v-tab @click="tabView = 'HOME'">Home</v-tab>
-              <v-tab @click="tabView = 'AGENDA'">Agenda</v-tab>
+              <v-tab @click="tabView = 'AGENDA'">Agendamento</v-tab>
+              <v-tab @click="tabView = 'HOME'">Fotos</v-tab>
               <v-tab @click="tabView = 'CONTATO'">Contato</v-tab>
             </v-tabs>
           </template>
@@ -312,7 +312,7 @@ const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
 export default {
   components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, SnackBar, },
   data: () => ({
-    tabView: 'HOME',
+    tabView: 'AGENDA',
     dialogUpdate: false,
     
     dialogPlan: false,
