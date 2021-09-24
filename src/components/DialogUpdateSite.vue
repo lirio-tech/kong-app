@@ -400,9 +400,6 @@ export default {
       updateInfos() {
           if(this.$refs.updateInfosForm.validate()) {
                 this.loadingInfo = true;
-
-                console.log(this.companySite)
-
                 companyGateway.updateCompanySite(this.company._id, this.companySite._id, this.companySite,
                     (res) => {
                         console.log('res', res)
