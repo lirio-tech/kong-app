@@ -147,7 +147,7 @@
               </v-btn>   
             </v-col>             -->
             <v-col xl="4" lg="4" md="4" sm="12" xs="12" cols="12">   
-              <span>{{ getMessageAgenda() }}</span>
+              <hour-working :openAt="companySite.openAt" />
             </v-col>
         </v-row>     
         <br/>
@@ -305,6 +305,7 @@ import companyGateway from '../api/companyGateway'
 import gateway from '../api/gateway'
 import DialogPlan from '../components/DialogPlan.vue'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
+import HourWorking from '../components/HourWorking.vue'
 import SiteAgendamentos from '../components/SiteAgendamentos.vue'
 import SnackBar from '../components/SnackBar.vue'
 import storage from '../storage'
@@ -313,7 +314,7 @@ import UserTypes from '../utils/UserTypes'
 const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
 //const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
-  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, SnackBar, },
+  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, SnackBar, HourWorking, },
   data: () => ({
     tabView: 'AGENDA',
     dialogUpdate: false,
@@ -476,60 +477,6 @@ export default {
     onError(){
       alert('Erro ao Copiar')
     },
-    getMessageAgenda() {
-      
-      let today = new Date();
-      console.log(today.getDay());
-      if(today.getDay() == 0) {
-          if(this.companySite.openAt.sunday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.sunday.timeStartAt} às ${this.companySite.openAt.sunday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }
-      if(today.getDay() == 1) {
-          if(this.companySite.openAt.monday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.monday.timeStartAt} às ${this.companySite.openAt.monday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }         
-      if(today.getDay() == 2) {
-          if(this.companySite.openAt.tuesday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.tuesday.timeStartAt} às ${this.companySite.openAt.tuesday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }   
-      if(today.getDay() == 3) {
-          if(this.companySite.openAt.wednesday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.wednesday.timeStartAt} às ${this.companySite.openAt.wednesday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }  
-      if(today.getDay() == 4) {
-          if(this.companySite.openAt.thursday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.thursday.timeStartAt} às ${this.companySite.openAt.thursday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }  
-      if(today.getDay() == 5) {
-          if(this.companySite.openAt.friday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.friday.timeStartAt} às ${this.companySite.openAt.friday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }  
-      if(today.getDay() == 6) {
-          if(this.companySite.openAt.saturday.isOpen) {
-              return `Hoje estamos aberto das ${this.companySite.openAt.saturday.timeStartAt} às ${this.companySite.openAt.saturday.timeEndAt}`
-          } else {
-            return 'Hoje estamos Fechado';
-          }
-      }                                
-    }
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
