@@ -224,7 +224,7 @@
                                     <table >
                                           <tbody >
                                             <tr>
-                                                <td>   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.monday.isOpen"
                                                       :label="`Segunda-Feira ${!companySite.openAt.monday.isOpen ? ' - Fechado' : ''}`"
@@ -249,7 +249,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="color-grid">
-                                                <td >   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.tuesday.isOpen"
                                                       :label="`Terça-Feira ${!companySite.openAt.tuesday.isOpen ? ' - Fechado' : ''}`"
@@ -274,7 +274,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.wednesday.isOpen"
                                                       :label="`Quarta-Feira ${!companySite.openAt.wednesday.isOpen ? ' - Fechado' : ''}`"
@@ -299,7 +299,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="color-grid">
-                                                <td>   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.thursday.isOpen"
                                                       :label="`Quinta-Feira ${!companySite.openAt.thursday.isOpen ? ' - Fechado' : ''}`"
@@ -325,7 +325,7 @@
                                             </tr>        
 
                                             <tr >
-                                                <td >   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.friday.isOpen"
                                                       :label="`Sexta-Feira ${!companySite.openAt.friday.isOpen ? ' - Fechado' : ''}`"
@@ -351,7 +351,7 @@
                                             </tr>             
 
                                             <tr class="color-grid">
-                                                <td>   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.saturday.isOpen"
                                                       :label="`Sabado ${!companySite.openAt.saturday.isOpen ? ' - Fechado' : ''}`"
@@ -377,7 +377,7 @@
                                             </tr>                                                                                                                                                                                                                     
 
                                             <tr >
-                                                <td>   
+                                                <td class="td-week">   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.sunday.isOpen"
                                                       :label="`Domingo ${!companySite.openAt.sunday.isOpen ? ' - Fechado' : ''}`"
@@ -699,5 +699,8 @@ export default {
 <style scoped>
 .color-grid {
   background-color: rgba(0, 0, 100, .05)
+}
+.td-week {
+  width: 250px;
 }
 </style>
