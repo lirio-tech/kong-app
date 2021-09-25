@@ -71,21 +71,20 @@ export default {
 
     },
     methods: {
+      getMessageHour(start, end) {
+          return `Horário: ${start} às ${end}`
+      },
       getMessageAgenda() {
-        
-        
-        console.log(this.today.getDay());
         if(this.today.getDay() == 0) {
             if(this.openAt.sunday.isOpen) {
                 const hourStart = Number(this.openAt.sunday.timeStartAt.substring(0,2));
                 const hourEnd = Number(this.openAt.sunday.timeEndAt.substring(0,2));
-                console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
                     this.status = 'Aberto';
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.sunday.timeStartAt} às ${this.openAt.sunday.timeEndAt}`
+                return this.getMessageHour(this.openAt.sunday.timeStartAt, this.openAt.sunday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
@@ -101,7 +100,7 @@ export default {
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.monday.timeStartAt} às ${this.openAt.monday.timeEndAt}`
+                return this.getMessageHour(this.openAt.monday.timeStartAt, this.openAt.monday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
@@ -117,7 +116,7 @@ export default {
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.tuesday.timeStartAt} às ${this.openAt.tuesday.timeEndAt}`
+                return this.getMessageHour(this.openAt.tuesday.timeStartAt, this.openAt.tuesday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
@@ -133,7 +132,7 @@ export default {
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.wednesday.timeStartAt} às ${this.openAt.wednesday.timeEndAt}`
+                return this.getMessageHour(this.openAt.wednesday.timeStartAt, this.openAt.wednesday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
@@ -149,7 +148,7 @@ export default {
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.thursday.timeStartAt} às ${this.openAt.thursday.timeEndAt}`
+                return this.getMessageHour(this.openAt.thursday.timeStartAt, this.openAt.thursday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
@@ -165,7 +164,7 @@ export default {
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.friday.timeStartAt} às ${this.openAt.friday.timeEndAt}`
+                return this.getMessageHour(this.openAt.friday.timeStartAt, this.openAt.friday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
@@ -181,7 +180,7 @@ export default {
                 } else {
                     this.status ='Fechado'
                 }
-                return ` ${this.openAt.saturday.timeStartAt} às ${this.openAt.saturday.timeEndAt}`
+                return this.getMessageHour(this.openAt.saturday.timeStartAt, this.openAt.saturday.timeEndAt);
             } else {
               this.status ='Fechado'
               return 'Hoje estamos Fechado';
