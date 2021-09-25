@@ -221,50 +221,47 @@
                                     </v-col>           
 
                                     <h4>🕑  <span style="margin-left: 5px"> Horário de Funcionamento</span> </h4>        
-                                    <v-simple-table dense >
-                                        <template v-slot:default>
+                                    <table >
                                           <tbody >
                                             <tr>
-                                                <td colspan="2">   
+                                                <td>   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.monday.isOpen"
                                                       :label="`Segunda-Feira ${!companySite.openAt.monday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr v-if="companySite.openAt.monday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.monday.timeStartAt"
                                                         type="time"
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.monday.isOpen"
                                                     ></v-text-field>   
                                                 </td>                                                
-                                                <td >
+                                                <td>
                                                     <v-text-field
                                                         v-model="companySite.openAt.monday.timeEndAt"
                                                         type="time"
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.monday.isOpen"
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>
                                             <tr class="color-grid">
-                                                <td colspan="2">   
+                                                <td >   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.tuesday.isOpen"
                                                       :label="`Terça-Feira ${!companySite.openAt.tuesday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr class="color-grid" v-if="companySite.openAt.tuesday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.tuesday.timeStartAt"
                                                         type="time"
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.tuesday.isOpen" 
                                                     ></v-text-field>   
                                                 </td>                                                
                                                 <td >
@@ -272,164 +269,141 @@
                                                         v-model="companySite.openAt.tuesday.timeEndAt"
                                                         type="time"
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.tuesday.isOpen" 
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>
-
                                             <tr>
-                                                <td colspan="2">   
+                                                <td>   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.wednesday.isOpen"
                                                       :label="`Quarta-Feira ${!companySite.openAt.wednesday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr v-if="companySite.openAt.wednesday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.wednesday.timeStartAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.wednesday.isOpen"
                                                     ></v-text-field>   
                                                 </td>                                                
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.wednesday.timeEndAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.wednesday.isOpen"
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>
-
                                             <tr class="color-grid">
-                                                <td colspan="2">   
+                                                <td>   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.thursday.isOpen"
                                                       :label="`Quinta-Feira ${!companySite.openAt.thursday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr class="color-grid" v-if="companySite.openAt.thursday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.thursday.timeStartAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.thursday.isOpen"
                                                     ></v-text-field>   
                                                 </td>                                                
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.thursday.timeEndAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.thursday.isOpen"
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>        
 
                                             <tr >
-                                                <td colspan="2">   
+                                                <td >   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.friday.isOpen"
                                                       :label="`Sexta-Feira ${!companySite.openAt.friday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr v-if="companySite.openAt.friday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.friday.timeStartAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.friday.isOpen"
                                                     ></v-text-field>   
                                                 </td>                                                
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.friday.timeEndAt"
                                                         type="time"
-                                                        
+                                                        v-if="companySite.openAt.friday.isOpen"
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>             
 
                                             <tr class="color-grid">
-                                                <td colspan="2">   
+                                                <td>   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.saturday.isOpen"
                                                       :label="`Sabado ${!companySite.openAt.saturday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr class="color-grid" v-if="companySite.openAt.saturday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.saturday.timeStartAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.saturday.isOpen"
                                                     ></v-text-field>   
                                                 </td>                                                
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.saturday.timeEndAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.saturday.isOpen"
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>                                                                                                                                                                                                                     
 
                                             <tr >
-                                                <td colspan="2">   
+                                                <td>   
                                                     <v-checkbox
                                                       v-model="companySite.openAt.sunday.isOpen"
                                                       :label="`Domingo ${!companySite.openAt.sunday.isOpen ? ' - Fechado' : ''}`"
                                                       color="green darken-3"
                                                     ></v-checkbox>                                                     
                                                 </td>                                              
-                                            </tr>                                              
-                                            <tr v-if="companySite.openAt.sunday.isOpen">
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.sunday.timeStartAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.sunday.isOpen"
                                                     ></v-text-field>   
                                                 </td>                                                
                                                 <td >
                                                     <v-text-field
                                                         v-model="companySite.openAt.sunday.timeEndAt"
                                                         type="time"
-                                                        
                                                         :rules="[v => !!v || 'Horário Obrigatório',]"
-                                                        
+                                                        v-if="companySite.openAt.sunday.isOpen"
                                                     ></v-text-field>   
                                                 </td>
                                             </tr>                                                                             
 
                                           </tbody>
-                                        </template>
-                                    </v-simple-table>
+                                    </table>
                                     <br/>
 
                                     <h4>📍 Endereço</h4>    

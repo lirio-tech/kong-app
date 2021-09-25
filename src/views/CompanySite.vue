@@ -112,11 +112,11 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
         <v-row>
-            <v-col cols="12" style="margin-left: 0px;">   
+            <!-- <v-col cols="12" style="margin-left: 0px;">   
                 <span style="font-size: 1.4rem !important;" class="white--text">  
                     Agenda
                 </span>
-            </v-col> 
+            </v-col>  -->
             <!-- <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6" >                
               <v-btn
                v-if="userLogged && userLogged.type === 'sys_admina'"
