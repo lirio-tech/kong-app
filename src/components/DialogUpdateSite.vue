@@ -192,7 +192,9 @@
                                       </v-textarea>
 
 
-                                  </v-col>                                  
+                                  </v-col>            
+
+                                  <hr-line /> <br/>              
 
                                   <h4>📱 Redes Sociais</h4>
                               
@@ -219,6 +221,8 @@
                                           />                                    
 
                                     </v-col>           
+
+                                    <hr-line /> <br/>
 
                                     <h4>🕑  <span style="margin-left: 5px"> Horário de Funcionamento</span> </h4>        
                                     <table >
@@ -405,6 +409,7 @@
                                           </tbody>
                                     </table>
                                     <br/>
+                                    <hr-line /> <br/>
 
                                     <h4>📍 Endereço</h4>    
 
@@ -517,6 +522,7 @@ import commons from '../utils/commons'
 import SnackBar from './SnackBar.vue'
 import companyGateway from '../api/companyGateway'
 import addressGateway from '../api/addressGateway'
+import HrLine from './HrLine.vue'
 const CLEAN_INDEX = -9999
 export default {
     components: { 
@@ -524,6 +530,7 @@ export default {
       FacebookInput,
       ArrobaInput,
       SnackBar,
+        HrLine,
     },
     props: {
       dialog: {

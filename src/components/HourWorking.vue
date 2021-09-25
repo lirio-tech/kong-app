@@ -59,6 +59,8 @@
 </template>
 
 <script> 
+const OPEN = 'Aberto';
+const CLOSED = 'Fechado';
 export default {
     name: 'HourWorking',
     props: [ 'openAt' ],
@@ -72,7 +74,10 @@ export default {
     },
     methods: {
       getMessageHour(start, end) {
-          return `Horário: ${start} às ${end}`
+          return `Horário de Hoje das ${start} às ${end}`
+      },
+      gerMessageClosed() {
+          return 'Hoje estamos Fechado!!!'
       },
       getMessageAgenda() {
         if(this.today.getDay() == 0) {
@@ -80,14 +85,14 @@ export default {
                 const hourStart = Number(this.openAt.sunday.timeStartAt.substring(0,2));
                 const hourEnd = Number(this.openAt.sunday.timeEndAt.substring(0,2));
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status = CLOSED;
                 }
                 return this.getMessageHour(this.openAt.sunday.timeStartAt, this.openAt.sunday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status = CLOSED;
+              return this.gerMessageClosed();
             }
         }
         if(this.today.getDay() == 1) {
@@ -96,14 +101,14 @@ export default {
                 const hourEnd = Number(this.openAt.monday.timeEndAt.substring(0,2));
                 console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status = CLOSED
                 }
                 return this.getMessageHour(this.openAt.monday.timeStartAt, this.openAt.monday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status = CLOSED
+              return this.gerMessageClosed();
             }
         }         
         if(this.today.getDay() == 2) {
@@ -112,14 +117,14 @@ export default {
                 const hourEnd = Number(this.openAt.tuesday.timeEndAt.substring(0,2));
                 console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status =CLOSED
                 }
                 return this.getMessageHour(this.openAt.tuesday.timeStartAt, this.openAt.tuesday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status =CLOSED
+              return this.gerMessageClosed();
             }
         }   
         if(this.today.getDay() == 3) {
@@ -128,14 +133,14 @@ export default {
                 const hourEnd = Number(this.openAt.wednesday.timeEndAt.substring(0,2));
                 console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status =CLOSED
                 }
                 return this.getMessageHour(this.openAt.wednesday.timeStartAt, this.openAt.wednesday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status =CLOSED
+              return this.gerMessageClosed();
             }
         }  
         if(this.today.getDay() == 4) {
@@ -144,14 +149,14 @@ export default {
                 const hourEnd = Number(this.openAt.thursday.timeEndAt.substring(0,2));
                 console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status =CLOSED
                 }
                 return this.getMessageHour(this.openAt.thursday.timeStartAt, this.openAt.thursday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status =CLOSED
+              return this.gerMessageClosed();
             }
         }  
         if(this.today.getDay() == 5) {
@@ -160,14 +165,14 @@ export default {
                 const hourEnd = Number(this.openAt.friday.timeEndAt.substring(0,2));
                 console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status =CLOSED
                 }
                 return this.getMessageHour(this.openAt.friday.timeStartAt, this.openAt.friday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status =CLOSED
+              return this.gerMessageClosed();
             }
         }  
         if(this.today.getDay() == 6) {
@@ -176,14 +181,14 @@ export default {
                 const hourEnd = Number(this.openAt.saturday.timeEndAt.substring(0,2));
                 console.log(this.today.getHours(), hourStart, hourEnd);
                 if(this.today.getHours() >= hourStart && this.today.getHours() < hourEnd) { 
-                    this.status = 'Aberto';
+                    this.status = OPEN;
                 } else {
-                    this.status ='Fechado'
+                    this.status =CLOSED
                 }
                 return this.getMessageHour(this.openAt.saturday.timeStartAt, this.openAt.saturday.timeEndAt);
             } else {
-              this.status ='Fechado'
-              return 'Hoje estamos Fechado';
+              this.status =CLOSED
+              return this.gerMessageClosed();
             }
         }                                
       }      
