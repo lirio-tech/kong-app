@@ -35,10 +35,10 @@
                                       :key="userBalance._id" 
                                       style="margin-top:-5px"
                                     >
-                                        <v-col cols="7" style="font-size: 1.4rem" align="center">
+                                        <v-col cols="7" style="font-size: 1.4rem" align="center" :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">
                                               {{ userBalance.user.name }}
                                         </v-col> 
-                                        <v-col cols="5" :style="'font-size: 1.4rem;'" align="">
+                                        <v-col cols="5" :style="'font-size: 1.4rem;'" align="" :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">
                                               R$ {{ userBalance.balance | currency }}
                                         </v-col>
                                         <v-col cols="12" class="text-center">
