@@ -153,6 +153,7 @@
                         >
                           Ordem de Serviço
                         </router-link>
+                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>   
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'PENDING'">
                         <v-btn
@@ -374,6 +375,7 @@ export default {
                   color: this.getColorByStatus(this.agendamentos[i]),
                   orderId: this.agendamentos[i].orderId,
                   timed: true,
+                  createdAt: this.agendamentos[i].createdAt,
               });      
            }
            this.events = events;

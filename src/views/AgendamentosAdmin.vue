@@ -184,7 +184,8 @@
                           :to="{ path: `/ordem-servico/${selectedEvent.orderId}` }"
                         >
                           Ordem de Serviço
-                        </router-link>                      
+                        </router-link>       
+                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>               
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
                           <button-contact-customer-whats-app :customer="{ name: selectedEvent.name, phone_number: selectedEvent.phoneNumber }" />
@@ -481,6 +482,7 @@ export default {
                 timed: true,
                 orderId: this.agendamentos[i].orderId,
                 category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
+                createdAt: this.agendamentos[i].createdAt,
             });        
           }
           this.events = events;
