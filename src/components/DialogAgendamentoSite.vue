@@ -251,17 +251,19 @@ export default {
               this.showMessage('Verifique os campos obrigatórios', 'error');
               return;
           }
+          this.changeTimeStart();
           this.agendamento.date = this.date;
-          if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
-            alert('Horário de Inicio deve ser menor que o horario final do agendamento');
-            return;
-          }
+          // if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
+          //   alert('Horário de Inicio deve ser menor que o horario final do agendamento');
+          //   return;
+          // }
+
+          console.log('this.agendamento', JSON.stringify(this.agendamento))
 
           this.agendamento.companyId = this.myCompany._id;
           this.agendamento.services = this.myCompany.services.filter(it => this.servicesSelected.includes(it.type));
           console.log(this.agendamento.services)
           this.agendamento.dateAt = this.agendamento.date;
-          console.log(this.agendamento);
 
           this.loagindAgendar = true;
 
@@ -275,10 +277,11 @@ export default {
             (err) => {  
               this.loagindAgendar = false; 
               if(err.response.status === 422) {
-                alert(err.response.data.message);    
-                //this.agendamento = err.response.data.schedulesVerify[0];     
-                this.ok();   
-                return;
+                    alert(err.response.data.message);    
+                    if(['301', '302'].includes(err.response.data.code)) { 
+                        this.ok();   
+                    }
+                    return;
               }                     
               alert('Erro ao registrar agendamento')
             }
