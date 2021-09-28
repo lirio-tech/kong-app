@@ -7,7 +7,7 @@
         color="success darken-2"
         small
         >
-            <v-icon>mdi-whatsapp</v-icon> <span style="margin-left: 5px;">Falar com {{ customer.name }}</span>
+            <v-icon>mdi-whatsapp</v-icon> <span style="margin-left: 5px;">WhatsApp</span>
         </v-btn>  
     </a>       
 </template>

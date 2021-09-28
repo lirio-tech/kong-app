@@ -7,15 +7,24 @@
           shaped
           :color="agendamento.postItColor"
         >
+
+                    <v-card-text class="black--text">
+                      <div> {{ agendamento.title }} <span class="icon-emoji-30" style="float: right;margin-top:-20px">📌</span></div> 
+                      <router-link :to="isAdmin() ? `/admin/agendamentos/?date=${agendamento.dateTimeStartAt}` : `/agendamentos/?date=${agendamento.dateTimeStartAt}`" style="color: inherit; text-decoration: none">
+                          <p class="text-h6 black--text" style="margin-bottom: -5px">
+                            {{ agendamento.customer.name }} 
+                          </p>
+                          <small class="black--text" v-if="agendamento.customer.phone_number" >
+                            {{ agendamento.customer.phone_number }} 
+                          </small>
+                      </router-link>                   
+                      <div v-if="agendamento.status === 'REQUESTED'" class="black--text" >
+                          <button-contact-customer-whats-app :customer="agendamento.customer" /> 
+                          <button-contact-customer-call-phone-number :customer="agendamento.customer" style="margin-left: 10px;" /> 
+                      </div>     
+                    </v-card-text>
                     <router-link :to="isAdmin() ? `/admin/agendamentos/?date=${agendamento.dateTimeStartAt}` : `/agendamentos/?date=${agendamento.dateTimeStartAt}`" style="color: inherit; text-decoration: none">
                           <v-card-text class="black--text">
-                            <div> {{ agendamento.title }} <span class="icon-emoji-30" style="float: right;margin-top:-20px">📌</span></div> 
-                            <p class="text-h6 black--text">
-                              {{ agendamento.customer.name }} 
-                            </p>
-                            <p class="black--text" v-if="agendamento.customer.phone_number">
-                              <v-icon class="black--text" >mdi-whatsapp</v-icon> {{ agendamento.customer.phone_number }} 
-                            </p>                            
                             <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
                             <v-icon class="black--text">mdi-clock</v-icon> &nbsp; 
                               <b>
@@ -24,12 +33,8 @@
                                   às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
                             <small>Criado em {{ new Date(agendamento.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small> <br/>
-                              
                           </v-card-text>
-                    </router-link>
-                    <v-card-actions v-if="agendamento.status === 'REQUESTED'">
-                        <button-contact-customer-whats-app :customer="agendamento.customer" /> 
-                    </v-card-actions>                    
+                    </router-link>               
                     <v-card-actions> 
                         <v-btn
                          @click="goAgendamentoUpdate(agendamento)"
@@ -83,8 +88,9 @@ import agendamentoGateway from '../api/agendamentoGateway';
 import DialogAgendamentoConcluir from './DialogAgendamentoConcluir.vue';
 import dateUtil from '../utils/date';
 import ButtonContactCustomerWhatsApp from './ButtonContactCustomerWhatsApp.vue';
+import ButtonContactCustomerCallPhoneNumber from './ButtonContactCustomerCallPhoneNumber.vue';
 export default {
-  components: { DialogAgendamentoConcluir, ButtonContactCustomerWhatsApp },
+  components: { DialogAgendamentoConcluir, ButtonContactCustomerWhatsApp, ButtonContactCustomerCallPhoneNumber },
     name: 'HomeAgendamentoCard',
     props: [ 'agendamento', 'userLogged' ],
     data() {
