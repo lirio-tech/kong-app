@@ -28,6 +28,11 @@ npm run build
 npm run lint
 ```
 
+### Change Version
+```
+npm version patch
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 

@@ -84,7 +84,7 @@ export default {
             const hourEnd = Number(timeEndAt.substring(0,2));
             const minuteStart = Number(timeStartAt.substring(3,5));
             const minuteEnd = Number(timeEndAt.substring(3,5));
-            return (this.today.getHours() < hourStart && this.today.getHours() >= hourEnd) ||
+            return (this.today.getHours() < hourStart || this.today.getHours() >= hourEnd) ||
                    (this.today.getHours() == hourStart && this.today.getMinutes() < minuteStart) ||
                    (this.today.getHours() == hourEnd && this.today.getMinutes() > minuteEnd)
       },
@@ -112,7 +112,7 @@ export default {
                 this.status = this.isClosed(this.openAt.tuesday.timeStartAt, this.openAt.tuesday.timeEndAt) ? this.status = CLOSED : this.status = OPEN;
                 return this.getMessageHour(this.openAt.tuesday.timeStartAt, this.openAt.tuesday.timeEndAt);
             } else {
-              this.status =CLOSED
+              this.status = CLOSED
               return this.gerMessageClosed();
             }
         }   
