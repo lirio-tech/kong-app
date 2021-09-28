@@ -14,17 +14,11 @@ jobs:
     steps:
       - 
         uses: actions/checkout@v2
-      -
-        name: change version
-        run: |
-          git config --local user.email "diegolirio.dl@gmail.com"
-          git config --local user.name "GitHub Action"
-          npm version patch       
       - 
-        name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+        name: Bump version and push tag
+        uses: ChloePlanet/github-tag-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
 
                     
