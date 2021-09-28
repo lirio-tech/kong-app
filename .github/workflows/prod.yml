@@ -1,0 +1,30 @@
+name: Production CI/CD
+
+on:
+  release:
+    types: [push, pull_request]
+  push:
+    branches:    
+      - main    
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        uses: actions/checkout@v2
+      -
+        name: change version
+        run: |
+          git config --local user.email "diegolirio.dl@gmail.com"
+          git config --local user.name "GitHub Action"
+          npm version patch       
+      - 
+        name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+                    
