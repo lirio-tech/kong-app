@@ -66,6 +66,7 @@
                 </v-col>
             </v-row>              
         </v-main>
+        <dialog-loading :loading="loading" />          
     </v-container>
 </template>
 
@@ -77,10 +78,12 @@ import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
 import device from '../utils/device'
 import HrLine from '../components/HrLine.vue';
+import DialogLoading from '../components/loading/DialogLoading.vue';
   export default {
     name: 'PaymentsUsers',
-    components: { AppBar, HeaderBackTitle, HrLine, },
+    components: { AppBar, HeaderBackTitle, HrLine, DialogLoading, },
     data: () => ({
+      loading: false,
       headers: [
         { text: "Funcionario", value: "name" },
         { text: "Username", value: "valueReceive" }
@@ -99,10 +102,13 @@ import HrLine from '../components/HrLine.vue';
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.loading = true;
       gateway.getUsersBalance(res => {
             this.usersBalance = res;
             this.total = res.reduce((a, r) => a + r.balance, 0);
+            this.loading = false;
         }, () => {
+            this.loading = false;
             alert('Erro ao Buscar Saldo do Usuario');
         })
     }

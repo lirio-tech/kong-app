@@ -138,26 +138,7 @@
                 Dados não Encontrados para este período
           </v-alert>
 
-          <v-dialog
-            v-model="loading"
-            hide-overlay
-            persistent
-            width="300"
-          >
-            <v-card
-              color="primary"
-              dark
-            >
-              <v-card-text>
-                Por favor aguarde...
-                <v-progress-linear
-                  indeterminate
-                  color="white"
-                  class="mb-0"
-                ></v-progress-linear>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+          <dialog-loading :loading="loading" />  
 
           <div v-if="dataView === BY_DAYS_OF_THE_WEEK && dataReturnOK">
             <v-row>
@@ -251,12 +232,14 @@ import { GChart } from 'vue-google-charts'
 import gateway from '../api/gateway';
 import analyticsGateway from '../api/analyticsGateway';
 import date from '../utils/date'
+import DialogLoading from '../components/loading/DialogLoading.vue';
 //import DaysOfTheWeek from '../components/analytics/DaysOfTheWeek'
 export default {
     name: 'Analytics',
     components: {
-      GChart,
-      //DaysOfTheWeek
+        GChart,
+        DialogLoading,
+        //DaysOfTheWeek
     },
     data: () => ({
       menu: false,

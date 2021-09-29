@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <AppBar v-if="!isMobile()" />             
-        <v-main class="">
+        <v-main class="">      
           <header-back-title title="Vales e Pagamentos" :emoji="emoji"/>        
           <v-row>
                 <v-col cols="12" sm="12">
@@ -137,6 +137,7 @@
             :userBalanceType="userBalanceType" 
             v-on:show-dialog="showDialog" 
           />
+          <dialog-loading :loading="loading" />
         </v-main> 
     </v-container>
 </template>
@@ -149,11 +150,13 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
 import device from '../utils/device'
+import DialogLoading from '../components/loading/DialogLoading.vue';
   export default {
     name: 'UserBalanceDetail',
-    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, },
+    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, DialogLoading, },
     data: () => ({
       emoji: '💰',
+      loading: true,
       dialog: false,
       balanceValueTotal: 0,
       userBalance: {user:{}},
@@ -168,26 +171,39 @@ import device from '../utils/device'
           return device.isMobile();
       } ,      
       getUserBalanceByUserId(_userId) {
+        this.loading = true;
         gateway.getUserBalanceByUserId(_userId,
           res => {
             this.userBalance = res;
+            this.loading = false;
           }, () => {
             alert('Erro ao Buscar Saldo');
+            this.loading = false;
           })
       },      
       getUserBalanceDetailExtractByUserId(_userId) {
+        this.loading = true;
         gateway.getUserBalanceDetailExtractByUserId(_userId,
           res => {
             this.userBalanceDetail = res;
+            this.loading = false;
           }, () => {
+            this.loading = false;
             alert('Erro ao Buscar Extrato');
           })
       },            
       showDialog(show) {
         this.dialog = show;
         if(show === false) {
-          this.getUserBalanceByUserId(this.$route.params.userId);
-          this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);          
+          this.loading = true;
+          setTimeout(
+            () => {
+                this.getUserBalanceByUserId(this.$route.params.userId);
+                this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);          
+            },
+            1000
+          )
+
         }
       },
       payUser(userBalanceType2) {
