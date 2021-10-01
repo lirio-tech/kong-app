@@ -155,7 +155,7 @@
                                       prepend-icon="mdi-clock"    
                                       label="Assistente de Agendamento"
                                       :append-icon="'mdi-content-copy'"
-                                      v-clipboard:copy="urlAssistantSchedule()"
+                                      v-clipboard:copy="`https://${urlAssistantSchedule()}`"
                                       v-clipboard:success="onCopyUrlAssistantSchedule"
                                       v-clipboard:error="onError"                        
                                   ></v-text-field>                                  
