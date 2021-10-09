@@ -141,6 +141,8 @@ export default {
         { text: "Fim", value: "plan.dateEnd" },
       ],        
       dt: new Date(),
+      totalLastMonth: 0,
+      amountLastMonth: 0,
       selectMonth: '', 
       months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ]
     }),
@@ -149,7 +151,9 @@ export default {
       this.selectMonth = this.months[this.dt.getMonth()];
 
       gateway.getAllPaymentsHist(res => {
-        this.paymentsHistoric = res;
+          this.paymentsHistoric = res;
+          this.totalLastMonth = this.getTotalLastMonth();
+          this.amountLastMonth = this.getAmountLastMonth();        
       }, () => {
         alert('Erro ao buscar pagamentos'); 
       });
@@ -159,34 +163,35 @@ export default {
         let ttl = 0;
         this.paymentsHistoric.forEach(p => ttl+=p.plan.payment.price);
         return ttl;
+      },    
+        
+    }, 
+    methods: {
+      changeMonth() {
+          let month = this.months.indexOf(this.selectMonth);
+          this.dt.setMonth(month);
+
+          this.totalLastMonth = this.getTotalLastMonth();
+          this.amountLastMonth = this.getAmountLastMonth();
       },
-      totalLastMonth() {
+      getTotalLastMonth() {
         let ttl = 0;
-        let dt = new Date();
         this.paymentsHistoric.forEach(p => { 
-          if(dt.getMonth() == new Date(p.createdAt).getMonth() && dt.getFullYear() == new Date(p.createdAt).getFullYear()) {
+          if(this.dt.getMonth() == new Date(p.createdAt).getMonth() && this.dt.getFullYear() == new Date(p.createdAt).getFullYear()) {
             ttl+=p.plan.payment.price
           }
         });
         return ttl;
       },
-      amountLastMonth() {
+      getAmountLastMonth() {
         let amount = 0;
-        let dt = new Date();
         this.paymentsHistoric.forEach(p => { 
-          if(dt.getMonth() == new Date(p.createdAt).getMonth() && dt.getFullYear() == new Date(p.createdAt).getFullYear() && p.plan.payment.price > 0) {
+          if(this.dt.getMonth() == new Date(p.createdAt).getMonth() && this.dt.getFullYear() == new Date(p.createdAt).getFullYear() && p.plan.payment.price > 0) {
             amount++
           }
         });
         return amount;
-      }       
-        
-    },
-    methods: {
-      changeMonth() {
-          let month = this.months.indexOf(this.selectMonth);
-          this.dt.setMonth(month);
-      }
+      }   
     }
   }
 </script>
