@@ -178,6 +178,7 @@
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
                         Funcionario: {{ selectedEvent.userName }} <br/>
                         <span v-if="selectedEvent.status === 'DONE'">R$ {{ selectedEvent.total | currency }}</span> <br/>
+                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>   
                         <h3 v-if="selectedEvent.status === 'DONE'" class="success--text">Concluído</h3>
                         <router-link
                           v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
@@ -185,7 +186,7 @@
                         >
                           Ordem de Serviço
                         </router-link>       
-                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>               
+                                    
                       </v-card-text>
                       <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
                           <button-contact-customer-whats-app :customer="{ name: selectedEvent.name, phone_number: selectedEvent.phoneNumber }" />
