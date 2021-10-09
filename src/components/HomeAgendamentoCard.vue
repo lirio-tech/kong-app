@@ -32,7 +32,7 @@
                                   {{  ['Ontem','Hoje','Amanhã'].includes(getDayOfWeek(new Date(agendamento.dateTimeStartAt))) ? '' : ', '+new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} 
                                   às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
                             <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
-                            <small>Criado em {{ new Date(agendamento.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small> <br/>
+                            <small>Criado em {{ new Date(agendamento.createdAt).toLocaleString('pt-BR').substring(0,16) }} por {{ agendamento.createdBy }}</small> <br/>
                           </v-card-text>
                     </router-link>               
                     <v-card-actions> 

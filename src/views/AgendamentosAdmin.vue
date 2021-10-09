@@ -178,7 +178,7 @@
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
                         Funcionario: {{ selectedEvent.userName }} <br/>
                         <span v-if="selectedEvent.status === 'DONE'">R$ {{ selectedEvent.total | currency }}</span> <br/>
-                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>   
+                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }} por {{ selectedEvent.createdBy }}</small> <br/>   
                         <h3 v-if="selectedEvent.status === 'DONE'" class="success--text">Concluído</h3>
                         <router-link
                           v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
@@ -484,6 +484,7 @@ export default {
                 orderId: this.agendamentos[i].orderId,
                 category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
                 createdAt: this.agendamentos[i].createdAt,
+                createdBy: this.agendamentos[i].createdBy,
             });        
           }
           this.events = events;
