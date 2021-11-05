@@ -298,7 +298,7 @@
                             :disabled="loadingAdm"
                             style="width: 40%"
                             @click="becomeCommon"
-                        >Tornar Comum</v-btn>                               
+                        >Tornar Funcionário</v-btn>                               
                     </v-col>                                                  
                 </v-row>                    
             </v-form>          
@@ -511,7 +511,7 @@ export default {
                    err.response.status === 403) {
                     alert(err.response.data.message)
                 } else {                        
-                    alert('Erro ao alterar usuario para Comum, tente novamente');                
+                    alert('Erro ao alterar usuario para Funcionário, tente novamente');                
                 }
             })
       },

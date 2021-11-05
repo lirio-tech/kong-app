@@ -12,7 +12,7 @@ const types = {
             return 'Administrador';
         } 
         if(type === HAIRDRESSER) {
-            return 'Comum';
+            return 'Funcionário';
         }
         return type;  
     }

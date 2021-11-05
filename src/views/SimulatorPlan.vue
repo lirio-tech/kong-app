@@ -32,7 +32,7 @@
                     v-model="amountUsersCommon"
                     min="0"
                     prepend-icon="mdi-account"
-                    label="Comum"
+                    label="Funcionário"
                     max="15"
                     thumb-label
                 ></v-slider>                
@@ -217,7 +217,7 @@ export default {
                     },
                     {
                         icon: "mdi-account",
-                        description: `${this.amountUsersCommon} Usuário(s) Comum`
+                        description: `${this.amountUsersCommon} Funcionários`
                     },                
                     {
                         icon: "mdi-content-cut",

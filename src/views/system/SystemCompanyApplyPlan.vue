@@ -159,7 +159,7 @@
                         <v-col  xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="planView.name === 'Smart'">
                             <v-text-field 
                                 v-model="planView.amountUsersCommon"
-                                label="Qtde Usuarios Comum"
+                                label="Qtde Funcionários"
                                 ref="amountUsersCommon"
                                 prepend-icon="mdi-account"
                                 filled
@@ -284,7 +284,7 @@
                             <v-col cols="12" md="4" v-if="company.plan.name !== 'Free'">
                                 <v-text-field 
                                     v-model="company.plan.amountUsersCommon"
-                                    label="Usuarios Comum"
+                                    label="Funcionários"
                                     ref="amountUsersCommon"
                                     prepend-icon="mdi-cash"
                                     filled 

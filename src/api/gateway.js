@@ -375,7 +375,7 @@ export default{
               "benefits": [
                 {
                   "icon": "mdi-account",
-                  "description": "2 Usuários (1 Admin + 1 Comum)"
+                  "description": "2 Usuários (1 Admin + 1 Funcionário)"
                 },
                 {
                   "icon": "mdi-content-cut",
@@ -405,7 +405,7 @@ export default{
               "benefits": [          
                 {
                   "icon": "mdi-account",
-                  "description": "6 Usuários (2 Admin + 4 Comuns)"
+                  "description": "6 Usuários (2 Admin + 4 Funcionários)"
                 },
                 {
                   "icon": "mdi-content-cut",

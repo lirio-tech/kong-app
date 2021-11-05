@@ -48,7 +48,7 @@
                     v-if="company.plan"
                 >
                     <br/>
-                    <span class="grey--text">Usuarios Comum: </span> 
+                    <span class="grey--text">Funcionários: </span> 
                     {{ company.plan.name === 'Free' ? 0 : company.plan.amountUsersCommon }} 
                 </span>        
                 <br/>
