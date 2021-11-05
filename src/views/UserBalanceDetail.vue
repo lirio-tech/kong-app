@@ -28,7 +28,8 @@
                                           <v-list-item-title class="headline mb-1">
                                               <span class="caption grey--text">Total</span><br/>
                                               <div style="font-size: 3.0rem">
-                                                <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
+                                                <span v-if="!userLogged.hiddenCommission" :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
+                                                <span v-else>R$ * * * * * </span>
                                               </div>
                                           </v-list-item-title>
                                         </v-col>

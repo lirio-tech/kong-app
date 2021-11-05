@@ -1,4 +1,4 @@
-# Kong Barber
+# Kongapp
 
 ### Production
 
