@@ -260,6 +260,17 @@
                             </template>
                         </v-simple-table>
                     </v-col> 
+                    <v-col 
+                        cols="12" md="4" 
+                        style="margin-left: 20%" 
+                    >
+                            <v-switch
+                                dense
+                                v-model="user.hiddenCommission"
+                                :label="'Esconder Valor de Comissão'"
+                            ></v-switch>    
+                            
+                    </v-col>                        
                 </v-row>                          
                 <v-row 
                     align="center"
