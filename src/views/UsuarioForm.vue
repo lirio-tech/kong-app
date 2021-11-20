@@ -260,6 +260,17 @@
                             </template>
                         </v-simple-table>
                     </v-col> 
+                    <v-col 
+                        cols="12" md="4" 
+                        style="margin-left: 20%" 
+                    >
+                            <v-switch
+                                dense
+                                v-model="user.hiddenCommission"
+                                :label="'Esconder Valor de Comissão'"
+                            ></v-switch>    
+                            
+                    </v-col>                        
                 </v-row>                          
                 <v-row 
                     align="center"
@@ -298,7 +309,7 @@
                             :disabled="loadingAdm"
                             style="width: 40%"
                             @click="becomeCommon"
-                        >Tornar Comum</v-btn>                               
+                        >Tornar Funcionário</v-btn>                               
                     </v-col>                                                  
                 </v-row>                    
             </v-form>          
@@ -511,7 +522,7 @@ export default {
                    err.response.status === 403) {
                     alert(err.response.data.message)
                 } else {                        
-                    alert('Erro ao alterar usuario para Comum, tente novamente');                
+                    alert('Erro ao alterar usuario para Funcionário, tente novamente');                
                 }
             })
       },

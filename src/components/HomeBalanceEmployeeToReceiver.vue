@@ -12,7 +12,7 @@
               >
                   <v-list-item three-line>
                         <v-list-item-content>                 
-                              <v-col cols="11" style="margin-top: -10px">
+                              <v-col cols="12" style="margin-top: -10px">
                                   <span class="icon-emoji">💰</span> <span class="grey--text" style="margin-left: 15px">Comissão a Receber</span>
                                   <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                               </v-col>         
@@ -26,8 +26,10 @@
                                         :value="userBalance.balance"
                                         :formatValue="formatToPrice"
                                         :duration="500"
+                                        v-if="!userLogged.hiddenCommission"
                                          :class="userBalance.balance < 0 ? 'red--text' : 'green--text'"
-                                      />                                                
+                                      />
+                                      <span v-else>R$ * * * * * </span>                                                
                                     </div>
                                     <div v-else> 
                                           <v-skeleton-loader tile type="heading" />
@@ -49,7 +51,7 @@ export default {
     props: [ 'userLogged', 'userBalance', 'loading' ],
     data() {
       return {
-        
+
       }
     },
     methods: {

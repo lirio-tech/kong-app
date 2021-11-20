@@ -5,7 +5,7 @@ module.exports = {
 //   ],
   pwa: {
     themeColor: '#3399FF',
-    name: 'Kong Barber', 
+    name: 'Kongapp', 
     workboxOptions: {
         skipWaiting: true
     }

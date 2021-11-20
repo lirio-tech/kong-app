@@ -12,7 +12,7 @@
               </v-col>
               <v-col cols="7" align="center">   
                   <span style="font-size: 1.8rem !important;">  
-                      Usuarios                    
+                      Usuarios                     
                   </span>
               </v-col>            
           </v-row>          
@@ -27,7 +27,10 @@
                             hide-default-footer
                             loading-text="Carregando... Por favor aguarde"
                             @click:row="clickRow"
-                        >                        
+                        >                   
+                            <template v-slot:item.device="{ item }">
+                                {{ device(item.device) }}                            
+                            </template>                                
                         </v-data-table>               
                     </v-sheet>
                 </v-col>
@@ -52,6 +55,8 @@ export default {
         { text: "Criado", value: "createdAt" },
         { text: "Alterado", value: "updatedAt" },
         { text: "Desativado", value: "disabled" },
+        { text: "Telefone", value: "phone_number" },
+        { text: "SmartPhone", value: "device" },
       ],                
       users: []
     }),
@@ -60,7 +65,8 @@ export default {
         return UserTypes.isAdmin(type);
       },
       getUsers() {
-        gateway.getUsers('all', res => {
+        
+        gateway.getUsersByCompanyId(this.$route.params.companyId,'all', res => {
           this.users = res;
         }, err => {
           console.log(err);
@@ -76,6 +82,12 @@ export default {
       },
       getTypePtBR(type) {
         return UserTypes.getDescriptionPtBR(type);
+      },
+      device(dvc) {
+          if(!dvc) return 'Outros';
+          if(dvc.toLowerCase().includes('iphone')) return 'iPhone';
+          if(dvc.toLowerCase().includes('android')) return 'Android';
+          return 'Outros'
       }
     },
     beforeMount() {

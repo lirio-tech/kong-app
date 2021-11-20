@@ -53,4 +53,13 @@ export default {
     getIncrementButton() {
         return Number(localStorage.getItem('INC_BTN'));
     },    
-}
+    setCustomerSiteAgendamento(customerSite) {
+        localStorage.setItem('customerSiteAgendamento', JSON.stringify(customerSite));
+    },    
+    getCustomerSiteAgendamento() {
+        if(localStorage.getItem('customerSiteAgendamento')) { 
+            return JSON.parse(localStorage.getItem('customerSiteAgendamento'));
+        }
+        return null;
+    },
+} 

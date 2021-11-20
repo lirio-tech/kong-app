@@ -45,6 +45,87 @@
 
                     <v-tabs-items v-model="tab">
                       <v-tab-item
+                        value="tab-photos"
+                      >
+                          <v-container >
+                              <v-form 
+                                v-on:submit.prevent="updatePhotos"
+                                ref="updatePhotosForm"
+                                id="updatePhotosForm"
+                              >       
+                                <br/>          
+                                <h4>Foto de Capa</h4>
+                                <br/>
+                                <v-row>
+                                  <v-col xl="12" lg="12" md="12" sm="12" xs="12" cols="12">   
+                                    <v-card flat class="rounded-0">
+                                        <v-img
+                                          :src="companySite.photoCover"
+                                          height="175"
+                                          class="grey darken-4"
+                                        >
+                                              <v-card-title class="align-end fill-height" style="float: right;">
+                                                  <v-btn fab style="z-index: 9999" small @click="clickUploadPhotoCover" :loading="isSelecting">
+                                                    <v-icon>mdi-camera</v-icon>
+                                                  </v-btn>
+                                                  <input
+                                                    ref="uploader"
+                                                    class="d-none"
+                                                    type="file"
+                                                    accept="image/jpeg, image/jpg"
+                                                    @change="onFileChanged"
+                                                  >                                                      
+                                              </v-card-title>
+                                        </v-img>
+                                    </v-card>
+                                  </v-col> 
+                                </v-row>
+
+                                <br/>          
+                                <h4>Fotos de Galeria</h4>
+                                <br/>
+
+                                <v-row>
+                                  <v-col
+                                    v-for="photo in companySite.photos"
+                                    :key="photo._id"
+                                    class="d-flex child-flex"
+                                    xl="3" lg="3" md="3" sm="6" xs="6" cols="6"
+
+                                  >
+                                    <v-img
+                                      :src="`${photo.photo}`"
+                                      :lazy-src="`${photo.photo}`"
+                                      aspect-ratio="1"
+                                      class="grey lighten-2"
+                                    >
+
+                                              <v-card-title class="align-end fill-height" style="float: right;">
+                                                  <v-btn 
+                                                    fab small style="z-index: 9999" 
+                                                    @click="clickUploadPhotoGalleryItem(photo)"
+                                                    :loading="companySite && companySite.photos && photoItemGallerySeletedIndex === companySite.photos.indexOf(photo)"
+                                                  >
+                                                    <v-icon>mdi-camera</v-icon>
+                                                  </v-btn>                                                     
+                                              </v-card-title>
+
+                                    </v-img>                                 
+                                  </v-col>
+                                  <input
+                                    ref="uploaderGalleryItem"
+                                    class="d-none"
+                                    type="file"
+                                    accept="image/jpeg, image/jpg"
+                                    @change="onFileItemChanged"
+                                  >                                        
+                                </v-row>      
+
+
+                              </v-form>
+                          </v-container>
+                      </v-tab-item>                      
+                      <v-tab-item
                         value="tab-infos"
                       >
                           <v-container >
@@ -60,11 +141,24 @@
                                   <v-text-field
                                       :value="urlSite()"
                                       readonly
+                                      filled
                                       :append-icon="'mdi-content-copy'"
                                       v-clipboard:copy="urlSite()"
                                       v-clipboard:success="onCopy"
                                       v-clipboard:error="onError"                        
                                   ></v-text-field>
+
+                                  <v-text-field
+                                      :value="urlAssistantSchedule()"
+                                      readonly
+                                      filled
+                                      prepend-icon="mdi-clock"    
+                                      label="Assistente de Agendamento"
+                                      :append-icon="'mdi-content-copy'"
+                                      v-clipboard:copy="`https://${urlAssistantSchedule()}`"
+                                      v-clipboard:success="onCopyUrlAssistantSchedule"
+                                      v-clipboard:error="onError"                        
+                                  ></v-text-field>                                  
 
                                   <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">      
                                         <arroba-input 
@@ -98,7 +192,9 @@
                                       </v-textarea>
 
 
-                                  </v-col>                                  
+                                  </v-col>            
+
+                                  <hr-line /> <br/>              
 
                                   <h4>📱 Redes Sociais</h4>
                               
@@ -125,6 +221,195 @@
                                           />                                    
 
                                     </v-col>           
+
+                                    <hr-line /> <br/>
+
+                                    <h4>🕑  <span style="margin-left: 5px"> Horário de Funcionamento</span> </h4>        
+                                    <table >
+                                          <tbody >
+                                            <tr>
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.monday.isOpen"
+                                                      :label="`Segunda-Feira ${!companySite.openAt.monday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.monday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.monday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td>
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.monday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.monday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>
+                                            <tr class="color-grid">
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.tuesday.isOpen"
+                                                      :label="`Terça-Feira ${!companySite.openAt.tuesday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.tuesday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.tuesday.isOpen" 
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.tuesday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.tuesday.isOpen" 
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.wednesday.isOpen"
+                                                      :label="`Quarta-Feira ${!companySite.openAt.wednesday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.wednesday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.wednesday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.wednesday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.wednesday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>
+                                            <tr class="color-grid">
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.thursday.isOpen"
+                                                      :label="`Quinta-Feira ${!companySite.openAt.thursday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.thursday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.thursday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.thursday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.thursday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>        
+
+                                            <tr >
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.friday.isOpen"
+                                                      :label="`Sexta-Feira ${!companySite.openAt.friday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.friday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.friday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.friday.timeEndAt"
+                                                        type="time"
+                                                        v-if="companySite.openAt.friday.isOpen"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>             
+
+                                            <tr class="color-grid">
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.saturday.isOpen"
+                                                      :label="`Sabado ${!companySite.openAt.saturday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.saturday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.saturday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.saturday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.saturday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>                                                                                                                                                                                                                     
+
+                                            <tr >
+                                                <td class="td-week">   
+                                                    <v-checkbox
+                                                      v-model="companySite.openAt.sunday.isOpen"
+                                                      :label="`Domingo ${!companySite.openAt.sunday.isOpen ? ' - Fechado' : ''}`"
+                                                      color="green darken-3"
+                                                    ></v-checkbox>                                                     
+                                                </td>                                              
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.sunday.timeStartAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.sunday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>                                                
+                                                <td >
+                                                    <v-text-field
+                                                        v-model="companySite.openAt.sunday.timeEndAt"
+                                                        type="time"
+                                                        :rules="[v => !!v || 'Horário Obrigatório',]"
+                                                        v-if="companySite.openAt.sunday.isOpen"
+                                                    ></v-text-field>   
+                                                </td>
+                                            </tr>                                                                             
+
+                                          </tbody>
+                                    </table>
+                                    <br/>
+                                    <hr-line /> <br/>
 
                                     <h4>📍 Endereço</h4>    
 
@@ -217,94 +502,13 @@
                               </v-form>                                          
                           </v-container>
                       </v-tab-item>
-                      <v-tab-item
-                        value="tab-photos"
-                      >
-                          <v-container >
-                              <v-form 
-                                v-on:submit.prevent="updatePhotos"
-                                ref="updatePhotosForm"
-                                id="updatePhotosForm"
-                              >       
-                                <br/>          
-                                <h4>Foto de Capa</h4>
-                                <br/>
-                                <v-row>
-                                  <v-col xl="12" lg="12" md="12" sm="12" xs="12" cols="12">   
-                                    <v-card flat class="rounded-0">
-                                        <v-img
-                                          :src="companySite.photoCover"
-                                          height="175"
-                                          class="grey darken-4"
-                                        >
-                                              <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn fab style="z-index: 9999" small @click="clickUploadPhotoCover" :loading="isSelecting">
-                                                    <v-icon>mdi-camera</v-icon>
-                                                  </v-btn>
-                                                  <input
-                                                    ref="uploader"
-                                                    class="d-none"
-                                                    type="file"
-                                                    accept="image/jpeg, image/jpg"
-                                                    @change="onFileChanged"
-                                                  >                                                      
-                                              </v-card-title>
-                                        </v-img>
-                                    </v-card>
-                                  </v-col> 
-                                </v-row>
-
-                                <br/>          
-                                <h4>Fotos de Galeria</h4>
-                                <br/>
-
-                                <v-row>
-                                  <v-col
-                                    v-for="photo in companySite.photos"
-                                    :key="photo._id"
-                                    class="d-flex child-flex"
-                                    xl="3" lg="3" md="3" sm="6" xs="6" cols="6"
-
-                                  >
-                                    <v-img
-                                      :src="`${photo.photo}`"
-                                      :lazy-src="`${photo.photo}`"
-                                      aspect-ratio="1"
-                                      class="grey lighten-2"
-                                    >
-
-                                              <v-card-title class="align-end fill-height" style="float: right;">
-                                                  <v-btn 
-                                                    fab small style="z-index: 9999" 
-                                                    @click="clickUploadPhotoGalleryItem(photo)"
-                                                    :loading="companySite && companySite.photos && photoItemGallerySeletedIndex === companySite.photos.indexOf(photo)"
-                                                  >
-                                                    <v-icon>mdi-camera</v-icon>
-                                                  </v-btn>                                                     
-                                              </v-card-title>
-
-                                    </v-img>                                 
-                                  </v-col>
-                                  <input
-                                    ref="uploaderGalleryItem"
-                                    class="d-none"
-                                    type="file"
-                                    accept="image/jpeg, image/jpg"
-                                    @change="onFileItemChanged"
-                                  >                                        
-                                </v-row>      
-
-
-                              </v-form>
-                          </v-container>
-                      </v-tab-item>
                     </v-tabs-items>      
                    
 
           
           <div style="flex: 1 1 auto;"></div>
         </v-card>
-        <snack-bar :color="message.color" :text="message.text" :show="message.show" />
+        <snack-bar :color="message.color" :text="message.text" :show="message.show" :timeout="message.timeout" />
     </v-dialog>    
 </template>
 
@@ -318,6 +522,7 @@ import commons from '../utils/commons'
 import SnackBar from './SnackBar.vue'
 import companyGateway from '../api/companyGateway'
 import addressGateway from '../api/addressGateway'
+import HrLine from './HrLine.vue'
 const CLEAN_INDEX = -9999
 export default {
     components: { 
@@ -325,6 +530,7 @@ export default {
       FacebookInput,
       ArrobaInput,
       SnackBar,
+        HrLine,
     },
     props: {
       dialog: {
@@ -344,7 +550,7 @@ export default {
       return {
         loadingInfo: false,
         userLogged: {},
-        message: { show: false, color: 'primary', text: '' },  
+        message: { show: false, color: 'primary', text: '', timeout: 5000 },  
         tab: null,
         isSelecting: false,
         photoCover: '',
@@ -368,9 +574,9 @@ export default {
                 this.loadingInfo = true;
                 companyGateway.updateCompanySite(this.company._id, this.companySite._id, this.companySite,
                     (res) => {
+                        console.log('res', res)
                         this.showMessage('Atualizado com Sucesso!!!'); 
                         this.loadingInfo = false;
-                        this.$emit('set-company-site', res);
                         this.$router.push(`/@/${this.companySite.arroba}`);
                     }, (err) => {
                         this.loadingInfo = false;
@@ -405,7 +611,7 @@ export default {
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado ao alterar Foto da Capa :(');
+                  alert('Algo deu errado ao alterar Foto da Capa :( Tente novamente.');
                 }
               )
           };
@@ -435,7 +641,7 @@ export default {
                 },
                 () => {
                   this.isSelecting = false
-                  alert('Algo deu errado Foto da Galeria :(');
+                  alert('Algo deu errado ao carregar Foto da Galeria :( Tente novamente');
                 }
               )
           };
@@ -444,17 +650,25 @@ export default {
       urlSite() {
         return commons.urlCompany(this.companySite, this.company.companyType);
       },
-      onCopy() {
-        this.showMessage('Site Copiado :)'); 
+      urlAssistantSchedule() {
+        return this.urlSite() + '?tab=AGENDA&realizarAgendamento=true';
       },
+      onCopy() {
+        this.message.timeout = 5000;
+        this.showMessage('Copiado :)'); 
+      },
+      onCopyUrlAssistantSchedule() {
+        this.message.timeout = 9000;
+        this.showMessage('Copiado!!! \nEnvie para seus Clientes. \nUtilize o assistente como resposta automática no WhatsApp ;-) '); 
+      },      
       onError(){
-        alert('Erro ao Copiar Codigo Copie e Cole')
+        alert('Erro ao Copiar')
       },
       showMessage(text) {
         this.message.show = true;
         this.message.color = 'info';
         this.message.text = text;
-        setTimeout(() => this.message.show = false, 4000);
+        setTimeout(() => this.message.show = false, this.message.timeout);
       },     
       getAddress() {
         if(this.companySite.address.postalCode.length === 9) {
@@ -490,4 +704,10 @@ export default {
 }
 </script>
 <style scoped>
+.color-grid {
+  background-color: rgba(0, 0, 100, .05)
+}
+.td-week {
+  width: 250px;
+}
 </style>

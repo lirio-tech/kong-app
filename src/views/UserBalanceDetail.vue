@@ -1,8 +1,8 @@
 <template>
     <v-container>
         <AppBar v-if="!isMobile()" />             
-        <v-main class="">
-          <header-back-title title="Vales e Pagamentos" />        
+        <v-main class="">      
+          <header-back-title title="Vales e Pagamentos" :emoji="emoji"/>        
           <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
@@ -28,26 +28,29 @@
                                           <v-list-item-title class="headline mb-1">
                                               <span class="caption grey--text">Total</span><br/>
                                               <div style="font-size: 3.0rem">
-                                                <span :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
+                                                <span v-if="!userLogged.hiddenCommission" :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">R$ {{ userBalance.balance | currency }} </span>
+                                                <span v-else>R$ * * * * * </span>
                                               </div>
                                           </v-list-item-title>
                                         </v-col>
                                     </v-row>
                                     <v-row v-if="isAdmin(userLogged.type)">
-                                        <v-col cols="12" class="text-center">
+                                        <v-col cols="6" class="text-center">
                                           <v-btn 
-                                              style="width: 45%"
+                                              style="width: 100%"
                                               class="ma-2"
                                               @click="payUser('MONEY_VOUCHER')"                
                                               color="primary"
                                           >
                                             Vale
-                                          </v-btn>         
+                                          </v-btn>      
+                                        </v-col>
+                                        <v-col cols="6" class="text-center">   
                                           <v-btn 
-                                              style="width: 45%"
+                                              style="width: 100%"
                                               class="ma-2"
                                               @click="payUser('PAYMENT')"                
-                                              color="green"
+                                              color="success"
                                           >
                                             Pagamento
                                           </v-btn>                                                                               
@@ -77,6 +80,7 @@
                           <th class="text-center">
                             Valor
                           </th>
+                          <th class="text-center" v-if="isAdmin(userLogged.type)"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -107,7 +111,7 @@
                             class="text-center" 
                             :class="det.type === 'PAYMENT' ? 'green--text' : (det.type === 'MONEY_VOUCHER' ? 'primary--text' : '')"
                           >
-                            R$ {{ det.value | currency }}
+                            R$ {{ det.value | currency }} 
                           </td>
                           <td class="text-center" v-if="isAdmin(userLogged.type)">
                               <v-icon 
@@ -134,6 +138,7 @@
             :userBalanceType="userBalanceType" 
             v-on:show-dialog="showDialog" 
           />
+          <dialog-loading :loading="loading" />
         </v-main> 
     </v-container>
 </template>
@@ -146,10 +151,13 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
 import device from '../utils/device'
+import DialogLoading from '../components/loading/DialogLoading.vue';
   export default {
     name: 'UserBalanceDetail',
-    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, },
+    components: { AppBar, DialogMoneyVoucherOrPaymentEmployee, HeaderBackTitle, DialogLoading, },
     data: () => ({
+      emoji: '💰',
+      loading: true,
       dialog: false,
       balanceValueTotal: 0,
       userBalance: {user:{}},
@@ -164,26 +172,39 @@ import device from '../utils/device'
           return device.isMobile();
       } ,      
       getUserBalanceByUserId(_userId) {
+        this.loading = true;
         gateway.getUserBalanceByUserId(_userId,
           res => {
             this.userBalance = res;
+            this.loading = false;
           }, () => {
-            alert('Erro ao Buscar saldo dos usuarios');
+            alert('Erro ao Buscar Saldo');
+            this.loading = false;
           })
       },      
       getUserBalanceDetailExtractByUserId(_userId) {
+        this.loading = true;
         gateway.getUserBalanceDetailExtractByUserId(_userId,
           res => {
             this.userBalanceDetail = res;
+            this.loading = false;
           }, () => {
-            alert('Erro ao Buscar movimentacoes usuarios');
+            this.loading = false;
+            alert('Erro ao Buscar Extrato');
           })
       },            
       showDialog(show) {
         this.dialog = show;
         if(show === false) {
-          this.getUserBalanceByUserId(this.$route.params.userId);
-          this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);          
+          this.loading = true;
+          setTimeout(
+            () => {
+                this.getUserBalanceByUserId(this.$route.params.userId);
+                this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);          
+            },
+            1000
+          )
+
         }
       },
       payUser(userBalanceType2) {
@@ -199,13 +220,17 @@ import device from '../utils/device'
         return `${day}/${month}/${year}`
       },        
       deleteDebit(balanceDetail) {
-        if(confirm(`Deseja realmente delete a movimentacao ${balanceDetail.description}?`))
+        if(confirm(`Deseja realmente Excluir a movimentação ${balanceDetail.description}?`))
         gateway.deleteBalanceDebit(this.userBalance._id, balanceDetail._id,
           () => {
             this.getUserBalanceByUserId(this.$route.params.userId);
             this.getUserBalanceDetailExtractByUserId(this.$route.params.userId);
-          }, () => {
-            alert('Erro ao Deletar Debito ' + balanceDetail.description);
+          }, (err) => {
+            if(err.response.status >= 400 && err.response.status <= 499) {
+              alert(err.response.data.message)              
+              return;
+            }      
+            alert('Erro ao Excluir ' + balanceDetail.description);
           }) 
       }  
     },

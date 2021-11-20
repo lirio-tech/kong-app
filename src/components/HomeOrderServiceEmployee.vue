@@ -9,7 +9,7 @@
                   <router-link :to="{ path:'/analytics'}" style="color: inherit; text-decoration: none">
                     <v-list-item three-line>
                           <v-list-item-content>       
-                                <v-col cols="11">
+                                <v-col cols="12">
                                     <span class="icon-emoji">✂️</span> <span class="grey--text" style="margin-left: 15px">Ordem de Serviços</span>
                                     <v-icon class="chevron-right">mdi-chevron-right</v-icon>
                                 </v-col>                                            

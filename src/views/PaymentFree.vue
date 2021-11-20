@@ -23,7 +23,7 @@
 
           <v-row class="grey--text">
             <v-col cols="12" align="center">
-              <p>Seu Plano atual é o Basico, após o vencimento o plano Free será assumido como seu plano Atual.</p>
+              <p>Seu Plano atual é o {{ company.plan.name }}, após o vencimento o plano Free será assumido como seu plano Atual.</p>
             </v-col>
           </v-row>          
           <br/>

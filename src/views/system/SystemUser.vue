@@ -5,7 +5,7 @@
           <v-row>
               <v-col cols="1" style="margin-left: 10px; margin-top: 12px;">   
                   <v-btn icon small style="display: inline;"
-                      :to="{ 'path': '/system/users'}" 
+                      @click="$router.go(-1)"
                   >
                       <v-icon large color="blue-grey darken-2">mdi-chevron-left</v-icon>
                   </v-btn>
@@ -23,7 +23,7 @@
                 </span>
               </v-col>
           </v-row>     
-          <v-row>
+          <!-- <v-row>
               <v-col cols="12" sm="12" align="center" >
                 <v-btn 
                   color="purple darken-4"
@@ -34,7 +34,7 @@
                  Entrar com o Usuario 
                 </v-btn>
               </v-col>
-          </v-row>      
+          </v-row>       -->
           <v-row>
               <v-col cols="12" sm="12" align="center" >
                 <v-btn 

@@ -39,7 +39,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                "https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o Kong Barber App!"
+                "https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o Kongapp!"
             );
         },        
         goBack() {

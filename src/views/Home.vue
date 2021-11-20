@@ -45,14 +45,33 @@
                 </v-alert>
                 </v-card>
             </v-col>
-            <v-row v-if="userLogged.type === 'sys_admin' || company._id === '606627b33919e16f05f4b1a7'" >
+            <v-row style="margin-bottom: -23px">
+                <v-col cols="12">         
+
+                    <v-sheet
+                      class="mx-auto"
+                      max-width="800"
+                      height="50"
+                    >
+                      <v-slide-group
+                        multiple
+                        show-arrows
+                      >
+                        <button-slider-site :company="company" />
+                        <button-slider-pix :company="company" />
+                        <button-slider-kongbot v-if="userLogged && userLogged.type === 'sys_admin'" :company="company" />
+                        <button-slider-analytics :company="company" />
+                      
+                      </v-slide-group>
+                    </v-sheet>
+
+                </v-col>                
+            </v-row> 
+            <v-row v-if="userLogged.username === 'diego'" style="margin-bottom: -25px">
                 <v-col cols="12">
-                      <home-site 
-                        :company="company" 
-                        style="margin-bottom: -10px"
-                      />
+                    <card-xp :userLogged="userLogged" :company="company" />
                 </v-col>
-            </v-row>
+            </v-row>             
             <v-row>
               
               <v-col cols="12">
@@ -211,12 +230,16 @@ import HomeOrderServiceAdmin from '../components/HomeOrderServiceAdmin'
 import HomeBalanceAdminToPay from '../components/HomeBalanceAdminToPay'
 import HomeBalanceEmployeeToReceiver from '../components/HomeBalanceEmployeeToReceiver'
 import HomeAgendamentos from '../components/HomeAgendamentos'
-import HomeSite from '../components/HomeSite'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import VuePullRefresh from 'vue-pull-refresh'
 import dateUtils from '../utils/date'
-export default {
+import ButtonSliderSite from '../components/ButtonSliderSite.vue'
+import ButtonSliderPix from '../components/ButtonSliderPix.vue'
+import ButtonSliderKongbot from '../components/ButtonSliderKongbot.vue'
+import ButtonSliderAnalytics from '../components/ButtonSliderAnalytics.vue'
+import CardXp from '../components/CardXp.vue'
+export default { 
     name: 'Home',
     components: { 
       AppBar,
@@ -228,7 +251,11 @@ export default {
       HomeBalanceAdminToPay,
       HomeBalanceEmployeeToReceiver,
       HomeAgendamentos,
-      HomeSite,
+      ButtonSliderSite,
+      ButtonSliderPix,
+      ButtonSliderKongbot,
+      ButtonSliderAnalytics,
+      CardXp,
     },
     data: () => ({
       config: {
@@ -392,6 +419,9 @@ export default {
         this.ordersGroup.card = 0.0;
         this.ordersGroup.cash = 0.0;
         this.ordersGroup.pix = 0.0;
+        this.ordersGroup.netTotal = 0.0;
+        this.ordersGroup.cardRateValueDiscount = 0.0;
+
 
         this.ordersByUsers = [];
         orderGateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
@@ -406,6 +436,8 @@ export default {
               this.ordersGroup.card += obu.card;
               this.ordersGroup.cash += obu.cash;
               this.ordersGroup.pix += obu.pix;
+              this.ordersGroup.netTotal += obu.netTotal;
+              this.ordersGroup.cardRateValueDiscount += obu.cardRateValueDiscount;
             });
             storage.setUserLogged(JSON.stringify(res.user));
             storage.setCompany(JSON.stringify(res.company));

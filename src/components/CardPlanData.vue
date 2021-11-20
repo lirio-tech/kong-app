@@ -7,7 +7,7 @@
             dark
         >
             <br />
-            Seu Plano Atual é o {{ company.plan.name === 'Custom' ? 'Personalizado' : company.plan.name  }}
+            Seu Plano Atual é o {{ company.plan.name === 'Custom' ? 'Personalizado' : company.plan.name  }} {{ company.plan.name === 'Free' ? '🤔' : '😎' }}
         </div>        
         <v-container>
                 <span 
@@ -28,7 +28,7 @@
                 >
                     <br/>
                     <span class="grey--text">Valor/Mes: </span> 
-                    R$ {{ company.plan.name === 'Free' ? 500 : company.plan.maxCash | currency }} 
+                    R$ {{ company.plan.name === 'Free' ? 1000 : company.plan.maxCash | currency }} 
                 </span>     
                 <span 
                     v-if="company.plan"
@@ -48,7 +48,7 @@
                     v-if="company.plan"
                 >
                     <br/>
-                    <span class="grey--text">Usuarios Comum: </span> 
+                    <span class="grey--text">Funcionários: </span> 
                     {{ company.plan.name === 'Free' ? 0 : company.plan.amountUsersCommon }} 
                 </span>        
                 <br/>

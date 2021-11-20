@@ -2,39 +2,52 @@
     <v-container>      
         <v-main class="">
             <v-row 
-                    align="center"
-                    justify="space-around"
+
                 >
-                    <v-col cols="12" md="12" align="center">
+                    <v-col cols="3" md="3" >
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('day')"
                             :color="typePeriod === 'day' ? 'primary' : ''"              
                         >Dia</v-btn>     
+                    </v-col>
+                    <v-col cols="3" md="3" >    
                         &nbsp; 
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('week')"
                             :color="typePeriod === 'week' ? 'primary' : ''"
                         > 
                             Semana
                         </v-btn>    
-                        &nbsp;  
+                      </v-col>
+                      <v-col cols="3" md="3" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('month')"
                             :color="typePeriod === 'month' ? 'primary' : ''"
                         >Mês</v-btn>                               
-                    </v-col>                                                  
+                    </v-col>        
+                    <v-col cols="3" md="3" >    
+                        <v-btn 
+                            type="button" 
+                            depressed  
+                            large 
+                            style="width: 100%"
+                            @click="showDialogAgendamento(true)"
+                        >
+                          <v-icon >mdi-plus</v-icon>
+                        </v-btn>                          
+                    </v-col>                                        
             </v-row>           
 
             <v-row class="fill-height">
@@ -86,31 +99,71 @@
                     color="primary"
                     :events="events"
                     :event-color="getEventColor"
+                    :first-interval="6"
+                    :interval-minutes="60"
+                    :interval-count="19"
                     :type="typePeriod"
+                    @click:event="showEvent"
                     @click:more="viewDay"
                     @click:date="viewDay"
                     @change="updateRange"
                   >
                   </v-calendar>
+                  <v-menu
+                    v-model="selectedOpen"
+                    :close-on-content-click="false"
+                    :activator="selectedElement"
+                    offset-x
+                  >
+                    <v-card
+                      color="grey lighten-4"
+                      min-width="350px"
+                      flat
+                    >
+                      <v-toolbar
+                        :color="selectedEvent.color"
+                        dark
+                      >
+                        <v-btn icon @click="selectedOpen = false">
+                          <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                        <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+                        
+                      </v-toolbar>
+                      <v-card-text class="indigo--text">
+                        Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
+                        Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
+                        {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
+                      </v-card-text>
+                    </v-card>
+                  </v-menu>                  
                 </v-sheet>
               </v-col>
             </v-row>
      
         </v-main>
         <br/><br/>
-        
+        <dialog-agendamento-site 
+          :dialog="dialogAgendamento" 
+          :myCompany="company"
+          v-on:show-dialog-agendamento="showDialogAgendamento"
+        />        
     </v-container>
 </template>
 
 <script>
 import storage from '../storage'
+import DialogAgendamentoSite from '../components/DialogAgendamentoSite.vue'
 // import dateUtil from '../utils/date'
-// import agendamentoGateway from '../api/agendamentoGateway';
+import agendamentoGateway from '../api/agendamentoGateway';
 export default {
     name: 'SiteAgendamentos',
+    props: ['company'],
     components: { 
+      DialogAgendamentoSite,
     },
     data: () => ({
+        dialogAgendamento: false,
         userLogged: {},
         value: '',
         agendamentos: [],
@@ -129,6 +182,7 @@ export default {
           this.value = this.$route.query.date.substring(0,10);
         }
         this.findAgendamento();
+        if(this.$route.query.realizarAgendamento) { this.dialogAgendamento = this.$route.query.realizarAgendamento === 'true' }
     },
     mounted () {
       window.scrollTo(0,0);
@@ -136,20 +190,35 @@ export default {
     },
     methods: {
         findAgendamento() {
-           //let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
-          //  agendamentoGateway.getSiteAgendamentos(
-          //      res => {
-          //          this.agendamentos = res;
-          //          console.log('before');
-          //          this.updateCalendar(_date, _date);
-          //          if(this.$route.query._id) {
-          //             this.alterarAgendamentoShowDialog(this.$route.query._id);
-          //             this.$route.query._id = null;
-          //          }
-          //      }, () => {
-          //        alert('Erro ao Buscar agendamentos');
-          //      })    
+            if(this.company && this.company._id) {
+                  this.getSiteAgendamentos(this.company._id)
+            } else { 
+                setTimeout(
+                  () => {
+                    if(this.company && this.company._id) {
+                      this.getSiteAgendamentos(this.company._id)
+                    } else {
+                      this.findAgendamento();
+                    }
+                  }, 
+                  3000
+                )
+            }
         },  
+        getSiteAgendamentos(companyId) {
+              let phone_number = "";
+              if(storage.getCustomerSiteAgendamento()) {
+                  phone_number = storage.getCustomerSiteAgendamento().phone_number;
+              }
+              agendamentoGateway.getSiteAgendamentos(companyId, phone_number,
+                  res => {
+                    console.log('res', res);
+                      this.agendamentos = res;
+                      this.updateCalendar(null, null);
+                  }, () => {
+                    alert('Erro ao Buscar agendamentos');
+                  })   
+        },
         setTypePeriod(tp) {
           this.typePeriod = tp;
         },
@@ -172,35 +241,27 @@ export default {
         updateCalendar(start, end) {
            console.log(start, end);
            const events = []
+           console.log('this.agendamentos', this.agendamentos)
            for(var i in this.agendamentos) {
              const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
              const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
               events.push({
                   _id: this.agendamentos[i]._id,
-                  name: 'RESERVADO',  //this.agendamentos[i].customer.name,
-                  detail: this.getDescriptionServices(this.agendamentos[i].services),
+                  name: this.agendamentos[i].name,
+                  //detail: this.getDescriptionServices(this.agendamentos[i].services),
                   status: this.agendamentos[i].status,
                   start: _start,
                   end: _end,
-                  total: this.agendamentos[i].total,
-                  color: 'blue',
-                  orderId: this.agendamentos[i].orderId,
+                  //total: this.agendamentos[i].total,
+                  color: this.agendamentos[i].name === 'RESERVADO' ? 'green' : 'orange',
+                  //orderId: this.agendamentos[i].orderId,
                   timed: true,
               });      
            }
            this.events = events;
         },
         updateRange ({ start, end }) {
-          console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
-          console.log('updateRange');
           this.updateCalendar(start, end);
-        },
-        getDescriptionServices(services) {
-            let description = ''
-            for(var i in services) {
-              description += `${services[i].type}, `
-            }
-            return description;
         },
         initAgendamento() {
           return { 
@@ -219,7 +280,31 @@ export default {
               timeEndAt: '13:30:00',
               services: [],
             };
-        }
+        },
+        showDialogAgendamento(show, agendamento) {
+          this.dialogAgendamento = show;
+          if(show === false && agendamento) {
+              this.getSiteAgendamentos(this.company._id);
+              window.scrollTo(0,document.body.scrollHeight);
+
+          }
+        },    
+        showEvent ({ nativeEvent, event }) {
+          const open = () => {
+            this.selectedEvent = event
+            this.selectedElement = nativeEvent.target
+            requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
+          }
+
+          if (this.selectedOpen) {
+            this.selectedOpen = false
+            requestAnimationFrame(() => requestAnimationFrame(() => open()))
+          } else {
+            open()
+          }
+
+          nativeEvent.stopPropagation()
+        },            
     },        
 
   }

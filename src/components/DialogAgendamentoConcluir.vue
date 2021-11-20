@@ -31,27 +31,53 @@
                   ref="agendamentoForm"
                   id="agendamentoForm"
                 >              
-                    <br/>
-                    <v-col cols="12">                                  
-                      <v-radio-group
-                        v-model="paymentType"
-                        row
-                      >
-                        <v-radio
-                          label="Dinheiro"
-                          value="cash"
+                      <br/>
+                      <v-col cols="12">                                  
+                        <v-radio-group
+                          v-model="paymentType"
+                          row
                         >
-                        </v-radio>
-                        <v-radio
-                          label="Cartão"
-                          value="card"
-                        ></v-radio>
-                        <v-radio
-                          label="Pix"
-                          value="pix"
-                        ></v-radio>                                    
-                      </v-radio-group>                              
-                    </v-col>                            
+                          <v-radio
+                            label="Dinheiro"
+                            value="cash"
+                          >
+                          </v-radio>
+                          <v-radio
+                            label="Cartão"
+                            value="card"
+                          ></v-radio>
+                          <v-radio
+                            label="Pix"
+                            value="pix"
+                          ></v-radio>                                    
+                        </v-radio-group>                              
+                      </v-col>        
+                      <v-col cols="12" v-if="paymentType === 'card'">
+                          <v-subheader class="">{{rate/100 | currency }}% Taxa do Cartão</v-subheader>
+                          <v-slider
+                              v-model="rate"
+                              min="0"
+                              max="1000"
+                          >
+                              <template v-slot:prepend>
+                                    <v-icon 
+                                      @click="cardRateDecr()"
+                                    >
+                                        mdi-minus
+                                    </v-icon>
+                              </template>
+
+                              <template v-slot:append>
+
+                                    <v-icon
+                                      @click="cardRateIncr()"
+                                    >
+                                        mdi-plus
+                                    </v-icon>
+                              </template>
+                          </v-slider>                                
+                      </v-col>     
+                                                              
                       <v-col cols="12" sm="12">           
                           <v-simple-table dense >
                           
@@ -121,7 +147,8 @@ export default {
           prefix: 'R$ ',
           precision: 2,
           masked: false
-        }        
+        },
+        rate: 0
 
       }
     }, 
@@ -145,7 +172,8 @@ export default {
         //this.$emit('done', this.agendamento, this.paymentType); 
         if(confirm("Deseja Realmente Concluir?")) {
             this.loadingConcluir = true;
-            agendamentoGateway.agendamentoDone(this.agendamento._id, this.agendamento, this.paymentType,
+            const cardRate = this.rate/100;
+            agendamentoGateway.agendamentoDone(this.agendamento._id, this.agendamento, this.paymentType, cardRate,
               res => {
                   this.loadingConcluir = false;
                   const order = res;
@@ -168,7 +196,13 @@ export default {
                   alert('Erro ao Concluir :(');
               })
         }   
-      }
+      },
+      cardRateIncr() {
+          this.rate++;
+      },
+      cardRateDecr() {
+        this.rate--;
+      },         
     },
     computed: {
     },
@@ -176,6 +210,7 @@ export default {
       this.userLogged = storage.getUserLogged();
       this.myCompany = storage.getCompany();
       this.services = this.myCompany.services;
+      this.rate = this.myCompany.cardRate*100;      
     }
 }
 </script>

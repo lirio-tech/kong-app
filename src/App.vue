@@ -3,7 +3,7 @@
     <router-view v-if="!loadingSite" />  
     <v-progress-circular
       v-else
-      :size="70"
+      :size="100"
       :width="7"
       color="primary"
       indeterminate
@@ -32,13 +32,14 @@ export default {
       }
   },
   beforeMount() {
+
       if(this.isSiteCustom()) {
           // Find Company Site Custom
           this.loadingSite = true;
           companyGateway.getCompanySiteDiscoveryByWindowLocation(String(window.location.hostname), 
             res => {
               this.loadingSite = false;
-              this.$router.push(`/@/${res.arroba}`);
+              this.$router.push(`/@/${res.arroba}${window.location.search}`);
             },
             () => {
                 this.loadingSite = false;
@@ -56,7 +57,7 @@ export default {
 <style scoped>
   .centered {
     position: fixed; /* or absolute */
-    top: 50%;
-    left: 50%;
+    top: 30%;
+    left: 40%;
   }
 </style>

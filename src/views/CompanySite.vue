@@ -14,14 +14,14 @@
           <template v-slot:img="{ props }">
             <v-img
               v-bind="props"
-              gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+              gradient="to top right, rgba(70,85,151,.5), rgba(18,28,52,.7)"
             ></v-img>
           </template>
 
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
        
-            <span style="align-self: flex-end; width: 100%;" >💈 {{ companySite.title }} </span>
+            <span style="align-self: flex-end; position: absolute;" >💈 {{ companySite.title }} </span>
      
 
           <v-spacer></v-spacer>
@@ -39,12 +39,11 @@
           </v-btn>      
 
 
-          <a :href="forwardApp()" target="blank" style="color: inherit; text-decoration: none">
+          <!-- <a :href="forwardApp()" target="blank" style="color: inherit; text-decoration: none">
             <v-btn icon >
               <v-icon>mdi-login</v-icon>
             </v-btn>              
-          </a>
-
+          </a> -->
           <!-- <v-btn icon>
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn> -->
@@ -52,8 +51,8 @@
           <template v-slot:extension>
             <v-tabs align-with-title>
 
-              <v-tab @click="tabView = 'HOME'">Home</v-tab>
-              <v-tab @click="tabView = 'AGENDA'">Agenda</v-tab>
+              <v-tab @click="tabView = 'AGENDA'">Agendamento</v-tab>
+              <v-tab @click="tabView = 'HOME'">Fotos</v-tab>
               <v-tab @click="tabView = 'CONTATO'">Contato</v-tab>
             </v-tabs>
           </template>
@@ -70,10 +69,10 @@
         
       </v-card>
       <center v-if="userLogged">
-          <br/>
-          <v-btn color="primary" to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
-          <v-btn color="primary" @click="showDialog(true)"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
-          <v-btn color="primary" @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
+          <br/> 
+          <v-btn :color="btnUpdateSite" to="/"><v-icon>mdi-arrow-left</v-icon>App</v-btn> &nbsp;
+          <v-btn :color="btnUpdateSite" @click="showDialog(true)"><v-icon>mdi-edit</v-icon>Alterar Site</v-btn> &nbsp;
+          <v-btn :color="btnUpdateSite" @click="sharedMyCompany"><v-icon>mdi-share</v-icon></v-btn>
       </center>
       <v-container v-if="tabView === 'HOME'">
           <br/>
@@ -112,88 +111,182 @@
           </v-row>          
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
-          <h2 class="white--text">Agenda</h2>
-          <br/>
-          <site-agendamentos></site-agendamentos>
+        <v-row>
+            <!-- <v-col cols="12" style="margin-left: 0px;">   
+                <span style="font-size: 1.4rem !important;" class="white--text">  
+                    Agenda
+                </span>
+            </v-col>  -->
+            <!-- <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6" >                
+              <v-btn
+               v-if="userLogged && userLogged.type === 'sys_admina'"
+                class="mx-2"
+                active-class="primary white--text"
+                depressed
+                small
+                style="width: 95%;" 
+              >
+                  <span class="icon-emoji">🐵 </span>
+                  <span class="grey--text" style="margin-left: 5px; ">Kongbot</span>          
+              </v-btn>                         
+            </v-col> 
+            <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6">   
+              <v-btn
+                class="mx-2"
+                active-class="primary white--text"
+                depressed
+                small
+                style="width: 95%;"
+                @click="sharedMyCompanyAgendamento"
+                v-clipboard:copy="urlAssistantSchedule()"
+                v-clipboard:success="onCopyUrlAssistantSchedule"
+                v-clipboard:error="onError"                   
+              >
+                  <v-icon color="grey">mdi-share</v-icon>
+                  <span class="grey--text" >Compartilhar</span>          
+              </v-btn>   
+            </v-col>             -->
+            <v-col xl="4" lg="4" md="4" sm="12" xs="12" cols="12">   
+              <hour-working :openAt="companySite.openAt" />
+            </v-col>
+        </v-row>     
+        <br/>
+        <site-agendamentos :company="company"></site-agendamentos>
       </v-container>
       <v-container v-if="tabView === 'CONTATO'">
-            <h2 class="white--text">Contato</h2>
-            <br/>
-            <v-row>
-                <v-col
-                  v-if="companySite.address && companySite.address.lat && companySite.address.lng"
-                  xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+
+        <v-row>
+            <v-col cols="6" style="margin-left: 0px;">   
+                <span style="font-size: 1.6rem !important;" class="white--text">  
+                    Contato
+                </span>
+            </v-col> 
+            <v-col cols="2" >   
+              <a
+                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                style="color: inherit; text-decoration: none" 
+                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+              >
+                  <v-img align="" src="@/assets/img/uber.png" height="33" width="33" />
+              </a>
+            </v-col>              
+            <v-col cols="2" >   
+              <a
+                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                style="color: inherit; text-decoration: none" 
+                :href="`uber://?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+              >
+                  <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
+              </a>
+            </v-col>             
+            <v-col cols="2" style=" margin-top: -3px;">   
+              <a 
+                v-if="companySite.address && companySite.address.lat"
+                style="color: inherit; text-decoration: none;" 
+                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+              >
+                  <v-img align="" src="@/assets/img/Waze.png" height="41" width="41" />
+              </a>
+            </v-col> 
+
+        </v-row>                 
+        <br/>
+        <v-row>
+            <v-col
+              v-if="companySite.address && companySite.address.lat && companySite.address.lng"
+              xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+            >
+                <GmapMap
+                  :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
+                  :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 4 : 16'
+                  style='width:100%;  height: 400px;'
                 >
-                    <GmapMap
-                      :center='{ lat: companySite.address.lat, lng: companySite.address.lng, }'
-                      :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 4 : 16'
-                      style='width:100%;  height: 400px;'
+                  <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
+                    <h3 class="black--text">{{infoContent}}</h3>
+                  </gmap-info-window>                
+                    <gmap-marker 
+                      v-for="(item, key) in coordinates" 
+                      :key="key" 
+                      :position="getPosition(item)" 
+                      :clickable="true" 
+                      @click="toggleInfo(item, key)" 
+                      :icon="{ url: require('../assets/barber_marker.png')}" 
+                    />
+                </GmapMap>
+
+            </v-col>
+            <v-col
+              xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
+            > 
+                <div v-if="companySite.address && companySite.address.description">
+                    <h4 class="white--text">📍 Endereço</h4>   <br/>
+                    <p style="margin-left: 30px;"><small class="white--text">{{ companySite.address.description }}</small> </p>
+                </div>
+                <br/>
+                <div v-if="companySite.instagram || companySite.facebook">
+                    
+                    <h4 class="white--text">
+                      📱 Siga a gente nas Redes 
+                    </h4>   
+
+                    <p v-if="companySite.instagram" 
+                      style="margin-left: 10px; margin-top: 15px;"
                     >
-                      <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
-                        <h3 class="black--text">{{infoContent}}</h3>
-                      </gmap-info-window>                
-                        <gmap-marker 
-                          v-for="(item, key) in coordinates" 
-                          :key="key" 
-                          :position="getPosition(item)" 
-                          :clickable="true" 
-                          @click="toggleInfo(item, key)" 
-                          :icon="{ url: require('../assets/barber_marker.png')}" 
-                        />
-                    </GmapMap>
-
-                </v-col>
-                <v-col
-                  xl="6" lg="6" md="6" sm="6" xs="12" cols="12"
-                > 
-                    <div v-if="companySite.address && companySite.address.description">
-                        <h4 class="white--text">📍 Endereço</h4>   <br/>
-                        <p style="margin-left: 30px;"><small class="white--text">{{ companySite.address.description }}</small> </p>
-                    </div>
+                        <v-btn text @click="openInsta()" v-if="companySite.instagram">
+                          <v-icon color="white">mdi-instagram</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
+                        </v-btn>                        
+                    </p>
+                    
+                    <p v-if="companySite.facebook" 
+                      style="margin-left: 10px;"
+                    >
+                        <v-btn text @click="openFace()" v-if="companySite.facebook">
+                          <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
+                        </v-btn>     
+                    </p>
                     <br/>
-                    <div v-if="companySite.instagram || companySite.facebook">
-                        
-                        <h4 class="white--text">
-                          📱 Siga a gente nas Redes 
-                        </h4>   
-
-                        <p v-if="companySite.instagram" 
-                          style="margin-left: 10px; margin-top: 15px;"
-                        >
-                            <v-btn text @click="openInsta()" v-if="companySite.instagram">
-                              <v-icon color="white">mdi-instagram</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
-                            </v-btn>                        
-                        </p>
-                        
-                        <p v-if="companySite.facebook" 
-                          style="margin-left: 10px;"
-                        >
-                            <v-btn text @click="openFace()" v-if="companySite.facebook">
-                              <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
-                            </v-btn>     
-                        </p>
-                    </div>
-                    <br/>
-
-                </v-col>
-            </v-row>
-            <br/><br/><br/>
-            <v-row>
-                <v-col
-                  xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
-                >               
-                    <center v-if="companySite.whatsapp">
+                    <p v-if="companySite.whatsapp">
                         
                         <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
                           <v-icon color="green">mdi-whatsapp</v-icon>
                         </v-btn>
                         <span class="green--text">{{ companySite.whatsapp }}</span>
-                    </center>
-                </v-col>
-            </v-row>
+                    </p>                    
+                </div>
+                <br/>
+
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="12" style="margin-left: 0px;">   
+                <span style="font-size: 1.2rem !important;" class="white--text">  
+                    Equipe
+                </span>
+            </v-col> 
+            <v-col xl="6" lg="6" md="6" sm="12" xs="12" cols="12" v-for="u in team" :key="u.username">   
+                <center>
+                    <v-card>
+                        <br/>
+                        <v-img 
+                          :src="u.avatar ? u.avatar : 'https://www.vippng.com/png/full/416-4161690_empty-profile-picture-blank-avatar-image-circle.png'" 
+                          height="100" 
+                          width="100" 
+                          class="rounded-circle text-center" 
+                        />
+                        <span style="font-size: 1.0rem !important;">  
+                            {{ u.name }}
+                        </span>      
+                        <br/> <br/>                      
+                    </v-card>
+                   
+                </center>
+
+            </v-col>             
+        </v-row>
+        <br/><br/><br/>
       </v-container>     
       <dialog-update-site 
-        v-if="isAdmin()"
+        v-if="userLogged"
         :dialog="dialogUpdate"
         :companySite="companySite"
         :company="company"
@@ -202,22 +295,31 @@
         @set-company-site-photo-cover-url="setCompanySitePhotoCoverUrl"
         @set-company-site-photos="setCompanySitePhotos"
       ></dialog-update-site>       
+
+    <dialog-plan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+    <snack-bar :color="message.color" :text="message.text" :show="message.show" :timeout="message.timeout" />
   </div>
 </template>
 <script>
 import companyGateway from '../api/companyGateway'
+import gateway from '../api/gateway'
+import DialogPlan from '../components/DialogPlan.vue'
 import DialogUpdateSite from '../components/DialogUpdateSite.vue'
+import HourWorking from '../components/HourWorking.vue'
 import SiteAgendamentos from '../components/SiteAgendamentos.vue'
+import SnackBar from '../components/SnackBar.vue'
 import storage from '../storage'
 import commons from '../utils/commons'
 import UserTypes from '../utils/UserTypes'
 const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
 //const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
-  components: { DialogUpdateSite, SiteAgendamentos, },
+  components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, SnackBar, HourWorking, },
   data: () => ({
-    tabView: 'HOME',
+    tabView: 'AGENDA',
     dialogUpdate: false,
+    
+    dialogPlan: false,
     userLogged: {},
     companySite: {
       title: '',
@@ -226,16 +328,18 @@ export default {
       facebook: '',
       instagram: '',
       photoCover: IMAGES_RANDOM_URL,
-      address: {}
+      address: {},
     },
     company: {},
-
+    message: { show: false, color: 'primary', text: '', timeout: 5000 },  
     coordinates: { },
     infoPosition: null,
     infoContent: null,
     infoOpened: true,
     infoCurrentKey: null,
-
+    btnUpdateSite: 'primary',
+    agendamentos: [],
+    team: []
   }),
   methods: {
     isAdmin() {
@@ -257,18 +361,28 @@ export default {
                     this.companySite = res.companySite;
                     if(!this.companySite.address) this.companySite.address = {};
                     this.company = res.company;
-                    this.coordinates = { 
-                        0: {
-                            full_name: this.companySite.title,
-                            lat: this.companySite.address.lat, lng: this.companySite.address.lng
-                        },
-                    };    
-                    this.toggleInfo(this.coordinates[0], "0");                
+                    this.setCoordinates(this.companySite);             
+
+                    gateway.getUsersSite(this.company._id, 
+                      res => this.team = res, 
+                      () => { }
+                    )
+
                 }
             }, () => {
                 alert('Erro ao buscar informações do Site ');
             });
     },    
+    setCoordinates(companySite) {
+        console.log(companySite.address.lat, companySite.address.lng)
+        this.coordinates = { 
+            0: {
+                full_name: companySite.title,
+                lat: companySite.address.lat, lng: companySite.address.lng
+            },
+        };    
+        this.toggleInfo(this.coordinates[0], "0");  
+    },
     sharedMyCompany() {
         const shareData = {
             title: this.company.name,
@@ -277,6 +391,15 @@ export default {
         }    
         console.log(shareData)        
         return navigator.share(shareData);      
+    },
+    sharedMyCompanyAgendamento() {
+        const shareData = {
+            title: this.company.name,
+            text: `💈 Faça o seu Agendamento`,
+            url: 'https://'+commons.urlCompany(this.companySite, this.company.companyType) + '?tab=AGENDA&realizarAgendamento=true',
+        }    
+        console.log(shareData)        
+        return navigator.share(shareData);     
     },
     forwardApp() {
         let path = '/public/help';
@@ -287,7 +410,12 @@ export default {
         }
     },
     showDialog(show) {
-      this.dialogUpdate = show;
+      if(this.company.plan.name != 'Free') { 
+          this.dialogUpdate = show;
+      } else {
+        alert('Para Personalizar seu Site assine agora mesmo o Plano Premium');
+        this.showPlanDialog(true);
+      }
     },
     getPosition: function(marker) {
       return {
@@ -297,6 +425,7 @@ export default {
     },
     setCompanySite(companySite) {
         this.companySite = companySite;
+        this.setCoordinates(this.companySite);  
     },
     setCompanySitePhotoCoverUrl(urlPhotoCover) {
         this.companySite.photoCover = urlPhotoCover;
@@ -304,6 +433,9 @@ export default {
     setCompanySitePhotos(photosGallery) {
         this.companySite.photos = photosGallery;
     },
+    showPlanDialog(show) {
+      this.dialogPlan = show
+    },    
     toggleInfo: function(marker, key) {
       console.log(marker, key);
       this.infoPosition = this.getPosition(marker)
@@ -314,13 +446,47 @@ export default {
         this.infoOpened = true
         this.infoCurrentKey = key
       }
-    }
-
+    },
+    flashingButtons() {
+      const interval = 700;
+      const timeStartAt = 3000;
+      setTimeout(() => {
+        this.btnUpdateSite = ''
+        setTimeout(() => { 
+          this.btnUpdateSite = 'primary' 
+          setTimeout(() => {
+            this.btnUpdateSite = ''
+            setTimeout(() => { this.btnUpdateSite = 'primary' }, interval)
+          }, interval);          
+        }
+        , interval)
+      }, timeStartAt);
+    },
+    showMessage(text) {
+      this.message.show = true;
+      this.message.color = 'info';
+      this.message.text = text;
+      setTimeout(() => this.message.show = false, this.message.timeout);
+    },       
+    urlAssistantSchedule() {
+      return 'https://'+commons.urlCompany(this.companySite, this.company.companyType) + '?tab=AGENDA&realizarAgendamento=true';
+    },    
+    onCopyUrlAssistantSchedule() {
+      this.showMessage('Copiado!!! \nEnvie para seus Clientes. \nUtilize o assistente como resposta automática no WhatsApp ;-) '); 
+    },      
+    onError(){
+      alert('Erro ao Copiar')
+    },
   },
   beforeMount() {
       this.userLogged = storage.getUserLogged();
       this.getCompanyArroba(this.$route.params.arroba);
-  }
+      if(this.$route.query.tab) { this.tabView = this.$route.query.tab }
+
+  },
+  mounted() {
+    this.flashingButtons()
+  }        
 }
 </script>
 

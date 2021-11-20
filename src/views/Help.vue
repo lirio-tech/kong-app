@@ -10,7 +10,7 @@
                     </v-btn>
                 </v-col> 
                 <v-col cols="8" align="center" >  
-                        <span style="font-size: 1.6rem !important;" class="white--text">{{ appType === 'app' ? 'Kong Barber App' : 'Lady App' }}</span>
+                        <span style="font-size: 1.6rem !important;" class="white--text">{{ appType === 'app' ? 'Kongapp' : 'Lady App' }}</span>
                 </v-col>       
             </v-row>   
             <br/>
@@ -83,7 +83,7 @@
                     </v-col>       
                 </v-row>
                 <br/><br/><br/>
-                <v-row align="center" v-if="userLogged">
+                <v-row align="center" v-if="!userLogged">
                     <v-col
                         xl="12" lg="12" md="12" sm="12" xs="12" cols="12"
                         align="center"
@@ -128,7 +128,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                `https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o ${this.appType === 'app' ? 'Kong Barber' : 'Lady' } App!`
+                `https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o ${this.appType === 'app' ? 'Kongapp' : 'Lady App' } !`
             );
         },        
         goBack() {
@@ -148,7 +148,7 @@ export default {
         },
         share() {
             const shareData = {
-                title: this.appType === 'app' ? 'Kong Barber App' : 'Lady App',
+                title: this.appType === 'app' ? 'Kongapp' : 'Lady App',
                 text: `💈Gerencie ${this.appType === 'app' ? 'sua Barbearia' : 'seu Salão/Studio' } ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱`,
                 url: this.urlShare,
             }            

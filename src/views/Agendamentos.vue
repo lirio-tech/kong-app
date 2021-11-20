@@ -27,32 +27,34 @@
                     align="center"
                     justify="space-around"
                 >
-                    <v-col cols="12" md="12" align="center">
+                    <v-col cols="4" md="4" align="center">
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('day')"
                             :color="typePeriod === 'day' ? 'primary' : ''"              
                         >Dia</v-btn>     
-                        &nbsp; 
+                    </v-col>
+                    <v-col cols="4" md="4" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('week')"
                             :color="typePeriod === 'week' ? 'primary' : ''"
                         > 
                             Semana
                         </v-btn>    
-                        &nbsp;  
+                    </v-col>
+                    <v-col cols="4" md="4" >    
                         <v-btn 
                             type="button" 
                             depressed  
                             large 
-                            style="width: 30%"
+                            style="width: 100%"
                             @click="setTypePeriod('month')"
                             :color="typePeriod === 'month' ? 'primary' : ''"
                         >Mês</v-btn>                               
@@ -144,6 +146,7 @@
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
                         
                         <span v-if="selectedEvent.status === 'DONE'">R$ {{ selectedEvent.total | currency }}</span> <br/>
+                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>   
                         <h3 v-if="selectedEvent.status === 'DONE'" class="success--text">Concluído</h3>
                         <router-link
                           v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
@@ -372,6 +375,7 @@ export default {
                   color: this.getColorByStatus(this.agendamentos[i]),
                   orderId: this.agendamentos[i].orderId,
                   timed: true,
+                  createdAt: this.agendamentos[i].createdAt,
               });      
            }
            this.events = events;

@@ -2,7 +2,7 @@
     <v-container>
         <AppBar v-if="!isMobile()"/>             
         <v-main class="">
-          <header-back-title title="Comissão a Pagar"/>        
+          <header-back-title title="Comissão a Pagar" :emoji="emoji" />        
             <v-row>
                 <v-col cols="12" sm="12">
                     <v-card
@@ -35,10 +35,10 @@
                                       :key="userBalance._id" 
                                       style="margin-top:-5px"
                                     >
-                                        <v-col cols="7" style="font-size: 1.4rem" align="center">
+                                        <v-col cols="7" style="font-size: 1.4rem" align="center" :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">
                                               {{ userBalance.user.name }}
                                         </v-col> 
-                                        <v-col cols="5" :style="'font-size: 1.4rem;'" align="">
+                                        <v-col cols="5" :style="'font-size: 1.4rem;'" align="" :class="userBalance.balance < 0 ? 'red--text' : 'green--text'">
                                               R$ {{ userBalance.balance | currency }}
                                         </v-col>
                                         <v-col cols="12" class="text-center">
@@ -66,6 +66,7 @@
                 </v-col>
             </v-row>              
         </v-main>
+        <dialog-loading :loading="loading" />          
     </v-container>
 </template>
 
@@ -77,14 +78,17 @@ import storage from '../storage';
 import UserTypes from '../utils/UserTypes';
 import device from '../utils/device'
 import HrLine from '../components/HrLine.vue';
+import DialogLoading from '../components/loading/DialogLoading.vue';
   export default {
     name: 'PaymentsUsers',
-    components: { AppBar, HeaderBackTitle, HrLine, },
+    components: { AppBar, HeaderBackTitle, HrLine, DialogLoading, },
     data: () => ({
+      loading: false,
       headers: [
         { text: "Funcionario", value: "name" },
         { text: "Username", value: "valueReceive" }
       ],                
+      emoji: '💰',
       usersBalance: [],
       total: 0
     }),
@@ -98,10 +102,13 @@ import HrLine from '../components/HrLine.vue';
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
+      this.loading = true;
       gateway.getUsersBalance(res => {
             this.usersBalance = res;
             this.total = res.reduce((a, r) => a + r.balance, 0);
+            this.loading = false;
         }, () => {
+            this.loading = false;
             alert('Erro ao Buscar Saldo do Usuario');
         })
     }

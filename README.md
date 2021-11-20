@@ -1,4 +1,4 @@
-# Kong Barber
+# Kongapp
 
 ### Production
 
@@ -26,6 +26,11 @@ npm run build
 ### Lints and fixes files
 ```
 npm run lint
+```
+
+### Change Version
+```
+npm version patch
 ```
 
 ### Customize configuration

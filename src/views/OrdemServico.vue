@@ -1,7 +1,8 @@
 <template>
     <v-container :style="`${this.$vuetify.theme.dark ? '' : 'background: white' }`">
+               <app-bar v-if="!isMobile()" />  
               <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
-              <div v-if="true">
+              <v-main class="">
                   <header-back-title :title="order._id ? 'Ordem de Serviço' : 'Nova Ordem Serviço'" titleColor="second"/>
                   <v-row>
                       <v-col cols="12" sm="12">
@@ -22,6 +23,14 @@
                         > 
                               Comissão de R$ {{ order.commission | currency }}
                         </center>
+                        <center 
+                          v-if="order.paymentType === 'card'"
+                          class="grey--text" 
+                          align="center" 
+                          justify="space-around"
+                        > 
+                            Taxa R$ {{ order.total * (rate/100) / 100 | currency }}
+                        </center>                        
 
                       </v-col>
                       <v-col cols="12" sm="12" v-if="isAdmin() || userLogged.allowEditOrder === true ||  !order._id">
@@ -124,8 +133,35 @@
                                   </v-radio-group>                              
                                 </v-col>
                               </v-row>
+                              <v-row v-if="order.paymentType === 'card'">
+                                <v-col cols="12" >
+                                    <v-subheader class="">{{rate/100 | currency }}% Taxa da Maquininha</v-subheader>
+                                    <v-slider
+                                        v-model="rate"
+                                        min="0"
+                                        max="1000"
+                                    >
+                                        <template v-slot:prepend>
+                                              <v-icon 
+                                                @click="cardRateDecr()"
+                                              >
+                                                  mdi-minus
+                                              </v-icon>
+                                        </template>
+
+                                        <template v-slot:append>
+
+                                              <v-icon
+                                                @click="cardRateIncr()"
+                                              >
+                                                  mdi-plus
+                                              </v-icon>
+                                        </template>
+                                    </v-slider>                                
+                                </v-col>     
+                              </v-row>
                               <v-row>
-                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12">        
+                                <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin() || order._id" >        
                                     <v-combobox 
                                         v-model="order.user" 
                                         size="1" 
@@ -135,8 +171,7 @@
                                         ref="user"
                                         required filled 
                                         item-text='name'
-                                        item-value='_id'          
-                                        v-if="isAdmin() || order._id"     
+                                        item-value='_id'            
                                         :disabled="order._id || order.total > 0"
                                         @change="setServices"
                                         style="margin-top: -20px;"                         
@@ -206,23 +241,27 @@
                           </v-form>                
                       </v-col>
                   </v-row>
-              </div>      
+              </v-main>      
               <br/><br/><br/><br/><br/><br/>            
     </v-container>
 </template>
 
 <script>
 import gateway from '../api/gateway'
+import orderGateway from '../api/orderGateway'
 import { mapGetters } from 'vuex'
 import DialogPlan from '../components/DialogPlan'
 import storage from '../storage'
 import UserTypes from '../utils/UserTypes'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue'
+import device from '../utils/device'
+import AppBar from '../components/AppBar.vue'
   export default {
     name: 'OrdemServico',
     components: {
       DialogPlan,
-        HeaderBackTitle
+        HeaderBackTitle,
+        AppBar,
     },
     data: vm => ({
         loadingSave: false,
@@ -245,6 +284,7 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
         dateFormatted: vm.formatDate(new Date().toLocaleString( 'sv', { timeZoneName: 'short' } ).substr(0,10)),     
         updatedAt: null,
         createdAt: null,   
+        rate: 0,
         order: {
           services: [],
           total: 0,
@@ -274,6 +314,12 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
       isAdmin() {
         return UserTypes.isAdmin(this.userLogged.type);
       },
+      cardRateIncr() {
+          this.rate++;
+      },
+      cardRateDecr() {
+        this.rate--;
+      },      
       save() {
         if (this.orderHasServices() && this.$refs.orderForm.validate()) {
           this.order.date = this.date;
@@ -283,7 +329,8 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
           }
           this.loadingSave = true;     
           this.order.company = this.myCompany._id;     
-          gateway.saveOrder(this.order,
+          this.order.cardRate = this.rate/100;
+          orderGateway.saveOrder(this.order,
             res => {
               this.order = res;
               this.loadingSave = false;          
@@ -390,12 +437,13 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
         return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
       },           
       numberUsToBr(v) {
+          if(!v) v = 0;
           return v.toLocaleString('pt-br', {minimumFractionDigits: 2});
       },      
       deleteOrder() {        
         if (this.isAdmin() && confirm('Deseja Relamente Excluir?')) {
           this.loadingDelete = true;          
-          gateway.deleteOrder(this.order._id,
+          orderGateway.deleteOrder(this.order._id,
             () => {
               this.loadingDelete = false;              
               alert('Excluido com sucesso');
@@ -432,7 +480,13 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
       setServices() {
           this.typeServices = [];
           this.order.user.services.forEach(s => this.typeServices.push(s.type) );        
-      }
+      },
+      isMobile() {
+          return device.isMobile();
+      } ,        
+    },
+    mounted() {
+      window.scrollTo(0,0);
     },
     beforeMount() {
       this.userLogged = storage.getUserLogged();
@@ -440,21 +494,25 @@ import HeaderBackTitle from '../components/HeaderBackTitle.vue'
       this.userLogged.services.forEach(s => this.typeServices.push(s.type) );
 
       if(this.$route.params._id) {
-        gateway.getOrderById(this.$route.params._id,
+        orderGateway.getOrderById(this.$route.params._id,
           res => {
             this.order = res;
+            console.log(this.order)
             this.dateFormatted = this.formatDate(this.order.date); 
             this.createdAt = this.formatDateTime(this.order.createdAt);
             this.updatedAt = this.formatDateTime(this.order.updatedAt);
-            this.order.priceBR = this.numberUsToBr(this.order.price);
+            //this.order.priceBR = this.numberUsToBr(this.order.price);
             this.loadingDelete = false;
             this.loadingSave = false;           
+            this.rate = this.order.cardRate*100;       
+            
           }, () => {
             this.loadingDelete = false;
             this.loadingSave = false;            
           });
       } else {
-        this.order.user = this.userLogged;        
+        this.order.user = this.userLogged; 
+        this.rate = this.myCompany.cardRate*100;       
       }
       if(this.isAdmin()) {
           this.findAllUsers();

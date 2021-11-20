@@ -35,6 +35,7 @@
                               size="1" 
                               :items="users"
                               label="Funcionário"
+                              prepend-icon="mdi-account"
                               :rules="[v => !!v || 'Funcionário Obrigatório',]"
                               ref="user"
                               required filled 
@@ -52,9 +53,24 @@
                               label="Cliente"
                               filled required
                               ref="customerName"
+                              prepend-icon="mdi-account"
                               :rules="[v => !!v || 'Nome do Cliente Obrigatório',]"
                           ></v-text-field>  
-                      </v-col>              
+                      </v-col>            
+                      <v-col 
+                        cols="12"
+                        sm="6"
+                      >
+                          <v-text-field 
+                              v-model="agendamento.customer.phone_number"
+                              label="WhatsApp ou Celular"
+                              ref="whats"
+                              v-mask="'(##) #####-####'"
+                              filled
+                              :rules="[v => !!v || 'WhatsApp Obrigatório',]"
+                              prepend-icon="mdi-whatsapp"
+                          />                                    
+                      </v-col>                            
                       <v-col
                         cols="12"
                         sm="6"
@@ -67,6 +83,7 @@
                           chips
                           label="Serviços"
                           multiple
+                          prepend-icon="mdi-content-cut"
                           ref="services"
                           :rules="[v => v.length > 0 || 'Servico Obrigatório',]"                          
                         ></v-select>
@@ -148,6 +165,7 @@
                           sm="6"
                           align="center"
                           justify="space-around"
+                          v-if="agendamento.status !== 'REQUESTED' && agendamento.status !== 'DONE'"
                       >
                         <v-btn 
                             style="width: 90%"
@@ -158,13 +176,30 @@
                         >
                           Agendar
                         </v-btn>                                                                               
-                      </v-col>           
+                      </v-col>                                
+                      <v-col 
+                          cols="12"
+                          sm="6"
+                          align="center"
+                          justify="space-around"
+                          v-if="agendamento.status === 'REQUESTED'"
+                      >
+                        <v-btn 
+                            style="width: 90%"
+                            color="info"
+                            x-large
+                            type="submit"
+                            :loading="loagindAgendar"
+                        >
+                          Confirmar
+                        </v-btn>                                                                               
+                      </v-col>                          
                 </v-form>                                          
             </v-container>
           </v-card-text>          
           <div style="flex: 1 1 auto;"></div>
         </v-card>
-
+        <snack-bar :color="message.color" :text="message.text" :show="message.show" :timeout="message.timeout" />
     </v-dialog>    
 </template>
 
@@ -173,7 +208,9 @@ import agendamentoGateway from '../api/agendamentoGateway';
 import UserTypes from '../utils/UserTypes'
 import moment from 'moment'
 import storage from '../storage'
+import SnackBar from './SnackBar.vue';
 export default {
+    components: { SnackBar },
     props:['dialog', 'agendamento', 'date','servicesSelected', 'users'],
     data () {
       return {
@@ -184,8 +221,8 @@ export default {
         value: [],        
 
         menu2: false,
-        modal: false
-
+        modal: false,
+        message: { show: false, color: 'primary', text: '', timeout: 5000 },  
       }
     }, 
     methods: {
@@ -231,8 +268,10 @@ export default {
         });
       },      
       registrarAgendamento() {
-        console.log(this.total)
-        if(this.$refs.agendamentoForm.validate()) {
+          if(!this.$refs.agendamentoForm.validate()) {
+            this.showMessage('Verifique os campos obrigatórios', 'error');
+            return;
+          }
           this.agendamento.date = this.date;
           if( Number(this.agendamento.timeStartAt.substring(0,2)) > Number(this.agendamento.timeEndAt.substring(0,2))) {
             alert('Horario de Inicio deve ser menor que o horario final do agendamento');
@@ -246,17 +285,35 @@ export default {
 
           if(this.agendamento._id) {
               this.loagindAgendar = true;
-              agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
-                      () => {
-                        this.loagindAgendar = false;
-                        this.$emit('scheduled-success', new Date(),new Date())
-                        this.$emit('show-dialog',false)
-                      },
-                      () => {
-                        this.loagindAgendar = false;
-                        alert('Erro ao registrar agendamento')
-                      }
-                    )
+
+              if(this.agendamento.status === 'REQUESTED') {
+
+                  agendamentoGateway.confirmarAgendamento(this.agendamento._id, this.agendamento,
+                          () => {
+                            this.loagindAgendar = false;
+                            this.$emit('scheduled-success', new Date(),new Date())
+                            this.$emit('show-dialog',false)
+                          },
+                          () => {
+                            this.loagindAgendar = false;
+                            alert('Erro ao registrar agendamento')
+                          }
+                        )
+
+              } else {
+
+                  agendamentoGateway.alterarAgendamento(this.agendamento._id, this.agendamento,
+                          () => {
+                            this.loagindAgendar = false;
+                            this.$emit('scheduled-success', new Date(),new Date())
+                            this.$emit('show-dialog',false)
+                          },
+                          () => {
+                            this.loagindAgendar = false;
+                            alert('Erro ao registrar agendamento')
+                          }
+                        )
+              }
           
 
           } else {
@@ -273,8 +330,14 @@ export default {
                   }
                 )
           }
-        }
+        
       },
+      showMessage(text, color) {
+        this.message.show = true;
+        this.message.color = color;
+        this.message.text = text;
+        setTimeout(() => this.message.show = false, this.message.timeout);
+      },           
     },
     computed: {
       computedDateFormattedMomentjs() {

@@ -73,6 +73,86 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>  
                 <v-expansion-panel>
+                    <v-expansion-panel-header>Tipos de Pagamento</v-expansion-panel-header>
+                    <v-expansion-panel-content>              
+                        <v-col cols="12">  
+                            <v-form 
+                                id="formCompanyCardRate" 
+                                ref="formCompanyCardRate" 
+                                v-model="valid" 
+                                lazy-validation 
+                                v-on:submit.prevent="onSubmitCompanyCardRate"
+                            >          
+                               
+                                <v-col cols="12" >
+                                    <h4>
+                                        <v-icon color="green" size="28">mdi-cash</v-icon> &nbsp; Dinheiro
+                                    </h4>
+                                </v-col>
+                                <hr-line />
+                                <br/>
+                                <v-col cols="12" >
+                                    <h4>
+                                        <v-icon color="purple">mdi-credit-card</v-icon> &nbsp; Cartão
+                                    </h4>           
+                                    <small class="grey--text">Percentual que Pago ao realizar Vendas no Cartão</small>                         
+                                    <v-subheader class="">{{ rate/100 | currency }}% Taxa do Cartão</v-subheader>
+                                    <v-slider
+                                        v-model="rate"
+                                        min="0"
+                                        max="1000"
+                                    >
+                                        <template v-slot:prepend>
+                                        <v-icon
+                                            color="secondary"
+                                            @click="rate--"
+                                        >
+                                            mdi-minus
+                                        </v-icon>
+                                        </template>
+
+                                        <template v-slot:append>
+                                        <v-icon
+                                            color="secondary"
+                                            @click="rate++"
+                                        >
+                                            mdi-plus
+                                        </v-icon>
+                                        </template>
+                                        <!-- <template v-slot:thumb-label="{ rate }">
+                                            {{ rate/100  }}
+                                        </template>                                         -->
+                                    </v-slider>                                
+                                </v-col>     
+                                <hr-line />
+                                <br/>
+                                <v-col cols="12" >
+                                    <h4>
+                                        <v-icon color="teal lighten-2">mdi-rhombus-split</v-icon> &nbsp; Pix
+                                    </h4>
+                                    <small class="grey--text">Pix para apresentar para os Clientes dentro do App</small>
+                                    <v-text-field
+                                        label="Código Copie e Cole"
+                                        required
+                                        v-model="company.pixCopyPast"
+                                        ref="companyPixCopyPast"
+                                        :rules="[val => !val || val.length == 0 || val.length > 30 || 'Esse é o Código Copie e Cole e não a Chave como CPF ou E-mail']"
+                                        :disabled="!isAdmin()"
+                                    />                        
+                                </v-col>                                                        
+                                <br/>
+                                <v-btn
+                                    color="success"
+                                    type="submit"
+                                    :disabled="!isAdmin()"
+                                >
+                                    Salvar
+                                </v-btn>                                
+                            </v-form>
+                        </v-col>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>                  
+                <v-expansion-panel>
                     <v-expansion-panel-header>Site</v-expansion-panel-header>
                     <v-expansion-panel-content>              
                         <v-col cols="12">  
@@ -593,10 +673,11 @@ import Commons from '../utils/commons'
 import DialogPlan from '../components/DialogPlan.vue'
 import SnackBar from '../components/SnackBar.vue'
 import CardPlanData from '../components/CardPlanData.vue'
-import MyMoney from '../components/inputs/MyMoney.vue'
+import MyMoney from '../components/inputs/KongMoney.vue'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue'
 import InstagramInput from '../components/inputs/InstagramInput.vue'
 import FacebookInput from '../components/inputs/FacebookInput.vue'
+import HrLine from '../components/HrLine.vue'
 export default {
     name: 'Perfil',
     components: {
@@ -607,6 +688,7 @@ export default {
         HeaderBackTitle,
         InstagramInput,
         FacebookInput,
+        HrLine,
     },
     data: () => ({
       dialogServiceUpdate: false,
@@ -648,6 +730,7 @@ export default {
             time: "01:00"                       
       },        
       themeKong: true,
+      rate: 0,
       money: {
             decimal: ',',
             thousands: '.',
@@ -800,11 +883,34 @@ export default {
         getCompanySite(companyId) {
             companyGateway.getCompanySiteById(companyId,
                 (res) => {
-                    if(res) this.companySite = res;
+                    if(res) {
+                        this.companySite = res;
+                    }
                 }, () => {
                     alert('Erro ao buscar informaçoes do Site ');
                 });
         },
+        onSubmitCompanyCardRate() {
+            if(this.$refs.formCompanyCardRate.validate()) {
+                const paymentTypes = {
+                    cardRate: this.rate/100,
+                    pixCopyPast: this.company.pixCopyPast,
+                }
+                console.log(paymentTypes);
+                companyGateway.saveCompanyPaymentTypes(this.company._id, paymentTypes,
+                    () => {
+                        alert('Atualizado com Sucesso!!!');
+                        this.company.cardRate = paymentTypes.cardRate;
+                        storage.setCompany(JSON.stringify(this.company));
+                    }, (err) => {
+                        if(err.response.status === 500) {
+                            alert('Erro ao se Cadastrar, tente novamente mais tarde ');
+                        } else {
+                            alert(err.response.data.message);
+                        }
+                    });
+            }
+        },  
         onSubmitCompanyName() {
             if(this.$refs.formCompany.validate()) {
                 this.companyWithoutUpdate.name = this.company.name;
@@ -821,7 +927,7 @@ export default {
                         }
                     });
             }
-        },  
+        },
         onSubmitCompanySite() {
             if(this.$refs.formCompanySite.validate()) {
                 companyGateway.saveCompanySite(this.company._id, this.companySite,
@@ -893,6 +999,7 @@ export default {
           this.userLogged.configuration = {table: 'mobile'};
       }
       this.company = storage.getCompany();
+      this.rate = this.company.cardRate*100;
       this.companyWithoutUpdate = storage.getCompany();
       this.services = this.companyWithoutUpdate.services;
       this.panel = this.isAdmin() && this.company.plan.name === 'Free' ? [0] : [];      

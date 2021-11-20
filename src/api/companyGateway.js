@@ -49,7 +49,7 @@ export default{
           })         
     },
     applyPlan(companyId, plan, callback, errorCb) {
-      let url = `${COMPANIES_API}/${companyId}/upgrade/plan`;
+      let url = `${COMPANIES_API}/v2/${companyId}/upgrade/plan`;
       Axios.put(url, plan)
           .then(data => {
               callback(data.data)
@@ -181,5 +181,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })               
-      }      
+      },
+      saveCompanyPaymentTypes(companyId, companyPaymentTypes, callback, errorCb) {
+        let url = `${COMPANIES_API}/${companyId}/payment-types`;
+        Axios.patch(url, companyPaymentTypes)
+            .then(data => {
+                callback(data.data) 
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })            
+      }     
 }

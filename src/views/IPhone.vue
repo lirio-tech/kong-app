@@ -83,7 +83,7 @@
             <v-col align="center" xl="6" lg="6" md="8" sm="12" xs="12" cols="12" class="pt-6">
                 <p class="mr-2 text-center" 
                    style="font-size: 1.3rem;">
-                    Pronto!!! <br/><span class="primary--text">Kong Barber App</span> Instalado com Sucesso sem ocupar espaço no seu Celular
+                    Pronto!!! <br/><span class="primary--text">Kongapp</span> Instalado com Sucesso sem ocupar espaço no seu Celular
                 </p>  
                 <v-img 
                     src="../assets/iphone-installed.gif"
