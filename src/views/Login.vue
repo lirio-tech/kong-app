@@ -34,12 +34,13 @@
 
                     <v-text-field
                       autocomplete="off"
-                      :label="`Telefone`"
+                      label="Celular"
                       :prepend-icon="`mdi-phone`"
                       v-model="user.phone_number"
-                      :rules="[ val => val && val.length > 0 || 'Telefone Obrigatorio']"
+                      :rules="[val => val && val.length > 11 || 'Celular Obrigatório']"
                       ref="phone"
                       required
+                      v-mask="'(##) #####-####'"
                     />
 
                     <v-text-field
