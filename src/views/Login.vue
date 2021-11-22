@@ -34,11 +34,11 @@
 
                     <v-text-field
                       autocomplete="off"
-                      label="Username"
-                      prepend-icon="mdi-account"
-                      v-model="user.username"
-                      :rules="[ val => val && val.length > 0 || 'Username Obrigatorio']"
-                      ref="username"
+                      :label="`Telefone`"
+                      :prepend-icon="`mdi-phone`"
+                      v-model="user.phone_number"
+                      :rules="[ val => val && val.length > 0 || 'Telefone Obrigatorio']"
+                      ref="phone"
                       required
                     />
 
@@ -119,7 +119,7 @@ export default {
         methods: {
             onSubmit() {
                 if(this.$refs.form.validate()) {     
-                    this.user.username = this.user.username.toLowerCase();
+                    //this.user.username = this.user.username.toLowerCase();
                     this.loading = true;
                     this.user.device = navigator.userAgent;
                     gateway.signIn(this.user, 
@@ -150,8 +150,8 @@ export default {
                         }
                       });
                 } else {
-                    if(!this.user.username) {
-                        this.$refs.username.focus();
+                    if(!this.user.phone_number) {
+                        this.$refs.phone.focus();
                     } 
                     else if(!this.user.password) {
                         this.$refs.password.focus();
@@ -163,7 +163,7 @@ export default {
                 this.message.text = text;
                 this.message.show = true;
                 setTimeout(() => this.message.show = false, 4000);
-            }                          
+            },
         },
         beforeMount() {
         
