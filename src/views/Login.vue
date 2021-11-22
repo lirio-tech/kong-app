@@ -124,15 +124,14 @@ export default {
                     this.user.device = navigator.userAgent;
                     gateway.signIn(this.user, 
                       res => {
+                        this.loading = false;
                         if(!res.auth === true) {
                             alert('Usuario ou Senha Invalido');
-                            this.loading = false;
                             return;
                         }
                         localStorage.setItem('TOKEN', res.token);
                         localStorage.setItem('user', JSON.stringify(res.user));
                         storage.setCompany(JSON.stringify(res.company));
-                        this.loading = false;
                         if(res.user.type === 'sys_admin') {
                           this.$router.push('/system');  
                         } 

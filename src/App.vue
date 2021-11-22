@@ -27,7 +27,7 @@ export default {
             String(window.location.hostname).includes('localhost') || 
             String(window.location.hostname).includes('app.kongbarber.com') || 
             String(window.location.hostname).includes('app.ladyapp.com.br') || 
-            String(window.location.hostname).includes('kong-app-develop.netlify.app') 
+            String(window.location.hostname).includes('devkongapp.netlify.app') 
           )
       }
   },
