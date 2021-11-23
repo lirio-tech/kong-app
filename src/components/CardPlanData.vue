@@ -7,7 +7,7 @@
             dark
         >
             <br />
-            Seu Plano Atual é o {{ company.plan.name === 'Custom' ? 'Personalizado' : company.plan.name  }} {{ company.plan.name === 'Free' ? '🤔' : '😎' }}
+            Seu Plano Atual é o {{ company.plan.name }} {{ company.plan.name === 'Free' ? '🤔' : '😎' }}
         </div>        
         <v-container>
                 <span 

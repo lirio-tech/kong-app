@@ -84,7 +84,7 @@
                                 <v-list-item-title 
                                     class="headline " 
                                 >
-                                    Personalizado               
+                                    Smart               
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
@@ -204,7 +204,7 @@ export default {
             }
             let codePix = `00020126510014BR.GOV.BCB.PIX0114+55119431974870211Plano Smart5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062140510PlanoSmart63045227`;
             return {
-                name: "Personalizado",
+                name: "Smart",
                 type: `Meses=${this.amountMouth}`,
                 price: priceAppliedDiscount,
                 priceWithoutDiscount: priceWithoutDiscount,
