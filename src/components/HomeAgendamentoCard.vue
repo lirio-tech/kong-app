@@ -25,13 +25,24 @@
                     </v-card-text>
                     <router-link :to="isAdmin() ? `/admin/agendamentos/?date=${agendamento.dateTimeStartAt}` : `/agendamentos/?date=${agendamento.dateTimeStartAt}`" style="color: inherit; text-decoration: none">
                           <v-card-text class="black--text">
-                            <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> <br />
+                            <v-icon class="black--text">mdi-account</v-icon> &nbsp; <b>{{ agendamento.user.name }}</b> 
+                            <br />
                             <v-icon class="black--text">mdi-clock</v-icon> &nbsp; 
                               <b>
                                   {{ getDayOfWeek(new Date(agendamento.dateTimeStartAt)) }}
                                   {{  ['Ontem','Hoje','Amanhã'].includes(getDayOfWeek(new Date(agendamento.dateTimeStartAt))) ? '' : ', '+new Date(agendamento.dateTimeStartAt).toLocaleString('pt-BR').substring(0,5) }} 
-                                  às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> <br/>
-                            <b>{{ getDescriptionServices(agendamento.services) }}</b> <br/>
+                                  às {{ agendamento.dateTimeStartAt.substring(11,16) }} </b> 
+                                  <v-chip 
+                                    small 
+                                    style="margin-top: -5px" 
+                                    color="dark"
+                                    v-if="getTimePast(agendamento.dateTimeStartAt).show"
+                                  >
+                                      {{ getTimePast(agendamento.dateTimeStartAt).description }}
+                                  </v-chip>
+                                  <br/>
+                            <b>{{ getDescriptionServices(agendamento.services) }}</b> 
+                            <br/>
                             <small>Criado em {{ new Date(agendamento.createdAt).toLocaleString('pt-BR').substring(0,16) }} por {{ agendamento.createdBy }}</small> <br/>
                           </v-card-text>
                     </router-link>               
@@ -149,6 +160,34 @@ export default {
       },      
       getDayOfWeek(date) {
         return dateUtil.getDayOfWeekToday(date)
+      },
+      getTimePast(dateTimeStartAt) {
+          const diff = Math.abs(new Date().getTime() - new Date(dateTimeStartAt).getTime());
+          const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+          if(days > 30) {
+              return {
+                  description: `${Math.trunc(days/30)} mes(es) atras`,
+                  show: true
+              }            
+          }
+          const horas = Math.ceil(diff / (1000 * 60 * 60));
+          if(horas > 24) {
+              return {
+                  description: `${Math.trunc(horas/24)} dia(s) atras`,
+                  show: true
+              }            
+          }
+          if(horas > 2) {
+              return {
+                  description: `${Math.trunc(horas)}h atras`,
+                  show: true
+              }            
+          }                    
+          return {
+              description: ``,
+              show: false
+          }                      
+
       }    
     }
   }

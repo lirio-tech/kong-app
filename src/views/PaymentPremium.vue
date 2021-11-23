@@ -84,7 +84,7 @@ export default {
   },
   beforeMount() {
     this.userLogged = storage.getUserLogged();
-    if(this.$route.params.planName !== 'Personalizado') {
+    if(this.$route.params.planName !== 'Smart') {
       this.plan = gateway
                 .getAllPlans()
                 .filter(p => p.name === this.$route.params.planName)[0];
