@@ -165,21 +165,24 @@ export default {
           const diff = Math.abs(new Date().getTime() - new Date(dateTimeStartAt).getTime());
           const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
           if(days > 30) {
+              let vl = Math.trunc(days/30)
               return {
-                  description: `${Math.trunc(days/30)} mes(es) atras`,
+                  description: `${vl} ${vl > 1 ? "meses" : "mês" } atrás`,
                   show: true
               }            
           }
           const horas = Math.ceil(diff / (1000 * 60 * 60));
           if(horas > 24) {
+              let vl = Math.trunc(horas/24)
               return {
-                  description: `${Math.trunc(horas/24)} dia(s) atras`,
+                  description: `${vl} dia${vl > 1 ? 's' : ''} atrás`,
                   show: true
               }            
           }
           if(horas > 2) {
+              let vl = Math.trunc(horas)
               return {
-                  description: `${Math.trunc(horas)}h atras`,
+                  description: `${vl}h atrás`,
                   show: true
               }            
           }                    
