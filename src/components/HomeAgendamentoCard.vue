@@ -162,6 +162,14 @@ export default {
         return dateUtil.getDayOfWeekToday(date)
       },
       getTimePast(dateTimeStartAt) {
+
+          if(new Date(dateTimeStartAt).getTime() > new Date()) {
+            return {
+                description: ``,
+                show: false
+            }                      
+          }
+
           const diff = Math.abs(new Date().getTime() - new Date(dateTimeStartAt).getTime());
           const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
           if(days > 30) {
