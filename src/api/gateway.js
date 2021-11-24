@@ -9,7 +9,7 @@ const RATE_US_API =  process.env.VUE_APP_HOST_API + '/.netlify/functions/api/rat
 
 export default{
     signIn(user, callback,errorCb){       
-        let url = `${AUTH_API}/signin`;
+        let url = `${AUTH_API}/_/v2/signin`;
         console.log(url);
         Axios.post(url, user)
             .then(data => {
