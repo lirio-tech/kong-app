@@ -391,8 +391,20 @@ export default {
                     this.loadingCancel = false;
                     this.selectedOpen = false;
                     this.findAgendamento();
-                }, () => {
+                }, (err) => {
                   this.loadingCancel = false;
+                  if(err.response.status === 401) {
+                    this.$router.push('/login');
+                    return;
+                  }
+                  if(err.response.status === 412) {
+                    alert(err.response.data.message)      
+                    return;
+                  }
+                  if(err.response.status === 422) {
+                    alert(err.response.data.message)            
+                    return;
+                  }                                                
                   alert('Erro ao Concluir :(');
                 })              
           }

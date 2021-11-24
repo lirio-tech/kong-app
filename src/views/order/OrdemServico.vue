@@ -250,7 +250,7 @@
 import gateway from '../../api/gateway'
 import orderGateway from '../../api/orderGateway'
 import { mapGetters } from 'vuex'
-import DialogPlan from '../components/DialogPlan'
+import DialogPlan from '../../components/DialogPlan'
 import storage from '../../storage'
 import UserTypes from '../../utils/UserTypes'
 import HeaderBackTitle from '../../components/HeaderBackTitle.vue'
