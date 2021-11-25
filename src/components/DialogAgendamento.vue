@@ -349,8 +349,21 @@ export default {
                     this.$emit('scheduled-success',new Date(),new Date())
                     this.$emit('show-dialog',false)
                   },
-                  () => { 
+                  (err) => { 
                     this.loagindAgendar = false; 
+                    if(err.response.status === 401) {
+                      this.$router.push('/login');
+                      return;
+                    }
+                    if(err.response.status === 412) {
+                      alert(err.response.data.message)
+                      this.dialogPlan = true;                
+                      return;
+                    }
+                    if(err.response.status === 422) {
+                      alert(err.response.data.message)            
+                      return;
+                    }                              
                     alert('Erro ao registrar agendamento')
                   }
                 )
