@@ -103,7 +103,10 @@
                                 </th>                                                                                                  
                                 <th class="text-center caption">
                                   Vencimento
-                                </th>                                  
+                                </th> 
+                                <th class="text-center caption">
+                                  Ult. Lacto
+                                </th>                                                                  
                               </tr>
                             </thead>
                             <tbody>
@@ -119,6 +122,7 @@
                                 <td class="text-center caption">R$ {{ c.total | currency }}</td>
                                 <td class="text-center caption">{{ c.planName }}</td>
                                 <td class="text-center caption">{{ c.planDateEnd }}</td>
+                                <td class="text-center caption">{{ c.lastAt }}</td>
                               </tr>
                             </tbody>
                           </template>
