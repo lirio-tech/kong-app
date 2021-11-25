@@ -73,12 +73,12 @@
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>     
-                        <router-link v-if="userLogged && userLogged.type === 'sys_admin'" to="/admin/purchases-products" style="color: inherit; text-decoration: none">
+                        <!-- <router-link v-if="userLogged && userLogged.type === 'sys_admin'" to="/admin/purchases-products" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                             Compras de Produtos <v-chip color="primary" style="margin-left: 15px;" outlined small>SYS</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
-                        </router-link>                                                                     
+                        </router-link>                                                                      -->
                         <router-link v-if="userLogged" :to="'/perfil'" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                             Configurações
@@ -91,14 +91,7 @@
                                 <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
-                        </router-link>          
-                        <router-link v-if="isAdmin()" to="/users-balance" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Pagamentos
-                                <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                            
+                        </router-link>                                  
                         <router-link v-if="userLogged && userLogged.type === 'hairdresser'" :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Meu Extrato
