@@ -45,7 +45,7 @@
                 </v-alert>
                 </v-card>
             </v-col>
-            <v-row style="margin-bottom: -23px">
+            <v-row style="margin-bottom: -10px">
                 <v-col cols="12">         
 
                     <v-sheet
@@ -67,30 +67,11 @@
 
                 </v-col>                
             </v-row> 
-            <v-row v-if="userLogged.username === 'diego'" style="margin-bottom: -25px">
+            <!-- <v-row v-if="userLogged.username === 'diego'" style="margin-bottom: -25px">
                 <v-col cols="12">
                     <card-xp :userLogged="userLogged" :company="company" />
                 </v-col>
-            </v-row>             
-            <v-row>
-              
-              <v-col cols="12">
-                <HomeBalanceEmployeeToReceiver
-                    :userLogged="userLogged"
-                    :userBalance="userBalance"
-                    :loading="loadingBalance"
-                    v-if="!isAdmin()"
-                />  
-
-                <HomeBalanceAdminToPay
-                  :userLogged="userLogged"
-                  :balanceFull="balanceFull"
-                  :loading="loadingBalance"
-                  v-if="isAdmin()"
-                />                
- 
-              </v-col>
-            </v-row>
+            </v-row>              -->
             <v-row justify="center">
       
                       <v-expansion-panels 
@@ -209,6 +190,25 @@
               style="margin-top: 12px;"
               :userLogged="userLogged"
             />
+
+            <v-row style="margin-top: 1px;">
+              <v-col cols="12">
+                <HomeBalanceEmployeeToReceiver
+                    :userLogged="userLogged"
+                    :userBalance="userBalance"
+                    :loading="loadingBalance"
+                    v-if="!isAdmin()"
+                />  
+
+                <HomeBalanceAdminToPay
+                  :userLogged="userLogged"
+                  :balanceFull="balanceFull"
+                  :loading="loadingBalance"
+                  v-if="isAdmin()"
+                />                
+ 
+              </v-col>
+            </v-row>            
             
         </v-main>
       </VuePullRefresh>
@@ -238,7 +238,7 @@ import ButtonSliderSite from '../components/ButtonSliderSite.vue'
 import ButtonSliderPix from '../components/ButtonSliderPix.vue'
 import ButtonSliderKongbot from '../components/ButtonSliderKongbot.vue'
 import ButtonSliderAnalytics from '../components/ButtonSliderAnalytics.vue'
-import CardXp from '../components/CardXp.vue'
+//import CardXp from '../components/CardXp.vue'
 export default { 
     name: 'Home',
     components: { 
@@ -255,7 +255,7 @@ export default {
       ButtonSliderPix,
       ButtonSliderKongbot,
       ButtonSliderAnalytics,
-      CardXp,
+      // CardXp,
     },
     data: () => ({
       config: {
