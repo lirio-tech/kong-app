@@ -174,15 +174,20 @@ export default {
         return dateUtil.getDayOfWeekToday(date)
       },
       getTimePast(dateTimeStartAt) {
+        
+          let dtStart = new Date(dateTimeStartAt)
+          dtStart.setHours(dtStart.getHours()+3);
 
-          if(new Date(dateTimeStartAt).getTime() > new Date()) {
+          if(dtStart.getTime() > new Date()) {
             return {
                 description: ``,
                 show: false
             }                      
           }
 
-          const diff = Math.abs(new Date().getTime() - new Date(dateTimeStartAt).getTime());
+          
+          console.log();
+          const diff = Math.abs(new Date().getTime() - dtStart.getTime());
           const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
           if(days > 30) {
               let vl = Math.trunc(days/30)
@@ -191,6 +196,9 @@ export default {
                   show: true
               }            
           }
+
+          console.log('diff',diff);
+
           const horas = Math.ceil(diff / (1000 * 60 * 60));
           if(horas > 24) {
               let vl = Math.trunc(horas/24)
