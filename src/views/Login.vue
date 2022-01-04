@@ -18,12 +18,12 @@
                       <v-img 
                         v-if="$vuetify.theme.dark"
                         avatar
-                        src="../assets/kong.png" 
+                        src="../assets/img/kongapp.png" 
                       />
                       <v-img 
                         v-else
                         avatar
-                        src="../assets/lady.png" 
+                        src="../assets/img/kongapp.png" 
                       />                      
                    </v-avatar>
                   </center>
