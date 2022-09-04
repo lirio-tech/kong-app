@@ -35,12 +35,3 @@ npm version patch
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-Calendar:
-
-VUE -> https://stackoverflow.com/questions/57717902/how-to-change-vuetify-calendar-date-format   
-
-Date Javascript:   
-https://clovisdasilvaneto.github.io/dominando-o-objeto-date-no-javascript
-
