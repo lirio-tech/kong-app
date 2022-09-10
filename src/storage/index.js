@@ -62,4 +62,11 @@ export default {
         }
         return null;
     },
+    setFiltroSelected(type) {
+        localStorage.setItem('filterSelected', type);
+    },
+    getFiltroSelected() {
+        return localStorage.getItem('filterSelected');
+    }
+
 } 
