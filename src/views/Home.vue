@@ -269,11 +269,11 @@ export default {
       dialogPlan: false,
       dialogRateUs: false,
       itemsPeriodo: ['Ontem', 'Hoje', 'Mes Atual', 'Mes Anterior', 'Personalizado'],
+      selectPeriodo: 'Hoje',
       periodo: {
         inicio: new Date(),
         fim: new Date()
       },
-      selectPeriodo: 'Hoje',
       ordersGroup: {
         total: 0.0,
         totalCompany: 0.0,
@@ -304,6 +304,7 @@ export default {
         return UserTypes.isAdmin(this.userLogged.type);
       },
       selectedPeriodo() {
+        storage.setFiltroSelected(this.selectPeriodo);
         if(this.selectPeriodo === 'Ontem') {
            let ontem = new Date();
            ontem.setDate(ontem.getDate()-1);
@@ -470,10 +471,17 @@ export default {
       }
     },
     beforeMount() {
+
       this.userLogged = storage.getUserLogged();
       this.company = storage.getCompany();
-      this.periodo = this.formatarPeriodo(new Date(), new Date())
-      this.ordersGroup.periodDescription = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+
+      let filterStorage = storage.getFiltroSelected();
+      if(filterStorage) this.selectPeriodo = filterStorage;
+      
+      //this.periodo = this.formatarPeriodo(new Date(), new Date())
+      //this.ordersGroup.periodDescription = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
+      this.selectedPeriodo();
+
       this.filterOrders()
       this.findBalance();
     },
