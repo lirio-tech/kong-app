@@ -42,7 +42,7 @@
                                     <div style="margin-top:10px;">
                                         <span class="font-weight-black" >
                                             {{ userLogged.name.split(' ')[0] }}
-                                        </span>
+                                        </span>                                   
                                     </div>
                                     <div>
                                         <span class="font-weight-thin">veja seu perfil</span>
@@ -141,6 +141,7 @@
                             style="color: inherit; text-decoration: none">
                             <v-col cols="10" class="font-weight-medium">
                                 Ajuda
+                               <small class="font-weight-thin"> v{{ version() }}</small>
                             </v-col>
                             <v-divider class="my-1"></v-divider>
                         </router-link>  
@@ -175,6 +176,8 @@ import DialogPlan from './DialogPlan'
 import gateway from '../api/gateway';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes'
+import appConfig from '../utils/appConfig'
+
 export default {
         name: 'AppBar',
         components: {
@@ -205,7 +208,10 @@ export default {
             },
             isAdmin() {
                 return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
-            }
+            },
+            version() {
+                return appConfig.version();
+            }              
         },  
         beforeMount() {
             this.userLogged = storage.getUserLogged();
