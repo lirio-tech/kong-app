@@ -304,7 +304,13 @@ export default {
         return UserTypes.isAdmin(this.userLogged.type);
       },
       selectedPeriodo() {
-        storage.setFiltroSelected(this.selectPeriodo);
+        
+        if(this.selectPeriodo === 'Personalizado') { 
+          storage.setFiltroSelected('Mes Atual');
+        } else {
+          storage.setFiltroSelected(this.selectPeriodo);
+        }
+
         if(this.selectPeriodo === 'Ontem') {
            let ontem = new Date();
            ontem.setDate(ontem.getDate()-1);
@@ -482,7 +488,7 @@ export default {
       //this.ordersGroup.periodDescription = 'Hoje (' + new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ')';
       this.selectedPeriodo();
 
-      this.filterOrders()
+      //this.filterOrders()
       this.findBalance();
     },
     computed: {
