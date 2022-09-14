@@ -374,6 +374,10 @@ export default {
       } ,         
     },
     beforeMount() {
+      let filterStorage = storage.getFiltroSelected();
+      if(filterStorage) this.selectPeriodo = filterStorage;
+      this.selectedPeriodo();
+
       this.userLogged = storage.getUserLogged();
       this.company = storage.getCompany();
       this.periodo = this.formatarPeriodo(new Date(), new Date())
