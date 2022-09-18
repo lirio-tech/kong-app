@@ -16,6 +16,32 @@
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on" style="margin-bottom: 20px;">
+                    <v-icon style="font-size: 1.6rem">mdi-bell-outline</v-icon>
+                    <!-- <v-icon color="red" style="font-size: 1.6rem">mdi-bell-badge-outline</v-icon> -->
+                </v-btn>
+                </template>
+                <v-card >
+                    <v-list-item-content class="justify-center">
+
+                        <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Funcionários
+                                <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                                  
+                        <router-link :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Meu Extrato
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                                                    
+                    </v-list-item-content>
+                </v-card>                
+            </v-menu>
+            <v-menu bottom min-width="200px" rounded offset-y>
+                <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on" style="margin-bottom: 20px;">
                     <v-icon v-if="userLogged" style="font-size: 1.6rem">mdi-account-circle</v-icon>
                     <v-icon v-else style="font-size: 1.6rem">mdi-menu</v-icon>
                 </v-btn>
