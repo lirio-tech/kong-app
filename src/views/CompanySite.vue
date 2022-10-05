@@ -203,6 +203,14 @@
                 >
                   <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
                     <h3 class="black--text">{{infoContent}}</h3>
+                    <br/>
+                    <p>
+                      <a :href="`https://www.google.com/maps/?q=${companySite.address.lat},${companySite.address.lng}`"
+                        target="blank"
+                      >
+                        Google Maps
+                      </a>
+                    </p>
                   </gmap-info-window>                
                     <gmap-marker 
                       v-for="(item, key) in coordinates" 
