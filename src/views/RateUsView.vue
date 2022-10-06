@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AppBar from '../components/AppBar'
+import AppBar from '@/components/appbar/AppBar'
 import RateUs from '../components/RateUs'
 export default {
   name: "Denounce",
