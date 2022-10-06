@@ -23,7 +23,7 @@
         </v-toolbar>    
         <v-card-text>
           
-                  <v-row v-if="notifications.length !== 0 && !loading">
+                  <v-container v-if="notifications.length !== 0 && !loading">
                       
                           <v-sheet min-height="70vh" rounded="lg" >           
                               <v-simple-table >
@@ -62,7 +62,7 @@
                               </v-simple-table>                        
                           </v-sheet>
                       
-                  </v-row>              
+                  </v-container>              
               
         </v-card-text>          
         <div style="flex: 1 1 auto;"></div>
