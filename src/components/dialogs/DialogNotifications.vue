@@ -23,42 +23,39 @@
         </v-toolbar>    
         <v-card-text>
           
-                           
-                              <v-simple-table fluid v-if="notifications.length !== 0 && !loading">
-                                <template v-slot:default>
-                                  <tbody>
-                                    <tr
-                                      v-for="n in notifications"
-                                      :key="n._id"
-                                      @click="clickRow(n)"
-                                    >
-                                      <td>
-                                        <v-btn v-if="n.mdi" fab>
-                                              <v-icon>{{ n.mdi }}</v-icon>
-                                        </v-btn>
-                                        <v-btn v-else fab>
-                                              <span  class="icon-emoji-30">
-                                              {{ n.emojiIcon }}
-                                              </span>
-                                        </v-btn>
-                                      </td>
-                                      <td style="padding: 30px 0px 20px 0px;">
-                                        <p class="grey--text">
-                                          {{ n.title }} - {{n.createdAt}}
-                                          <span style="padding-left: 10px;" class="red--text">
-                                            <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
-                                          </span>
-                                        </p> 
-                                        <span>
-                                          {{ n.description }}
-                                        </span>
-
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </template>
-                              </v-simple-table>                        
-                             
+            <v-simple-table fluid v-if="notifications.length !== 0 && !loading">
+              <template v-slot:default>
+                  <tbody>
+                    <tr
+                      v-for="n in notifications"
+                      :key="n._id"
+                      @click="clickRow(n)"
+                    >
+                      <td>
+                        <v-btn v-if="n.mdi" fab>
+                              <v-icon>{{ n.mdi }}</v-icon>
+                        </v-btn>
+                        <v-btn v-else fab>
+                              <span  class="icon-emoji-30">
+                              {{ n.emojiIcon }}
+                              </span>
+                        </v-btn>
+                      </td>
+                      <td style="padding: 30px 0px 20px 0px;">
+                        <p class="grey--text">
+                          {{ n.title }} - {{n.createdAt}}
+                          <span style="padding-left: 10px;" class="red--text">
+                            <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
+                          </span>
+                        </p> 
+                        <span>
+                          {{ n.description }}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+              </template>
+            </v-simple-table>                        
               
         </v-card-text>          
         <div style="flex: 1 1 auto;"></div>
