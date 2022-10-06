@@ -23,10 +23,8 @@
         </v-toolbar>    
         <v-card-text>
           
-                  <v-container v-if="notifications.length !== 0 && !loading">
-                      
-                          <v-sheet min-height="70vh" rounded="lg" >           
-                              <v-simple-table >
+                           
+                              <v-simple-table fluid v-if="notifications.length !== 0 && !loading">
                                 <template v-slot:default>
                                   <tbody>
                                     <tr
@@ -47,7 +45,7 @@
                                       <td style="padding: 30px 0px 20px 0px;">
                                         <p class="grey--text">
                                           {{ n.title }} - {{n.createdAt}}
-                                          <span class="chevron-right red--text">
+                                          <span style="padding-left: 10px;" class="red--text">
                                             <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
                                           </span>
                                         </p> 
@@ -60,9 +58,7 @@
                                   </tbody>
                                 </template>
                               </v-simple-table>                        
-                          </v-sheet>
-                      
-                  </v-container>              
+                             
               
         </v-card-text>          
         <div style="flex: 1 1 auto;"></div>
