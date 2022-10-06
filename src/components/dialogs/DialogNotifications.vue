@@ -35,11 +35,18 @@
                                       @click="clickRow(n)"
                                     >
                                       <td>
-                                        <span class="icon-emoji-30">💎</span> 
+                                        <v-btn v-if="n.mdi" fab>
+                                              <v-icon>{{ n.mdi }}</v-icon>
+                                        </v-btn>
+                                        <v-btn v-else fab>
+                                              <span  class="icon-emoji-30">
+                                              {{ n.emojiIcon }}
+                                              </span>
+                                        </v-btn>
                                       </td>
                                       <td style="padding: 30px 0px 20px 0px;">
                                         <p class="grey--text">
-                                          {{n.createdAt}} - {{ n.title }} 
+                                          {{ n.title }} - {{n.createdAt}}
                                           <span class="chevron-right red--text">
                                             <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
                                           </span>
@@ -76,7 +83,12 @@ export default {
     }
   }, 
   methods: {
-
+    clickRow(notification) {
+        // TODO Request to Backend -> update notification to read - isNotRead = false
+        if(notification.path) {
+          alert(notification.path);
+        }
+    }
   },
   computed: {
 
@@ -91,14 +103,22 @@ export default {
         title: "Assinatura",
         description: "Seu plano de assinatura está vencendo, realize o pagamento e continue mantendo a visão da seu Faturamento, Agendamentos, Comissão :) ",
         createdAt: '05/10/2022',
-        isNotRead: false
+        isNotRead: false,
+        type: 'signature',
+        mdi: 'mdi-account-plus',
+        emojiIcon: '💎',
+        path: ''        
       },
       {
         _id: "asewcewc-wcv-v-ev--v-dv-dfv",
-        title: "Assinatura",
-        description: "Seu plano de assinatura está vencendo, realize o pagamento e continue mantendo a visão da seu Faturamento, Agendamentos, Comissão :) ",
+        title: "Novo Agendamento",
+        description: "Lucas Silva realizou um novo Agendamento, clica aqui para realizar a confirmação.",
         createdAt: '05/10/2022',
-        isNotRead: true
+        isNotRead: true,
+        type: 'newSchedule',
+        mdi: '',
+        emojiIcon: '💎',
+        path: 'Tela de Agendamento' 
       }      
     ]
   }
