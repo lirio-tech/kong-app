@@ -182,7 +182,7 @@
 
 <script>
 import DialogPlan from './DialogPlan'
-import DialogNotifitions from './dialogs/DialogNotifications'
+import DialogNotifitions from './appbar/notifications/DialogNotifications'
 import gateway from '../api/gateway';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes'

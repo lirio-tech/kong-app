@@ -222,7 +222,7 @@
 <script>
 import gateway from '../api/gateway'
 import orderGateway from '../api/orderGateway'
-import AppBar from '../components/AppBar'
+import AppBar from '../components/appbar/AppBar'
 import DialogPlan from '../components/DialogPlan'
 import DialogRateUs from '../components/DialogRateUs'
 import HomeOrderServiceEmployee from '../components/HomeOrderServiceEmployee'
