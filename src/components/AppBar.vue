@@ -13,31 +13,13 @@
             </router-link>
         </v-row>
         <v-row justify="end" align="center" >
-            <v-menu bottom min-width="200px" rounded offset-y>
+            <v-menu bottom min-width="200px" rounded offset-y v-if="userLogged && userLogged.type === 'sys_admin'">
                 <template v-slot:activator="{ on }">
-                <v-btn icon v-on="on" style="margin-bottom: 20px;">
+                <v-btn icon v-on="on" @click="showNotificationsDialog(true)" style="margin-bottom: 20px;">
                     <v-icon style="font-size: 1.6rem">mdi-bell-outline</v-icon>
                     <!-- <v-icon color="red" style="font-size: 1.6rem">mdi-bell-badge-outline</v-icon> -->
                 </v-btn>
                 </template>
-                <v-card >
-                    <v-list-item-content class="justify-center">
-
-                        <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Funcionários
-                                <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                                  
-                        <router-link :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Meu Extrato
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                                                    
-                    </v-list-item-content>
-                </v-card>                
             </v-menu>
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
@@ -194,11 +176,13 @@
             </v-menu>
         </v-row>
         <DialogPlan :dialog="dialogPlan" v-on:show-plan-dialog="showPlanDialog" />
+        <DialogNotifitions :dialog="dialogNotifitions" v-on:show-notifications-dialog="showNotificationsDialog" />
     </v-app-bar>    
 </template>
 
 <script>
 import DialogPlan from './DialogPlan'
+import DialogNotifitions from './DialogNotifications'
 import gateway from '../api/gateway';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes'
@@ -207,13 +191,15 @@ import appConfig from '../utils/appConfig'
 export default {
         name: 'AppBar',
         components: {
-            DialogPlan
+            DialogPlan,
+            DialogNotifitions
         },
         data:() => ({
             userLogged: null,
             company: null,
             dialog: false,
             dialogPlan: false,
+            dialogNotifitions: false,
             themeLadyModoON: true
         }),
         methods: {
@@ -237,6 +223,9 @@ export default {
             },
             version() {
                 return appConfig.version();
+            },
+            showNotificationsDialog(show) {
+                this.dialogNotifitions = show
             }              
         },  
         beforeMount() {
