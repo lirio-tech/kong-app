@@ -7,13 +7,13 @@
   >
       <v-card>
         <v-toolbar
-          class="second white--text" height="240"
+          class="second white--text" height="190"
         >
           <v-toolbar-title >
 
               <p>
                   <v-btn
-                    style="padding-left: 40px; position: absolute; top: 40px;"
+                    style="padding-left: 36px; position: absolute; top: 25px;"
                     icon
                     small
                     @click="$emit('show-menu-user-dialog', false)"
@@ -29,7 +29,7 @@
                         >
                             <v-row class="mr-0 ml-0">
                                 <v-col cols="5">
-                                    <v-avatar size="60" color="grey">
+                                    <v-avatar size="50" color="grey">
                                         <v-icon
                                             medium
                                             dark
@@ -61,122 +61,129 @@
             <v-simple-table fluid>
               <template v-slot:default>
                   <tbody>
-                    <tr
-                      
-                    >
+                    <tr v-if="userLogged && userLogged.type === 'sys_admin'">
                       <td style="padding: 30px 0px 20px 0px;">
-                          <router-link v-if="userLogged && userLogged.type === 'sys_admin'" to="/system" style="color: inherit; text-decoration: none">
+                          <router-link to="/system" style="color: inherit; text-decoration: none">
                               <v-col cols="10" class="font-weight-medium">
                                   System <v-chip color="red" style="margin-left: 15px;" outlined small>SYSTEM</v-chip>
                               </v-col>
-                              <v-divider class="my-1"></v-divider>
                           </router-link>    
                       </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                          <router-link v-if="userLogged" :to="'/perfil'" style="color: inherit; text-decoration: none">
-                              <v-col cols="10" class="font-weight-medium">
-                              Configurações
-                              </v-col> 
-                              <v-divider class="my-1"></v-divider>
-                          </router-link>                          
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link v-if="isAdmin()" to="/admin/users" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Funcionários
-                                <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                                                        
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link v-if="userLogged && userLogged.type === 'hairdresser'" :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Meu Extrato
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                                                                          
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link v-if="!userLogged" to="/login" style="color: inherit; text-decoration: none">
-                              <v-col cols="10" class="font-weight-medium">
-                                  Login
-                              </v-col>
-                              <v-divider class="my-1"></v-divider>
-                        </router-link>     
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link v-if="!userLogged" to="/sign-up" style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Cadastre-se
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                           
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <div 
-                            style="cursor: pointer;" @click="showPlanDialog(true)">                           
-                            <v-col cols="12" class="font-weight-medium">
-                                Planos <v-chip v-if="!company || (company && company.plan.name === 'Free')" color="orange" style="margin-left: 15px;" outlined small>Seja Premium</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </div>                        
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link 
-                            v-if="false"
-                            :to="isAdmin() ? '/admin/agendamentos' : '/agendamentos'" 
-                            style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Agendamentos 
-                                <v-chip color="primary" style="margin-left: 15px;" outlined small>Novo</v-chip>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                           
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link 
-                            to="/public/avalie-nos" 
-                            style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Avalie-nos
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                        
-                      </td>
-                      <td style="padding: 30px 0px 20px 0px;">
-                        <router-link 
-                            to="/public/help" 
-                            style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Ajuda
-                               <small class="font-weight-thin"> v{{ version() }}</small>
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>                        
-                      </td>
-
-                      <router-link 
-                            to="/public/fale-conosco" 
-                            style="color: inherit; text-decoration: none">
-                            <v-col cols="10" class="font-weight-medium">
-                                Fale Conosco
-                            </v-col>
-                            <v-divider class="my-1"></v-divider>
-                        </router-link>  
-                        <div 
-                            style="cursor: pointer;" 
-                            @click="logout"
-                            v-if="userLogged"
-                        >                           
-                            <v-col cols="12" class="font-weight-medium">
-                                Sair
-                            </v-col>
-                        </div>
-
-
-
                     </tr>
+                    <tr v-if="userLogged">
+                      <td style="padding: 30px 0px 20px 0px;">
+                            <router-link :to="'/perfil'" style="color: inherit; text-decoration: none">
+                                <v-col cols="10" class="font-weight-medium">
+                                Configurações
+                                </v-col> 
+                            </router-link>                          
+                        </td>
+                      </tr>
+                      <tr v-if="isAdmin()" >
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link to="/admin/users" style="color: inherit; text-decoration: none">
+                              <v-col cols="10" class="font-weight-medium">
+                                  Funcionários
+                                  <v-chip color="primary" style="margin-left: 15px;" outlined small>ADMIN</v-chip>
+                              </v-col>
+                          </router-link>                                                        
+                        </td>
+                      </tr>
+                      <tr v-if="userLogged && userLogged.type === 'hairdresser'">
+                        <td style="padding: 30px 0px 20px 0px;" >
+                          <router-link :to="{ path: '/users-balance-detail/'+userLogged._id }" style="color: inherit; text-decoration: none">
+                              <v-col cols="10" class="font-weight-medium">
+                                  Meu Extrato
+                              </v-col>
+                          </router-link>                                                                          
+                        </td>
+                      </tr>
+                      <tr v-if="!userLogged">
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link to="/login" style="color: inherit; text-decoration: none">
+                                <v-col cols="10" class="font-weight-medium">
+                                    Login
+                                </v-col>
+                          </router-link>     
+                        </td>
+                      </tr>
+                      <tr v-if="!userLogged">
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link to="/sign-up" style="color: inherit; text-decoration: none">
+                              <v-col cols="10" class="font-weight-medium">
+                                  Cadastre-se
+                              </v-col>
+                          </router-link>                           
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <div 
+                              style="cursor: pointer;" @click="showPlanDialog(true)">                           
+                              <v-col cols="12" class="font-weight-medium">
+                                  Planos <v-chip v-if="!company || (company && company.plan.name === 'Free')" color="orange" style="margin-left: 15px;" outlined small>Seja Premium</v-chip>
+                              </v-col>
+                          </div>                        
+                        </td>
+                      </tr>
+                      <tr v-if="userLogged">
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link 
+                              :to="isAdmin() ? '/admin/agendamentos' : '/agendamentos'" 
+                              style="color: inherit; text-decoration: none">
+                              <v-col cols="10" class="font-weight-medium">
+                                  Agendamentos 
+                              </v-col>
+                          </router-link>                           
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link 
+                              to="/public/avalie-nos" 
+                              style="color: inherit; text-decoration: none">
+                              <v-col cols="10" class="font-weight-medium">
+                                  Avalie-nos
+                              </v-col>
+                          </router-link>                        
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link 
+                              to="/public/help" 
+                              style="color: inherit; text-decoration: none">
+                              <v-col cols="10" class="font-weight-medium">
+                                  Ajuda
+                                <small class="font-weight-thin"> v{{ version() }}</small>
+                              </v-col>
+                          </router-link>                        
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 30px 0px 20px 0px;">
+                          <router-link 
+                                to="/public/fale-conosco" 
+                                style="color: inherit; text-decoration: none">
+                                <v-col cols="10" class="font-weight-medium">
+                                    Fale Conosco
+                                </v-col>
+                            </router-link>  
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 30px 0px 20px 0px;">
+                            <div 
+                                style="cursor: pointer;" 
+                                @click="logout"
+                                v-if="userLogged"
+                            >                           
+                                <v-col cols="12" class="font-weight-medium">
+                                    Sair
+                                </v-col>
+                            </div>
+                        </td>
+                      </tr> 
                   </tbody>
               </template>
             </v-simple-table>                        
@@ -191,8 +198,10 @@
 </template>
 
 <script>
-import storage from '../../../storage'
+import storage from '@/storage'
 import DialogPlan from '@/components/DialogPlan'
+import UserTypes from '@/utils/UserTypes'
+import appConfig from '@/utils/appConfig'
 export default {
   name: 'DialogMenuUser',
   props:['dialog'],
@@ -208,6 +217,16 @@ export default {
   methods: {
     showPlanDialog(show) {
       this.dialogPlan = show
+    },    
+    isAdmin() {
+        return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
+    },    
+    version() {
+      return appConfig.version();
+    },    
+    logout() {
+      storage.logout();
+      this.$router.push('/login');
     },    
   },
   computed: {
