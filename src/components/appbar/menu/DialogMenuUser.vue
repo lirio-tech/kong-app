@@ -123,8 +123,58 @@
                         </div>                        
                       </td>
                       <td style="padding: 30px 0px 20px 0px;">
-                      
+                        <router-link 
+                            v-if="false"
+                            :to="isAdmin() ? '/admin/agendamentos' : '/agendamentos'" 
+                            style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Agendamentos 
+                                <v-chip color="primary" style="margin-left: 15px;" outlined small>Novo</v-chip>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                           
                       </td>
+                      <td style="padding: 30px 0px 20px 0px;">
+                        <router-link 
+                            to="/public/avalie-nos" 
+                            style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Avalie-nos
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                        
+                      </td>
+                      <td style="padding: 30px 0px 20px 0px;">
+                        <router-link 
+                            to="/public/help" 
+                            style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Ajuda
+                               <small class="font-weight-thin"> v{{ version() }}</small>
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>                        
+                      </td>
+
+                      <router-link 
+                            to="/public/fale-conosco" 
+                            style="color: inherit; text-decoration: none">
+                            <v-col cols="10" class="font-weight-medium">
+                                Fale Conosco
+                            </v-col>
+                            <v-divider class="my-1"></v-divider>
+                        </router-link>  
+                        <div 
+                            style="cursor: pointer;" 
+                            @click="logout"
+                            v-if="userLogged"
+                        >                           
+                            <v-col cols="12" class="font-weight-medium">
+                                Sair
+                            </v-col>
+                        </div>
+
+
 
                     </tr>
                   </tbody>
