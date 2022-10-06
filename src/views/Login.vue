@@ -96,7 +96,7 @@
 import gateway from '../api/gateway'
 import SnackBar from '../components/SnackBar'
 import storage from '../storage'
-import AppBar from '../components/AppBar'
+import AppBar from '@/components/appbar/AppBar'
 import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue'
 export default {
         components: {
