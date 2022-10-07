@@ -23,7 +23,7 @@
         </v-toolbar>    
         <v-card-text>
           
-            <v-simple-table fluid v-if="notifications.length !== 0 && !loading">
+            <v-simple-table fluid v-if="notifications.list.length !== 0 && !loading">
               <template v-slot:default>
                   <tbody>
                     <tr
@@ -68,11 +68,10 @@
 import storage from '@/storage'
 export default {
   name: 'DialogNotifications',
-  props:['dialog'],
+  props:['dialog', 'notifications'],
   data () {
     return {
       userLogged: {},
-      notifications: [],
     }
   }, 
   methods: {
@@ -90,30 +89,30 @@ export default {
     this.userLogged = storage.getUserLogged();
   },
   mounted() {
-    this.notifications = [
-      {
-        _id: "asewcewc-wcv-v-ev--v-dv-dfv",
-        title: "Assinatura",
-        description: "Seu plano de assinatura está vencendo, realize o pagamento e continue mantendo a visão da seu Faturamento, Agendamentos, Comissão :) ",
-        createdAt: '05/10/2022',
-        isNotRead: false,
-        type: 'signature',
-        mdi: 'mdi-account-plus',
-        emojiIcon: '💎',
-        path: ''        
-      },
-      {
-        _id: "asewcewc-wcv-v-ev--v-dv-dfv",
-        title: "Novo Agendamento",
-        description: "Lucas Silva realizou um novo Agendamento, clica aqui para realizar a confirmação.",
-        createdAt: '05/10/2022',
-        isNotRead: true,
-        type: 'newSchedule',
-        mdi: '',
-        emojiIcon: '💎',
-        path: 'Tela de Agendamento' 
-      }      
-    ]
+    // this.notifications = [
+    //   {
+    //     _id: "asewcewc-wcv-v-ev--v-dv-dfv",
+    //     title: "Assinatura",
+    //     description: "Seu plano de assinatura está vencendo, realize o pagamento e continue mantendo a visão da seu Faturamento, Agendamentos, Comissão :) ",
+    //     createdAt: '05/10/2022',
+    //     isNotRead: false,
+    //     type: 'signature',
+    //     mdi: 'mdi-account-plus',
+    //     emojiIcon: '💎',
+    //     path: ''        
+    //   },
+    //   {
+    //     _id: "asewcewc-wcv-v-ev--v-dv-dfv",
+    //     title: "Novo Agendamento",
+    //     description: "Lucas Silva realizou um novo Agendamento, clica aqui para realizar a confirmação.",
+    //     createdAt: '05/10/2022',
+    //     isNotRead: true,
+    //     type: 'newSchedule',
+    //     mdi: '',
+    //     emojiIcon: '💎',
+    //     path: 'Tela de Agendamento' 
+    //   }      
+    // ]
   }
 }
 </script>

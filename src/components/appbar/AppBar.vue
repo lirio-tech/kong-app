@@ -33,7 +33,8 @@
         
         <DialogMenuUser :dialog="dialogMenuUser" v-on:show-menu-user-dialog="showMenuUserDialog" />
 
-        <DialogNotifitions :dialog="dialogNotifitions" v-on:show-notifications-dialog="showNotificationsDialog" />
+        <DialogNotifitions :dialog="dialogNotifitions" :notifications="notifications" v-on:show-notifications-dialog="showNotificationsDialog" />
+    
     </v-app-bar>    
 </template>
 
@@ -41,6 +42,7 @@
 import DialogNotifitions from '@/components/appbar/notifications/DialogNotifications'
 import DialogMenuUser from '@/components/appbar/menu/DialogMenuUser'
 import gateway from '../../api/gateway';
+import notificationGateway from '@/api/notificationGateway'
 import storage from '../../storage';
 import UserTypes from '../../utils/UserTypes'
 import appConfig from '../../utils/appConfig'
@@ -58,8 +60,8 @@ export default {
             dialogMenuUser: false,
             notifications: {
                 list: [],
-                amountNotRead: 1,
-                amountRead: 10
+                amountNotRead: 0,
+                amountRead: 0
             }
         }),
         methods: {
@@ -91,7 +93,15 @@ export default {
                 () => {
                     alert('Erro, tente novamente mais tarde');
                 })
-            }            
+            }
+            
+            notificationGateway.get(
+                res => {
+                    this.notifications = res;
+                }, err => {
+                    console.error('Erro ao buscar notificacoes', err);
+                }
+            )            
         },       
     }
 </script>
