@@ -73,7 +73,7 @@
 
 <script>
 import gateway from '../../api/gateway';
-import AppBar from '../../components/AppBar'
+import AppBar from '@/components/appbar/AppBar'
 import storage from '../../storage';
 export default {
     name: 'SystemUser',

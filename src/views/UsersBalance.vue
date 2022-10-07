@@ -72,7 +72,7 @@
 
 <script>
 import gateway from '../api/gateway';
-import AppBar from '../components/AppBar'
+import AppBar from '@/components/appbar/AppBar'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';

@@ -42,13 +42,13 @@
                         </v-btn>
                       </td>
                       <td style="padding: 30px 0px 20px 0px;">
-                        <p class="grey--text">
+                        <p>
                           {{ n.title }} - {{n.createdAt}}
                           <span style="padding-left: 10px;" class="red--text">
                             <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
                           </span>
                         </p> 
-                        <span>
+                        <span class="grey--text">
                           {{ n.description }}
                         </span>
                       </td>

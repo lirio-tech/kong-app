@@ -74,7 +74,7 @@
 </template>
 
 <script>
-  import AppBar from '../../components/AppBar'
+  import AppBar from '@/components/appbar/AppBar'
   import DialogPlan from '../../components/DialogPlan'
   import storage from '../../storage';
   export default {

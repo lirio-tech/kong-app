@@ -18,15 +18,9 @@
                         size="90"
                     >
                       <v-img 
-                        v-if="$vuetify.theme.dark"
                         avatar
                         src="../assets/img/kongapp.png" 
                       />
-                      <v-img 
-                        v-else
-                        avatar
-                        src="../assets/img/kongapp.png" 
-                      />                      
                    </v-avatar>
                 </center>                
                 <br/>

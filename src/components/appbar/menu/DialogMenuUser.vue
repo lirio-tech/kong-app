@@ -13,7 +13,7 @@
 
               <p>
                   <v-btn
-                    style="padding-left: 36px; position: absolute; top: 25px;"
+                    :style="userLogged ? 'padding-left: 36px; position: absolute; top: 25px;' : 'padding-left: 57px; position: absolute; top: 25px;'"
                     icon
                     small
                     @click="$emit('show-menu-user-dialog', false)"
@@ -22,13 +22,43 @@
                   </v-btn>      
               </p>
               
+                        
+                        <v-row 
+                          class="mr-0 ml-0"
+                          v-if="!userLogged"  
+                        >
+                                <v-col >
+                                    <v-avatar
+                                        class="profile"
+                                        color="black"
+                                        size="90"
+                                    >
+                                        <v-img 
+                                          avatar
+                                          src="@/assets/img/kongapp.png" 
+                                        />
+                                    </v-avatar>
+                                </v-col>
+                                <v-col > 
+                                    <div>
+                                        <h2 class="font-weight-black" >
+                                          Kongapp         
+                                        </h2>                                   
+                                    </div>
+                                    <div>
+                                        <span class="font-weight-thin">Studio</span>
+                                    </div>
+                                </v-col>
+                        </v-row>                        
+
                         <router-link 
-                            :to="'/perfil'" 
+                          v-else
+                          :to="'/perfil'" 
                             style="color: inherit; text-decoration: none"
-                            v-if="userLogged"
+                            
                         >
                             <v-row class="mr-0 ml-0">
-                                <v-col cols="5">
+                                <v-col >
                                     <v-avatar size="50" color="grey">
                                         <v-icon
                                             medium
@@ -38,14 +68,14 @@
                                         </v-icon>     
                                     </v-avatar>
                                 </v-col>
-                                <v-col cols="7"> 
+                                <v-col > 
                                     <div>
                                         <span class="font-weight-black" >
                                             {{ userLogged.name.split(' ')[0] }}
                                         </span>                                   
                                     </div>
                                     <div>
-                                        <span class="font-weight-thin">veja seu perfil</span>
+                                        <small class="grey--text">veja seu perfil</small>
                                     </div>
                                 </v-col>
                             </v-row>

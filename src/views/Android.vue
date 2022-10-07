@@ -116,7 +116,7 @@
 
 <script>
 import Contact from '../components/Contact'
-import AppBar from '../components/AppBar'
+import AppBar from '@/components/appbar/AppBar'
 import device from '../utils/device'
 export default {
     components: {
