@@ -17,15 +17,20 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>      
           <v-toolbar-title style="margin-left:-10px;">
-              Notificações
+              Notificações 
+              <v-icon
+                v-if="notifications.amountNotRead > 0"
+              >
+                mdi-numeric-{{ notifications.amountNotRead }}-circle
+              </v-icon>
           </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>    
         <v-card-text>
           
-            <v-simple-table fluid v-if="notifications.list.length !== 0 && !loading">
+            <v-simple-table fluid>
               <template v-slot:default>
-                  <tbody>
+                  <tbody v-if="notifications.list.length !== 0 && !loading">
                     <tr
                       v-for="n in notifications.list"
                       :key="n._id"
@@ -54,7 +59,25 @@
                         </span>
                       </td>
                     </tr>
-                  </tbody>
+                  </tbody>  
+                  <tfoot>
+                    <tr
+                      v-if="notifications.list.length === 0"
+                    >                    
+                        <td style="padding-top: 50px;">
+                            <v-btn fab>
+                                  <span  class="icon-emoji-30">
+                                    😓
+                                  </span>
+                            </v-btn>
+                          </td>
+                          <td style="padding: 70px 0px 20px 0px;">
+                            <span class="grey--text">
+                              Não há Notificações para Você no Momento!
+                            </span>
+                          </td>
+                    </tr>
+                  </tfoot>
               </template>
             </v-simple-table>                        
               

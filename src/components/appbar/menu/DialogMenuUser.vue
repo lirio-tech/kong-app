@@ -13,7 +13,7 @@
 
               <p>
                   <v-btn
-                    :style="userLogged ? 'padding-left: 36px; position: absolute; top: 25px;' : 'padding-left: 57px; position: absolute; top: 25px;'"
+                    :style="userLogged ? 'padding-left: 36px; position: absolute; top: 25px;' : 'padding-left: 48px; position: absolute; top: 25px;'"
                     icon
                     small
                     @click="$emit('show-menu-user-dialog', false)"
@@ -22,42 +22,34 @@
                   </v-btn>      
               </p>
               
-                        
-                        <v-row 
-                          class="mr-0 ml-0"
-                          v-if="!userLogged"  
-                        >
-                                <v-col >
-                                    <v-avatar
-                                        class="profile"
-                                        color="black"
-                                        size="90"
-                                    >
-                                        <v-img 
-                                          avatar
-                                          src="@/assets/img/kongapp.png" 
-                                        />
-                                    </v-avatar>
-                                </v-col>
-                                <v-col > 
-                                    <div>
-                                        <h2 class="font-weight-black" >
-                                          Kongapp         
-                                        </h2>                                   
-                                    </div>
-                                    <div>
-                                        <span class="font-weight-thin">Studio</span>
-                                    </div>
-                                </v-col>
-                        </v-row>                        
+                  <v-row 
+                    class="mr-0 ml-0"
+                    v-if="!userLogged"  
+                  >
+                      <v-col > 
+                          <div>
+                            <v-img 
+                              avatar
+                              max-width="400"
+                              src="@/assets/img/kongapp-name-removebg.png" 
+                            />
+                              <small 
+                                class="grey--text"
+                                style="padding-left: 30px"
+                              >
+                                Studio
+                              </small>
+                          </div>
+                      </v-col>
+                  </v-row>                        
 
-                        <router-link 
-                          v-else
-                          :to="'/perfil'" 
-                            style="color: inherit; text-decoration: none"
-                            
-                        >
-                            <v-row class="mr-0 ml-0">
+                  <router-link 
+                    v-else
+                    :to="'/perfil'" 
+                      style="color: inherit; text-decoration: none"
+                      
+                  >
+                      <v-row class="mr-0 ml-0">
                                 <v-col >
                                     <v-avatar size="50" color="grey">
                                         <v-icon
@@ -78,9 +70,9 @@
                                         <small class="grey--text">veja seu perfil</small>
                                     </div>
                                 </v-col>
-                            </v-row>
-                                                                        
-                        </router-link>            
+                      </v-row>
+                                                                  
+                  </router-link>            
                 
 
           </v-toolbar-title>
