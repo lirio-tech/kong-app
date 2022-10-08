@@ -36,16 +36,6 @@
             <v-icon>mdi-facebook</v-icon>
           </v-btn>      
 
-
-          <!-- <a :href="forwardApp()" target="blank" style="color: inherit; text-decoration: none">
-            <v-btn icon >
-              <v-icon>mdi-login</v-icon>
-            </v-btn>              
-          </a> -->
-          <!-- <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn> -->
-
           <template v-slot:extension>
             <v-tabs align-with-title>
 
@@ -110,40 +100,6 @@
       </v-container>
       <v-container v-if="tabView === 'AGENDA'">
         <v-row>
-            <!-- <v-col cols="12" style="margin-left: 0px;">   
-                <span style="font-size: 1.4rem !important;" class="white--text">  
-                    Agenda
-                </span>
-            </v-col>  -->
-            <!-- <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6" >                
-              <v-btn
-               v-if="userLogged && userLogged.type === 'sys_admina'"
-                class="mx-2"
-                active-class="primary white--text"
-                depressed
-                small
-                style="width: 95%;" 
-              >
-                  <span class="icon-emoji">🐵 </span>
-                  <span class="grey--text" style="margin-left: 5px; ">Kongbot</span>          
-              </v-btn>                         
-            </v-col> 
-            <v-col xl="3" lg="3" md="3" sm="6" xs="6" cols="6">   
-              <v-btn
-                class="mx-2"
-                active-class="primary white--text"
-                depressed
-                small
-                style="width: 95%;"
-                @click="sharedMyCompanyAgendamento"
-                v-clipboard:copy="urlAssistantSchedule()"
-                v-clipboard:success="onCopyUrlAssistantSchedule"
-                v-clipboard:error="onError"                   
-              >
-                  <v-icon color="grey">mdi-share</v-icon>
-                  <span class="grey--text" >Compartilhar</span>          
-              </v-btn>   
-            </v-col>             -->
             <v-col xl="4" lg="4" md="4" sm="12" xs="12" cols="12">   
               <hour-working :openAt="companySite.openAt" />
             </v-col>
@@ -163,16 +119,18 @@
               <a
                 v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
                 style="color: inherit; text-decoration: none" 
-                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+                :href="getUrlUber()"
+                target="_blank"
               >
                   <v-img align="" src="@/assets/img/uber.png" height="33" width="33" />
               </a>
             </v-col>              
             <v-col cols="2" >   
               <a
-                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                v-if="false && companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
                 style="color: inherit; text-decoration: none" 
-                :href="`uber://?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+                :href="getUrl99()"
+                target="_blank"
               >
                   <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
               </a>
@@ -181,7 +139,8 @@
               <a 
                 v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none;" 
-                :href="`https://www.waze.com/ul?ll=${companySite.address.lat}%2C${companySite.address.lng}&navigate=yes&zoom=17`"
+                :href="getUrlWaze()"
+                target="_blank"
               >
                   <v-img align="" src="@/assets/img/Waze.png" height="41" width="41" />
               </a>
@@ -203,7 +162,7 @@
                     <h3 class="black--text">{{infoContent}}</h3>
                     <br/>
                     <p>
-                      <a :href="`https://www.google.com/maps/?q=${companySite.address.lat},${companySite.address.lng}`"
+                      <a :href="getUrlGoogleMaps()"
                         target="blank"
                       >
                         Google Maps
@@ -318,7 +277,6 @@ import storage from '../storage'
 import commons from '../utils/commons'
 import UserTypes from '../utils/UserTypes'
 const IMAGES_RANDOM_URL = 'https://picsum.photos/1920/1080?random'
-//const IMAGE_KONG = 'https://i2.wp.com/hypepotamus.com/wp-content/uploads/2018/08/kong-logo.png'
 export default {
   components: { DialogUpdateSite, SiteAgendamentos, DialogPlan, SnackBar, HourWorking, },
   data: () => ({
@@ -360,6 +318,19 @@ export default {
     openFace() {
         window.location.href = `https://facebook.com/${this.companySite.facebook}`        
     }, 
+    getUrlGoogleMaps() {
+        return `https://www.google.com/maps/?q=${this.companySite.address.lat},${this.companySite.address.lng}`;
+    },
+    getUrlUber() {
+        //return `uber://?action=setPickup&client_id=${process.env.VUE_APP_UBER_CLIENT_ID}&pickup=my_location&dropoff[formatted_address]=${this.companySite.address.description}&dropoff[latitude]=${this.companySite.address.lat}&dropoff[longitude]=${this.companySite.address.lng}`;
+        return `https://m.uber.com/ul/?action=setPickup&client_id=${process.env.VUE_APP_UBER_CLIENT_ID}&pickup=my_location&dropoff[formatted_address]=${this.companySite.address.description}&dropoff[latitude]=${this.companySite.address.lat}&dropoff[longitude]=${this.companySite.address.lng}`
+    },
+    getUrlWaze() {
+        return `https://www.waze.com/ul?ll=${this.companySite.address.lat}%2C${this.companySite.address.lng}&navigate=yes&zoom=17`;
+    },
+    getUrl99() {
+
+    },
     getCompanyArroba(arroba) {
         companyGateway.getCompanySiteByArroba(arroba,
             (res) => {
