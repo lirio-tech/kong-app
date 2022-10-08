@@ -43,7 +43,7 @@
                       </td>
                       <td style="padding: 30px 0px 20px 0px;">
                         <p>
-                          {{ n.title }} - {{n.createdAt}}
+                          {{ n.title }}
                           <span style="padding-left: 10px;" class="red--text">
                             <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
                           </span>
@@ -51,6 +51,7 @@
                         <span class="grey--text">
                           {{ n.description }}
                         </span>
+                        <p><small class="grey--text">{{n.createdAt}}</small></p>
                       </td>
                     </tr>
                   </tbody>
