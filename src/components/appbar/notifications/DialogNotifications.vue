@@ -47,11 +47,11 @@
                           <span style="padding-left: 10px;" class="red--text">
                             <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
                           </span>
+                          <br/><small class="grey--text">{{n.createdAt}}</small>
                         </p> 
                         <span class="grey--text">
                           {{ n.description }}
                         </span>
-                        <p><small class="grey--text">{{n.createdAt}}</small></p>
                       </td>
                     </tr>
                   </tbody>
