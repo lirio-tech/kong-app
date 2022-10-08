@@ -67,6 +67,7 @@
 
 <script>
 import storage from '@/storage'
+import UserTypes from '@/utils/UserTypes' 
 export default {
   name: 'DialogNotifications',
   props:['dialog', 'notifications'],
@@ -78,10 +79,18 @@ export default {
   methods: {
     clickRow(notification) {
         // TODO Request to Backend -> update notification to read - isNotRead = false
-        if(notification.path) {
-          alert(notification.path);
+        if(notification.onlyAdmin && this.isAdmin()) {
+              if(notification.path) {
+                  this.$router.push(notification.path);
+              } 
+              else if(notification.hyperLink) {
+                  alert(notification.hyperLink);
+              }
         }
-    }
+    },
+    isAdmin() {
+        return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
+    },    
   },
   computed: {
 
