@@ -46,8 +46,8 @@
                   <router-link 
                     v-else
                     :to="'/perfil'" 
-                      style="color: inherit; text-decoration: none"
-                      
+                    style="text-decoration: none"
+                    :class="getClassText()"
                   >
                       <v-row class="mr-0 ml-0">
                                 <v-col >
@@ -250,6 +250,9 @@ export default {
       storage.logout();
       this.$router.push('/login');
     },    
+    getClassText() {
+      return this.$vuetify.theme.dark ? 'white--text' : 'black--text'
+    }
   },
   computed: {
 

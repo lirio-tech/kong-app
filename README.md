@@ -48,5 +48,51 @@ npm run lint
 npm version patch
 ```
 
+## Layer Archteture 
+
+#### Monolitic 
+
+> For a momonitic Frontend I've choosen use the arch bellow:
+
+```
+|--- kong-app
+           |--- package.json
+           |--- public
+           |--- src
+                  |--- bounded-context/
+                        |--- order/
+                              |--- views/
+                              |--- components/
+                        |--- company/
+                              |--- views/
+                              |--- components/
+                        |--- schedule/
+                              |--- views/
+                              |--- components/                                          
+                 |--- shared
+                       |--- icons/
+                              |--- ClockEmoji.vue
+                       |--- inputs/
+                              |--- InputCurrency.vue
+                       |--- list/
+                       |--- dialogs/
+```
+
+> If it was a microfrontend I would keep the same when it's created by Vue-ui:
+
+```
+|--- kong-schedule
+           |--- package.json
+           |--- public/
+           |--- src/
+                 |--- components/
+                        |--- dialogs/
+                               |--- ScheduleFormDialog.vue
+                        |--- icons/
+                 |--- views/
+                        |--- ScheduleCalendar.vue
+```
+
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

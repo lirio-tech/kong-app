@@ -23,12 +23,25 @@
           </v-toolbar>    
           <v-card-text>
             <v-container >
+
                 <v-form 
                   v-on:submit.prevent="registrarAgendamento"
                   ref="agendamentoForm"
                   id="agendamentoForm"
-                >              
-                    <br/>
+                >     
+                      <div 
+                        v-if="agendamento.status === 'DONE'"
+                      >
+                          <br/>
+                          <v-alert
+                            color="blue-grey darken-2"
+                            type="success"
+                            icon=""
+                          >
+                            Agendamento Concluído!
+                          </v-alert>
+                      </div>
+                      <br/>
                       <v-col xl="6" lg="6" md="8" sm="12" xs="12" cols="12" v-if="isAdmin()">        
                           <v-select 
                               v-model="agendamento.user._id" 

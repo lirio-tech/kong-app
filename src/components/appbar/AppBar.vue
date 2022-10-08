@@ -16,7 +16,16 @@
             <v-menu bottom min-width="200px" rounded offset-y v-if="userLogged && userLogged.type === 'sys_admin'">
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on" @click="showNotificationsDialog(true)" style="margin-bottom: 20px;">
-                        <v-icon v-if="notifications && notifications.amountNotRead > 0" style="font-size: 1.6rem">mdi-bell-badge-outline</v-icon>
+                        <div v-if="notifications && notifications.amountNotRead > 0">
+                            <v-icon style="font-size: 1.6rem">mdi-bell-badge-outline</v-icon>
+                            <v-icon 
+                                size="10" 
+                                color="red"
+                                style="position: absolute; top: -6px;left: 19px;"
+                            >
+                                mdi-circle
+                            </v-icon>
+                        </div>
                         <v-icon v-else style="font-size: 1.6rem">mdi-bell-outline</v-icon>
                     </v-btn>
                 </template>

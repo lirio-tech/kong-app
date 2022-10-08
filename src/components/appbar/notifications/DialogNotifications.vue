@@ -91,7 +91,8 @@
 import storage from '@/storage'
 import UserTypes from '@/utils/UserTypes' 
 import notificationGateway from '../../../api/notificationGateway'
-import IconNumericNotification from '../../icons/IconNumericNotification.vue'
+import IconNumericNotification from '../../shared/icons/IconNumericNotification.vue';
+
 export default {
     name: "DialogNotifications",
     props: ["dialog", "notifications"],
@@ -103,16 +104,24 @@ export default {
     },
     methods: {
         clickRow(notification) {
-            // TODO Request to Backend -> update notification to read - isNotRead = false
-            if (notification.onlyAdmin && this.isAdmin()) {
-                notificationGateway.updateNotificationRead(notification._id, () => { }, err => { console.error(err); });
+
+          if (notification.onlyAdmin && this.isAdmin()) {
+
+                if(notification.isNotRead) {
+                    notificationGateway.updateNotificationRead(
+                      notification._id, 
+                      () => { }, 
+                      err => { console.error(err); }
+                    );
+                }
+                
                 if (notification.path) {
                     this.$router.push(notification.path);
                 }
                 else if (notification.hyperLink) {
                     alert(notification.hyperLink);
                 }
-            }
+          }
         },
         isAdmin() {
             return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
