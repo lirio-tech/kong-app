@@ -7,7 +7,7 @@
   >
       <v-card>
         <v-toolbar
-          class="primary white--text"
+          class="primary darken-4 white--text"
         >
           <v-btn
             icon
@@ -18,11 +18,10 @@
           </v-btn>      
           <v-toolbar-title style="margin-left:-10px;">
               Notificações 
-              <v-icon
+              <IconNumericNotification 
+                :number="notifications.amountNotRead" 
                 v-if="notifications.amountNotRead > 0"
-              >
-                mdi-numeric-{{ notifications.amountNotRead }}-circle
-              </v-icon>
+              />
           </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>    
@@ -92,50 +91,46 @@
 import storage from '@/storage'
 import UserTypes from '@/utils/UserTypes' 
 import notificationGateway from '../../../api/notificationGateway'
+import IconNumericNotification from '../../icons/IconNumericNotification.vue'
 export default {
-  name: 'DialogNotifications',
-  props:['dialog', 'notifications'],
-  data () {
-    return {
-      userLogged: {},
-    }
-  }, 
-  methods: {
-    clickRow(notification) {
-        // TODO Request to Backend -> update notification to read - isNotRead = false
-        if(notification.onlyAdmin && this.isAdmin()) {
-
-              notificationGateway.updateNotificationRead(
-                notification._id,
-                () => {},
-                err => {console.error(err)}
-              )
-
-              if(notification.path) {
-                  this.$router.push(notification.path);
-              } 
-              else if(notification.hyperLink) {
-                  alert(notification.hyperLink);
-              }
-        }
+    name: "DialogNotifications",
+    props: ["dialog", "notifications"],
+    components: { IconNumericNotification },
+    data() {
+        return {
+            userLogged: {},
+        };
     },
-    isAdmin() {
-        return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
-    },    
-  },
-  computed: {
-
-  },
-  beforeMount() {
-    this.userLogged = storage.getUserLogged();
-  },
-  mounted() {
-
-  }
+    methods: {
+        clickRow(notification) {
+            // TODO Request to Backend -> update notification to read - isNotRead = false
+            if (notification.onlyAdmin && this.isAdmin()) {
+                notificationGateway.updateNotificationRead(notification._id, () => { }, err => { console.error(err); });
+                if (notification.path) {
+                    this.$router.push(notification.path);
+                }
+                else if (notification.hyperLink) {
+                    alert(notification.hyperLink);
+                }
+            }
+        },
+        isAdmin() {
+            return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
+        },
+    },
+    computed: {},
+    beforeMount() {
+        this.userLogged = storage.getUserLogged();
+    },
+    mounted() {
+    }
 }
 </script>
 <style scoped>
   .notification {
     padding: 25px 0px 75px 0px;
   }
+  .bullet li a:before {
+    content: "\e5cc";
+}  
 </style>

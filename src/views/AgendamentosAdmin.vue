@@ -366,12 +366,19 @@ export default {
                       this.alterarAgendamentoShowDialog(this.$route.query._id);
                       this.$route.query._id = null;
                   }                  
-              }, () => {
+              }, 
+              (err) => {
+                console.log("ERROR ====<> ", err);
+                // if(err.response.status === 412) {
+                //   alert(err.response.data.message);
+                //   return;
+                // }                
                 alert('Erro ao Buscar agendamentos');
               })
         },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+          if(!this.agendamento) return;
           this.agendamento.dateAt = String(this.agendamento.dateTimeStartAt).substring(0,10);
           this.agendamento.timeStartAt = String(this.agendamento.dateTimeStartAt).substring(11,16);
           this.agendamento.timeEndAt = String(this.agendamento.dateTimeEndAt).substring(11,16);

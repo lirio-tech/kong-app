@@ -30,7 +30,7 @@
                           <div>
                             <v-img 
                               avatar
-                              max-width="400"
+                              max-width="350"
                               src="@/assets/img/kongapp-name-removebg.png" 
                             />
                               <small 
@@ -62,7 +62,7 @@
                                 </v-col>
                                 <v-col > 
                                     <div>
-                                        <span class="font-weight-black" >
+                                        <span >
                                             {{ userLogged.name.split(' ')[0] }}
                                         </span>                                   
                                     </div>

@@ -185,7 +185,7 @@ import UserTypes from '../../utils/UserTypes'
 import dateUtils from '../../utils/date'
 import HeaderBackTitle from '../../components/HeaderBackTitle.vue'
 import device from '../../utils/device'
-import AppBar from '../../components/AppBar.vue'
+import AppBar from '../../components/appbar/AppBar.vue'
 export default {
     name: 'Home',
     components: {

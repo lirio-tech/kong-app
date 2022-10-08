@@ -255,7 +255,7 @@ import storage from '../../storage'
 import UserTypes from '../../utils/UserTypes'
 import HeaderBackTitle from '../../components/HeaderBackTitle.vue'
 import device from '../../utils/device'
-import AppBar from '../../components/AppBar.vue'
+import AppBar from '../../components/appbar/AppBar.vue'
   export default {
     name: 'OrdemServico',
     components: {
