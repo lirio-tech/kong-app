@@ -13,7 +13,7 @@
 
               <p>
                   <v-btn
-                    :style="userLogged ? 'padding-left: 36px; position: absolute; top: 25px;' : 'padding-left: 48px; position: absolute; top: 25px;'"
+                    :style="userLogged ? 'padding-left: 51px; position: absolute; top: 25px;' : 'padding-left: 48px; position: absolute; top: 25px;'"
                     icon
                     small
                     @click="$emit('show-menu-user-dialog', false)"
@@ -27,7 +27,7 @@
                     v-if="!userLogged"  
                   >
                       <v-col > 
-                          <div>
+                          <v-row>
                             <v-img 
                               avatar
                               max-width="350"
@@ -39,7 +39,7 @@
                               >
                                 Studio
                               </small>
-                          </div>
+                            </v-row>
                       </v-col>
                   </v-row>                        
 
@@ -51,7 +51,7 @@
                   >
                       <v-row class="mr-0 ml-0">
                                 <v-col >
-                                    <v-avatar size="50" color="grey">
+                                    <v-avatar size="80" color="grey">
                                         <v-icon
                                             medium
                                             dark
@@ -60,21 +60,20 @@
                                         </v-icon>     
                                     </v-avatar>
                                 </v-col>
-                                <v-col > 
-                                    <div>
+                                <v-col style="padding-top: 35px;"> 
+                                    <v-row>
                                         <span >
                                             {{ userLogged.name.split(' ')[0] }}
                                         </span>                                   
-                                    </div>
-                                    <div>
+                                    </v-row>
+                                    <v-row>
                                         <small class="grey--text">veja seu perfil</small>
-                                    </div>
+                                    </v-row>
                                 </v-col>
                       </v-row>
                                                                   
-                  </router-link>            
+                  </router-link>       
                 
-
           </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>    
@@ -234,6 +233,7 @@ export default {
     return {
       userLogged: {},
       dialogPlan: false,
+      isDarkMode: true
     }
   }, 
   methods: {
