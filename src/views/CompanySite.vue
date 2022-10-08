@@ -322,14 +322,13 @@ export default {
         return `https://www.google.com/maps/?q=${this.companySite.address.lat},${this.companySite.address.lng}`;
     },
     getUrlUber() {
-        //return `uber://?action=setPickup&client_id=${process.env.VUE_APP_UBER_CLIENT_ID}&pickup=my_location&dropoff[formatted_address]=${this.companySite.address.description}&dropoff[latitude]=${this.companySite.address.lat}&dropoff[longitude]=${this.companySite.address.lng}`;
         return `https://m.uber.com/ul/?action=setPickup&client_id=${process.env.VUE_APP_UBER_CLIENT_ID}&pickup=my_location&dropoff[formatted_address]=${this.companySite.address.description}&dropoff[latitude]=${this.companySite.address.lat}&dropoff[longitude]=${this.companySite.address.lng}`
     },
     getUrlWaze() {
         return `https://www.waze.com/ul?ll=${this.companySite.address.lat}%2C${this.companySite.address.lng}&navigate=yes&zoom=17`;
     },
     getUrl99() {
-
+        return `uber://?action=setPickup&client_id=${process.env.VUE_APP_UBER_CLIENT_ID}&pickup=my_location&dropoff[formatted_address]=${this.companySite.address.description}&dropoff[latitude]=${this.companySite.address.lat}&dropoff[longitude]=${this.companySite.address.lng}`;
     },
     getCompanyArroba(arroba) {
         companyGateway.getCompanySiteByArroba(arroba,
