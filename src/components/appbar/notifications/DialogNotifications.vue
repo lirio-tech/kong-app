@@ -91,6 +91,7 @@
 <script>
 import storage from '@/storage'
 import UserTypes from '@/utils/UserTypes' 
+import notificationGateway from '../../../api/notificationGateway'
 export default {
   name: 'DialogNotifications',
   props:['dialog', 'notifications'],
@@ -103,6 +104,13 @@ export default {
     clickRow(notification) {
         // TODO Request to Backend -> update notification to read - isNotRead = false
         if(notification.onlyAdmin && this.isAdmin()) {
+
+              notificationGateway.updateNotificationRead(
+                notification._id,
+                () => {},
+                err => {console.error(err)}
+              )
+
               if(notification.path) {
                   this.$router.push(notification.path);
               } 

@@ -6,8 +6,18 @@ export default{
 
     get(callback,errorCb){       
         let url = `${HOST_API}`;
-        console.log(url);
         Axios.get(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })
+    },
+    updateNotificationRead(_id, callback, errorCb) {
+        let url = `${HOST_API}/${_id}`;
+        Axios.patch(url)
             .then(data => {
                 callback(data.data)
             })
