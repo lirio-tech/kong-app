@@ -127,7 +127,7 @@
             </v-col>              
             <v-col cols="2" >   
               <a
-                v-if="false && companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
                 style="color: inherit; text-decoration: none" 
                 :href="getUrl99()"
                 target="_blank"
