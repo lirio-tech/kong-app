@@ -1016,7 +1016,7 @@ export default {
     },
     computed: {
         linkCompany: function() {
-            return Commons.urlCompany(this.companySite, this.company.companyType);
+            return Commons.urlCompany(this.companySite);
         }
     }
   }

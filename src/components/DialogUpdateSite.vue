@@ -648,10 +648,10 @@ export default {
           reader.readAsDataURL(file);
       },            
       urlSite() {
-        return commons.urlCompany(this.companySite, this.company.companyType);
+        return commons.urlCompany(this.companySite);
       },
       urlAssistantSchedule() {
-        return this.urlSite() + '?tab=AGENDA&realizarAgendamento=true';
+        return this.urlSite() + '?tab=AGENDA&realizarAgendamento=true'; 
       },
       onCopy() {
         this.message.timeout = 5000;

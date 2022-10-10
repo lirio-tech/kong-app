@@ -363,7 +363,7 @@ export default {
         const shareData = {
             title: this.company.name,
             text: `💈 Conheça nosso Site`,
-            url: 'https://'+commons.urlCompany(this.companySite, this.company.companyType),
+            url: 'https://'+commons.urlCompany(this.companySite),
         }    
         console.log(shareData)        
         return navigator.share(shareData);      
@@ -372,7 +372,7 @@ export default {
         const shareData = {
             title: this.company.name,
             text: `💈 Faça o seu Agendamento`,
-            url: 'https://'+commons.urlCompany(this.companySite, this.company.companyType) + '?tab=AGENDA&realizarAgendamento=true',
+            url: 'https://'+commons.urlCompany(this.companySite) + '?tab=AGENDA&realizarAgendamento=true',
         }    
         console.log(shareData)        
         return navigator.share(shareData);     
@@ -445,7 +445,7 @@ export default {
       setTimeout(() => this.message.show = false, this.message.timeout);
     },       
     urlAssistantSchedule() {
-      return 'https://'+commons.urlCompany(this.companySite, this.company.companyType) + '?tab=AGENDA&realizarAgendamento=true';
+      return 'https://'+commons.urlCompany(this.companySite) + '?tab=AGENDA&realizarAgendamento=true';
     },    
     onCopyUrlAssistantSchedule() {
       this.showMessage('Copiado!!! \nEnvie para seus Clientes. \nUtilize o assistente como resposta automática no WhatsApp ;-) '); 

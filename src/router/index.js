@@ -33,8 +33,8 @@ import PurchasesProductsList from '../views/PurchasesProductsList'
 import PurchasesProductsForm from '../views/PurchasesProductsForm'
 import UsersBalance from '../views/UsersBalance'
 import UserBalanceDetail from '../views/UserBalanceDetail'
-import Agendamentos from '../views/Agendamentos'
-import AgendamentosAdmin from '../views/AgendamentosAdmin'
+import Agendamentos from '../bounded-context/schedule/views/Agendamentos'
+import AgendamentosAdmin from '../bounded-context/schedule/views/AgendamentosAdmin'
 import CompanySite from '../views/CompanySite'
 
 

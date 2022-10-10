@@ -1,5 +1,5 @@
 export default {
-    urlCompany(companySite, companyType) {
+    urlCompany(companySite) {
         if(companySite.domainSync === true) {
             return companySite.domain;  
         }            

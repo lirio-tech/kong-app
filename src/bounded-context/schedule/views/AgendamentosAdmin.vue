@@ -10,17 +10,19 @@
                         <v-icon large color="white darken-2">mdi-chevron-left</v-icon>
                     </v-btn>
                 </v-col>
-                <v-col cols="9" align="center">   
+                <v-col cols="9" >   
                     <span style="font-size: 1.6rem !important;" class="white--text">
                       Agendamentos
                     </span>
                 </v-col>
                 <v-col cols="1" align="center" style="margin-left:-40px;">   
                     <v-btn 
-                        @click="showDialog(true)"  
+                        @click="agendamento.user = userLogged; showDialog(true)"  
                         class="ma-2"
                         small
-                    ><v-icon >mdi-plus</v-icon></v-btn>                        
+                    >
+                      <v-icon >mdi-plus</v-icon>
+                    </v-btn>                        
                 </v-col>                     
             </v-row>    
             <v-row 
@@ -60,6 +62,33 @@
                         >Mês</v-btn>                               
                     </v-col>                                                  
             </v-row>           
+            <v-row 
+                    align="center"
+                    justify="space-around"
+                >
+                    <v-col cols="9" md="9" >                   
+                        <v-btn 
+                            type="button" 
+                            depressed  
+                            large 
+                            style="width: 100%"
+                            @click="typePeriod = 'category'"
+                            :color="typePeriod === 'category' ? 'primary' : ''"
+                        >Funcionários</v-btn>    
+                    </v-col>
+                    <v-col cols="3" md="3" >                                                      
+                        <v-btn 
+                            type="button" 
+                            depressed  
+                            large 
+                            style="width: 100%"
+                            @click="showDialogEmployees(true)"
+                            :color="typePeriod === 'category' ? 'primary' : ''"
+                        >
+                          <v-icon>mdi-account-multiple-plus</v-icon>
+                        </v-btn>      
+                    </v-col>                                                                                        
+            </v-row>                 
 
             <v-row class="fill-height">
               <v-col>
@@ -73,7 +102,7 @@
                       color="grey darken-2"
                       @click="setToday"
                     >
-                      Hoje 
+                      Hoje
                     </v-btn>
                     <v-btn
                       fab
@@ -109,12 +138,15 @@
                     v-model="value"
                     color="primary"
                     :events="events"
+                    :categories="usersCategories"
+                    category-show-all
                     :event-color="getEventColor"
                     :type="typePeriod"
                     @click:event="showEvent"
                     @click:more="viewDay"
                     @click:date="viewDay"
                     @click:time="newSchedule"
+                    @click:time-category="newSchedule"
                     @change="updateRange"
                   >
                   </v-calendar>
@@ -144,22 +176,26 @@
                         Data: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(0,10) }} <br/>
                         Horario: {{ new Date(selectedEvent.start).toLocaleString('pt-BR').substring(11,16) }} às 
                         {{ new Date(selectedEvent.end).toLocaleString('pt-BR').substring(11,16) }} <br/>
-                        
+                        Funcionario: {{ selectedEvent.userName }} <br/>
                         <span v-if="selectedEvent.status === 'DONE'">R$ {{ selectedEvent.total | currency }}</span> <br/>
-                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }}</small>   
+                        <small>Criado em {{ new Date(selectedEvent.createdAt).toLocaleString('pt-BR').substring(0,16) }} por {{ selectedEvent.createdBy }}</small> <br/>   
                         <h3 v-if="selectedEvent.status === 'DONE'" class="success--text">Concluído</h3>
                         <router-link
                           v-if="selectedEvent.status === 'DONE' && selectedEvent.orderId"
                           :to="{ path: `/ordem-servico/${selectedEvent.orderId}` }"
                         >
                           Ordem de Serviço
-                        </router-link>
+                        </router-link>       
+                                    
                       </v-card-text>
-                      <v-card-actions v-if="selectedEvent.status === 'PENDING'">
+                      <v-card-actions v-if="selectedEvent.status === 'REQUESTED'">
+                          <button-contact-customer-whats-app :customer="{ name: selectedEvent.name, phone_number: selectedEvent.phoneNumber }" />
+                      </v-card-actions>                        
+                      <v-card-actions >
                         <v-btn
                           color="white" 
-                          @click="alterarAgendamentoShowDialog(selectedEvent._id)" 
-                          v-if="selectedEvent.status === 'PENDING'"
+                          @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
+                          v-if="selectedEvent.status === 'PENDING' || selectedEvent.status === 'REQUESTED'"
                           class="indigo--text"
                           small
                         >
@@ -170,6 +206,7 @@
                           @click="cancel(selectedEvent._id)"
                           class="white--text"
                           :loading="loadingCancel"
+                          v-if="selectedEvent.status === 'PENDING' || selectedEvent.status === 'REQUESTED'"
                           small
                         >
                           Cancelar
@@ -179,10 +216,19 @@
                           color="success"
                           @click="showDialogConcluir(true, selectedEvent._id)"
                           :loading="loadingConcluir"
+                          v-if="selectedEvent.status === 'PENDING'"
                           small
                         >
                           Concluir
-                        </v-btn>                                        
+                        </v-btn>               
+                        <v-btn
+                          color="info"
+                          @click="alterarAgendamentoShowDialog(selectedEvent._id)"  
+                          v-if="selectedEvent.status === 'REQUESTED'"
+                          small
+                        >
+                          Confirmar
+                        </v-btn>                                      
                       </v-card-actions>
                     </v-card>
                   </v-menu>
@@ -192,6 +238,7 @@
 
             <DialogAgendamento 
                 :dialog="dialog" 
+                :users="usersAll"
                 :agendamento="agendamento"
                 :date="agendamento.date"
                 :servicesSelected="servicesSelected"
@@ -203,53 +250,84 @@
               :dialog="dialogAgendamentoConcluir" 
               :agendamento="agendamentoConcluir"
               v-on:show-dialog="showDialogConcluir" 
-            />          
+              
+            />   
+
+            <DialogAgendamentoEmployees 
+                :dialog="dialogEmployees"
+                :usersCategories="usersCategoriesReset"
+                v-on:show-dialog="showDialogEmployees"
+            />       
         </v-main>
+        <snack-bar :color="message.color" :text="message.text" :show="message.show" />
         <br/><br/>
-        
     </v-container>
 </template>
 
 <script>
-import storage from '../storage'
-import dateUtil from '../utils/date'
-import agendamentoGateway from '../api/agendamentoGateway';
-import DialogAgendamento from '../components/DialogAgendamento'
-import DialogAgendamentoConcluir from '../components/DialogAgendamentoConcluir'
+import storage from '../../../storage'
+import dateUtil from '../../../utils/date'
+import agendamentoGateway from '../../../api/agendamentoGateway';
+import gateway from '../../../api/gateway';
+import DialogAgendamento from '../../../components/DialogAgendamento'
+import DialogAgendamentoConcluir from '../../../components/DialogAgendamentoConcluir'
+import DialogAgendamentoEmployees from '../../../components/DialogAgendamentoEmployees'
+import SnackBar from '../../../components/SnackBar.vue';
+import ButtonContactCustomerWhatsApp from '../../../components/ButtonContactCustomerWhatsApp.vue';
 export default {
     name: 'Agendamentos',
     components: { 
         DialogAgendamento,
-        DialogAgendamentoConcluir
+        DialogAgendamentoConcluir,
+        DialogAgendamentoEmployees,
+        SnackBar,
+        ButtonContactCustomerWhatsApp, 
     },
     data: () => ({
         dialog: false,
         dialogAgendamentoConcluir: false,
+        dialogEmployees: false,
         loadingCancel: false,
         loadingConcluir: false,
 
         agendamentoConcluir: {},
 
         userLogged: {},
-        value: '',
         agendamentos: [],
         agendamento: {},
         servicesSelected: [],
-        typePeriod: 'day',
+        typePeriod: 'category',
+
+        value: '',
         selectedEvent: {},
         selectedElement: null,
         selectedOpen: false,
         events: [],
-        names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
-
+        users: [],
+        usersCategories: [],
+        usersCategoriesReset: [],
+        usersAll: [],
+        message: {
+            show: false,
+            color: 'primary',
+            text: ''
+        },   
     }), 
     beforeMount() {
         this.userLogged = storage.getUserLogged();
         this.agendamento = this.initAgendamento();
         if(this.$route.query.date) {
           this.value = this.$route.query.date.substring(0,10);
-        }
+        }        
         this.findAgendamento();
+        gateway.getUsers('enabled', res => {
+          this.usersAll = res;
+          this.usersCategories = res.filter(it => res.indexOf(it) <= 3 ).map(it => it.name);  
+          this.usersCategoriesReset = res.map(it => it.name);
+          this.users = res.filter(it => it._id === this.userLogged._id).map(it => it.name);  
+        }, err => {
+          console.log(err);
+        });        
     },
     mounted () {
       window.scrollTo(0,0);
@@ -257,33 +335,50 @@ export default {
     },
     methods: {
         showDialog(show) {
-            this.dialog = show;
             if(show === false) {
                 this.agendamento = this.initAgendamento();       
+                this.agendamento.user = this.userLogged;
                 this.servicesSelected = [];       
             }
+            this.dialog = show;
         },
         showDialogConcluir(show, agendamentoId) {
           this.dialogAgendamentoConcluir = show;
           if(agendamentoId) this.agendamentoConcluir = this.agendamentos.filter(it => it._id === agendamentoId)[0];
         },
+        showDialogEmployees(show, usersSelected) {
+            if(show === false && usersSelected) {
+              this.usersCategories = usersSelected;
+              this.setTypePeriod('category')
+            } else {
+              this.setTypePeriod('day')
+            }
+            this.dialogEmployees = show;
+        },
         findAgendamento() {
-           let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
-           agendamentoGateway.getAgendamentos(_date, _date,
-               res => {
-                   this.agendamentos = res;
-                   console.log('before');
-                   this.updateCalendar(_date, _date);
-                   if(this.$route.query._id) {
+          let _date = this.value ? this.value : dateUtil.dateToStringEnUS(new Date());
+          agendamentoGateway.getAgendamentos(_date, _date,
+              res => {
+                  this.agendamentos = res;
+                  console.log('before');
+                  this.updateCalendar(_date, _date);
+                  if(this.$route.query._id) {
                       this.alterarAgendamentoShowDialog(this.$route.query._id);
                       this.$route.query._id = null;
-                   }
-               }, () => {
-                 alert('Erro ao Buscar agendamentos');
-               })
-         },        
+                  }                  
+              }, 
+              (err) => {
+                console.log("ERROR ====<> ", err);
+                // if(err.response.status === 412) {
+                //   alert(err.response.data.message);
+                //   return;
+                // }                
+                alert('Erro ao Buscar agendamentos');
+              })
+        },
         alterarAgendamentoShowDialog(_id) {
           this.agendamento = this.agendamentos.filter(it => it._id === _id)[0];
+          if(!this.agendamento) return;
           this.agendamento.dateAt = String(this.agendamento.dateTimeStartAt).substring(0,10);
           this.agendamento.timeStartAt = String(this.agendamento.dateTimeStartAt).substring(11,16);
           this.agendamento.timeEndAt = String(this.agendamento.dateTimeEndAt).substring(11,16);
@@ -316,25 +411,34 @@ export default {
                   if(err.response.status === 422) {
                     alert(err.response.data.message)            
                     return;
-                  }                          
+                  }                                                
                   alert('Erro ao Concluir :(');
                 })              
           }
         },
         isPendingPast(agendamento) {
-            let start = new Date(`${agendamento.dateTimeStartAt}`);
-            start.setHours(start.getHours()+3);
-            return agendamento.status === 'PENDING' && start < new Date();
+          let start = new Date(agendamento.dateTimeStartAt);
+          start.setHours(start.getHours()+3)
+          return agendamento.status === 'PENDING' && start < new Date();
         },
+        isPending1Hour(agendamento) {
+          let start = new Date(agendamento.dateTimeStartAt);
+          start.setHours(start.getHours()+2);
+          return agendamento.status === 'PENDING' && start < new Date();
+        },        
         getColorByStatus(agendamento) {
             if(this.isPendingPast(agendamento))
               return 'red'          
+            if(this.isPending1Hour(agendamento))
+              return 'orange'
             if(agendamento.status === 'PENDING')
               return 'blue'
             if(agendamento.status === 'DONE')
               return 'blue-grey darken-2'
+            if(agendamento.status === 'REQUESTED')
+              return 'green'              
             return 'indigo'
-        },        
+        },            
         setTypePeriod(tp) {
           this.typePeriod = tp;
         },
@@ -371,29 +475,41 @@ export default {
           nativeEvent.stopPropagation()
         },
         updateCalendar(start, end) {
-           console.log(start, end);
-           const events = []
-           for(var i in this.agendamentos) {
-             const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
-             const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
-              events.push({
-                  _id: this.agendamentos[i]._id,
-                  name: this.agendamentos[i].customer.name,
-                  detail: this.getDescriptionServices(this.agendamentos[i].services),
-                  status: this.agendamentos[i].status,
-                  start: _start,
-                  end: _end,
-                  total: this.agendamentos[i].total,
-                  color: this.getColorByStatus(this.agendamentos[i]),
-                  orderId: this.agendamentos[i].orderId,
-                  timed: true,
-                  createdAt: this.agendamentos[i].createdAt,
-              });      
-           }
-           this.events = events;
-         },
+          console.log(start, end);
+          const events = []
+          console.log(this.agendamentos)
+          for(var i in this.agendamentos) {
+            const _start = new Date(`${this.agendamentos[i].dateTimeStartAt.substring(0, 16)}-03:00`);
+            const _end = new Date(`${this.agendamentos[i].dateTimeEndAt.substring(0, 16)}-03:00`);
+            if(!this.agendamentos[i].user && this.agendamentos[i].status === 'REQUESTED') {
+                this.agendamentos[i].user = {
+                  username: 'requested',
+                  name: 'Sem profissional adicionado', 
+                }
+            }
+            events.push({
+                _id: this.agendamentos[i]._id,
+                name: this.agendamentos[i].customer.name,
+                phoneNumber: this.agendamentos[i].customer.phone_number,
+                user: this.agendamentos[i].user.username,
+                userName: this.agendamentos[i].user.name,
+                detail: this.getDescriptionServices(this.agendamentos[i].services),
+                status: this.agendamentos[i].status,
+                start: _start,
+                end: _end,
+                total: this.agendamentos[i].total,
+                color: this.getColorByStatus(this.agendamentos[i]),
+                timed: true,
+                orderId: this.agendamentos[i].orderId,
+                category: this.usersCategories.filter(it => it === this.agendamentos[i].user.name)[0],
+                createdAt: this.agendamentos[i].createdAt,
+                createdBy: this.agendamentos[i].createdBy,
+            });        
+          }
+          this.events = events;
+        },
         updateRange ({ start, end }) {
-          console.log(JSON.stringify(start) + ' ' + JSON.stringify(end));
+          console.log(start, end);
           console.log('updateRange');
           this.updateCalendar(start, end);
         },
@@ -405,15 +521,26 @@ export default {
             return description;
         },
         newSchedule(ev) {
-           this.agendamento = this.initAgendamento();
-           this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
-           this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
-           this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
-           if(this.agendamento.timeEndAt.length < 5) {
-             this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
-           }  
-           this.servicesSelected = [];
-           this.showDialog(true);
+           if(ev.category) { 
+                this.agendamento = this.initAgendamento();
+                this.agendamento.user = this.usersAll.filter(it => it.name === ev.category.categoryName)[0];  
+                this.agendamento.timeStartAt = `${ev.time.substring(0,2)}:00`;
+                this.agendamento.timeEndAt = `${(Number(ev.time.substring(0,2))+1)}:00`;
+                this.agendamento.date = new Date(ev.date).toISOString().substr(0, 10);
+                if(this.agendamento.timeEndAt.length < 5) {
+                  this.agendamento.timeEndAt = `0${this.agendamento.timeEndAt}`;
+                }  
+                this.servicesSelected = [];
+                this.showDialog(true);
+           } else if(this.typePeriod !== 'category') {
+                this.showMessage('Para Adicionar uma Agenda clique no botão Funcionários');     
+           }
+        },
+        showMessage(text) {
+          this.message.show = true;
+          this.message.color = 'primary';
+          this.message.text = text;
+          setTimeout(() => this.message.show = false, 4000);
         },
         initAgendamento() {
           return { 
