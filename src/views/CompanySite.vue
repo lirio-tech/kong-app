@@ -379,11 +379,11 @@ export default {
     },
     forwardApp() {
         let path = '/public/help';
-        if(this.company.companyType === 'BARBER') {
-            return `https://app.kongbarber.com/#${path}`;
-        } else {
-            return `https://app.ladyapp.com.br/#${path}`;
-        }
+        //if(this.company.companyType === 'BARBER') {
+            return `https://app.kongapp.com.br/#${path}`;
+        // } else {
+        //     return `https://app.ladyapp.com.br/#${path}`;
+        // }
     },
     showDialog(show) {
       if(this.company.plan.name != 'Free') { 

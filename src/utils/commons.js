@@ -4,8 +4,8 @@ export default {
             return companySite.domain;  
         }            
         if(companySite.subdomainSync === true) {
-            return companySite.arroba + (companyType === 'BARBER' ? '.kongbarber.com' : '.ladyapp.com.br');    
+            return companySite.arroba + '.kongapp.com.br';    
         }
-        return (companyType === 'BARBER' ? 'app.kongbarber.com' : 'app.ladyapp.com.br') +`/#/@/${companySite.arroba}`;
+        return `app.kongapp.com.br/#/@/${companySite.arroba}`;
     },  
 }

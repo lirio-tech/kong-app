@@ -149,7 +149,7 @@ export default {
         share() {
             const shareData = {
                 title: this.appType === 'app' ? 'Kongapp' : 'Lady App',
-                text: `💈Gerencie ${this.appType === 'app' ? 'sua Barbearia' : 'seu Salão/Studio' } ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱`,
+                text: `💈Gerencie seu Salão/Studio/Barbearia ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱`,
                 url: this.urlShare,
             }            
             return navigator.share(shareData)
@@ -163,7 +163,8 @@ export default {
            return this.$vuetify.theme.dark ? 'app' : 'ladyapp';
        }, 
        urlApp() {
-           return this.appType === 'app' ? 'https://app.kongbarber.com' : 'https://ladyapp.com.br';
+           //return this.appType === 'app' ? 'https://app.kongbarber.com' : 'https://ladyapp.com.br';
+           return 'https://app.kongapp.com.br';
        },
        urlShare() {
            return `${this.urlApp}/#/public/identify-device`;
