@@ -148,7 +148,7 @@ export default {
         },
         share() {
             const shareData = {
-                title: this.appType === 'app' ? 'Kongapp' : 'Lady App',
+                title: 'Kongapp', //this.appType === 'app' ? 'Kongapp' : 'Lady App',
                 text: `💈Gerencie seu Salão/Studio/Barbearia ✂️ 💰 com o App mais simples e fácil, tudo em seu celular 📱`,
                 url: this.urlShare,
             }            

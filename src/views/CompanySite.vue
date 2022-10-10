@@ -117,7 +117,7 @@
             </v-col> 
             <v-col cols="2" >   
               <a
-                v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
+                v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none" 
                 :href="getUrlUber()"
                 target="_blank"
@@ -125,7 +125,7 @@
                   <v-img align="" src="@/assets/img/uber.png" height="33" width="33" />
               </a>
             </v-col>              
-            <v-col cols="2" >   
+            <!-- <v-col cols="2" >   
               <a
                 v-if="companySite.address && companySite.address.lat && userLogged && userLogged.type === 'sys_admin'"
                 style="color: inherit; text-decoration: none" 
@@ -134,7 +134,7 @@
               >
                   <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
               </a>
-            </v-col>             
+            </v-col>              -->
             <v-col cols="2" style=" margin-top: -3px;">   
               <a 
                 v-if="companySite.address && companySite.address.lat"
