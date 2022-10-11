@@ -76,7 +76,7 @@ import gateway from '../../api/gateway';
 import AppBar from '@/components/appbar/AppBar'
 import storage from '../../storage';
 export default {
-    name: 'SystemUser',
+    name: 'BackofficeUser',
     components: { AppBar },
     data: () => ({
       user: {},

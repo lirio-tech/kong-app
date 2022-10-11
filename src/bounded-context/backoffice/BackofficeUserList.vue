@@ -45,7 +45,7 @@ import AppBar from '@/components/appbar/AppBar'
 import storage from '../../storage';
 import UserTypes from '../../utils/UserTypes';
 export default {
-    name: 'SystemUserList',
+    name: 'BackofficeUserList',
     components: { AppBar },
     data: () => ({
       headers: [

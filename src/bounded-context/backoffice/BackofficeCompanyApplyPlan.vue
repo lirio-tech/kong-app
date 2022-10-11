@@ -348,7 +348,7 @@ import inputs from '../../utils/inputs'
 import moment from 'moment'
 import date from '../../utils/date'
 export default {
-    name: 'UsuarioForm', 
+    name: 'BackofficeCompanyApplyPlan', 
     components: { 
     },
     data: () => ({

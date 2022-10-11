@@ -15,15 +15,16 @@ import IPhone from '../views/IPhone'
 import PaymentPremium from '../views/PaymentPremium'
 import PaymentFree from '../views/PaymentFree'
 import IdentifyDeviceRedirect from '../views/IdentifyDeviceRedirect'
-import SystemCompanyApplyPlan from '../views/system/SystemCompanyApplyPlan'
-import SystemCompanyOption from '../views/system/SystemCompanyOption'
-import SystemControlPlan from '../views/system/SystemControlPlan'
-import SystemCompanyList2 from '../views/system/SystemCompanyList2'
-import SystemCompaniesActives from '../views/system/SystemCompaniesActives'
-import SystemUserList from '../views/system/SystemUserList'
-import SystemUser from '../views/system/SystemUser'
-import SystemPayments from '../views/system/SystemPayments'
-import SystemRateUsList from '../views/system/SystemRateUsList'
+import BackofficeCompanyApplyPlan from '../bounded-context/backoffice/BackofficeCompanyApplyPlan'
+import BackofficeCompanyOption from '../bounded-context/backoffice/BackofficeCompanyOption'
+import BackofficeControlPlan from '../bounded-context/backoffice/BackofficeControlPlan'
+import BackofficeCompanyList2 from '../bounded-context/backoffice/BackofficeCompanyList2'
+import BackofficeCompaniesActives from '../bounded-context/backoffice/BackofficeCompaniesActives'
+import BackofficeUserList from '../bounded-context/backoffice/BackofficeUserList'
+import BackofficeUser from '../bounded-context/backoffice/BackofficeUser'
+import BackofficePayments from '../bounded-context/backoffice/BackofficePayments'
+import BackofficeRateUsList from '../bounded-context/backoffice/BackofficeRateUsList'
+import BackofficeNotificationSignatureExpiration from '../bounded-context/backoffice/notifications/BackofficeNotificationSignatureExpiration'
 import Analytics from '../views/Analytics'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
@@ -138,50 +139,55 @@ const routes = [
   },     
   {
     path: '/system',
-    name: 'SystemControlPlan',  
-    component: SystemControlPlan
+    name: 'BackofficeControlPlan',  
+    component: BackofficeControlPlan
   },   
   {
     path: '/system/companies',
-    name: 'SystemCompanyList2',  
-    component: SystemCompanyList2
+    name: 'BackofficeCompanyList2',  
+    component: BackofficeCompanyList2
   },    
   {
     path: '/system/companies/actives',
-    name: 'SystemCompaniesActives',  
-    component: SystemCompaniesActives
+    name: 'BackofficeCompaniesActives',  
+    component: BackofficeCompaniesActives
   },      
   {
     path: '/system/companies/:_id/options',
-    name: 'SystemCompanyOption', 
-    component: SystemCompanyOption
+    name: 'BackofficeCompanyOption', 
+    component: BackofficeCompanyOption
   },      
   {
     path: '/system/companies/:_id',
-    name: 'SystemCompanyApplyPlan', 
-    component: SystemCompanyApplyPlan
+    name: 'BackofficeCompanyApplyPlan', 
+    component: BackofficeCompanyApplyPlan
   },       
   {
     path: '/:companyId/system/users',
-    name: 'SystemUserList', 
-    component: SystemUserList
+    name: 'BackofficeUserList', 
+    component: BackofficeUserList
   },     
   {
     path: '/system/rated-us',
-    name: 'SystemRateUsList', 
-    component: SystemRateUsList
+    name: 'BackofficeRateUsList', 
+    component: BackofficeRateUsList
   },     
 
   {
     path: '/system/users/:_id',
-    name: 'SystemUser', 
-    component: SystemUser
+    name: 'BackofficeUser', 
+    component: BackofficeUser
   },   
   {
     path: '/system/payments',
-    name: 'SystemPayments', 
-    component: SystemPayments
+    name: 'BackofficePayments', 
+    component: BackofficePayments
   },    
+  {
+    path: '/backoffice/notifications',
+    name: 'BackofficeNotificationSignatureExpiration', 
+    component: BackofficeNotificationSignatureExpiration
+  },      
   {
     path: '/analytics',
     name: 'Analytics',

@@ -63,7 +63,7 @@
   import DialogPlan from '../../components/DialogPlan'
   import storage from '../../storage';
   export default {
-    name: 'Home',
+    name: 'BackofficeCompanyOption',
     components: { 
       AppBar,
       DialogPlan

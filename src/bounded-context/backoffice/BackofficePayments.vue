@@ -129,7 +129,7 @@
 import gateway from '../../api/gateway';
 import storage from '../../storage';
 export default {
-    name: 'SystemPayments',
+    name: 'BackofficePayments',
     components: {  },
     data: () => ({
       paymentsHistoric: [],

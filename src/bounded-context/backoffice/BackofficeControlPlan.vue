@@ -68,7 +68,21 @@
                     >Avaliacoes</v-btn>                    
                   </router-link>
               </v-col>
-          </v-row>                                                      
+          </v-row>          
+          <v-row>
+              <v-col cols="12" sm="12" align="center">
+                  <router-link to="/backoffice/notifications"
+                   style="color: inherit; text-decoration: none">
+                    <v-btn 
+                        type="button" 
+                        depressed  
+                        x-large 
+                        color="red darken-2 darken-3"
+                        style="width: 96%"
+                    >Notificações</v-btn>                    
+                  </router-link>
+              </v-col>
+          </v-row>                                                             
         </v-main>
     </v-container>
 </template>
@@ -78,7 +92,7 @@
   import DialogPlan from '../../components/DialogPlan'
   import storage from '../../storage';
   export default {
-    name: 'SystemControlPlan',
+    name: 'BackofficeControlPlan',
     components: { 
       AppBar,
       DialogPlan

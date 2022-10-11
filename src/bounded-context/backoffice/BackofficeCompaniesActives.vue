@@ -180,7 +180,7 @@ import gateway from '../../api/gateway';
 import storage from '../../storage';
 import date from '../../utils/date';
 export default {
-    name: 'SystemCompaniesActives',
+    name: 'BackofficeCompaniesActives',
     components: { 
     },
     data: () => ({

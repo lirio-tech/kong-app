@@ -55,7 +55,7 @@
 import gateway from '../../api/gateway';
 import storage from '../../storage';
 export default {
-    name: 'SystemRateUsList',
+    name: 'BackofficeRateUsList',
     components: {  },
     data: () => ({
       rates: []

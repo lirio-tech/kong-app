@@ -9,7 +9,7 @@
         <v-toolbar
           class="second white--text" height="190"
         >
-          <v-toolbar-title >
+          <v-toolbar-title>
 
               <p>
                   <v-btn
@@ -42,14 +42,10 @@
                             </v-row>
                       </v-col>
                   </v-row>                        
-
-                  <router-link 
+                  <v-row 
+                    class="mr-0 ml-0"
                     v-else
-                    :to="'/perfil'" 
-                    style="text-decoration: none"
-                    :class="getClassText()"
                   >
-                      <v-row class="mr-0 ml-0">
                                 <v-col >
                                     <v-avatar size="80" color="grey">
                                         <v-icon
@@ -61,18 +57,22 @@
                                     </v-avatar>
                                 </v-col>
                                 <v-col style="padding-top: 35px;"> 
-                                    <v-row>
-                                        <span >
-                                            {{ userLogged.name.split(' ')[0] }}
-                                        </span>                                   
-                                    </v-row>
-                                    <v-row>
-                                        <small class="grey--text">veja seu perfil</small>
-                                    </v-row>
+                                      <router-link 
+                                        :to="'/perfil'" 
+                                        style="text-decoration: none"
+                                        :class="getClassText()"
+                                      >
+                                        <v-row>
+                                            <span >
+                                                {{ userLogged.name.split(' ')[0] }} - {{ viewBO }}
+                                            </span>                                   
+                                        </v-row>
+                                        <v-row>
+                                            <small class="grey--text">veja seu perfil</small>
+                                        </v-row>
+                                      </router-link>
                                 </v-col>
-                      </v-row>
-                                                                  
-                  </router-link>       
+                </v-row>
                 
           </v-toolbar-title>
           <v-spacer></v-spacer>
@@ -82,11 +82,11 @@
             <v-simple-table fluid>
               <template v-slot:default>
                   <tbody>
-                    <tr v-if="userLogged && userLogged.type === 'sys_admin'">
+                    <tr v-if="(userLogged && userLogged.type === 'sys_admin')">
                       <td style="padding: 30px 0px 20px 0px;">
                           <router-link to="/system" style="color: inherit; text-decoration: none">
                               <v-col cols="10" class="font-weight-medium">
-                                  System <v-chip color="red" style="margin-left: 15px;" outlined small>SYSTEM</v-chip>
+                                  Backoffice <v-chip color="red" style="margin-left: 15px;" outlined small>Backoffice</v-chip>
                               </v-col>
                           </router-link>    
                       </td>
@@ -233,7 +233,8 @@ export default {
     return {
       userLogged: {},
       dialogPlan: false,
-      isDarkMode: true
+      isDarkMode: true,
+      viewBO: 0
     }
   }, 
   methods: {

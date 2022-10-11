@@ -25,5 +25,16 @@ export default{
                 console.log(error);
                 errorCb(error)
             })
-    }
+    },
+    verifyAndSaveSignatureExpiration(callback, errorCb) {
+        let url = `${HOST_API}/signature-expiration`;
+        Axios.post(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })
+    }    
 }
