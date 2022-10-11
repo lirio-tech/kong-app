@@ -93,6 +93,11 @@ npm version patch
                         |--- ScheduleCalendar.vue
 ```
 
+### Icons
+
+https://pictogrammers.github.io/@mdi/font/2.0.46/   
+    
+https://materialdesignicons.com/
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

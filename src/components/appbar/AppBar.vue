@@ -13,7 +13,7 @@
             </router-link>
         </v-row>
         <v-row justify="end" align="center" >
-            <v-menu bottom min-width="200px" rounded offset-y v-if="userLogged && userLogged.type === 'sys_admin'">
+            <v-menu bottom min-width="200px" rounded offset-y v-if="userLogged">
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on" @click="showNotificationsDialog(true)" style="margin-bottom: 20px;">
                         <div v-if="notifications && notifications.amountNotRead > 0">
