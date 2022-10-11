@@ -8,6 +8,7 @@ export default{
         let url = `${HOST_API}`;
         Axios.get(url)
             .then(data => {
+                console.log(data.data)
                 callback(data.data)
             })
             .catch(error => {

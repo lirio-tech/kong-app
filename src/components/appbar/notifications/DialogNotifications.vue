@@ -37,7 +37,7 @@
                     >
                       <td>
                         <v-btn v-if="n.mdi" fab>
-                              <v-icon>{{ n.mdi }}</v-icon>
+                              <v-icon :color="n.mdiColor">{{ n.mdi }}</v-icon>
                         </v-btn>
                         <v-btn v-else fab>
                               <span  class="icon-emoji-30">
@@ -49,7 +49,13 @@
                         <p>
                           {{ n.title }}
                           <span style="padding-left: 10px;" class="red--text">
-                            <v-icon v-if="n.isNotRead" size="15" color="red">mdi-brightness-1</v-icon>
+                            <v-icon 
+                              v-if="n.isNotRead" 
+                              size="15" 
+                              color="red"
+                            >
+                              mdi-brightness-1
+                            </v-icon>
                           </span>
                           <br/><small class="grey--text">{{n.createdAt}}</small>
                         </p> 
