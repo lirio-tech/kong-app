@@ -90,7 +90,7 @@
                     <v-stepper-step
                         step="2"                    
                     >
-                        Usuario 
+                        Usuário 
                         <small>Dono do Estabelecimento</small>
                     </v-stepper-step>
 

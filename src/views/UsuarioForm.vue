@@ -28,7 +28,7 @@
                         </v-col>
                         <v-col cols="12" md="4">                      
                             <v-text-field v-model="user.name"
-                                        label="Nome do Novo Usuario"
+                                        label="Nome do Novo Usuário"
                                         ref="nome"
                                         required
                                         prepend-icon="mdi-account"
@@ -444,11 +444,11 @@ export default {
         enabled: true,
         message: {},      
         passwordRules: [
-            v => !!v || 'Senha do Usuario Obrigatório',
+            v => !!v || 'Senha do Usuário Obrigatório',
             v => (v && v.length > 3) || 'Senha deve ser maior que 3 caracteres',
         ],                          
         passwordConfirmRules: [
-            v => (!!v) || 'Confirmacao de Senha deve ser equivalente',
+            v => (!!v) || 'Confirmação de Senha deve ser equivalente',
         ],         
         userLogged: {},
         money: {
@@ -522,7 +522,7 @@ export default {
                    err.response.status === 403) {
                     alert(err.response.data.message)
                 } else {                        
-                    alert('Erro ao alterar usuario para Funcionário, tente novamente');                
+                    alert('Erro ao alterar usuário para Funcionário, tente novamente');                
                 }
             })
       },
@@ -534,15 +534,15 @@ export default {
         }
 
         if (!this.user.password.match(this.user.passwordConfirm)) {
-            alert('Confirmacao de Senha deve ser equivalente');
-            this.showMessage('red', 'Confirmacao de Senha deve ser equivalente');
+            alert('Confirmação de Senha deve ser equivalente');
+            this.showMessage('red', 'Confirmação de Senha deve ser equivalente');
             return;
         }
         this.loadingSave = true;
         this.user.company = this.company;
         if(this.$route.params._id && this.$route.params._id !== '_newUser') {
             let desabilitando = this.enabled === true && this.user.enabled === false;
-            if(desabilitando && !confirm('Apos desativar o usuario voce podera ativa-lo novamente apos 3 dias, deseja realmente desativar usuario?')) {
+            if(desabilitando && !confirm('Após desativar o usuário você poderá ativa-lo novamente após 3 dias, deseja realmente desativar usuário?')) {
                 this.loadingSave = false;
                 return;
             }
@@ -574,7 +574,7 @@ export default {
                         console.log(err);
                         this.loadingSave = false;
                         if(err.response.status === 500) {
-                            alert('Erro ao Cadastrar usuario, tente novamente');
+                            alert('Erro ao Cadastrar usuário, tente novamente');
                         } else {
                             alert(err.response.data.message);
                         }

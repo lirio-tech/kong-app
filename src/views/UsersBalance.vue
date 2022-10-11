@@ -109,7 +109,7 @@ import DialogLoading from '../components/loading/DialogLoading.vue';
             this.loading = false;
         }, () => {
             this.loading = false;
-            alert('Erro ao Buscar Saldo do Usuario');
+            alert('Erro ao Buscar Saldo do Usuário');
         })
     }
   }

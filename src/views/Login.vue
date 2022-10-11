@@ -127,7 +127,7 @@ export default {
                       res => {
                         this.loading = false;
                         if(!res.auth === true) {
-                            alert('Usuario ou Senha Invalido');
+                            alert('Usuário ou Senha Inválido');
                             return;
                         }
                         localStorage.setItem('TOKEN', res.token);
@@ -144,7 +144,7 @@ export default {
                         console.log('err', err.response); 
                         this.loading = false;
                         if(err.response.status === 401) {
-                          alert('Usuario ou Senha Invalido');
+                          alert('Usuário ou Senha Inválido');
                         } else {
                           alert('Erro interno no servidor, contate o Administrador ou Tente novamente');
                         }

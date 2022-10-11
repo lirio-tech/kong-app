@@ -23,18 +23,6 @@
                 </span>
               </v-col>
           </v-row>     
-          <!-- <v-row>
-              <v-col cols="12" sm="12" align="center" >
-                <v-btn 
-                  color="purple darken-4"
-                  x-large
-                  style="width:100%"
-                  @click="login"
-                >
-                 Entrar com o Usuario 
-                </v-btn>
-              </v-col>
-          </v-row>       -->
           <v-row>
               <v-col cols="12" sm="12" align="center" >
                 <v-btn 

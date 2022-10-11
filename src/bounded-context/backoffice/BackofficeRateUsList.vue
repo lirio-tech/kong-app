@@ -21,7 +21,7 @@
                     <template v-slot:default>
                       <thead >
                         <tr>
-                            <th class="text-center">Usuario</th>
+                            <th class="text-center">Usuário</th>
                             <th class="text-center">Score</th>
                             <th class="text-left">Description</th>
                             <th></th>
