@@ -64,7 +64,7 @@
                                       >
                                         <v-row>
                                             <span >
-                                                {{ userLogged.name.split(' ')[0] }} - {{ viewBO }}
+                                                {{ userLogged.name.split(' ')[0] }}
                                             </span>                                   
                                         </v-row>
                                         <v-row>
