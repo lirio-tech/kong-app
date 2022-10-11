@@ -496,7 +496,7 @@ export default {
     },    
     methods: {
       becomeAdmin() {
-          if (confirm(`${this.user.name} tera acesso de administrador e podera ver a contabilidade completa.\n\nDeseja Relamente Tornar ${this.user.name} Admin?`)) {
+          if (confirm(`${this.user.name} terá o acesso de administrador e poderá ver a contabilidade completa.\n\nDeseja Relamente Tornar ${this.user.name} Admin?`)) {
             gateway.becomeUserAdmin(this.user._id,
                 res => {
                     console.log(res);
