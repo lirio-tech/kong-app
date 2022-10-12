@@ -135,9 +135,9 @@
 </template>
 
 <script>
-import gateway from '../../api/gateway';
-import storage from '../../storage';
-import date from '../../utils/date';
+import gateway from '../../../api/gateway';
+import storage from '../../../storage';
+import date from '../../../utils/date';
 export default {
     name: 'BackofficeCompaniesActives',
     components: { 

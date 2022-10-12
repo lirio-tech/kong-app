@@ -15,16 +15,17 @@ import IPhone from '../views/IPhone'
 import PaymentPremium from '../views/PaymentPremium'
 import PaymentFree from '../views/PaymentFree'
 import IdentifyDeviceRedirect from '../views/IdentifyDeviceRedirect'
-import BackofficeCompanyApplyPlan from '../bounded-context/backoffice/BackofficeCompanyApplyPlan'
-import BackofficeCompanyOption from '../bounded-context/backoffice/BackofficeCompanyOption'
-import BackofficeControlPlan from '../bounded-context/backoffice/BackofficeControlPlan'
-import BackofficeCompanyList2 from '../bounded-context/backoffice/BackofficeCompanyList2'
-import BackofficeCompaniesActives from '../bounded-context/backoffice/BackofficeCompaniesActives'
-import BackofficeUserList from '../bounded-context/backoffice/BackofficeUserList'
-import BackofficeUser from '../bounded-context/backoffice/BackofficeUser'
-import BackofficePayments from '../bounded-context/backoffice/BackofficePayments'
-import BackofficeRateUsList from '../bounded-context/backoffice/BackofficeRateUsList'
-import BackofficeNotificationSignatureExpiration from '../bounded-context/backoffice/notifications/BackofficeNotificationSignatureExpiration'
+import BackofficeCompanyApplyPlan from '../bounded-context/backoffice/views/BackofficeCompanyApplyPlan'
+import BackofficeCompanyOption from '../bounded-context/backoffice/views/BackofficeCompanyOption'
+import BackofficeControlPlan from '../bounded-context/backoffice/views/BackofficeControlPlan'
+import BackofficeCompanyList2 from '../bounded-context/backoffice/views/BackofficeCompanyList2'
+import BackofficeCompaniesActives from '../bounded-context/backoffice/views/BackofficeCompaniesActives'
+import BackofficeUserList from '../bounded-context/backoffice/views/BackofficeUserList'
+import BackofficeUser from '../bounded-context/backoffice/views/BackofficeUser'
+import BackofficePayments from '../bounded-context/backoffice/views/BackofficePayments'
+import BackofficeRateUsList from '../bounded-context/backoffice/views/BackofficeRateUsList'
+import BackofficeNotificationOptions from '../bounded-context/backoffice/views/notifications/BackofficeNotificationOptions'
+import BackofficeNotificationList from '../bounded-context/backoffice/views/notifications/BackofficeNotificationList'
 import Analytics from '../views/Analytics'
 import storage from '../storage'
 import PasswordRecovery from '../views/PasswordRecovery'
@@ -185,9 +186,14 @@ const routes = [
   },    
   {
     path: '/backoffice/notifications',
-    name: 'BackofficeNotificationSignatureExpiration', 
-    component: BackofficeNotificationSignatureExpiration
+    name: 'BackofficeNotificationOptions', 
+    component: BackofficeNotificationOptions
   },      
+  {
+    path: '/backoffice/notifications/s',
+    name: 'BackofficeNotificationList', 
+    component: BackofficeNotificationList
+  },        
   {
     path: '/analytics',
     name: 'Analytics',

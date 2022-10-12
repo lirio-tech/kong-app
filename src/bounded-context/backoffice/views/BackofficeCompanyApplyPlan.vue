@@ -342,11 +342,11 @@
 </template>
 
 <script>
-import companyGateway from '../../api/companyGateway'
-import storage from '../../storage'
-import inputs from '../../utils/inputs'
+import companyGateway from '../../../api/companyGateway'
+import storage from '../../../storage'
+import inputs from '../../../utils/inputs'
 import moment from 'moment'
-import date from '../../utils/date'
+import date from '../../../utils/date'
 export default {
     name: 'BackofficeCompanyApplyPlan', 
     components: { 

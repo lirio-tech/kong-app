@@ -126,8 +126,8 @@
 </template>
 
 <script>
-import gateway from '../../api/gateway';
-import storage from '../../storage';
+import gateway from '../../../api/gateway';
+import storage from '../../../storage';
 export default {
     name: 'BackofficePayments',
     components: {  },

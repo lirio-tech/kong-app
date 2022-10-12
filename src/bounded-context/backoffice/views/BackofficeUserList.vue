@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import gateway from '../../api/gateway';
+import gateway from '../../../api/gateway';
 import AppBar from '@/components/appbar/AppBar'
-import storage from '../../storage';
-import UserTypes from '../../utils/UserTypes';
+import storage from '../../../storage';
+import UserTypes from '../../../utils/UserTypes';
 export default {
     name: 'BackofficeUserList',
     components: { AppBar },

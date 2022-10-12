@@ -89,8 +89,8 @@
 
 <script>
   import AppBar from '@/components/appbar/AppBar'
-  import DialogPlan from '../../components/DialogPlan'
-  import storage from '../../storage';
+  import DialogPlan from '../../../components/DialogPlan'
+  import storage from '../../../storage';
   export default {
     name: 'BackofficeControlPlan',
     components: { 

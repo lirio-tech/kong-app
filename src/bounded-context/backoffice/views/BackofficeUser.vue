@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import gateway from '../../api/gateway';
+import gateway from '../../../api/gateway';
 import AppBar from '@/components/appbar/AppBar'
-import storage from '../../storage';
+import storage from '../../../storage';
 export default {
     name: 'BackofficeUser',
     components: { AppBar },
