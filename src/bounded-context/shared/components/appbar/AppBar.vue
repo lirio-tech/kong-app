@@ -48,13 +48,13 @@
 </template>
 
 <script>
-import DialogNotifitions from '@/components/appbar/notifications/DialogNotifications'
-import DialogMenuUser from '@/components/appbar/menu/DialogMenuUser'
-import gateway from '../../api/gateway';
+import DialogNotifitions from '@/bounded-context/notifications/components/DialogNotifications'
+import DialogMenuUser from './menu/DialogMenuUser'
+import gateway from '@/api/gateway';
 import notificationGateway from '@/api/notificationGateway'
-import storage from '../../storage';
-import UserTypes from '../../utils/UserTypes'
-import appConfig from '../../utils/appConfig'
+import storage from '@/storage';
+import UserTypes from '@/utils/UserTypes'
+import appConfig from '@/utils/appConfig'
 
 export default {
         name: 'AppBar',

@@ -18,7 +18,7 @@
     </v-container>
 </template>
 <script>
-import AppBar from '@/components/appbar/AppBar';
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar' 
 import device from '../utils/device'
 export default {
     components: { AppBar },

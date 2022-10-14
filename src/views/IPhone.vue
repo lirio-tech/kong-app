@@ -108,7 +108,7 @@
 
 <script>
 import Contact from '../components/Contact'
-import AppBar from '@/components/appbar/AppBar'
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar' 
 export default {
     components: {
         AppBar,

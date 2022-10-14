@@ -88,7 +88,7 @@
 </template>
 
 <script>
-  import AppBar from '@/components/appbar/AppBar'
+  import AppBar from '@/bounded-context/shared/components/appbar/AppBar'
   import DialogPlan from '../../../components/DialogPlan'
   import storage from '../../../storage';
   export default {

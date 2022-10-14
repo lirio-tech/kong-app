@@ -222,7 +222,7 @@
 <script>
 import gateway from '../api/gateway'
 import orderGateway from '../api/orderGateway'
-import AppBar from '../components/appbar/AppBar'
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar.vue'
 import DialogPlan from '../components/DialogPlan'
 import DialogRateUs from '../components/DialogRateUs'
 import HomeOrderServiceEmployee from '../components/HomeOrderServiceEmployee'

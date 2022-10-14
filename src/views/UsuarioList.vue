@@ -99,7 +99,7 @@
 
 <script>
 import gateway from '../api/gateway'; 
-import AppBar from '../components/appbar/AppBar.vue';
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar.vue'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
 import UserTypes from '../utils/UserTypes';

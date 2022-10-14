@@ -200,7 +200,7 @@
 
 <script>
 import gateway from '../api/gateway'
-import AppBar from '@/components/appbar/AppBar'
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar' 
 import GetItOnGooglePlay from '../components/GetItOnGooglePlay.vue';
 import storage from '../storage';
 import InputsUtils from '../utils/inputs'

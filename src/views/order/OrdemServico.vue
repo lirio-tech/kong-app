@@ -247,15 +247,15 @@
 </template>
 
 <script>
-import gateway from '../../api/gateway'
-import orderGateway from '../../api/orderGateway'
+import gateway from '@/api/gateway'
+import orderGateway from '@/api/orderGateway'
 import { mapGetters } from 'vuex'
-import DialogPlan from '../../components/DialogPlan'
-import storage from '../../storage'
-import UserTypes from '../../utils/UserTypes'
-import HeaderBackTitle from '../../components/HeaderBackTitle.vue'
-import device from '../../utils/device'
-import AppBar from '../../components/appbar/AppBar.vue'
+import DialogPlan from '@/components/DialogPlan'
+import storage from '@/storage'
+import UserTypes from '@/utils/UserTypes'
+import HeaderBackTitle from '@/components/HeaderBackTitle.vue'
+import device from '@/utils/device'
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar.vue'
   export default {
     name: 'OrdemServico',
     components: {

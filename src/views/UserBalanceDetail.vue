@@ -145,7 +145,7 @@
 
 <script>
 import gateway from '../api/gateway';
-import AppBar from '@/components/appbar/AppBar'
+import AppBar from '@/bounded-context/shared/components/appbar/AppBar' 
 import DialogMoneyVoucherOrPaymentEmployee from '../components/DialogMoneyVoucherOrPaymentEmployee'
 import HeaderBackTitle from '../components/HeaderBackTitle.vue';
 import storage from '../storage';
