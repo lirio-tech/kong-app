@@ -37,6 +37,12 @@
           </v-row>
 
         </v-main>
+        <DialogViewNotification 
+          :company="company" 
+          :notification="notification" 
+          :dialog="dialogViewNotification" 
+          v-on:show-notification-dialog="showNotificationDialog"
+        />
     </v-container>
 </template>
 
@@ -46,14 +52,17 @@ import storage from '@/storage';
 import notificationGateway from '@/api/notificationGateway';
 import ListViewNotifications from '../../../notifications/components/ListViewNotifications.vue';
 import companyGateway from '../../../../api/companyGateway';
+import DialogViewNotification from '../components/DialogViewNotification.vue';
   export default {
     name: 'BackofficeNotificationOptions',
     components: {
     AppBar,
-    ListViewNotifications
+    ListViewNotifications,
+    DialogViewNotification
 },
     data: () => ({
       loading: false,
+      dialogViewNotification: false,
       userLogged: {
         type: 'none'
       },
@@ -64,7 +73,9 @@ import companyGateway from '../../../../api/companyGateway';
           sortDirection: 'desc'
       },        
       notifications: [],
-      isReturn10: true,
+      isReturn10: true, 
+      company: {},
+      notification: {}
     }),
     methods: {
         getList() {
@@ -87,7 +98,9 @@ import companyGateway from '../../../../api/companyGateway';
             companyGateway.getCompanyById(
               item.company, 
               res => {
-                alert(res.name);
+                this.notification = item;
+                this.company = res;
+                this.showNotificationDialog(true);
               },
               err => {
                 console.error(err);
@@ -102,6 +115,9 @@ import companyGateway from '../../../../api/companyGateway';
             }
             this.pagination.page++;
             this.getList();
+        },
+        showNotificationDialog(show) {
+          this.dialogViewNotification = show;
         }
     },
     beforeMount() {

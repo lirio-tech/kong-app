@@ -47,14 +47,19 @@
                     v-else
                   >
                                 <v-col >
-                                    <v-avatar size="80" color="grey">
-                                        <v-icon
-                                            medium
-                                            dark
-                                        >
-                                            mdi-account
-                                        </v-icon>     
-                                    </v-avatar>
+                                    <div 
+                                        style="cursor: pointer;" 
+                                        @click="showwBO()"
+                                    >  
+                                        <v-avatar size="80" color="grey">
+                                            <v-icon
+                                                medium
+                                                dark
+                                            >
+                                                mdi-account
+                                            </v-icon>     
+                                        </v-avatar>
+                                    </div>
                                 </v-col>
                                 <v-col style="padding-top: 35px;"> 
                                       <router-link 
@@ -82,7 +87,7 @@
             <v-simple-table fluid>
               <template v-slot:default>
                   <tbody>
-                    <tr v-if="(userLogged && userLogged.type === 'sys_admin')">
+                    <tr v-if="(userLogged && userLogged.type === 'sys_admin') && showBackoffice >= 5">
                       <td style="padding: 30px 0px 20px 0px;">
                           <router-link to="/system" style="color: inherit; text-decoration: none">
                               <v-col cols="10" class="font-weight-medium">
@@ -234,7 +239,8 @@ export default {
       userLogged: {},
       dialogPlan: false,
       isDarkMode: true,
-      viewBO: 0
+      viewBO: 0,
+      showBackoffice: 0
     }
   }, 
   methods: {
@@ -253,6 +259,9 @@ export default {
     },    
     getClassText() {
       return this.$vuetify.theme.dark ? 'white--text' : 'black--text'
+    },
+    showwBO() {
+      this.showBackoffice++
     }
   },
   computed: {
