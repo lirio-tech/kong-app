@@ -18,7 +18,8 @@
               </v-col>
           </v-row>          
           <v-row>
-                <h1>Hahhah </h1>
+                <ListViewNotifications :list="notifications" v-on:click-item="clickItem"/>
+                
           </v-row>         
 
         </v-main>
@@ -28,22 +29,56 @@
 <script>
 import AppBar from '@/bounded-context/shared/components/appbar/AppBar'
 import storage from '@/storage';
-//import notificationGateway from '@/api/notificationGateway';
+import notificationGateway from '@/api/notificationGateway';
+import ListViewNotifications from '../../../notifications/components/ListViewNotifications.vue';
+import companyGateway from '../../../../api/companyGateway';
   export default {
     name: 'BackofficeNotificationOptions',
-    components: { 
-      AppBar,
-    },
+    components: {
+    AppBar,
+    ListViewNotifications
+},
     data: () => ({
       loading: false,
       userLogged: {
         type: 'none'
-      }
+      },
+      notifications: []
     }),
     methods: {
-
+        getList() {
+          const pagination = {
+            page: 0,
+            size: 10,
+            sortField: 'createdAt',
+            sortDirection: 'asc'
+          }
+          notificationGateway.getListPage(
+            pagination,
+            res => {
+                this.notifications = res;
+            },
+            err => {
+                console.error(err);
+                alert('Erro innesperado ao Buscar Lista')
+            }
+          )
+        },
+        clickItem(item) {
+            companyGateway.getCompanyById(
+              item.company, 
+              res => {
+                alert(res.name);
+              },
+              err => {
+                console.error(err);
+                alert('Erro Inesperado');
+              }
+            )
+        }
     },
     beforeMount() {
+      this.getList()
       this.userLogged = storage.getUserLogged();
     }
   }
