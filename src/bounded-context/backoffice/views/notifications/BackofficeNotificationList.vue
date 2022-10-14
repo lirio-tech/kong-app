@@ -18,9 +18,23 @@
               </v-col>
           </v-row>          
           <v-row>
-                <ListViewNotifications :list="notifications" v-on:click-item="clickItem"/>
-                
+                <ListViewNotifications 
+                    :list="notifications" 
+                    v-on:click-item="clickItem"
+                />
           </v-row>         
+          <v-row
+            align="center"
+            justify="space-around"          
+            style="padding-top: 20px; padding-bottom: 50px;"
+          >
+                <v-btn
+                  @click="loadMore"
+                  :loading="loading"
+                >
+                        Carregar mais
+                </v-btn>            
+          </v-row>
 
         </v-main>
     </v-container>
@@ -43,22 +57,27 @@ import companyGateway from '../../../../api/companyGateway';
       userLogged: {
         type: 'none'
       },
-      notifications: []
+      pagination: {
+          page: 0,
+          size: 10,
+          sortField: 'createdAt',
+          sortDirection: 'desc'
+      },        
+      notifications: [],
+      isReturn10: true,
     }),
     methods: {
         getList() {
-          const pagination = {
-            page: 0,
-            size: 10,
-            sortField: 'createdAt',
-            sortDirection: 'asc'
-          }
+          this.loading = true;
           notificationGateway.getListPage(
-            pagination,
+            this.pagination,
             res => {
-                this.notifications = res;
+                this.loading = false;
+                this.notifications.push(...res);
+                this.isReturn10 = res.length >= this.pagination.size;
             },
             err => {
+                this.loading = false;
                 console.error(err);
                 alert('Erro innesperado ao Buscar Lista')
             }
@@ -75,10 +94,25 @@ import companyGateway from '../../../../api/companyGateway';
                 alert('Erro Inesperado');
               }
             )
+        },
+        loadMore() {
+            if(!this.isReturn10) {
+              alert('Todos as notificações já foram carregadas');
+              return;
+            }
+            this.pagination.page++;
+            this.getList();
         }
     },
     beforeMount() {
-      this.getList()
+      this.getList(
+        {
+          page: 0,
+          size: 10,
+          sortField: 'createdAt',
+          sortDirection: 'asc'
+        }        
+      )
       this.userLogged = storage.getUserLogged();
     }
   }
