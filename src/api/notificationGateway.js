@@ -50,4 +50,16 @@ export default{
                 errorCb(error)
             })
     },        
+    delete(_id, callback,errorCb){       
+        let url = `${HOST_API}/${_id}`;
+        Axios.delete(url)
+            .then(data => {
+                console.log(data.data)
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })
+    },       
 }

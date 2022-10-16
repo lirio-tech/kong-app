@@ -17,13 +17,34 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>      
           <v-toolbar-title style="margin-left:-10px;">
-              Notificação de {{ company.name }}
+              Notificação
           </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>    
         <v-card-text>
-  
-            <h1>Hear</h1>  
+              <v-row>
+                  <h3 
+                    style="padding-top: 50px; padding-bottom: 30px"
+                  >
+                    Estabelecimento: 
+                    <span class="primary--text">
+                        {{ company.name }}
+                    </span>
+                  </h3>
+              </v-row>
+              <v-row>
+                <ListViewNotifications 
+                  :list="[notification]" 
+                />
+              </v-row>
+              <v-row style="padding-top: 50px">
+                <v-btn 
+                    color="red"
+                    @click="del()"
+                >
+                  Excluir
+                </v-btn>
+              </v-row>
 
         </v-card-text>          
         <div style="flex: 1 1 auto;"></div>
@@ -34,27 +55,42 @@
 
 <script>
 import storage from '@/storage'
-import UserTypes from '@/utils/UserTypes' 
+import UserTypes from '@/utils/UserTypes'
+import notificationGateway from '../../../../api/notificationGateway';
+import ListViewNotifications from '../../../notifications/components/ListViewNotifications.vue'; 
 
 export default {
     name: "DialogViewNotification",
     props: ["dialog", "notification", "company"],
-    components: {  },
+    components: { ListViewNotifications },
     data() {
         return {
-            userLogged: {},
+            userLogged: {}
         };
     },
     methods: {
         isAdmin() {
             return this.userLogged && UserTypes.isAdmin(this.userLogged.type);
         },
+        del() {
+          if(confirm('Deseja realmente excluir notification?')) {
+              
+            notificationGateway.delete(
+                this.notification._id,
+                () => {
+                  this.$router.go(0);
+                }, 
+                err => {
+                    alert('Erro ao Excluir Notificação');
+                    console.log(err);
+                });     
+          }
+        }
     },
-    computed: {},
+    computed: {}, 
     beforeMount() {
-        this.userLogged = storage.getUserLogged();
+        this.userLogged = storage.getUserLogged();        
     },
-    mounted() {
-    }
+    mounted() {}
 }
 </script>
