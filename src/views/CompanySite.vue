@@ -115,7 +115,7 @@
                     Contato
                 </span>
             </v-col> 
-            <v-col cols="2" >   
+            <v-col cols="3" >   
               <a
                 v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none" 
@@ -135,7 +135,7 @@
                   <v-img align="" src="@/assets/img/99.png" height="32" width="32" />
               </a>
             </v-col>              -->
-            <v-col cols="2" style=" margin-top: -3px;">   
+            <v-col cols="3" style=" margin-top: -3px;">   
               <a 
                 v-if="companySite.address && companySite.address.lat"
                 style="color: inherit; text-decoration: none;" 
@@ -158,17 +158,17 @@
                   :zoom='companySite.address.lat == -14.1738762 && companySite.address.lng == -49.5344501 ? 4 : 16'
                   style='width:100%;  height: 400px;'
                 >
-                  <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
-                    <h3 class="black--text">{{infoContent}}</h3>
-                    <br/>
-                    <p>
-                      <a :href="getUrlGoogleMaps()"
-                        target="blank"
-                      >
-                        Google Maps
-                      </a>
-                    </p>
-                  </gmap-info-window>                
+                    <gmap-info-window :options="{ pixelOffset: { width: 0, height: -50 } }" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
+                      <h3 class="black--text">{{infoContent}}</h3>
+                      <br/>
+                      <p>
+                        <a :href="getUrlGoogleMaps()"
+                          target="blank"
+                        >
+                          Google Maps
+                        </a>
+                      </p>
+                    </gmap-info-window>                
                     <gmap-marker 
                       v-for="(item, key) in coordinates" 
                       :key="key" 
@@ -198,7 +198,8 @@
                       style="margin-left: 10px; margin-top: 15px;"
                     >
                         <v-btn text @click="openInsta()" v-if="companySite.instagram">
-                          <v-icon color="white">mdi-instagram</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
+                          <v-icon color="white">mdi-instagram</v-icon> 
+                          <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">@{{companySite.instagram}}</span>
                         </v-btn>                        
                     </p>
                     
@@ -206,12 +207,12 @@
                       style="margin-left: 10px;"
                     >
                         <v-btn text @click="openFace()" v-if="companySite.facebook">
-                          <v-icon color="white">mdi-facebook</v-icon> <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
+                          <v-icon color="white">mdi-facebook</v-icon> 
+                          <span style="text-transform: lowercase; margin-left: 10px;" class="white--text">/{{companySite.facebook}}</span>
                         </v-btn>     
                     </p>
                     <br/>
                     <p v-if="companySite.whatsapp">
-                        
                         <v-btn icon @click="openWhats()" v-if="companySite.whatsapp">
                           <v-icon color="green">mdi-whatsapp</v-icon>
                         </v-btn>
