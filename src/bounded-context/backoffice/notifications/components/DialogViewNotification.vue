@@ -81,7 +81,8 @@ export default {
                 this.notification._id,
                 () => {
                   this.loading = false
-                  this.$router.go(0);
+                  //this.$router.go(0);
+                  window.location.reload();
                 }, 
                 err => {
                     this.loading = false
