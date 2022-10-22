@@ -116,19 +116,15 @@ import DialogViewNotification from '../components/DialogViewNotification.vue';
             this.pagination.page++;
             this.getList();
         },
-        showNotificationDialog(show) {
+        showNotificationDialog(show, notificationDeleted) {
           this.dialogViewNotification = show;
+          if(notificationDeleted) {
+            this.notifications.splice(this.notifications.indexOf(notificationDeleted), 1);
+          }
         }
     },
     beforeMount() {
-      this.getList(
-        {
-          page: 0,
-          size: 10,
-          sortField: 'createdAt',
-          sortDirection: 'asc'
-        }        
-      )
+      this.getList({ page: 0, size: 10, sortField: 'createdAt', sortDirection: 'asc' })
       this.userLogged = storage.getUserLogged();
     }
   }

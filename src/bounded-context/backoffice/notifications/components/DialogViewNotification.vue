@@ -12,7 +12,7 @@
           <v-btn
             icon
             small
-            @click="$emit('show-notification-dialog', false)"
+            @click="$emit('show-notification-dialog', false, null)"
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>      
@@ -82,7 +82,7 @@ export default {
                 () => {
                   this.loading = false
                   //this.$router.go(0);
-                  window.location.reload();
+                  this.$emit('show-notification-dialog', false, this.notification);
                 }, 
                 err => {
                     this.loading = false
