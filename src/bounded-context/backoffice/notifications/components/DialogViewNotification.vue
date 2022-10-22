@@ -41,6 +41,7 @@
                 <v-btn 
                     color="red"
                     @click="del()"
+                    :loading="loading"
                 >
                   Excluir
                 </v-btn>
@@ -65,7 +66,8 @@ export default {
     components: { ListViewNotifications },
     data() {
         return {
-            userLogged: {}
+            userLogged: {},
+            loading: false
         };
     },
     methods: {
@@ -74,13 +76,15 @@ export default {
         },
         del() {
           if(confirm('Deseja realmente excluir notification?')) {
-              
+            this.loading = true  
             notificationGateway.delete(
                 this.notification._id,
                 () => {
+                  this.loading = false
                   this.$router.go(0);
                 }, 
                 err => {
+                    this.loading = false
                     alert('Erro ao Excluir Notificação');
                     console.log(err);
                 });     
