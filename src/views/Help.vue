@@ -128,7 +128,7 @@ export default {
     methods: {
         sendMessageWhatsapp() {
             window.open(
-                `https://api.whatsapp.com/send?phone=5511943197487&text=Olá, Gostaria de tirar algumas duvidas sobre o ${this.appType === 'app' ? 'Kongapp' : 'Lady App' } !`
+                `https://api.whatsapp.com/send?phone=5511961409798&text=Olá, Gostaria de tirar algumas duvidas sobre o ${this.appType === 'app' ? 'Kongapp' : 'Lady App' } !`
             );
         },        
         goBack() {
