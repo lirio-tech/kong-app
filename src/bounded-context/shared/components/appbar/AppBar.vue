@@ -17,11 +17,17 @@
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on" @click="showNotificationsDialog(true)" style="margin-bottom: 20px;">
                         <div v-if="notifications && notifications.amountNotRead > 0">
-                            <v-icon style="font-size: 1.6rem">mdi-bell-badge-outline</v-icon>
+                            <v-icon 
+                                style="font-size: 1.6rem"
+                                class="shaking-bell"
+                            >
+                                mdi-bell-badge-outline
+                            </v-icon>
                             <v-icon 
                                 size="10" 
                                 color="red"
                                 style="position: absolute; top: -6px;left: 19px;"
+                                class="shaking-bell"
                             >
                                 mdi-circle
                             </v-icon>
