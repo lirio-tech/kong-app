@@ -28,14 +28,13 @@
                   :key="notify.text"                  
                 >              
                 <v-alert 
-                      :type="notify.type"
-                      :icon="notify.icon"
+                      :color="notify.color"
                       border="left"
                       :dismissible="notify.closeable"
                       prominent
                     >
                       <v-row align="center">
-                        <v-col class="grow">
+                        <v-col :class="notify.textColor+`--text`">
                           {{ notify.text }}
                         </v-col>
                         <v-col class="shrink" v-if="notify.link">
