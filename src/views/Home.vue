@@ -428,7 +428,6 @@ export default {
         this.ordersGroup.netTotal = 0.0;
         this.ordersGroup.cardRateValueDiscount = 0.0;
 
-
         this.ordersByUsers = [];
         orderGateway.getOrdersSummaryByDataBetween(this.periodo.inicio, this.periodo.fim,
           res => {

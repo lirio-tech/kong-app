@@ -21,7 +21,7 @@
                 >
                     <br/>
                     <span class="grey--text">Vencimento do Plano: </span> 
-                    {{ new Date(company.plan.dateEnd).toLocaleDateString('pt-BR') }} 
+                    {{ company.plan.dateEndBR }} 
                 </span>       
                 <span 
                     v-if="company.plan"
