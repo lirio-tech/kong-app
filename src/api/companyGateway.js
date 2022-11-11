@@ -49,8 +49,8 @@ export default{
           })         
     },
     renovatePlan(companyId, callback, errorCb) {
-        let url = `${COMPANIES_API}/v1/${companyId}/renovate/plan`;
-        Axios.put(url)
+        let url = `${COMPANIES_API}/v1/${companyId}/renovate-plan`;
+        Axios.patch(url)
             .then(data => {
                 callback(data.data)
             })
