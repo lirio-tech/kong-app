@@ -48,6 +48,17 @@ export default{
               errorCb(error)
           })         
     },
+    renovatePlan(companyId, callback, errorCb) {
+        let url = `${COMPANIES_API}/v1/${companyId}/renovate/plan`;
+        Axios.put(url)
+            .then(data => {
+                callback(data.data)
+            })
+            .catch(error => {
+                console.log(error);
+                errorCb(error)
+            })      
+    },    
     applyPlan(companyId, plan, callback, errorCb) {
       let url = `${COMPANIES_API}/v2/${companyId}/upgrade/plan`;
       Axios.put(url, plan)

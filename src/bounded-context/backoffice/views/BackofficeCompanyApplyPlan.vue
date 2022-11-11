@@ -21,6 +21,11 @@
                             row
                         >
                             <v-radio
+                                v-if="showRenovate"
+                                label="Renova Plano"
+                                value="RENOVATE_PLAN"
+                            ></v-radio>                                   
+                            <v-radio
                                 label="Aplicar Plano"
                                 value="APPLY_PLAN"
                             ></v-radio>                    
@@ -31,6 +36,27 @@
                         </v-radio-group>
                 </v-col>
               </v-container>
+          </v-row>
+          <v-row v-if="'RENOVATE_PLAN' === view">
+                <v-form 
+                    v-model="valid" 
+                    v-on:submit.prevent="renovatePlan"
+                    ref="renovatePlanForm"
+                    id="renovatePlanForm"
+                >                
+                    <v-btn 
+                        type="submit" 
+                        depressed  
+                        x-large 
+                        color="purple"
+                        :loading="loadingSave"
+                        :disabled="loadingSave"
+                        style="width: 100%"
+                        align="center"
+                    >
+                        Aplicar Plano
+                    </v-btn>                     
+                </v-form>
           </v-row>
           <v-row v-if="'APPLY_PLAN' === view">
               <v-col cols="12">   
@@ -360,6 +386,7 @@ export default {
         company: { 
             plan: {}
         },
+        showRenovate: false,
         view: 'APPLY_PLAN',
         planView: { 
             name: 'Simples', 
@@ -382,6 +409,27 @@ export default {
       numberBrToUS(v) {
         return Number(v.replace('R$ ', '').replace('.', '').replace(',', '.'));
       },          
+      renovatePlan() {
+        if(this.company.plan.name === 'Free') {
+            alert('Plano Free não permite renovação');
+            return;
+        }
+        if(confirm(`Deseja Realmente renovar o Plano, se continuar o plano será adicionado +1 mês a partir da Data de Termino do Plano Atual/Vencido = ${this.company.plan.dataEnd} + 1 mês`)) {
+            companyGateway.renovatePlan(this.company._id,
+                res => {
+                    this.company = res;
+                    alert('Plano Alterado com Sucesso');
+                    this.view = 'EDIT'
+                },
+                (err) => {
+                    if(err.response.status >= 400 && err.response.status <= 499) {
+                    alert(err.response.data.message)              
+                    return;
+                    }                     
+                    alert('Erro, Tente novamente');
+                })
+            }
+      },
       applyPlanNow() {
         if(!this.$refs.applyPlanForm.validate()) {
             return;
@@ -428,6 +476,11 @@ export default {
                     this.$route.params._id,
                     res => { 
                         this.company = res;
+
+                        if(this.company.plan.name != 'Free') {
+                            this.showRenovate = true;                            
+                        } 
+
                         if(this.$route.query.planName) {
                             this.planView.name = this.$route.query.planName;
                             this.planView.price = inputs.maskCurrency(this.$route.query.price+'0');
