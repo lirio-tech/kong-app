@@ -28,7 +28,7 @@
                 >
                     <br/>
                     <span class="grey--text">Valor/Mes: </span> 
-                    R$ {{ company.plan.name === 'Free' ? 1000 : company.plan.maxCash | currency }} 
+                    R$ {{ company.plan.name === 'Free' ? 300 : company.plan.maxCash | currency }} 
                 </span>     
                 <span 
                     v-if="company.plan"
