@@ -354,7 +354,7 @@ export default{
                 },
                 {
                   "icon": "mdi-content-cut",
-                  "description": "R$ 1000,00 por Mês de Lançamentos"
+                  "description": "R$ 300,00 por Mês de Lançamentos"
                 },
                 {
                     "icon": "mdi-clock",
