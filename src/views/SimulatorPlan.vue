@@ -202,7 +202,7 @@ export default {
             if(priceAppliedDiscount < 9.99) {
                 priceAppliedDiscount = 9.99
             }
-            let codePix = `00020126510014BR.GOV.BCB.PIX0114+55119431974870211Plano Smart5204000053039865802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062140510PlanoSmart63045227`;
+            let codePix = `00020126580014BR.GOV.BCB.PIX01364f708bf0-1c4f-48be-8bb9-b34c20ae09355204000053039865802BR5925Denis Lirio Damacena Pere6009SAO PAULO62140510tQRcOdbCwJ6304AFE2`;
             return {
                 name: "Smart",
                 type: `Meses=${this.amountMouth}`,

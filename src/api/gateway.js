@@ -396,7 +396,7 @@ export default{
               },
               "color": "cyan",
               "advantage": false,
-              "pixCopyAndPast": "00020126530014BR.GOV.BCB.PIX0114+55119431974870213plano simples52040000530398654049.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062160512planosimples6304B630"
+              "pixCopyAndPast": "00020126580014BR.GOV.BCB.PIX01364f708bf0-1c4f-48be-8bb9-b34c20ae093552040000530398654049.905802BR5925Denis Lirio Damacena Pere6009SAO PAULO621405109MwCmvjHNz630488E0"
             },              
             {
               "name": "Top",
@@ -426,7 +426,7 @@ export default{
               },
               "color": "green",
               "advantage": false,
-              "pixCopyAndPast": "00020126490014BR.GOV.BCB.PIX0114+55119431974870209plano top520400005303986540524.905802BR5925Diego Lirio Damacena Pere6009SAO PAULO61080540900062120508planotop6304A5E1"
+              "pixCopyAndPast": "00020126580014BR.GOV.BCB.PIX01364f708bf0-1c4f-48be-8bb9-b34c20ae0935520400005303986540524.905802BR5925Denis Lirio Damacena Pere6009SAO PAULO621405101ZRLYZbKPp63048D75"
             },                                           
           ];
     },
